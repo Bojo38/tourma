@@ -156,6 +156,9 @@ public class Tournament implements IContainCoachs, Serializable {
     public Cup getCup() {
         return mCup;
     }
+    public void setCup(Cup cup) {
+         mCup=cup;
+    }
     
     private Tournament() {
 

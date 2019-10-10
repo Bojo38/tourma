@@ -48,9 +48,9 @@ public class WebCup {
             // Add Title for the Round            
             sb.append("<div id=\"maintable" + i + "\" class=\"section\">");
             sb.append("<br><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Round)) + " " + (i + 1) + "</CENTER>");
-            if (r.isLooserCup()) {
+          /*  if (r.isLooserCup()) {
                 sb.append("<BR><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_MainTable)) + " " + (i + 1) + "</CENTER>");
-            }
+            }*/
             sb.append("<table style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                     + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
             // Add Title Line            
@@ -73,7 +73,7 @@ public class WebCup {
             sb.append("</table>");
             sb.append("</div>");
 
-            if (r.isThirdPlace()) {
+/*            if (r.isThirdPlace()) {
                 sb.append("<div id=\"maintable" + (++i) + "\" class=\"section\">");
                 sb.append("<BR><CENTER>" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_ThirdPlace)) + "</CENTER>");
                 sb.append("<table style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
@@ -103,13 +103,13 @@ public class WebCup {
 
                     // Add Title Line  
                     sb.append(getHTMLHeader());
-                    /* Check the maximum round for looser cup */
+                    // Check the maximum round for looser cup 
                     if (Math.round(Math.pow(2, i - 1) / 2) == rounds_with_cup.get(0).getMatchsCount()) {
-                        /* We are at maximum looser cup round */
+                        // We are at maximum looser cup round 
                         nb_looseMatch = 1;
                     }
                     if (Math.pow(2, i - 1) / 2 > rounds_with_cup.get(0).getMatchsCount()) {
-                        /* We are at maximum looser cup round */
+                        // We are at maximum looser cup round 
                         nb_looseMatch = 0;
                     }
 
@@ -123,7 +123,7 @@ public class WebCup {
                     sb.append("</table>");
                     sb.append("</div>");
                 }
-            }
+            }*/
         }
 
         return sb.toString();

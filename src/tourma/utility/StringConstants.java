@@ -236,4 +236,11 @@ public interface StringConstants {
     public static final String CS_CUP_ROUNDS_COUNT = "Rounds_Count";
     public static final String CS_CUP_SWISS_FOR_LOOSERS = "Swiss_for_loosers";
     public static final String CS_CUP_SHUFFLE = "Shuffle";
+    
+    public static final String CS_CUP_TABLES="Tables";
+    public static final String CS_CUP_TABLE="Table";
+    public static final String CS_CUP_ROUNDS="Rounds";
+    public static final String CS_CUP_ROUND="Round";
+    public static final String CS_CUP_MATCHS="Matchs";
+    public static final String CS_CUP_MATCH="Match";
 }

@@ -164,7 +164,6 @@ public class JPNMatch extends javax.swing.JPanel {
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jlbPlayer1.setBackground(new java.awt.Color(255, 255, 255));
-        jlbPlayer1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jlbPlayer1.setText(bundle.getString("PLAYER 1")); // NOI18N
         jlbPlayer1.setMaximumSize(new java.awt.Dimension(135, 25));
@@ -173,7 +172,7 @@ public class JPNMatch extends javax.swing.JPanel {
         jPanel2.add(jlbPlayer1, java.awt.BorderLayout.WEST);
 
         jlbScore1.setBackground(new java.awt.Color(255, 255, 255));
-        jlbScore1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbScore1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbScore1.setText(bundle.getString("0")); // NOI18N
         jlbScore1.setMaximumSize(new java.awt.Dimension(15, 25));
         jlbScore1.setMinimumSize(new java.awt.Dimension(15, 25));
@@ -195,7 +194,6 @@ public class JPNMatch extends javax.swing.JPanel {
         jPanel4.setLayout(new java.awt.BorderLayout());
 
         jlbPlayer2.setBackground(new java.awt.Color(255, 255, 255));
-        jlbPlayer2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbPlayer2.setText(bundle.getString("PLAYER 2")); // NOI18N
         jlbPlayer2.setMaximumSize(new java.awt.Dimension(135, 25));
         jlbPlayer2.setMinimumSize(new java.awt.Dimension(135, 25));
@@ -203,7 +201,7 @@ public class JPNMatch extends javax.swing.JPanel {
         jPanel4.add(jlbPlayer2, java.awt.BorderLayout.WEST);
 
         jlbScore2.setBackground(new java.awt.Color(255, 255, 255));
-        jlbScore2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbScore2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jlbScore2.setText(bundle.getString("0")); // NOI18N
         jlbScore2.setMaximumSize(new java.awt.Dimension(15, 25));
         jlbScore2.setMinimumSize(new java.awt.Dimension(15, 25));

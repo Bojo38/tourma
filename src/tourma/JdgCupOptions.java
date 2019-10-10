@@ -15,6 +15,7 @@ import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
+import javax.swing.SpinnerNumberModel;
 import tourma.data.Coach;
 import tourma.data.Cup;
 import tourma.data.Round;
@@ -40,7 +41,7 @@ public class JdgCupOptions extends javax.swing.JDialog {
      * @param modal
      *
      */
-    public JdgCupOptions(final java.awt.Frame parent, final boolean modal) {
+    public JdgCupOptions(final java.awt.Frame parent, final boolean modal, int MaxTour) {
         super(parent, modal);
         initComponents();
 
@@ -50,10 +51,19 @@ public class JdgCupOptions extends javax.swing.JDialog {
 
         final int screenWidth = dmode.getWidth();
         final int screenHeight = dmode.getHeight();
+
+        this.setSize(768, 300);
+
         this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
         mCup = Tournament.getTournament().getCup();
+        if (mCup == null) {
+            mCup = new Cup(Cup.ROUND_TYPE.CLASSIC, 1, true, true, Cup.INITIAL_DRAW.RANDOM);
+            Tournament.getTournament().setCup(mCup);
+        }
 
+        final SpinnerNumberModel model = new SpinnerNumberModel(1, 1, MaxTour, 1);
+        jspNumberOfCupRounds.setModel(model);
         update();
     }
 
@@ -61,17 +71,30 @@ public class JdgCupOptions extends javax.swing.JDialog {
 
         jcxShuffle.setSelected(mCup.isShuffle());
         jcxSwissForOthers.setSelected(mCup.isSwissForLoosers());
-        
+
         jspNumberOfCupRounds.setValue(mCup.getRoundsCount());
-        
-        jrbClassic3rd.setSelected(mCup.getType()==Cup.ROUND_TYPE.CLASSIC_THIRD);
-        jrbTypeClassic.setSelected(mCup.getType()==Cup.ROUND_TYPE.CLASSIC);
-        jrbRankingMatchs.setSelected(mCup.getType()==Cup.ROUND_TYPE.RANKING_MATCHES);
-        jrbLooserCup.setSelected(mCup.getType()==Cup.ROUND_TYPE.LOOSER);
-        
-        jrbDrawRandom.setSelected(mCup.getInitialDraw()==Cup.INITIAL_DRAW.RANDOM);
-        jrbRankingOrder.setSelected(mCup.getInitialDraw()==Cup.INITIAL_DRAW.RANKING);
-        jrbManualChoice.setSelected(mCup.getInitialDraw()==Cup.INITIAL_DRAW.MANUAL);
+
+        jrbClassic3rd.setSelected(mCup.getType() == Cup.ROUND_TYPE.CLASSIC_THIRD);
+        jrbTypeClassic.setSelected(mCup.getType() == Cup.ROUND_TYPE.CLASSIC);
+        jrbRankingMatchs.setSelected(mCup.getType() == Cup.ROUND_TYPE.RANKING_MATCHES);
+        jrbLooserCup.setSelected(mCup.getType() == Cup.ROUND_TYPE.LOOSER);
+
+        jrbDrawRandom.setSelected(mCup.getInitialDraw() == Cup.INITIAL_DRAW.RANDOM);
+        jrbRankingOrder.setSelected(mCup.getInitialDraw() == Cup.INITIAL_DRAW.RANKING);
+        jrbManualChoice.setSelected(mCup.getInitialDraw() == Cup.INITIAL_DRAW.MANUAL);
+
+        if (Tournament.getTournament().getCategoriesCount()>= 2) {
+            jrbCategoriesCrossed.setSelected(mCup.getInitialDraw() == Cup.INITIAL_DRAW.CATEGORIES_CROSSED);
+            jrbCategoriesMixed.setSelected(mCup.getInitialDraw() == Cup.INITIAL_DRAW.CATEGORIES_MIXED);
+            jrbCategoriesAbsoluteRanking.setSelected(mCup.getInitialDraw() == Cup.INITIAL_DRAW.CATEGORIES_ABSOLUTE_RANKING);
+            jrbCategoriesNotMixed.setSelected(mCup.getInitialDraw() == Cup.INITIAL_DRAW.CATEGORIES_NOT_MIXED);
+        }
+        else
+        {
+            jrbCategoriesCrossed.setEnabled(false);
+            jrbCategoriesMixed.setEnabled(false);
+            jrbCategoriesAbsoluteRanking.setEnabled(false);
+        }
     }
 
     /**
@@ -106,6 +129,11 @@ public class JdgCupOptions extends javax.swing.JDialog {
         jrbDrawRandom = new javax.swing.JRadioButton();
         jrbRankingOrder = new javax.swing.JRadioButton();
         jrbManualChoice = new javax.swing.JRadioButton();
+        jLabel3 = new javax.swing.JLabel();
+        jrbCategoriesCrossed = new javax.swing.JRadioButton();
+        jrbCategoriesMixed = new javax.swing.JRadioButton();
+        jrbCategoriesNotMixed = new javax.swing.JRadioButton();
+        jrbCategoriesAbsoluteRanking = new javax.swing.JRadioButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -160,6 +188,7 @@ public class JdgCupOptions extends javax.swing.JDialog {
         jPanel1.add(jPanel3);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CupType"))); // NOI18N
+        jPanel4.setLayout(new java.awt.GridLayout(4, 1));
 
         bgCupType.add(jrbTypeClassic);
         jrbTypeClassic.setText(bundle.getString("CupTypeClassic")); // NOI18N
@@ -200,6 +229,7 @@ public class JdgCupOptions extends javax.swing.JDialog {
         jPanel1.add(jPanel4);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("CupInitialDraw"))); // NOI18N
+        jPanel6.setLayout(new java.awt.GridLayout(8, 1));
 
         bgInitialDraw.add(jrbDrawRandom);
         jrbDrawRandom.setText(bundle.getString("CupDrawRandom")); // NOI18N
@@ -228,6 +258,46 @@ public class JdgCupOptions extends javax.swing.JDialog {
         });
         jPanel6.add(jrbManualChoice);
 
+        jLabel3.setText(bundle.getString("CategoriesAsConferences")); // NOI18N
+        jPanel6.add(jLabel3);
+
+        bgInitialDraw.add(jrbCategoriesCrossed);
+        jrbCategoriesCrossed.setText(bundle.getString("CupDrawCategoriesCrossed")); // NOI18N
+        jrbCategoriesCrossed.setToolTipText("");
+        jrbCategoriesCrossed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbCategoriesCrossedActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jrbCategoriesCrossed);
+
+        bgInitialDraw.add(jrbCategoriesMixed);
+        jrbCategoriesMixed.setText(bundle.getString("CupCategoriesMixed")); // NOI18N
+        jrbCategoriesMixed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbCategoriesMixedActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jrbCategoriesMixed);
+
+        bgInitialDraw.add(jrbCategoriesNotMixed);
+        jrbCategoriesNotMixed.setText(bundle.getString("CupCategoriesNotMixed")); // NOI18N
+        jrbCategoriesNotMixed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbCategoriesNotMixedActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jrbCategoriesNotMixed);
+
+        bgInitialDraw.add(jrbCategoriesAbsoluteRanking);
+        jrbCategoriesAbsoluteRanking.setText(bundle.getString("CupCategoriesMixed")); // NOI18N
+        jrbCategoriesAbsoluteRanking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jrbCategoriesAbsoluteRankingActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jrbCategoriesAbsoluteRanking);
+
         jPanel1.add(jPanel6);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -243,6 +313,8 @@ public class JdgCupOptions extends javax.swing.JDialog {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
+        Cup newCup=new Cup(mCup);
+        Tournament.getTournament().setCup(newCup);
         this.setVisible(false);
 
     }//GEN-LAST:event_jbtOKActionPerformed
@@ -292,44 +364,63 @@ public class JdgCupOptions extends javax.swing.JDialog {
     private void jrbManualChoiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbManualChoiceActionPerformed
         if (jrbManualChoice.isSelected()) {
             mCup.setInitialDraw(Cup.INITIAL_DRAW.MANUAL);
-        }        
+        }
         update();
     }//GEN-LAST:event_jrbManualChoiceActionPerformed
 
     private void jcxShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxShuffleActionPerformed
-        if (jcxShuffle.isSelected())
-        {
+        if (jcxShuffle.isSelected()) {
             mCup.setShuffle(true);
-        }
-        else
-        {
+        } else {
             mCup.setShuffle(false);
         }
         update();
     }//GEN-LAST:event_jcxShuffleActionPerformed
 
     private void jcxSwissForOthersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxSwissForOthersActionPerformed
-        if (jcxSwissForOthers.isSelected())
-        {
+        if (jcxSwissForOthers.isSelected()) {
             mCup.setSwissForLoosers(true);
-        }
-        else
-        {
+        } else {
             mCup.setSwissForLoosers(false);
         }
         update();
     }//GEN-LAST:event_jcxSwissForOthersActionPerformed
 
     private void jspNumberOfCupRoundsStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jspNumberOfCupRoundsStateChanged
-        mCup.setRoundsCount((Integer) jspNumberOfCupRounds.getValue());        
+        mCup.setRoundsCount((Integer) jspNumberOfCupRounds.getValue());
         update();
     }//GEN-LAST:event_jspNumberOfCupRoundsStateChanged
+
+    private void jrbCategoriesCrossedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCategoriesCrossedActionPerformed
+        if (jrbCategoriesCrossed.isSelected()) {
+            mCup.setInitialDraw(Cup.INITIAL_DRAW.CATEGORIES_CROSSED);
+        }
+    }//GEN-LAST:event_jrbCategoriesCrossedActionPerformed
+
+    private void jrbCategoriesMixedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCategoriesMixedActionPerformed
+        if (jrbCategoriesMixed.isSelected()) {
+            mCup.setInitialDraw(Cup.INITIAL_DRAW.CATEGORIES_MIXED);
+        }
+    }//GEN-LAST:event_jrbCategoriesMixedActionPerformed
+
+    private void jrbCategoriesAbsoluteRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCategoriesAbsoluteRankingActionPerformed
+        if (jrbCategoriesMixed.isSelected()) {
+            mCup.setInitialDraw(Cup.INITIAL_DRAW.CATEGORIES_ABSOLUTE_RANKING);
+        }
+    }//GEN-LAST:event_jrbCategoriesAbsoluteRankingActionPerformed
+
+    private void jrbCategoriesNotMixedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbCategoriesNotMixedActionPerformed
+         if (jrbCategoriesNotMixed.isSelected()) {
+            mCup.setInitialDraw(Cup.INITIAL_DRAW.CATEGORIES_NOT_MIXED);
+        }
+    }//GEN-LAST:event_jrbCategoriesNotMixedActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup bgCupType;
     private javax.swing.ButtonGroup bgInitialDraw;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -340,6 +431,10 @@ public class JdgCupOptions extends javax.swing.JDialog {
     private javax.swing.JButton jbtOK;
     private javax.swing.JCheckBox jcxShuffle;
     private javax.swing.JCheckBox jcxSwissForOthers;
+    private javax.swing.JRadioButton jrbCategoriesAbsoluteRanking;
+    private javax.swing.JRadioButton jrbCategoriesCrossed;
+    private javax.swing.JRadioButton jrbCategoriesMixed;
+    private javax.swing.JRadioButton jrbCategoriesNotMixed;
     private javax.swing.JRadioButton jrbClassic3rd;
     private javax.swing.JRadioButton jrbDrawRandom;
     private javax.swing.JRadioButton jrbLooserCup;
