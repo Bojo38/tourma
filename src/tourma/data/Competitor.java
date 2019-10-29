@@ -40,6 +40,7 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         return new Color(red, green, blue);
     }
 
+    
     public boolean isUpdated() {
         return updated;
     }

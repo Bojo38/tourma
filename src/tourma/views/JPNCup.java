@@ -4,8 +4,17 @@
  */
 package tourma.views;
 
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.logging.Logger;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import org.jfree.ui.tabbedui.VerticalLayout;
+import tourma.data.Cup;
+import tourma.data.CupRound;
+import tourma.data.CupTable;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.Tournament;
@@ -58,15 +67,62 @@ public final class JPNCup extends javax.swing.JPanel {
      * Update panel
      */
     public void update() {
+
+        jpnCup.removeAll();
+
+        int nbTables = Tournament.getTournament().getCup().getTables().size();
+        int nbRounds=Tournament.getTournament().getCup().getRoundsCount();
+        
+        jpnCup.setLayout(new BoxLayout(jpnCup,BoxLayout.Y_AXIS));
+
+        for (CupTable table : Tournament.getTournament().getCup().getTables()) {
+            // Compute High of this table Part
+            JPanel jpnTab = new JPanel(new FlowLayout(FlowLayout.CENTER));
+            // @TODO compute W starting offset & gap for this round
+            for (int i = table.getCupRounds().size() - 1; i >= 0; i--) {
+                CupRound round = table.getCupRounds().get(i);
+                JPanel jpn = new JPanel(new GridLayout(round.getNbMatchs(), 1));
+              
+                for (int j = 0; j < round.getNbMatchs(); j++) {
+                    Match match = round.getMatchs().get(j);
+
+                    // If the match is empty, draw it empty
+                    if ((match.getCompetitor1() != null) && (match.getCompetitor2() != null)) {
+                        if ((!match.getCompetitor1().getName().equals("")) && (!match.getCompetitor2().getName().equals(""))) {
+                            // Find real match in the rounds
+                            // Build Graphical panel
+                            // Draw it
+                            for (int cpt_r = 0; cpt_r < Tournament.getTournament().getRoundsCount(); cpt_r++) {
+                                Round r = Tournament.getTournament().getRound(cpt_r);
+
+                                for (int cpt_m = 0; cpt_m < r.getMatchsCount(); cpt_m++) {
+                                    Match m = r.getMatch(cpt_m);
+                                    if ((m.getCompetitor1() == match.getCompetitor1()) && (m.getCompetitor2() == match.getCompetitor2())) {
+                                        JPNMatch g_match = new JPNMatch(m, true);
+                                        jpn.add(g_match);
+                                    }
+                                }
+                            }                            
+                        }
+                    }
+                }               
+                jpnTab.add(jpn);
+            }
+ 
+            jpnCup.add(jpnTab);
+            jpnCup.add(new JSeparator(JSeparator.HORIZONTAL));
+        }
+
         final ArrayList<Round> rounds_with_cup = new ArrayList<>();
+
         //final ArrayList<Round> rounds = Tournament.getTournament().getRounds();
-        boolean bLooserCup = false;
+        /*boolean bLooserCup = false;
 
             for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
                 Round round = Tournament.getTournament().getRound(i);
                 if (round.isCup()) {
                     rounds_with_cup.add(round);
-                    if (round.isLooserCup()) {
+                    if (Tournament.getTournament().getCup().getType()==Cup.ROUND_TYPE.LOOSER) {
                         bLooserCup = true;
                     }
                 }
@@ -80,7 +136,8 @@ public final class JPNCup extends javax.swing.JPanel {
             }
             jpnCup.setSize(max_width, max_heigth);
 
-            final int max_nb_match = (int) Math.pow(2, rounds_with_cup.get(0).getCupMaxTour() - 1);
+            int nb_rounds=Tournament.getTournament().getCup().getRoundsCount();
+            final int max_nb_match =  (int) Math.pow(2, nb_rounds - 1);
             final int base_high = 60;
             final int total_high = 60 * max_nb_match;
 
@@ -90,7 +147,7 @@ public final class JPNCup extends javax.swing.JPanel {
             int offset = 0;
             for (int i = 0; i < rounds_with_cup.size(); i++) {
                 final Round r = rounds_with_cup.get(i);
-                final int remaining_tour = r.getCupMaxTour() - r.getCupTour() + 1;
+                final int remaining_tour = nb_rounds - r.getCupTour() + 1;
                 int nb_match = (int) Math.pow(2, remaining_tour - 1) / 2;
                 if (nb_match == 0) {
                     nb_match = 1;
@@ -116,7 +173,7 @@ public final class JPNCup extends javax.swing.JPanel {
 
                 }
 
-                if (r.isThirdPlace()) {
+                if (Tournament.getTournament().getCup().getType()==Cup.ROUND_TYPE.CLASSIC_THIRD) {
                     Match m;
                     m = r.getMatch(nb_match);
 
@@ -128,17 +185,17 @@ public final class JPNCup extends javax.swing.JPanel {
                     nb_match++;
                 }
 
-                if (r.isLooserCup()) {
+                if (Tournament.getTournament().getCup().getType()==Cup.ROUND_TYPE.LOOSER) {
                     if (r.getCupTour() > 0) {
                         nb_looseMatch = nb_looseMatch / 2 + nb_match;
 
-                        /* Check the maximum round for looser cup */
+                        // Check the maximum round for looser cup 
                         if (Math.round(Math.pow(2, i - 1) / 2) == rounds_with_cup.get(0).getMatchsCount()) {
-                            /* We are at maximum looser cup round */
+                            // We are at maximum looser cup round 
                             nb_looseMatch = 1;
                         }
                         if (Math.pow(2, i - 1) / 2 > rounds_with_cup.get(0).getMatchsCount()) {
-                            /* We are at maximum looser cup round */
+                            // We are at maximum looser cup round 
                             nb_looseMatch = 0;
                         }
 
@@ -158,7 +215,7 @@ public final class JPNCup extends javax.swing.JPanel {
                         }
                     }
                 }
-            }
+            }*/
     }
     private static final Logger LOG = Logger.getLogger(JPNCup.class.getName());
 }

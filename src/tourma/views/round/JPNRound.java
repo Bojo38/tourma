@@ -86,6 +86,10 @@ public final class JPNRound extends javax.swing.JPanel {
         mTournament = t;
         mRoundNumber = roundNumber;
 
+        if (mTournament.getPoolCount() > 0)
+        {
+            jcxPoolOption.setSelected(true);
+        }
         if (mTournament.getParams().isTeamTournament()) {
             mJpnTeamRound = new JPNTeamRound(r, t);
             jtpGlobal.addTab(
@@ -202,13 +206,36 @@ public final class JPNRound extends javax.swing.JPanel {
             TableFormat.setColumnSize(jtbMatches);
 
             if (mRoundNumber < mTournament.getRoundsCount()) {
-                final boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());
-
+                 boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());
+                
+                if (forPool)
+                {
+                    jcxPoolOption.setEnabled(true);
+                    forPool=jcxPoolOption.isSelected();
+                }
+                else
+                {
+                    jcxPoolOption.setSelected(false);
+                    jcxPoolOption.setEnabled(false);
+                }
+                
+                boolean forCup = mRound.isCup();
+                if (forCup)
+                {
+                    jcxCupOption.setEnabled(true);
+                    forCup=jcxCupOption.isSelected();
+                }
+                else
+                {
+                    jcxCupOption.setSelected(false);
+                    jcxCupOption.setEnabled(false);
+                }
+                
                 final ArrayList<Coach> coaches = new ArrayList<>();
                 for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
                     coaches.add(Tournament.getTournament().getCoach(cpt));
                 }
-                final MjtRankingIndiv mRanking = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool);
+                final MjtRankingIndiv mRanking = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool,forCup);
                 jtbRankingIndiv.setModel(mRanking);
                 jtbRankingIndiv.setDefaultRenderer(String.class, mRanking);
                 jtbRankingIndiv.setDefaultRenderer(Integer.class, mRanking);
@@ -275,6 +302,9 @@ public final class JPNRound extends javax.swing.JPanel {
         jPanel7 = new javax.swing.JPanel();
         jbtGeneralIndiv = new javax.swing.JButton();
         jbtGlobal = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jcxPoolOption = new javax.swing.JCheckBox();
+        jcxCupOption = new javax.swing.JCheckBox();
         jPanel8 = new javax.swing.JPanel();
         jtpAnnexRankings = new javax.swing.JTabbedPane();
 
@@ -405,6 +435,24 @@ public final class JPNRound extends javax.swing.JPanel {
 
         jPanel6.add(jPanel7, java.awt.BorderLayout.SOUTH);
 
+        jcxPoolOption.setText(bundle.getString("PoolOption")); // NOI18N
+        jcxPoolOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxPoolOptionActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jcxPoolOption);
+
+        jcxCupOption.setText(bundle.getString("CupOption")); // NOI18N
+        jcxCupOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxCupOptionActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jcxCupOption);
+
+        jPanel6.add(jPanel2, java.awt.BorderLayout.NORTH);
+
         jSplitPane1.setLeftComponent(jPanel6);
 
         jPanel8.setLayout(new java.awt.BorderLayout());
@@ -457,7 +505,8 @@ public final class JPNRound extends javax.swing.JPanel {
                 for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
                     coaches.add(Tournament.getTournament().getCoach(cpt));
                 }
-                final MjtRankingIndiv model = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool);
+                boolean forCup = mRound.isCup();
+                final MjtRankingIndiv model = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool,forCup);
                 final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
                         Translate.translate(CS_GeneralByCoach),
                         i + 1, mTournament, model, 0);
@@ -482,7 +531,8 @@ public final class JPNRound extends javax.swing.JPanel {
                 for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
                     coaches.add(Tournament.getTournament().getCoach(cpt));
                 }
-                final MjtRankingIndiv model = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool);
+                boolean forCup = mRound.isCup();
+                final MjtRankingIndiv model = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool,forCup);
                 final HashMap<Criteria, MjtAnnexRank> annexForRankings = new HashMap<>();
                 final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
@@ -835,15 +885,23 @@ public final class JPNRound extends javax.swing.JPanel {
                 } else {
                     match.setRoster2(RosterType.getRosterType(index));
                 }
-
                 update();
             }
         }
 
     }//GEN-LAST:event_jmiChangeRosterForThisRoundActionPerformed
 
+    private void jcxPoolOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxPoolOptionActionPerformed
+        update();
+    }//GEN-LAST:event_jcxPoolOptionActionPerformed
+
+    private void jcxCupOptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxCupOptionActionPerformed
+        update();
+    }//GEN-LAST:event_jcxCupOptionActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -855,6 +913,8 @@ public final class JPNRound extends javax.swing.JPanel {
     private javax.swing.JButton jbtGlobal;
     private javax.swing.JButton jbtShowMatches;
     private javax.swing.JButton jbtShowResults;
+    private javax.swing.JCheckBox jcxCupOption;
+    private javax.swing.JCheckBox jcxPoolOption;
     private javax.swing.JMenuItem jmiChangePairing;
     private javax.swing.JMenuItem jmiChangeRosterForThisRound;
     private javax.swing.JMenuItem jmiEditCoach;

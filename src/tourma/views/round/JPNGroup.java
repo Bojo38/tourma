@@ -137,7 +137,7 @@ public final class JPNGroup extends javax.swing.JPanel {
         }
 
         final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                ArrayList, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+                ArrayList, mTournament.getParams().isTeamTournament(), mRoundOnly, false,false);
         jtbGroup.setModel(tableModel);
         jtbGroup.setDefaultRenderer(String.class, tableModel);
         jtbGroup.setDefaultRenderer(Integer.class, tableModel);

@@ -69,8 +69,8 @@ public class Round implements IXMLExport, Serializable {
     /**
      *
      */
-    private boolean mLooserCup = false;
-    private boolean mThirdPlace = false;
+    //private boolean mLooserCup = false;
+    //private boolean mThirdPlace = false;
 
     private double mMinBonus = 1.0;
     private double mMaxBonus = 1.0;
@@ -120,10 +120,10 @@ public class Round implements IXMLExport, Serializable {
         this.mCup = round.mCup;
         this.mCupMaxTour = round.mCupMaxTour;
         this.mHour = round.mHour;
-        this.mLooserCup = round.mLooserCup;
+//        this.mLooserCup = round.mLooserCup;
         this.mMaxBonus = round.mMaxBonus;
         this.mMinBonus = round.mMinBonus;
-        this.mThirdPlace = round.mThirdPlace;
+//        this.mThirdPlace = round.mThirdPlace;
 
         for (Match match : round.mMatchs) {
             boolean bFound = false;
@@ -375,8 +375,8 @@ public class Round implements IXMLExport, Serializable {
         }
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
-        round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
-        round.setAttribute(StringConstants.CS_THIRDPLACE, Boolean.toString(isThirdPlace()));
+//        round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
+//        round.setAttribute(StringConstants.CS_THIRDPLACE, Boolean.toString(isThirdPlace()));
         round.setAttribute(StringConstants.CS_CUP, Boolean.toString(isCup()));
         round.setAttribute(StringConstants.CS_TOUR, Integer.toString(getCupTour()));
         round.setAttribute(StringConstants.CS_MAXTOUR, Integer.toString(getCupMaxTour()));
@@ -401,8 +401,8 @@ public class Round implements IXMLExport, Serializable {
         final Element round = new Element(StringConstants.CS_ROUND);
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
-        round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
-        round.setAttribute(StringConstants.CS_THIRDPLACE, Boolean.toString(isThirdPlace()));
+//        round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
+//        round.setAttribute(StringConstants.CS_THIRDPLACE, Boolean.toString(isThirdPlace()));
         round.setAttribute(StringConstants.CS_CUP, Boolean.toString(isCup()));
         round.setAttribute(StringConstants.CS_TOUR, Integer.toString(getCupTour()));
         round.setAttribute(StringConstants.CS_MAXTOUR, Integer.toString(getCupMaxTour()));
@@ -435,11 +435,11 @@ public class Round implements IXMLExport, Serializable {
         }
 
         try {
-            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_LOOSERCUP)));
+//            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_LOOSERCUP)));
             setCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_CUP)));
             setCupTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_TOUR)));
             setCupMaxTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_MAXTOUR)));
-            setThirdPlace(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_THIRDPLACE)));
+ //           setThirdPlace(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_THIRDPLACE)));
         } catch (NumberFormatException e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
@@ -524,13 +524,13 @@ public class Round implements IXMLExport, Serializable {
         }
 
         try {
-            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_LOOSERCUP)));
+//            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_LOOSERCUP)));
             setCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_CUP)));
             setCupTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_TOUR)));
             setCupMaxTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_MAXTOUR)));
             setMinBonus(Double.parseDouble(round.getAttributeValue(StringConstants.CS_MINCOEF)));
             setMaxBonus(Double.parseDouble(round.getAttributeValue(StringConstants.CS_MAXCOEF)));
-            setThirdPlace(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_THIRDPLACE)));
+//            setThirdPlace(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_THIRDPLACE)));
         } catch (NumberFormatException e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }
@@ -612,17 +612,17 @@ public class Round implements IXMLExport, Serializable {
     /**
      * @return the mLooserCup
      */
-    public boolean isLooserCup() {
+    /*public boolean isLooserCup() {
         return mLooserCup;
-    }
+    }*/
 
     /**
      * @param mLooserCup the mLooserCup to set
      */
-    public void setLooserCup(boolean mLooserCup) {
+    /*public void setLooserCup(boolean mLooserCup) {
         this.mLooserCup = mLooserCup;
         updated = true;
-    }
+    }*/
 
     /**
      *
@@ -652,7 +652,7 @@ public class Round implements IXMLExport, Serializable {
             result &= this.mCupTour == r.mCupTour;
             result &= this.mCupMaxTour == r.mCupMaxTour;
             result &= this.mHour.toString().equals(r.mHour.toString());
-            result &= this.mLooserCup == r.mLooserCup;
+            //result &= this.mLooserCup == r.mLooserCup;
             result &= Math.abs(this.mMaxBonus - r.mMaxBonus) < 0.0001;
             result &= Math.abs(this.mMinBonus - r.mMinBonus) < 0.0001;
             result &= this.mMatchs.size() == r.mMatchs.size();
@@ -668,14 +668,14 @@ public class Round implements IXMLExport, Serializable {
         return result;
     }
 
-    public boolean isThirdPlace() {
+    /*public boolean isThirdPlace() {
         return mThirdPlace;
     }
 
     public void setThirdPlace(boolean b) {
         mThirdPlace = b;
         updated = true;
-    }
+    }*/
 
     public void recomputeMatchs() {
         for (int i = 0; i < mMatchs.size(); i++) {

@@ -231,7 +231,8 @@ public final class JFullScreenIndivRank extends JFullScreen {
                 MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                         coaches, Tournament.getTournament().getParams().isTeamTournament(),
                         false,
-                        Tournament.getTournament().getPoolCount() > 0);
+                        Tournament.getTournament().getPoolCount() > 0,
+                Tournament.getTournament().getRound(round).isCup());
                 ranking.setDetail(Ranking.CS_General);
                 rankeds.add(ranking);
 
@@ -251,7 +252,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                     MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                             coaches, Tournament.getTournament().getParams().isTeamTournament(),
                             false,
-                            false);
+                            false,false);
                     ranking.setDetail(g.getName());
                     rankeds.add(ranking);
                 }
@@ -271,7 +272,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                     MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                             coaches, Tournament.getTournament().getParams().isTeamTournament(),
                             false,
-                            false);
+                            false,false);
                     ranking.setDetail(cat.getName());
                     rankeds.add(ranking);
                 }
@@ -284,7 +285,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                     MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                             p.getCompetitors(), Tournament.getTournament().getParams().isTeamTournament(),
                             false,
-                            false);
+                            false,false);
                     ranking.setDetail(Integer.toString(i + 1));
                     rankeds.add(ranking);
                 }
