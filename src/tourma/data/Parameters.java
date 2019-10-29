@@ -154,6 +154,8 @@ public class Parameters implements IXMLExport, Serializable {
 
         this.mWebEdit = params.mWebEdit;
 
+        this.mCrossPoolMatch = params.mCrossPoolMatch;
+
     }
 
     /**
@@ -214,14 +216,14 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public static final int C_RANKING_BONUS_POINTS = 10;
     /**
-     * 
+     *
      */
     public static final int C_RANKING_HEAD_BY_HEAD = 11;
     /**
      *
      */
     public static final int C_RANKING_TIER = 12;
-    
+
     /**
      *
      */
@@ -246,10 +248,20 @@ public class Parameters implements IXMLExport, Serializable {
      */
     private int mGame = RosterType.C_BLOOD_BOWL;
 
+    public boolean isCrossPoolMatch() {
+        return mCrossPoolMatch;
+    }
+
     /**
      *
      */
+    public void setCrossPoolMatch(boolean crossPoolMatch) {
+        this.mCrossPoolMatch = crossPoolMatch;
+    }
+
     private int mPointsIndivVictory = 1000;
+
+    private boolean mCrossPoolMatch = false;
 
     /**
      *
@@ -748,6 +760,8 @@ public class Parameters implements IXMLExport, Serializable {
         params.setAttribute(StringConstants.CS_WEB_COLOR2, Integer.toString(mColor2.getRGB()));
         params.setAttribute(StringConstants.CS_WEB_FORECOLOR, Integer.toString(mForeColor.getRGB()));
         params.setAttribute(StringConstants.CS_WEB_BORDERCOLOR, Integer.toString(mBorderColor.getRGB()));
+        
+        params.setAttribute(StringConstants.CS_CROSSMATCHPOOL, Boolean.toString(mCrossPoolMatch));
 
         return params;
     }
@@ -956,6 +970,16 @@ public class Parameters implements IXMLExport, Serializable {
         } catch (DataConversionException dce) {
             this._webport = 80;
         }
+        try {
+            this.setCrossPoolMatch(params.getAttribute(StringConstants.CS_CROSSMATCHPOOL).getBooleanValue());
+
+        } catch (NullPointerException npe6) {
+            this.setCrossPoolMatch(false);
+        }
+        catch (DataConversionException dce2)
+        {
+            this.setCrossPoolMatch(false);
+        }
     }
 
     @Override
@@ -1159,6 +1183,7 @@ public class Parameters implements IXMLExport, Serializable {
     public int getPointsTeamHugeVictory() {
         return mPointsTeamHugeVictory;
     }
+
     /**
      * @param mPointsIndivLargeVictory the mPointsIndivLargeVictory to set
      */
@@ -1169,7 +1194,7 @@ public class Parameters implements IXMLExport, Serializable {
     public void setPointsTeamLargeVictory(int mPointsTeamLargeVictory) {
         this.mPointsTeamLargeVictory = mPointsTeamLargeVictory;
     }
-    
+
     public void setPointsTeamHugeVictory(int points) {
         this.mPointsTeamHugeVictory = points;
     }
@@ -1290,7 +1315,7 @@ public class Parameters implements IXMLExport, Serializable {
     public float getGapTeamLargeVictory() {
         return mGapTeamLargeVictory;
     }
-    
+
     public float getGapTeamHugeVictory() {
         return mGapTeamHugeVictory;
     }
@@ -1305,7 +1330,7 @@ public class Parameters implements IXMLExport, Serializable {
     public void setGapTeamLargeVictory(float mGapLargeVictory) {
         this.mGapTeamLargeVictory = mGapLargeVictory;
     }
-    
+
     public void setGapTeamHugeVictory(float mGapLargeVictory) {
         this.mGapTeamHugeVictory = mGapLargeVictory;
     }
@@ -1883,6 +1908,7 @@ public class Parameters implements IXMLExport, Serializable {
     public void setUseTeamLargeVictory(boolean use) {
         this.mUseTeamLargeVictory = use;
     }
+
     public void setUseTeamHugeVictory(boolean use) {
         this.mUseTeamHugeVictory = use;
     }
@@ -1906,7 +1932,7 @@ public class Parameters implements IXMLExport, Serializable {
     public boolean isUseTeamLargeVictory() {
         return mUseTeamLargeVictory;
     }
-    
+
     public boolean isUseTeamHugeVictory() {
         return mUseTeamHugeVictory;
     }
@@ -2005,6 +2031,8 @@ public class Parameters implements IXMLExport, Serializable {
             result &= params.mUseBestResultsTeam == this.mUseBestResultsTeam;
             result &= params.mUseLargeVictory == this.mUseLargeVictory;
             result &= params.mUseLittleLoss == this.mUseLittleLoss;
+
+            result &= params.mCrossPoolMatch;
 
             result &= params.mTeamPairing == this.mTeamPairing;
             result &= params.mTeamIndivPairing == this.mTeamIndivPairing;

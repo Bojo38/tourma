@@ -151,6 +151,15 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     private final ArrayList<Group> mGroups;
 
+    private Cup mCup;
+
+    public Cup getCup() {
+        return mCup;
+    }
+    public void setCup(Cup cup) {
+         mCup=cup;
+    }
+    
     private Tournament() {
 
         RosterType.initCollection();
@@ -763,6 +772,12 @@ public class Tournament implements IContainCoachs, Serializable {
             final Element team = mTeam.getXMLElement();
             document.addContent(team);
         }
+        
+        // Save Cup
+        if (mCup!=null) {
+            Element cup = mCup.getXMLElement();
+            document.addContent(cup);
+        }
 
         // Save rounds
         for (int i = 0; i < mRounds.size(); i++) {
@@ -774,7 +789,7 @@ public class Tournament implements IContainCoachs, Serializable {
                 // Build list of rankings
                 final ArrayList<Ranking> rankings = new ArrayList<>();
                 final boolean forPool = (mPools.size() > 0) && (!mRounds.get(i).isCup());
-
+                final boolean forCup = mRounds.get(i).isCup();
                 rankings.add(
                         new Ranking(
                                 Ranking.CS_Individual,
@@ -786,7 +801,7 @@ public class Tournament implements IContainCoachs, Serializable {
                                         this.mParams.getRankingIndiv3(),
                                         this.mParams.getRankingIndiv4(),
                                         this.mParams.getRankingIndiv5(),
-                                        mCoachs, false, false, forPool),
+                                        mCoachs, false, false, forPool,forCup),
                                 getRankingTypes(false)));
                 if (this.mParams.isTeamTournament()) {
                     rankings.add(
@@ -831,7 +846,7 @@ public class Tournament implements IContainCoachs, Serializable {
                                                 this.mParams.getRankingIndiv3(),
                                                 this.mParams.getRankingIndiv4(),
                                                 this.mParams.getRankingIndiv5(),
-                                                list, false, false, false),
+                                                list, false, false, false,false),
                                         getRankingTypes(false)));
                     }
                 }
@@ -1044,8 +1059,9 @@ public class Tournament implements IContainCoachs, Serializable {
         }
 
         final boolean forPool = (mPools.size() > 0) && (!mRounds.get(round).isCup());
+        final boolean forCup = mRounds.get(round).isCup();
         final MjtRankingIndiv ri = new MjtRankingIndiv(round, mParams.getRankingIndiv1(), mParams.getRankingIndiv2(), mParams.getRankingIndiv3(), mParams.getRankingIndiv4(), mParams.getRankingIndiv5(),
-                mCoachs, false, false, forPool);
+                mCoachs, false, false, forPool,forCup);
         for (int i = 0; i < ri.getRowCount(); i++) {
             final String coach = (String) ri.getValueAt(i, 2);
             a.append(Integer.toString(i + 1));
@@ -1481,6 +1497,17 @@ public class Tournament implements IContainCoachs, Serializable {
             mPools.add(po);
         }
 
+        Element cup=racine.getChild(StringConstants.CS_CUP);
+        if (cup!=null)
+        {
+            if (mCup==null)
+            {
+                mCup=new Cup();
+            }
+            mCup.setXMLElement(cup);
+        }
+                
+        
         /* Rounds */
         List<Element> rounds = racine.getChildren(StringConstants.CS_ROUND);
         if (rounds.isEmpty()) {

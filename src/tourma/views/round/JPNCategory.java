@@ -172,7 +172,7 @@ public final class JPNCategory extends javax.swing.JPanel {
             }
 
             final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                    al, mTournament.getParams().isTeamTournament(), mRoundOnly, false);
+                    al, mTournament.getParams().isTeamTournament(), mRoundOnly, false,false);
             jtbCategory.setModel(tableModel);
             jtbCategory.setDefaultRenderer(String.class, tableModel);
             jtbCategory.setDefaultRenderer(Integer.class, tableModel);

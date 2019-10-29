@@ -832,7 +832,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
             MjtRankingIndiv ranking = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
                     coach, mTournament.getParams().isTeamTournament(),
                     false,
-                    false);
+                    false,false);
 
             ArrayList<String> coach_names = new ArrayList<>();
             int count = ranking.getRowCount();
