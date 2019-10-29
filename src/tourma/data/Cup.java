@@ -50,7 +50,6 @@ public class Cup implements IXMLExport, Serializable {
 
             }
         }
-        //Nettoyage à faire
     }
 
     public Cup(Cup copy) {
