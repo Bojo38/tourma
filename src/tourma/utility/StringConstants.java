@@ -18,6 +18,8 @@ public interface StringConstants {
     public static final String CS_WEB_COLOR2 = "WebColor";
     public static final String CS_WEB_FORECOLOR = "WebForeColor";
     public static final String CS_WEB_BORDERCOLOR = "WebBorderColor";
+    
+    public static final String CS_CROSSMATCHPOOL="CrossPoolMatch";
     /**
      *
      */

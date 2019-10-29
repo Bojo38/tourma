@@ -126,6 +126,7 @@ public final class Generation {
     private final static String CS_FirstRound = "FirstRound";
     private final static String CS_NumberByPool = "NumberByPool";
     private final static String CS_TheNumberOfTeamsIsNotAMultipleOfYourChoice = "LE NOMBRE D'ÉQUIPE N'EST PAS UN MULTIPLE DE VOTRE CHOIX";
+    private final static String CS_OddInPool = "Impair in pool";
     private final static String CS_DoYouWantToChooseRankTeam = "VOULEZ VOUS CHOISIR L'ÉQUIPE DU RANG {0} ?";
     private final static String CS_ChooseCompetitor = "CHOISISSEZ UN COACH";
     private final static String CS_ChooseOpponentFor = "ChooseOpponentFor";
@@ -419,7 +420,7 @@ public final class Generation {
 
         final JSpinner jspNb = new JSpinner();
 
-        final SpinnerNumberModel model = new SpinnerNumberModel(2, 2, comps.size() / 2, 2);
+        final SpinnerNumberModel model = new SpinnerNumberModel(2, 2, comps.size() / 2, 1);
         jspNb.setModel(model);
 
         message.add(jlb, BorderLayout.NORTH);
@@ -428,6 +429,17 @@ public final class Generation {
         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), message, Translate.translate(CS_Pool), JOptionPane.QUESTION_MESSAGE);
 
         final int nb = (Integer) model.getValue();
+
+        boolean cross_matches = false;
+        if (nb % 2 != 0) {
+            cross_matches = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
+                    Translate.translate(CS_OddInPool),
+                    Translate.translate(CS_GenerationError),
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+
+        }
+
+        tour.getParams().setCrossPoolMatch(cross_matches);
 
         if (comps.size() % nb != 0) {
 
@@ -1048,6 +1060,24 @@ public final class Generation {
             }
         }
 
+        ArrayList<ObjectRanking> toRemove=new ArrayList<>();
+        // Remove Competitors from data if not in datas
+        for (ObjectRanking or:datas_tmp)
+        {
+            Object o=or.getObject();
+            if (o instanceof Competitor)
+            {
+                if (!competitors.contains(o))
+                {
+                    toRemove.add(or);
+                }
+            }
+        }
+        for(ObjectRanking or:toRemove)
+        {
+            datas_tmp.remove(or);
+        }
+        
         // If number of players is odd; add one null a the end
         if (comps.size() % 2 == 1) {
             if (comps.get(0) instanceof Coach) {
@@ -1532,7 +1562,7 @@ public final class Generation {
         @SuppressWarnings("unchecked")
         final ArrayList<Competitor> shuffle = new ArrayList<>(competitors);
         Collections.shuffle(shuffle);
-        while (shuffle.size() > 0) {
+        while (shuffle.size() > 1) {
             // Manage odd number of team with even number of coachs
             if (shuffle.size() == 3) {
                 if (Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
@@ -1541,6 +1571,12 @@ public final class Generation {
                     Team t3 = (Team) shuffle.get(2);
 
                     set3TeamsMatches(t1, t2, t3, r);
+                } else {
+                    Competitor c = shuffle.get(0);
+                    shuffle.remove(c);
+                    ArrayList<Competitor> opp = c.getPossibleOpponents(shuffle, r);
+                    c.addMatch(opp.get(0), r);
+                    shuffle.remove(opp.get(0));
                 }
             } else {
                 Competitor c = shuffle.get(0);
@@ -1585,7 +1621,7 @@ public final class Generation {
             }
         }
 
-        ArrayList<Match> nextMatchs = cup.generateMatches(roundIndex+1, r, previousMatchs, comps);
+        ArrayList<Match> nextMatchs = cup.generateMatches(roundIndex + 1, r, previousMatchs, comps);
 
         /*int nb_match = (int) Math.pow(2, previous_round.getCupMaxTour() - previous_round.getCupTour() - 1);
 
@@ -1694,7 +1730,6 @@ public final class Generation {
                 _loosers.get(i).addMatch(_loosers.get(_loosers.size() / 2 + i), r);
             }
         }*/
-        
         nextMatchs.forEach((m) -> {
             m.getCompetitor1().addMatch(m.getCompetitor2(), r);
         });
@@ -1898,9 +1933,61 @@ public final class Generation {
                 }
             }
         } else {
+            // If Cross match accepted, Take 1 competitor per pool which has not
+            // already played cross match
+            ArrayList<Competitor> comps = new ArrayList<>();
+            if (tour.getParams().isCrossPoolMatch()) {
+                // Collec coachs without matches                
+                for (int i = 0; i < tour.getPoolCount(); i++) {
+                    Pool p=tour.getPool(i);
+                    ArrayList<Competitor> pComps = p.getCompetitors();
+
+                    // Find the one without cross match match
+                    for (Competitor c : pComps) {
+                        boolean cross = false;
+                        for (int j=0; j<c.getMatchCount(); j++)
+                        {
+                            Match m=c.getMatch(j);
+                            if (m.getCompetitor1()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor2()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                            if (m.getCompetitor2()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor1()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                        }
+
+                        if (!cross) {
+                            comps.add(c);
+                            break;
+                        }
+                    }
+                }
+                datas = getSortedRankingData(roundnumber);
+                Generation.genQSwiss(comps,datas, r);
+                
+            }
+                                    
             for (int i = 0; i < tour.getPoolCount(); i++) {
                 datas = getSortedRankingData(tour.getPool(i), roundnumber);
-                Generation.genQSwiss(tour.getPool(i).getCompetitors(), datas, r);
+                
+                Pool p=tour.getPool(i);
+                ArrayList<Competitor> pComps=new ArrayList<>(p.getCompetitors());
+                // Remove the ones used for cross matches
+                for (Competitor c:comps)
+                {
+                    pComps.remove(c);
+                    
+                }
+                
+                genQSwiss(pComps, datas, r);
             }
         }
         return r;
@@ -1929,13 +2016,12 @@ public final class Generation {
                 r = null;
             } else {
 
-/*                boolean _third_place = false;
+                /*                boolean _third_place = false;
                 if ((round.getCupTour() == round.getCupMaxTour() - 2) && (Tournament.getTournament().getCup().getType() != Cup.ROUND_TYPE.LOOSER)) {
                     _third_place = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
                             Translate.translate(CS_DoYouWantToGenerateThirdPlaceMatch),
                             Translate.translate(Translate.CS_Cup), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
                 }*/
-
                 genCup(round, r);
                 //r.setThirdPlace(_third_place);
 
@@ -2396,9 +2482,62 @@ public final class Generation {
                 }
             }
         } else {
+            
+            // If Cross match accepted, Take 1 competitor per pool which has not
+            // already played cross match
+            ArrayList<Competitor> comps = new ArrayList<>();
+            if (tour.getParams().isCrossPoolMatch()) {
+                // Collec coachs without matches                
+                for (int i = 0; i < tour.getPoolCount(); i++) {
+                    Pool p=tour.getPool(i);
+                    ArrayList<Competitor> pComps = p.getCompetitors();
+
+                    // Find the one without cross match match
+                    for (Competitor c : pComps) {
+                        boolean cross = false;
+                        for (int j=0; j<c.getMatchCount(); j++)
+                        {
+                            Match m=c.getMatch(j);
+                            if (m.getCompetitor1()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor2()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                            if (m.getCompetitor2()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor1()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                        }
+
+                        if (!cross) {
+                            comps.add(c);
+                            break;
+                        }
+                    }
+                }
+                datas = getSortedRankingData(roundnumber);
+                Generation.genSwiss(comps,datas, r,topdown);
+                
+            }
+                                    
             for (int i = 0; i < tour.getPoolCount(); i++) {
                 datas = getSortedRankingData(tour.getPool(i), roundnumber);
-                genSwiss(tour.getPool(i).getCompetitors(), datas, r, topdown);
+                
+                Pool p=tour.getPool(i);
+                ArrayList<Competitor> pComps=new ArrayList<>(p.getCompetitors());
+                // Remove the ones used for cross matches
+                for (Competitor c:comps)
+                {
+                    pComps.remove(c);
+                    
+                }
+                
+                genSwiss(pComps, datas, r, topdown);
             }
         }
         return r;
@@ -2654,9 +2793,60 @@ public final class Generation {
                 }
             }
         } else {
-            for (int i = 0; i < tour.getPoolCount(); i++) {
-                Generation.genRandom(tour.getPool(i).getCompetitors(), r);
+            
+            // If Cross match accepted, Take 1 competitor per pool which has not
+            // already played cross match
+            ArrayList<Competitor> comps = new ArrayList<>();
+            if (tour.getParams().isCrossPoolMatch()) {
+                // Collec coachs without matches                
+                for (int i = 0; i < tour.getPoolCount(); i++) {
+                    Pool p=tour.getPool(i);
+                    ArrayList<Competitor> pComps = p.getCompetitors();
+
+                    // Find the one without cross match match
+                    for (Competitor c : pComps) {
+                        boolean cross = false;
+                        for (int j=0; j<c.getMatchCount(); j++)
+                        {
+                            Match m=c.getMatch(j);
+                            if (m.getCompetitor1()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor2()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                            if (m.getCompetitor2()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor1()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                        }
+
+                        if (!cross) {
+                            comps.add(c);
+                            break;
+                        }
+                    }
+                }
+                Generation.genRandom(comps, r);
+                
             }
+            
+            for (int i = 0; i < tour.getPoolCount(); i++) {
+                Pool p=tour.getPool(i);
+                ArrayList<Competitor> pComps=new ArrayList<>(p.getCompetitors());
+                // Remove the ones used for cross matches
+                for (Competitor c:comps)
+                {
+                    pComps.remove(c);
+                }
+                Generation.genRandom(pComps, r);
+            }
+
+            
         }
         return r;
     }

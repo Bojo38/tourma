@@ -1840,7 +1840,21 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     m.getCompetitor2().removeMatch(m);
                 }
 
+                // Clean Cup
+                if (round.isCup())
+                {
+                    if (round.getCupTour()==0)
+                    {
+                        mTournament.setCup(null);
+                    }
+                    else
+                    {
+                        mTournament.getCup().cleanRound( round);
+                    }
+                }
+                
                 mTournament.removeRound(round);
+                
 
                 update();
                 updateTree();

@@ -27,6 +27,32 @@ public class Cup implements IXMLExport, Serializable {
         return mTables;
     }
 
+    public void cleanRound(Round r) {
+
+        int roundIndex=r.getCupTour()-1;
+        for (CupTable table : mTables) {
+            int starting_round_index = mTables.get(0).mCupRounds.size() - table.mCupRounds.size();
+
+            for (CupRound round : table.getCupRounds()) {
+                // Build the list of player
+                // Winners of the previous round
+                int currentRoundIndex=table.getCupRounds().indexOf(round);
+                int relative_round_index = currentRoundIndex - roundIndex;
+
+                if (relative_round_index > 0) {
+                    
+                    //round.generateEmptyMatchs();
+                    for (Match match : round.getMatchs()) {
+                        match.setCompetitor1(null);
+                        match.setCompetitor2(null);
+                    }
+                }
+
+            }
+        }
+        //Nettoyage à faire
+    }
+
     public Cup(Cup copy) {
         mType = copy.mType;
         mRoundsCount = copy.mRoundsCount;
@@ -42,20 +68,20 @@ public class Cup implements IXMLExport, Serializable {
         // Generate fixtures according to supplides Data.
         switch (mType) {
             case CLASSIC:
-                mTables.add(new CupTable(copy.mRoundsCount, false));
+                mTables.add(new CupTable(copy.mRoundsCount, false, false));
                 break;
             case CLASSIC_THIRD:
-                mTables.add(new CupTable(copy.mRoundsCount, true));
+                mTables.add(new CupTable(copy.mRoundsCount, true, false));
                 break;
             case LOOSER:
-                mTables.add(new CupTable(copy.mRoundsCount, false));
-                mTables.add(new CupTable(copy.mRoundsCount - 1, false));
+                mTables.add(new CupTable(copy.mRoundsCount, false, false));
+                mTables.add(new CupTable(copy.mRoundsCount - 1, false, true));
                 break;
             case RANKING_MATCHES:
                 // Ajout du tableau des vainqueurs
-                mTables.add(new CupTable(copy.mRoundsCount, false));
+                mTables.add(new CupTable(copy.mRoundsCount, false, false));
                 // Ajout du tableau des perdants
-                mTables.add(new CupTable(copy.mRoundsCount - 1, false));
+                mTables.add(new CupTable(copy.mRoundsCount - 1, false, false));
 
                 int i = copy.mRoundsCount - 1;
                 while (i > 1) {
@@ -63,8 +89,8 @@ public class Cup implements IXMLExport, Serializable {
                     for (CupTable table : tables) {
                         if (table.getCupRounds().size() == i) {
                             // Add 1 level less table around it
-                            CupTable before = new CupTable(i - 1, false);
-                            CupTable after = new CupTable(i - 1, false);
+                            CupTable before = new CupTable(i - 1, false, false);
+                            CupTable after = new CupTable(i - 1, false, false);
                             int index = mTables.indexOf(table);
                             mTables.add(index, before);
                             index = mTables.indexOf(table);
@@ -96,20 +122,20 @@ public class Cup implements IXMLExport, Serializable {
         // Generate fixtures according to supplides Data.
         switch (mType) {
             case CLASSIC:
-                mTables.add(new CupTable(roundsCount, false));
+                mTables.add(new CupTable(roundsCount, false, false));
                 break;
             case CLASSIC_THIRD:
-                mTables.add(new CupTable(roundsCount, true));
+                mTables.add(new CupTable(roundsCount, true, false));
                 break;
             case LOOSER:
-                mTables.add(new CupTable(roundsCount, false));
-                mTables.add(new CupTable(roundsCount - 1, false));
+                mTables.add(new CupTable(roundsCount, false, false));
+                mTables.add(new CupTable(roundsCount - 1, false, true));
                 break;
             case RANKING_MATCHES:
                 // Ajout du tableau des vainqueurs
-                mTables.add(new CupTable(roundsCount, false));
+                mTables.add(new CupTable(roundsCount, false, false));
                 // Ajout du tableau des perdants
-                mTables.add(new CupTable(roundsCount - 1, false));
+                mTables.add(new CupTable(roundsCount - 1, false, false));
 
                 int i = roundsCount - 1;
                 while (i > 1) {
@@ -117,8 +143,8 @@ public class Cup implements IXMLExport, Serializable {
                     for (CupTable table : tables) {
                         if (table.getCupRounds().size() == i) {
                             // Add 1 level less table around it
-                            CupTable before = new CupTable(i - 1, false);
-                            CupTable after = new CupTable(i - 1, false);
+                            CupTable before = new CupTable(i - 1, false, false);
+                            CupTable after = new CupTable(i - 1, false, false);
                             int index = mTables.indexOf(table);
                             mTables.add(index, before);
                             index = mTables.indexOf(table);
@@ -297,14 +323,36 @@ public class Cup implements IXMLExport, Serializable {
         final Iterator<Element> k = tables.iterator();
         this.mTables = new ArrayList<>();
 
+        int i = 0;
         while (k.hasNext()) {
             Element t = k.next();
             try {
-                CupTable table = new CupTable(mRoundsCount, mShuffle);
+                CupTable table = null;
+                switch (mType) {
+                    case CLASSIC_THIRD:
+                        if (i == 0) {
+                            table = new CupTable(mRoundsCount, true, false);
+                        } else {
+                            table = new CupTable(mRoundsCount, false, false);
+                        }
+                        break;
+                    case LOOSER:
+                        if (i == 1) {
+                            table = new CupTable(mRoundsCount, false, true);
+                        } else {
+                            table = new CupTable(mRoundsCount, false, false);
+                        }
+                        break;
+                    default:
+                        table = new CupTable(mRoundsCount, false, false);
+
+                }
                 table.setXMLElement(t);
                 this.mTables.add(table);
             } catch (NullPointerException ne) {
             }
+            i++;
+
         }
 
     }
@@ -451,7 +499,7 @@ public class Cup implements IXMLExport, Serializable {
                 }
 
                 // Add Loosers of the previous table of the previous round
-                if ((mType == ROUND_TYPE.RANKING_MATCHES)||(mType==ROUND_TYPE.LOOSER)) {
+                if ((mType == ROUND_TYPE.RANKING_MATCHES) || (mType == ROUND_TYPE.LOOSER)) {
                     if ((index_table > 0) && (relative_round_index >= 0)) {
                         // Find table with the right level
                         CupTable prev_table = null;

@@ -27,13 +27,20 @@ public class CupTable implements IXMLExport {
 
     ArrayList<CupRound> mCupRounds = new ArrayList<>();
 
-    public CupTable(int cupRoundsCount, boolean third_place) {
+    public CupTable(int cupRoundsCount, boolean third_place, boolean looser_table) {
         for (int i = 0; i < cupRoundsCount; i++) {
             int nbMatchs = (int) Math.round(Math.pow(2, cupRoundsCount - i - 1));
 
             if ((i == cupRoundsCount - 1) && (third_place)) {
                 mCupRounds.add(new CupRound(nbMatchs + 1));
             } else {
+                if (looser_table)
+                {
+                    if (i!=0)
+                    {
+                        nbMatchs+=nbMatchs;
+                    }
+                }                
                 mCupRounds.add(new CupRound(nbMatchs));
             }
         }
