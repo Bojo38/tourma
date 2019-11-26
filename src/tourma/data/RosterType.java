@@ -437,82 +437,84 @@ public class RosterType implements IXMLExport, Serializable {
     public static String getRosterTranslation(final String source) {
         String result = translate("UNKNOWN");
         if (source.equals(translate("AmazonKey"))) {
-            result = translate("AMAZONS");
+            result = translate("Amazons");
         }
         if (translate("UnderworldKey").equals(source)) {
-            result = translate("UNDERWORLD");
+            result = translate("Underworld");
         }
         if (translate("BretonianKey").equals(source)) {
-            result=translate("BRETONNIANS");
+            result=translate("Bretonnians");
         }
         if (translate("ChaosKey").equals(source)) {
-            result = translate("CHAOS");
+            result = translate("Chaos");
         }
         if (source.equals(translate("ElfKey"))) {
-            result = translate("ELVES");
+            result = translate("Elves");
         }
         if ((source.equals(translate("WoodElfKey")))||(source.equals(translate("WoodElfKey2")))) {
-            result = translate("WOOD ELVES");
+            result = translate("Wood Elves");
         }
         if ((source.equals(translate("DarkElfKey")))||(source.equals(translate("DarkElfKey2")))) {
-            result = translate("DARK ELVES");
+            result = translate("Dark Elves");
         }
         if (source.equals(translate("GoblinKey"))) {
-            result = translate("GOBLINS");
+            result = translate("Goblins");
         }
         if (source.equals(translate("HalflingKey"))) {
-            result = translate("HALFLINGS");
+            result = translate("Halflings");
         }
         if (source.equals(translate("HighElfKey"))) {
-            result = translate("HIGH ELVES");
+            result = translate("High Elves");
         }
         if ((source.equals(translate("LizardmenKey")))||(source.equals(translate("LizardmenKey2")))) {
-            result = translate("LIZARDMEN");
+            result = translate("Lizardmen");
         }
         if (source.equals(translate("HumanKey"))) {
-            result = translate("HUMANS");
+            result = translate("Humans");
         }
         if (source.equals(translate("KhemriKey"))) {
-            result = translate("KHEMRI");
+            result = translate("Khemri");
         }
         if (source.equals(translate("UndeadKey"))) {
-            result = translate("UNDEAD");
+            result = translate("Undead");
         }
         if (source.equals(translate("DwarfKey"))) {
-            result = translate("DWARVES");
+            result = translate("Dwarves");
         }
         if ((source.equals(translate("ChaosDwarfKey")))||(source.equals(translate("ChaosDwarfKey2")))||(source.equals("Nain du Chaos"))) {
-            result = translate("CHAOS DWARVES");
+            result = translate("Chaos Dwarves");
         }
         if ((source.equals(translate("NecromanticKey")))||(source.equals("Necromantiques"))) {
-            result = translate("NECROMANTIC");
+            result = translate("Necromantic");
         }
         if ((source.equals(translate("NorseKey")))||(source.equals("Nordiques"))) {
-            result = translate("NORSE");
+            result = translate("Norse");
         }
         if (source.equals(translate("NurgleKey"))) {
-            result = translate("NURGLE'S ROTTERS");
+            result = translate("Nurgle's Rotters");
         }
         if (source.equals(translate("OgreKey"))) {
-            result = translate("OGRES");
+            result = translate("Ogres");
         }
+        
+        String tmp=translate("OrcKey");
         if (source.equals(translate("OrcKey"))) {
-            result = translate("ORC");
+            result = translate("Orc");
         }
         if (source.equals(translate("ChaosPactKey"))) {
-            result = translate("CHAOS PACT");
+            result = translate("Chaos Pact");
         }
         if (source.equals(translate("SkavenKey"))) {
-            result = translate("SKAVEN");
+            result = translate("Skaven");
         }
         if (source.equals(translate("SlannKey"))) {
-            result = translate("SLANN");
+            result = translate("Slann");
         }
         if (source.equals(translate("VampireKey"))) {
-            result = translate("VAMPIRES");
+            result = translate("Vampires");
         }
         if (source.equals(translate("KhorneKey")) || source.equals(translate("KhornesDaemonsKey"))) {
-            result = translate("KHORNE");
+            result = translate("Khorne");
         }
         return result;
     }

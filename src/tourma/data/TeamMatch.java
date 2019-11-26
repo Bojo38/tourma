@@ -1059,9 +1059,9 @@ public class TeamMatch extends Match implements Serializable {
                     if ((includeCurrent) || ((!includeCurrent) && (om != tm))) {
                         value += getPointsByTeam((Team) opponent, om, true, true);
                     }
-                    if (om == tm) {
+                    /*if (om == tm) {
                         break;
-                    }
+                    }*/
                 }
             }
         }
