@@ -15,7 +15,7 @@ import teamma.languages.Translate;
  */
 public class RosterType implements Serializable {
 
-    teamma.data.LRB.E_Version version=LRB.E_Version.CRP1;
+    teamma.data.LRB.E_Version version=LRB.E_Version.BB2016;
     
     public LRB.E_Version getVersion()
     {
@@ -69,6 +69,8 @@ public class RosterType implements Serializable {
     private static int _apothecary_cost = 50000;
     private static final Logger LOG = Logger.getLogger(RosterType.class.getName());
 
+    private ArrayList<InducementType> _inducements=new ArrayList<>();
+    
     /**
      * @return the extraRerollCost
      */
@@ -530,10 +532,40 @@ public class RosterType implements Serializable {
         _player_types.clear();
     }
     
+     public void clearInducementType() {
+        _inducements.clear();
+    }
+    
     public void clearAvailableStarPlayerType() {
         _available_starplayers.clear();
     }
 
+    public void addInducementType(InducementType it)
+    {
+        _inducements.add(it);
+    }
+    
+    public int getInducementTypeSize()
+    {
+        return _inducements.size();
+    }
+    
+    public InducementType getInducementType(int i)
+    {
+        return _inducements.get(i);
+    }
+    
+    public InducementType getInducementType(String s)
+    {
+        for (InducementType it:_inducements)
+        {
+            if (it.getName().equals(s))
+            {
+                return it;
+            }
+        }
+        return null;
+    }
     /**
      * @return the _player_types
      */

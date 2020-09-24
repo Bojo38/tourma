@@ -29,7 +29,7 @@ public class RosterTypeNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        lrb = LRB.getLRB(LRB.E_Version.BB2016);
     }
 
     @AfterClass
@@ -1241,9 +1241,9 @@ public class RosterTypeNGTest {
     @Test
     public void testGetVersion() {
         System.out.println("getVersion");
-        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         RosterType instance = lrb.getRosterType(0);
-        LRB.E_Version expResult = LRB.E_Version.NAF2017;
+        LRB.E_Version expResult = LRB.E_Version.BB2016;
         LRB.E_Version result = instance.getVersion();
         assertEquals(result, expResult);
     }
@@ -1254,7 +1254,7 @@ public class RosterTypeNGTest {
     @Test
     public void testSetVersion() {
         System.out.println("setVersion");
-        LRB.E_Version v = LRB.E_Version.NAF2017;
+        LRB.E_Version v = LRB.E_Version.BB2016;
         RosterType instance = new RosterType("test");
         instance.setVersion(v);
         LRB.E_Version result = instance.getVersion();
@@ -1267,13 +1267,13 @@ public class RosterTypeNGTest {
     @Test
     public void testIsChaos_wizard() {
         System.out.println("isChaos_wizard");
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Elus du Chaos");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Elus du Chaos");
 
         boolean expResult = true;
         boolean result = instance.isChaos_wizard();
         assertEquals(result, expResult);
 
-        instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Gobelins");
+        instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Gobelins");
 
         expResult = false;
         result = instance.isChaos_wizard();
@@ -1287,7 +1287,7 @@ public class RosterTypeNGTest {
     @Test
     public void testSetChaos_wizard() {
         System.out.println("setChaos_wizard");
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Elus du Chaos");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Elus du Chaos");
 
         boolean expResult = true;
         boolean result = instance.isChaos_wizard();
@@ -1352,13 +1352,13 @@ public class RosterTypeNGTest {
     @Test
     public void testIsKari_Coldstell() {
         System.out.println("isKari_Coldstell");
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Nordiques");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Nordiques");
 
         boolean expResult = true;
         boolean result = instance.isKari_Coldstell();
         assertEquals(result, expResult);
 
-        instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Gobelins");
+        instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Gobelins");
 
         expResult = false;
         result = instance.isKari_Coldstell();
@@ -1371,7 +1371,7 @@ public class RosterTypeNGTest {
     @Test
     public void testSetKari_Coldstell() {
         System.out.println("setKari_Coldstell");
-         RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Nordiques");
+         RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Nordiques");
 
         boolean expResult = true;
         boolean result = instance.isKari_Coldstell();
@@ -1413,13 +1413,13 @@ public class RosterTypeNGTest {
     public void testIsFink_Da_Fixer() {
         System.out.println("isFink_Da_Fixer");
 
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Elus du Chaos");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Elus du Chaos");
 
         boolean expResult = false;
         boolean result = instance.isFink_Da_Fixer();
         assertEquals(result, expResult);
 
-        instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Gobelins");
+        instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Gobelins");
 
         expResult = true;
         result = instance.isFink_Da_Fixer();
@@ -1432,7 +1432,7 @@ public class RosterTypeNGTest {
     @Test
     public void testSetFink_Da_Fixer() {
         System.out.println("setFink_Da_Fixer");
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Gobelins");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Gobelins");
 
         boolean expResult = true;
         boolean result = instance.isFink_Da_Fixer();
@@ -1473,13 +1473,13 @@ public class RosterTypeNGTest {
     @Test
     public void testIsPapa_Skullbones() {
         System.out.println("isPapa_Skullbones");
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Renégats du Chaos");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Renégats du Chaos");
 
         boolean expResult = true;
         boolean result = instance.isPapa_Skullbones();
         assertEquals(result, expResult);
 
-        instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Gobelins");
+        instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Gobelins");
 
         expResult = false;
         result = instance.isPapa_Skullbones();
@@ -1492,7 +1492,7 @@ public class RosterTypeNGTest {
     @Test
     public void testSetPapa_Skullbones() {
         System.out.println("setPapa_Skullbones");
-         RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Renégats du Chaos");
+         RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Renégats du Chaos");
 
         boolean expResult = true;
         boolean result = instance.isPapa_Skullbones();
@@ -1533,13 +1533,13 @@ public class RosterTypeNGTest {
     @Test
     public void testIsGalandril_Silverwater() {
         System.out.println("isGalandril_Silverwater");
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Union Elfique");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Union Elfique");
 
         boolean expResult = true;
         boolean result = instance.isGalandril_Silverwater();
         assertEquals(result, expResult);
 
-        instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Gobelins");
+        instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Gobelins");
 
         expResult = false;
         result = instance.isGalandril_Silverwater();
@@ -1553,7 +1553,7 @@ public class RosterTypeNGTest {
     @Test
     public void testSetGalandril_Silverwater() {
         System.out.println("setGalandril_Silverwater");
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Union Elfique");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Union Elfique");
 
         boolean expResult = true;
         boolean result = instance.isGalandril_Silverwater();
@@ -1594,13 +1594,13 @@ public class RosterTypeNGTest {
     @Test
     public void testIsKrot_Shockwhisker() {
         System.out.println("isKrot_Shockwhisker");
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Skavens");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Skavens");
 
         boolean expResult = true;
         boolean result = instance.isKrot_Shockwhisker();
         assertEquals(result, expResult);
 
-        instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Gobelins");
+        instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Gobelins");
 
         expResult = false;
         result = instance.isKrot_Shockwhisker();
@@ -1613,7 +1613,7 @@ public class RosterTypeNGTest {
     @Test
     public void testSetKrot_Shockwhisker() {
         System.out.println("setKrot_Shockwhisker");
-        RosterType instance = LRB.getLRB(LRB.E_Version.NAF2017).getRosterType("Skavens");
+        RosterType instance = LRB.getLRB(LRB.E_Version.BB2016).getRosterType("Skavens");
 
         boolean expResult = true;
         boolean result = instance.isKrot_Shockwhisker();

@@ -11,15 +11,26 @@ and open the template in the editor.
     <name>BretonianKey</name>
     <reroll>70000</reroll>
     <apothecary>true</apothecary>
+    
     <chef>300000</chef>
-    <igor>false</igor>
     <bribe>100000</bribe>
-    <chaos_wizard>false</chaos_wizard>
-    <kari_coldstell>true</kari_coldstell>
-    <fink_da_fixer>false</fink_da_fixer>
-    <papa_skullbones>false</papa_skullbones>
-    <galandril_silverwater>false</galandril_silverwater>
-    <krot_shockwhisker>false</krot_shockwhisker>
+    
+    <inducements>
+        <chef>300000</chef>
+        <bribe>100000</bribe>
+        <babes>50000</babes>
+        <wizard>150000</wizard>
+        <reroll>100000</reroll>
+        <apothecary>100000</apothecary>
+
+        <cards>yes</cards>
+        <starplayers>yes</starplayers>   
+        
+        <add_assistant>20000</add_assistant>
+        <add_cheerleaders>20000</add_cheerleaders>
+        <weather_wizard>30000</weather_wizard>
+        <horacio_x_schottenheim>80000</horacio_x_schottenheim>
+    </inducements>
     <playertypes>               
         <playerType>
             <limit>4</limit>

@@ -52,7 +52,7 @@ public class MjtPlayerTypesNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         RosterType rt=lrb.getRosterType(0);
         ArrayList<PlayerType> ar=new ArrayList<>();
         for (int i=0; i<rt.getPlayerTypeCount(); i++)
@@ -72,7 +72,7 @@ public class MjtPlayerTypesNGTest {
     @Test
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         RosterType rt=lrb.getRosterType(0);
         ArrayList<PlayerType> ar=new ArrayList<>();
         for (int i=0; i<rt.getPlayerTypeCount(); i++)
@@ -93,7 +93,7 @@ public class MjtPlayerTypesNGTest {
     public void testGetColumnName() {
         System.out.println("getColumnName");
         int col = 1;
-         LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+         LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         RosterType rt=lrb.getRosterType(0);
         ArrayList<PlayerType> ar=new ArrayList<>();
         for (int i=0; i<rt.getPlayerTypeCount(); i++)
@@ -116,7 +116,7 @@ public class MjtPlayerTypesNGTest {
         System.out.println("getValueAt");
         int row = 0;
         int col = 0;
-         LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+         LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         RosterType rt=lrb.getRosterType(0);
         ArrayList<PlayerType> ar=new ArrayList<>();
         for (int i=0; i<rt.getPlayerTypeCount(); i++)
@@ -137,7 +137,7 @@ public class MjtPlayerTypesNGTest {
     public void testGetColumnClass() {
         System.out.println("getColumnClass");
         int c = 1;
-        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         RosterType rt=lrb.getRosterType(0);
         ArrayList<PlayerType> ar=new ArrayList<>();
         for (int i=0; i<rt.getPlayerTypeCount(); i++)
@@ -160,7 +160,7 @@ public class MjtPlayerTypesNGTest {
         System.out.println("isCellEditable");
         int row = 0;
         int col = 0;
-        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         RosterType rt=lrb.getRosterType(0);
         ArrayList<PlayerType> ar=new ArrayList<>();
         for (int i=0; i<rt.getPlayerTypeCount(); i++)
@@ -186,7 +186,7 @@ public class MjtPlayerTypesNGTest {
         boolean hasFocus = false;
         int row = 0;
         int column = 0;
-        LRB lrb=LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         RosterType rt=lrb.getRosterType(0);
         ArrayList<PlayerType> ar=new ArrayList<>();
         for (int i=0; i<rt.getPlayerTypeCount(); i++)

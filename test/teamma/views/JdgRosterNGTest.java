@@ -173,7 +173,7 @@ public class JdgRosterNGTest {
                 window4.table("jtPositions").selectRows(0);
                 window4.button("ok").click();
             }
-            LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+            LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
 
             // Add Skills to Players
             for (int i = 0; i < 5; i++) {

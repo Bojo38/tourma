@@ -24,7 +24,7 @@ public class StarPlayerNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        lrb = LRB.getLRB(LRB.E_Version.BB2016);
     }
 
     @AfterClass

@@ -64,7 +64,7 @@ public class JdgSelectSkillNGTest {
         // Remove local apothecary, because the team is an unded team
         roster.setLocalapothecary(0);
         player = roster.getPlayer(0);
-        jdg = new JdgSelectSkill(null, true, player,LRB.getLRB(LRB.E_Version.NAF2017));
+        jdg = new JdgSelectSkill(null, true, player,LRB.getLRB(LRB.E_Version.BB2016));
         window = new DialogFixture(robot, jdg);
         window.show();
     }
@@ -84,7 +84,7 @@ public class JdgSelectSkillNGTest {
     public void hmiGeneralTest() {
         System.out.println("hmiGeneralTest");
         try {
-            LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+            LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
             
             JComboBoxFixture jcbf=window.comboBox("jcbGeneral");
             jcbf.component().setEnabled(true);

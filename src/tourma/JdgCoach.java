@@ -543,7 +543,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         jtfHandicap.setText(bundle.getString("110")); // NOI18N
         jPanel1.add(jtfHandicap);
 
-        jPanel7.setLayout(new java.awt.GridLayout());
+        jPanel7.setLayout(new java.awt.GridLayout(1, 0));
 
         jbtDownloadFromNaf.setText(bundle.getString("DOWNLOAD FROM NAF")); // NOI18N
         jbtDownloadFromNaf.addActionListener(new java.awt.event.ActionListener() {
@@ -567,8 +567,7 @@ public final class JdgCoach extends javax.swing.JDialog {
         jlbNafRanking.setText("150");
         jPanel1.add(jlbNafRanking);
 
-        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("teamma/languages/language"); // NOI18N
-        jbtPinCode.setText(bundle1.getString("PinCode")); // NOI18N
+        jbtPinCode.setText(bundle.getString("PinCode")); // NOI18N
         jbtPinCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtPinCodeActionPerformed(evt);
@@ -784,7 +783,7 @@ public final class JdgCoach extends javax.swing.JDialog {
                 JOptionPane.INFORMATION_MESSAGE,
                 null, RosterType.getRostersNames(), RosterType.getRostersNames()[0]);
 
-        LRB.E_Version version=LRB.E_Version.NAF2017;
+        LRB.E_Version version=LRB.E_Version.BB2016;
         teamma.data.RosterType rt = teamma.data.LRB.getLRB(version).getRosterType(input, false);
 
         if (rt != null) {

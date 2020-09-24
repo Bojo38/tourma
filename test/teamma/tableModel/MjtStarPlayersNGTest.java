@@ -51,7 +51,7 @@ public class MjtStarPlayersNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
         ArrayList<StarPlayer> ar = new ArrayList<>();
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
@@ -69,7 +69,7 @@ public class MjtStarPlayersNGTest {
     @Test
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
         ArrayList<StarPlayer> ar = new ArrayList<>();
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
@@ -88,7 +88,7 @@ public class MjtStarPlayersNGTest {
     public void testGetColumnName() {
         System.out.println("getColumnName");
         int col = 1;
-        LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
         ArrayList<StarPlayer> ar = new ArrayList<>();
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
@@ -108,7 +108,7 @@ public class MjtStarPlayersNGTest {
         System.out.println("getValueAt");
         int row = 0;
         int col = 0;
-        LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
         ArrayList<StarPlayer> ar = new ArrayList<>();
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
@@ -127,7 +127,7 @@ public class MjtStarPlayersNGTest {
     public void testGetColumnClass() {
         System.out.println("getColumnClass");
         int c = 0;
-        LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
         ArrayList<StarPlayer> ar = new ArrayList<>();
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
@@ -148,7 +148,7 @@ public class MjtStarPlayersNGTest {
         System.out.println("isCellEditable");
         int row = 0;
         int col = 0;
-        LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
         ArrayList<StarPlayer> ar = new ArrayList<>();
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
@@ -171,7 +171,7 @@ public class MjtStarPlayersNGTest {
         boolean hasFocus = false;
         int row = 0;
         int column = 0;
-        LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
         ArrayList<StarPlayer> ar = new ArrayList<>();
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));

@@ -31,7 +31,7 @@ public class PlayerNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        lrb = LRB.getLRB(LRB.E_Version.BB2016);
     }
 
     @AfterClass
@@ -527,7 +527,7 @@ public class PlayerNGTest {
             p.setName("Test");
             assertEquals(p.getName(), "Test");
             
-            p.pull(p, LRB.E_Version.NAF2017);
+            p.pull(p, LRB.E_Version.BB2016);
         }
         
         

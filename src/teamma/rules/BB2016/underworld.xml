@@ -14,6 +14,18 @@ and open the template in the editor.
     <chef>300000</chef>
     <igor>false</igor>
     <bribe>50000</bribe>
+    <add_assistant>true</add_assistant>
+    <add_cheerleaders>true</add_cheerleaders>
+    <weather_wizard>true</weather_wizard>
+    <druchi_sport_sorcerer>false</druchi_sport_sorcerer>
+        <plague_doctors>false</plague_doctors>
+    <nurglings>false</nurglings>
+    <horticulturalist>false</horticulturalist>
+    <joseph_bugman>false</joseph_bugman>
+    <slann_mage_priest>false</slann_mage_priest>
+        <hot-pot>false</hot-pot>
+    <heady_brew>false</heady_brew>
+    <sports_necrotheurge>false</sports_necrotheurge>
         <chaos_wizard>false</chaos_wizard>
     <kari_coldstell>false</kari_coldstell>
     <fink_da_fixer>true</fink_da_fixer>

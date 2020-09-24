@@ -147,6 +147,8 @@ public class RosterType implements IXMLExport, Serializable {
         mRostersNames.add(translate("SlannKey"));
         mRostersNames.add(translate("VampireKey"));
         mRostersNames.add(translate("BretonianKey"));
+        mRostersNames.add(translate("SnotlingsKey"));
+        mRostersNames.add(translate("OldWorldAllianceKey"));
 
         mRosterTypes.clear();
         mRosterTypes.put(translate("AmazonKey"), new RosterType(translate("AmazonKey")));
@@ -175,6 +177,9 @@ public class RosterType implements IXMLExport, Serializable {
         mRosterTypes.put(translate("SkavenKey"), new RosterType(translate("SkavenKey")));
         mRosterTypes.put(translate("SlannKey"), new RosterType(translate("SlannKey")));
         mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));    
+        mRosterTypes.put(translate("SnotlingsKey"), new RosterType(translate("SnotlingsKey")));
+        mRosterTypes.put(translate("OldWorldAllianceKey"), new RosterType(translate("OldWorldAllianceKey")));    
+
     }
 
     /**
@@ -320,6 +325,12 @@ public class RosterType implements IXMLExport, Serializable {
                 break;
             case "Bretonnien":
                 result = translate("BretonianKey");
+                break;
+            case "Snotlings":
+                result = translate("SnotlingsKey");
+                break;
+             case "Alliance du Vieux Monde":
+                result = translate("OldWorldAllianceKey");
                 break;
         }
         return result;
@@ -515,6 +526,12 @@ public class RosterType implements IXMLExport, Serializable {
         }
         if (source.equals(translate("KhorneKey")) || source.equals(translate("KhornesDaemonsKey"))) {
             result = translate("Khorne");
+        }
+        if (source.equals(translate("SnotlingsKey"))) {
+            result = translate("Snotlings");
+        }
+        if (source.equals(translate("OldWorldAllianceKey"))) {
+            result = translate("Old World Alliance");
         }
         return result;
     }

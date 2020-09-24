@@ -100,7 +100,7 @@ and open the template in the editor.
         <skill>Throw Team-Mate</skill>
         <skill>Kick Team-Mate</skill>
         <skill>Monstrous Mouth</skill>
-        <skill>No Hands</skill>
+        <skill>No Hand</skill>
         <skill>Titchy</skill>
         <skill>Timm-Ber !</skill>
         <skill>Stunty</skill>
@@ -118,6 +118,7 @@ and open the template in the editor.
         <skill>Swoop</skill>
         <skill>Timm-ber!</skill>
         <skill>Weeping Dagger</skill>
+        <skill>Trademark Stilts</skill>
     </category>
     <category>
         <name>Characteristics</name>

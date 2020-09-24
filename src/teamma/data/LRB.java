@@ -24,7 +24,7 @@ import teamma.languages.Translate;
 public final class LRB {
 
     public enum E_Version {
-        LRB1, LRB2, LRB3, LRB4, LRB5, LRB6, CRP1, NAF2017
+        LRB1, LRB2, LRB3, LRB4, LRB5, LRB6, CRP1, BB2016
     };
     /**
      *
@@ -47,13 +47,12 @@ public final class LRB {
         return _chef_enabled;
     }
 
-    private E_Version _version=E_Version.NAF2017;
-    
-    public E_Version getVersion()
-    {
+    private E_Version _version = E_Version.BB2016;
+
+    public E_Version getVersion() {
         return _version;
     }
-    
+
     public static void setChef_enabled(boolean _chef_enabled) {
         LRB._chef_enabled = _chef_enabled;
     }
@@ -203,7 +202,7 @@ public final class LRB {
                         _crp1 = new LRB(version);
                     }
                     return _crp1;
-                case NAF2017:
+                case BB2016:
                     if (_naf2017 == null) {
                         _naf2017 = new LRB(version);
                     }
@@ -242,7 +241,7 @@ public final class LRB {
         _rosterTypes = new ArrayList<>();
         _starPlayers = new ArrayList<>();
         _skillTypes = new ArrayList<>();
-        _version=version;
+        _version = version;
         String path = "";
         switch (version) {
             case LRB1:
@@ -266,8 +265,8 @@ public final class LRB {
             case CRP1:
                 path = "crp1";
                 break;
-            case NAF2017:
-                path = "naf2017";
+            case BB2016:
+                path = "BB2016";
                 break;
         }
 
@@ -289,6 +288,7 @@ public final class LRB {
     private final static String CS_Picture = "image";
     private final static String CS_Starplayers = "starplayers";
     private final static String CS_Inducements = "inducements";
+    private final static String CS_Inducement = "inducement";
     private final static String CS_Mercenaries = "mercenaries";
     private final static String CS_Babes = "babes";
     private final static String CS_Wizard = "wizard";
@@ -382,14 +382,14 @@ public final class LRB {
                 } catch (Exception e) {
 
                 }
-                
-                 try {
+
+                try {
                     Element e_horacio = e_inducements.getChild(CS_HoracioXSchottenheim);
                     _horacio_x_schottenheim = e_horacio.getText().equals("yes");
                 } catch (Exception e) {
 
                 }
-                
+
                 try {
                     Element e_checkBG = e_inducements.getChild(CS_Check_nb_big_guys);
                     _check_nb_big_guys = e_checkBG.getText().equals("yes");
@@ -498,6 +498,7 @@ public final class LRB {
     private final static String CS_Agility = "agility";
     private final static String CS_Armor = "armor";
     private final static String CS_Cost = "cost";
+    private final static String CS_Max = "max";
     private final static String CS_Single = "single";
     private final static String CS_SkillType = "skillType";
     private final static String CS_Double = "double";
@@ -530,93 +531,24 @@ public final class LRB {
             Element e_apo = racine.getChild(CS_Apothecary);
             rt.setApothecary(Boolean.parseBoolean(e_apo.getValue()));
 
-            Element e_chef_cost = racine.getChild(CS_Chef);
-            if (e_chef_cost != null) {
-                rt.setChef_cost(Integer.parseInt(e_chef_cost.getValue()));
-            } else {
-                rt.setChef_cost(0);
-            }
 
-            Element e_igor = racine.getChild(CS_Igor);
-            if (e_igor != null) {
-                rt.setIgor(Boolean.parseBoolean(e_igor.getValue()));
-            } else {
-                rt.setIgor(false);
-            }
+            Element e_inducements = racine.getChild(CS_Inducements);
 
-            Element e_bribe_cost = racine.getChild(CS_Bribe);
-            if (e_bribe_cost != null) {
-                rt.setBribe_cost(Integer.parseInt(e_bribe_cost.getValue()));
-            } else {
-                rt.setBribe_cost(0);
-            }
+            if (e_inducements != null) {
+                List<Element> l_inducType = e_inducements.getChildren(CS_Inducement);
+                Iterator<Element> cr = l_inducType.iterator();
+                rt.clearInducementType();
 
-            try {
-                Element e_chaos_wizard = racine.getChild(CS_ChaosWizard);
-                if (e_chaos_wizard != null) {
-                    rt.setChaos_wizard(e_chaos_wizard.getValue().equals("true"));
-                } else {
-                    rt.setChaos_wizard(false);
+                while (cr.hasNext()) {
+                    InducementType it = new InducementType();
+                    Element e_it = cr.next();
+                    it.setName(e_it.getAttributeValue(CS_Name));
+                    it.setNbMax(Integer.parseInt(e_it.getAttributeValue(CS_Max)));
+                    it.setCost(Integer.parseInt(e_it.getAttributeValue(CS_Cost)));
+                    rt.addInducementType(it);
                 }
-            } catch (Exception e) {
-
             }
 
-            try {
-                Element e_kari = racine.getChild(CS_KariColdstell);
-                if (e_kari != null) {
-                    rt.setKari_Coldstell(e_kari.getValue().equals("true"));
-                } else {
-                    rt.setKari_Coldstell(false);
-                }
-            } catch (Exception e) {
-
-            }
-            
-            try {
-                Element e_fink = racine.getChild(CS_FinkDaFixer);
-                if (e_fink != null) {
-                    rt.setFink_Da_Fixer(e_fink.getValue().equals("true"));
-                } else {
-                    rt.setFink_Da_Fixer(false);
-                }
-            } catch (Exception e) {
-
-            }
-            
-             try {
-                Element e_papa = racine.getChild(CS_PapaSkullbones);
-                if (e_papa != null) {
-                    rt.setPapa_Skullbones(e_papa.getValue().equals("true"));
-                } else {
-                    rt.setPapa_Skullbones(false);
-                }
-            } catch (Exception e) {
-
-            }
-             
-              try {
-                Element e_galandril = racine.getChild(CS_GalandrilSilverWater);
-                if (e_galandril != null) {
-                    rt.setGalandril_Silverwater(e_galandril.getValue().equals("true"));
-                } else {
-                    rt.setGalandril_Silverwater(false);
-                }
-            } catch (Exception e) {
-
-            }
-            
-              try {
-                Element e_krot = racine.getChild(CS_KrotShockwhisker);
-                if (e_krot != null) {
-                    rt.setKrot_Shockwhisker(e_krot.getValue().equals("true"));
-                } else {
-                    rt.setKrot_Shockwhisker(false);
-                }
-            } catch (Exception e) {
-
-            }
-              
             Element e_playerType = racine.getChild(CS_PlayerTypes);
             List<Element> l_players = e_playerType.getChildren(CS_PlayerType);
             Iterator<Element> cr = l_players.iterator();

@@ -50,7 +50,7 @@ public class LRBNGTest {
     @Test
     public void testGetLRB() {
         LOG.log(Level.FINE, "getLRB");
-        LRB result = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB result = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertNotNull(result);
         Assert.assertNotEquals(result.getRosterTypeCount(), 0);
         Assert.assertNotEquals(result.getSkillTypeCount(), 0);
@@ -63,7 +63,7 @@ public class LRBNGTest {
     @Test
     public void testGetSkill() {
         LOG.log(Level.FINE, "getSkill");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertTrue(instance.getSkillTypeCount() > 0);
         for (int i = 0; i < instance.getSkillTypeCount(); i++) {
             SkillType sp = instance.getSkillType(i);
@@ -90,7 +90,7 @@ public class LRBNGTest {
     @Test
     public void testGetSkillType_String() {
         LOG.log(Level.FINE, "getSkillType");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertTrue(instance.getSkillTypeCount() > 0);
         for (int i = 0; i < instance.getSkillTypeCount(); i++) {
             SkillType sp = instance.getSkillType(i);
@@ -108,7 +108,7 @@ public class LRBNGTest {
     public void testGetRosterType_String() {
         LOG.log(Level.FINE, "getRosterType");
 //        String name = "";
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         RosterType result = instance.getRosterType("Gobelins");
         Assert.assertNotNull(result);
     }
@@ -119,7 +119,7 @@ public class LRBNGTest {
     @Test
     public void testGetStarPlayer_String() {
         LOG.log(Level.FINE, "getStarPlayer");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertTrue(instance.getStarPlayerCount() > 0);
         for (int i = 0; i < instance.getStarPlayerCount(); i++) {
             StarPlayer sp = instance.getStarPlayer(i);
@@ -137,7 +137,7 @@ public class LRBNGTest {
     @Test
     public void testGetRosterType_int() {
         LOG.log(Level.FINE, "getRosterType");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertNotNull(instance);
         Assert.assertTrue(instance.getRosterTypeCount() > 0);
         for (int i = 0; i < instance.getRosterTypeCount(); i++) {
@@ -154,7 +154,7 @@ public class LRBNGTest {
     public void testGetRosterTypeCount() {
         LOG.log(Level.FINE, "getRosterTypeCount");
         LRB.unloadLRB();
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         int result = instance.getRosterTypeCount();
         assertEquals(result, 26);
     }
@@ -165,7 +165,7 @@ public class LRBNGTest {
     @Test
     public void testClearRosterTypes() {
         LOG.log(Level.FINE, "clearRosterTypes");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertNotEquals(instance.getRosterTypeCount(), 0);
         instance.clearRosterTypes();
         Assert.assertEquals(instance.getRosterTypeCount(), 0);
@@ -179,10 +179,10 @@ public class LRBNGTest {
     public void testAddRosterType() {
         LOG.log(Level.FINE, "addRosterType");
         RosterType rt = new RosterType("Donkeys");
-        int nb = LRB.getLRB(LRB.E_Version.NAF2017).getRosterTypeCount();
-        LRB.getLRB(LRB.E_Version.NAF2017).addRosterType(rt);
+        int nb = LRB.getLRB(LRB.E_Version.BB2016).getRosterTypeCount();
+        LRB.getLRB(LRB.E_Version.BB2016).addRosterType(rt);
 
-        assertEquals(nb + 1, LRB.getLRB(LRB.E_Version.NAF2017).getRosterTypeCount());
+        assertEquals(nb + 1, LRB.getLRB(LRB.E_Version.BB2016).getRosterTypeCount());
         LRB.unloadLRB();
 
     }
@@ -193,7 +193,7 @@ public class LRBNGTest {
     @Test
     public void testGetStarPlayerCount() {
         LOG.log(Level.FINE, "getStarPlayerCount");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertTrue(instance.getStarPlayerCount() > 0);
         LRB.unloadLRB();
     }
@@ -204,7 +204,7 @@ public class LRBNGTest {
     @Test
     public void testGetStarPlayer_int() {
         LOG.log(Level.FINE, "getStarPlayer");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertTrue(instance.getStarPlayerCount() > 0);
         for (int i = 0; i < instance.getStarPlayerCount(); i++) {
             StarPlayer sp = instance.getStarPlayer(i);
@@ -219,7 +219,7 @@ public class LRBNGTest {
     @Test
     public void testClearStarPlayers() {
         LOG.log(Level.FINE, "clearStarPlayers");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertNotEquals(instance.getStarPlayerCount(), 0);
         instance.clearStarPlayers();
         Assert.assertEquals(instance.getStarPlayerCount(), 0);
@@ -234,7 +234,7 @@ public class LRBNGTest {
     public void testAddStarPlayer() {
         LOG.log(Level.FINE, "addStarPlayer");
         StarPlayer sp = new StarPlayer("Toto");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         int nb = instance.getStarPlayerCount();
         instance.addStarPlayer(sp);
         assertEquals(nb + 1, instance.getStarPlayerCount());
@@ -248,7 +248,7 @@ public class LRBNGTest {
     public void testAddSkillType() {
         LOG.log(Level.FINE, "addSkillType");
         SkillType st = new SkillType("Dummy", "D");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         int nb = instance.getSkillTypeCount();
         instance.addSkillType(st);
 
@@ -263,7 +263,7 @@ public class LRBNGTest {
     public void testClearSkillTypes() {
         LOG.log(Level.FINE, "clearSkillTypes");
 
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertNotEquals(instance.getSkillTypeCount(), 0);
         instance.clearSkillTypes();
         Assert.assertEquals(instance.getSkillTypeCount(), 0);
@@ -277,7 +277,7 @@ public class LRBNGTest {
     @Test
     public void testGetSkillType_int() {
         LOG.log(Level.FINE, "getSkillType");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertTrue(instance.getSkillTypeCount() > 0);
         for (int i = 0; i < instance.getSkillTypeCount(); i++) {
             SkillType sp = instance.getSkillType(i);
@@ -292,7 +292,7 @@ public class LRBNGTest {
     @Test
     public void testGetSkillTypeCount() {
         LOG.log(Level.FINE, "getSkillTypeCount");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         Assert.assertTrue(instance.getSkillTypeCount() > 0);
 
         LRB.unloadLRB();
@@ -304,7 +304,7 @@ public class LRBNGTest {
     @Test
     public void testGetName() {
         LOG.log(Level.FINE, "getName");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         String result = instance.getName();
         Assert.assertNotNull(result);
     }
@@ -316,7 +316,7 @@ public class LRBNGTest {
     public void testSetName() {
         LOG.log(Level.FINE, "setName");
         String _name = "Test";
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         String save = instance.getName();
         instance.setName(_name);
         assertEquals("Test", instance.getName());
@@ -329,7 +329,7 @@ public class LRBNGTest {
     @Test
     public void testIsAllowSpecialSkills() {
         LOG.log(Level.FINE, "isAllowSpecialSkills");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         boolean save = instance.isAllowSpecialSkills();
         instance.setAllowSpecialSkills(true);
         assertEquals(true, instance.isAllowSpecialSkills());
@@ -342,7 +342,7 @@ public class LRBNGTest {
     @Test
     public void testSetAllowSpecialSkills() {
         LOG.log(Level.FINE, "setAllowSpecialSkills");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         boolean save = instance.isAllowSpecialSkills();
         instance.setAllowSpecialSkills(true);
         assertEquals(true, instance.isAllowSpecialSkills());
@@ -356,7 +356,7 @@ public class LRBNGTest {
     public void testUnloadLRB() {
         System.out.println("unloadLRB");
         LRB.unloadLRB();
-        LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB.getLRB(LRB.E_Version.BB2016);
         LRB.unloadLRB();
     }
 
@@ -366,7 +366,7 @@ public class LRBNGTest {
     @Test
     public void testGetRosterType_String_boolean() {
         System.out.println("getRosterType");
-        LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
 
         for (int i = 0; i < lrb.getRosterTypeCount(); i++) {
             RosterType rt = lrb.getRosterType(i);
@@ -395,7 +395,7 @@ public class LRBNGTest {
     @Test
     public void testGetRosterTypeListAsString() {
         System.out.println("getRosterTypeListAsString");
-        LRB lrb = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
         ArrayList result = lrb.getRosterTypeListAsString(false);
         Assert.assertNotNull(result);
         Assert.assertTrue(result.size() > 0);
@@ -424,7 +424,7 @@ public class LRBNGTest {
     public void testIsChef_enabled() {
         System.out.println("isChef_enabled");
         boolean expResult = false;
-        LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB.getLRB(LRB.E_Version.BB2016);
         boolean result = LRB.isChef_enabled();
         assertEquals(result, true);
     }
@@ -436,7 +436,7 @@ public class LRBNGTest {
     public void testSetChef_enabled() {
         System.out.println("setChef_enabled");
         boolean _chef_enabled = false;
-        LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB.getLRB(LRB.E_Version.BB2016);
         boolean result = LRB.isChef_enabled();
         assertEquals(result, true);
         LRB.setChef_enabled(_chef_enabled);
@@ -451,7 +451,7 @@ public class LRBNGTest {
     public void testIsMercenaries_enabled() {
         System.out.println("isMercenaries_enabled");
         boolean expResult = true;
-        LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB.getLRB(LRB.E_Version.BB2016);
         boolean result = LRB.isMercenaries_enabled();
         assertEquals(result, expResult);
     }
@@ -463,7 +463,7 @@ public class LRBNGTest {
     public void testSetMercenaries_enabled() {
         System.out.println("setMercenaries_enabled");
         boolean expResult = true;
-        LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB.getLRB(LRB.E_Version.BB2016);
         boolean result = LRB.isMercenaries_enabled();
         assertEquals(result, expResult);
 
@@ -509,7 +509,7 @@ public class LRBNGTest {
         System.out.println("isWizard_enabled");
         boolean expResult = true;
         LRB.unloadLRB();
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         boolean result = instance.isWizard_enabled();
         assertEquals(result, expResult);
     }
@@ -538,7 +538,7 @@ public class LRBNGTest {
         System.out.println("isReroll_enabled");
         boolean expResult = true;
         LRB.unloadLRB();
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         boolean result = LRB.isReroll_enabled();
         assertEquals(result, expResult);
 
@@ -650,7 +650,7 @@ public class LRBNGTest {
         System.out.println("isStarplayers_enabled");
         boolean expResult = true;
         LRB.unloadLRB();
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         boolean result = instance.isStarplayers_enabled();
         assertEquals(result, expResult);
     }
@@ -733,8 +733,8 @@ public class LRBNGTest {
     @Test
     public void testGetVersion() {
         System.out.println("getVersion");
-        LRB instance = LRB.getLRB(LRB.E_Version.NAF2017);
-        LRB.E_Version expResult = LRB.E_Version.NAF2017;
+        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
+        LRB.E_Version expResult = LRB.E_Version.BB2016;
         LRB.E_Version result = instance.getVersion();
         assertEquals(result, expResult);
 
