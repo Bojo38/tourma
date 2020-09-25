@@ -62,7 +62,7 @@ public class JdgSelectSkillNGTest {
         roster.setXMLElement(racine);
 
         // Remove local apothecary, because the team is an unded team
-        roster.setLocalapothecary(0);
+
         player = roster.getPlayer(0);
         jdg = new JdgSelectSkill(null, true, player,LRB.getLRB(LRB.E_Version.BB2016));
         window = new DialogFixture(robot, jdg);

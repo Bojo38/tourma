@@ -88,7 +88,7 @@ public class GenerationNGTest {
         Team team = null;
         ArrayList<Round> rounds = null;
         ArrayList expResult = null;
-        ArrayList result = Generation.subRanking(team, rounds);
+        ArrayList result = Generation.subRanking(team, rounds,true);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -103,7 +103,7 @@ public class GenerationNGTest {
         ArrayList<Coach> coachs = null;
         ArrayList<Round> rounds = null;
         ArrayList expResult = null;
-        ArrayList result = Generation.subRanking(coachs, rounds);
+        ArrayList result = Generation.subRanking(coachs, rounds,true);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

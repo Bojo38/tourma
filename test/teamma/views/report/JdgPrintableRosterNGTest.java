@@ -60,8 +60,6 @@ public class JdgPrintableRosterNGTest {
         roster = new Roster();
         roster.setXMLElement(racine);
 
-        // Remove local apothecary, because the team is an unded team
-        roster.setLocalapothecary(0);
 
         jdg = new JdgPrintableRoster(null, true,
                 roster, null, true);

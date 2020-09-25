@@ -6,6 +6,7 @@
 package tourma.utils;
 
 import java.io.File;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import static org.testng.Assert.assertEquals;
@@ -52,7 +53,14 @@ public class BalancingNGTest {
     public void testBalanceCoachMatchs() {
         System.out.println("balanceCoachMatchs");
         ArrayList<Match> matchs = null;
+        try
+        {
         Balancing.balanceCoachMatchs(matchs);
+        }
+        catch (RemoteException e)
+        {
+            
+        }
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

@@ -64,7 +64,6 @@ public class JdgSelectPositionNGTest {
         roster.setXMLElement(racine);
 
         // Remove local apothecary, because the team is an unded team
-        roster.setLocalapothecary(0);
         player = roster.getPlayer(0);
 
         ArrayList<PlayerType> ar = new ArrayList<>();
