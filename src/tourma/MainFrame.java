@@ -20,6 +20,8 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.SplashScreen;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -42,7 +44,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
@@ -54,7 +58,6 @@ import javax.swing.ProgressMonitor;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-import net.java.dev.colorchooser.ColorChooser;
 import org.apache.commons.net.ftp.FTPClient;
 import org.jfree.ui.tabbedui.VerticalLayout;
 import teamma.data.LRB;
@@ -2850,14 +2853,50 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     private void jmiEditColorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditColorsActionPerformed
 
-        ColorChooser jccColor1 = new ColorChooser();
-        jccColor1.setColor(Tournament.getTournament().getParams().getColor1());
-        ColorChooser jccColor2 = new ColorChooser();
-        jccColor2.setColor(Tournament.getTournament().getParams().getColor2());
-        ColorChooser jccBorderColor = new ColorChooser();
-        jccBorderColor.setColor(Tournament.getTournament().getParams().getBorderColor());
-        ColorChooser jccForeColor = new ColorChooser();
-        jccForeColor.setColor(Tournament.getTournament().getParams().getForeColor());
+        JButton jbtColor1 = new JButton(" ");
+        jbtColor1.setBackground(Tournament.getTournament().getParams().getColor1());
+        JButton jbtColor2 = new JButton(" ");
+        jbtColor2.setBackground(Tournament.getTournament().getParams().getColor2());
+        JButton jbtBorderColor = new JButton(" ");
+        jbtBorderColor.setBackground(Tournament.getTournament().getParams().getBorderColor());
+        JButton jbtForeColor = new JButton(" ");
+        jbtForeColor.setBackground(Tournament.getTournament().getParams().getForeColor());
+
+        jbtColor1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(jpnContent, CS_None, Tournament.getTournament().getParams().getColor1());
+                Tournament.getTournament().getParams().setColor1(c);
+                jbtColor1.setBackground(c);
+            }
+        });
+
+        jbtColor2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(jpnContent, CS_None, Tournament.getTournament().getParams().getColor2());
+                Tournament.getTournament().getParams().setColor2(c);
+                jbtColor2.setBackground(c);
+            }
+        });
+
+        jbtBorderColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(jpnContent, CS_None, Tournament.getTournament().getParams().getBorderColor());
+                Tournament.getTournament().getParams().setBorderColor(c);
+                jbtBorderColor.setBackground(c);
+            }
+        });
+
+        jbtForeColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(jpnContent, CS_None, Tournament.getTournament().getParams().getForeColor());
+                Tournament.getTournament().getParams().setForeColor(c);
+                jbtForeColor.setBackground(c);
+            }
+        });
 
         JLabel jlbColor1 = new JLabel(Translate.translate(COLOR_1));
         JLabel jlbColor2 = new JLabel(Translate.translate(COLOR_2));
@@ -2867,21 +2906,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         JPanel jpn = new JPanel(new GridLayout(4, 2));
 
         jpn.add(jlbColor1);
-        jpn.add(jccColor1);
+        jpn.add(jbtColor1);
         jpn.add(jlbColor2);
-        jpn.add(jccColor2);
+        jpn.add(jbtColor2);
         jpn.add(jlbBorderColor);
-        jpn.add(jccBorderColor);
+        jpn.add(jbtBorderColor);
         jpn.add(jlbForeColor);
-        jpn.add(jccForeColor);
+        jpn.add(jbtForeColor);
 
         JOptionPane.showConfirmDialog(this, jpn, "Couleurs", JOptionPane.OK_OPTION);
-
-        Tournament.getTournament().getParams().setColor1(jccColor1.getColor());
-        Tournament.getTournament().getParams().setColor2(jccColor2.getColor());
-        Tournament.getTournament().getParams().setBorderColor(jccBorderColor.getColor());
-        Tournament.getTournament().getParams().setForeColor(jccForeColor.getColor());
-
 
     }//GEN-LAST:event_jmiEditColorsActionPerformed
 
