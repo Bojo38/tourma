@@ -327,6 +327,7 @@ public class CoachMatch extends Match implements Serializable {
         for (int i = 0; i < size; i++) {
             final Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
             final Value val = new Value(crit);
+            
             if (i == 0) {
                 val.setValue1(-1);
                 val.setValue2(-1);
@@ -495,7 +496,7 @@ public class CoachMatch extends Match implements Serializable {
                         break;
                     }
                 }
-                final Value value = new Value(crit);
+                Value value= new Value(crit);
                 value.setValue1(val.getAttribute(StringConstants.CS_VALUE + 1).getIntValue());
                 value.setValue2(val.getAttribute(StringConstants.CS_VALUE + 2).getIntValue());
                 this.putValue(crit, value);
@@ -799,6 +800,7 @@ public class CoachMatch extends Match implements Serializable {
      * @return
      */
     public Value getValue(Criteria c) {
+
         Value val = mValues.get(c);
         if (val != null) {
             return val;

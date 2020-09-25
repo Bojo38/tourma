@@ -44,7 +44,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public Criteria getCriteria(String name) {
         for (Criteria criteria : mCriterias) {
-            if (criteria.getName().equals(name)) {
+            if (criteria.getName().equals(name) || criteria.getAccronym().equals(name)) {
                 return criteria;
             }
         }

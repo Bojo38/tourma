@@ -135,41 +135,54 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                     }
                 }
             }
+
             if (exists) {
                 JOptionPane.showMessageDialog(null, Translate.translate(Translate.CS_Error),
                         Translate.translate(CS_CriteriaAlreadyExists), JOptionPane.ERROR_MESSAGE);
 
             } else {
-
                 String tmp = value.toString();
                 final Criteria c = mParams.getCriteria(row);
                 int val;
                 switch (col) {
                     case 0:
+                        c.setAccronym(tmp);
                         c.setName(tmp);
+
                         break;
                     case 1:
+
+                        c.setName(tmp);
                         c.setAccronym(tmp);
+
                         break;
                     case 2:
+
                         val = Integer.parseInt(tmp);
                         c.setPointsFor(val);
                         Tournament.getTournament().recomputeAll();
+
                         break;
                     case 3:
+
                         val = Integer.parseInt(tmp);
                         c.setPointsAgainst(val);
                         Tournament.getTournament().recomputeAll();
+
                         break;
                     case 4:
+
                         val = Integer.parseInt(tmp);
                         c.setPointsTeamFor(val);
                         Tournament.getTournament().recomputeAll();
+
                         break;
                     case 5:
+
                         val = Integer.parseInt(tmp);
                         c.setPointsTeamAgainst(val);
                         Tournament.getTournament().recomputeAll();
+
                         break;
                     case 6:
                         val = Integer.parseInt(tmp);
