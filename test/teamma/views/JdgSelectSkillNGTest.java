@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import org.fest.swing.core.BasicRobot;
 import org.fest.swing.core.Robot;
 import org.fest.swing.fixture.DialogFixture;
+import org.fest.swing.fixture.JComboBoxFixture;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.testng.Assert;
@@ -30,6 +31,7 @@ import teamma.data.Roster;
  */
 public class JdgSelectSkillNGTest {
 
+    
     private DialogFixture window;
     private Roster roster;
     JdgSelectSkill jdg;
@@ -60,16 +62,17 @@ public class JdgSelectSkillNGTest {
         roster.setXMLElement(racine);
 
         // Remove local apothecary, because the team is an unded team
-        roster.setLocalapothecary(0);
+
         player = roster.getPlayer(0);
-        jdg = new JdgSelectSkill(null, true, player);
+        jdg = new JdgSelectSkill(null, true, player,LRB.getLRB(LRB.E_Version.BB2016));
         window = new DialogFixture(robot, jdg);
         window.show();
     }
 
     @AfterMethod
     public void tearDownMethod() throws Exception {
-        window.close();
+        jdg.setVisible(false);
+        //window.close();
         window.cleanUp();
         window = null;
     }
@@ -81,9 +84,12 @@ public class JdgSelectSkillNGTest {
     public void hmiGeneralTest() {
         System.out.println("hmiGeneralTest");
         try {
-            LRB lrb = LRB.getLRB();
+            LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
+            
+            JComboBoxFixture jcbf=window.comboBox("jcbGeneral");
+            jcbf.component().setEnabled(true);
             window.comboBox("jcbGeneral").selectItem(1);
-            Thread.sleep(200);
+            Thread.sleep(500);
             int nb = player.getSkillCount();
             Assert.assertEquals(nb, player.getSkillCount());
             window.button("cancel").click();

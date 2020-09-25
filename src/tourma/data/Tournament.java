@@ -1543,14 +1543,14 @@ public class Tournament implements IContainCoachs, Serializable {
 
                 }
             } catch (NumberFormatException npe) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Obsolete Version");
+        //        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Obsolete Version");
             }
 
         } catch (JDOMException e) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
+    //        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+      //      JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
         }
     }
 

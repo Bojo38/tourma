@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>WoodElfKey</name>
+    <reroll>50000</reroll>
+    <apothecary>true</apothecary>
+    <chef>300000</chef>
+    <igor>false</igor>
+    <bribe>100000</bribe>
+    <add_assistant>true</add_assistant>
+    <add_cheerleaders>true</add_cheerleaders>
+    <weather_wizard>true</weather_wizard>
+    <druchi_sport_sorcerer>false</druchi_sport_sorcerer>
+    <plague_doctors>false</plague_doctors>
+    <nurglings>false</nurglings>
+    <horticulturalist>false</horticulturalist>
+    <joseph_bugman>false</joseph_bugman>
+    <slann_mage_priest>false</slann_mage_priest>
+    <chaos_wizard>false</chaos_wizard>
+    <kari_coldstell>false</kari_coldstell>
+    <fink_da_fixer>false</fink_da_fixer>
+    <papa_skullbones>false</papa_skullbones>
+    <galandril_silverwater>true</galandril_silverwater>
+    <krot_shockwhisker>false</krot_shockwhisker>
+        <hot-pot>false</hot-pot>
+    <heady_brew>false</heady_brew>
+    <sports_necrotheurge>false</sports_necrotheurge>
+    <playertypes>               
+        <playerType>
+            <limit>2</limit>
+            <position>Wardancer</position>
+            <movement>8</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Block</skill>
+                <skill>Leap</skill>
+            </skills>
+            <cost>120000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>            
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Thrower</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Pass</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>4</limit>
+            <position>Catcher</position>
+            <movement>8</movement>
+            <strength>2</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Catch</skill>
+                <skill>Sprint</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Lineman</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <armor>7</armor>
+            <skills>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Treeman</position>
+            <movement>2</movement>
+            <strength>6</strength>
+            <agility>1</agility>
+            <armor>10</armor>
+            <skills>
+                  <skill>Take Roots</skill>
+                  <skill>Loner</skill>
+                  <skill>Stand Firm</skill>
+                  <skill>Mighty Blow</skill>
+                  <skill>Thick Skull</skill>
+                  <skill>Strong Arm</skill>
+                  <skill>Throw Team-Mate</skill>
+            </skills>
+            <cost>120000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

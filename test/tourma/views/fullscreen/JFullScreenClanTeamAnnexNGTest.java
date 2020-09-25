@@ -49,7 +49,7 @@ public class JFullScreenClanTeamAnnexNGTest {
     public void testClientLoop() throws Exception {
         System.out.println("clientLoop");
         JFullScreenClanTeamAnnex instance = null;
-        instance.clientLoop();
+        instance.clientLoop(0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

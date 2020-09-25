@@ -475,7 +475,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
             }
 
         } catch (DataConversionException dce) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
+        //    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), dce.getLocalizedMessage());
         }
 
         try {

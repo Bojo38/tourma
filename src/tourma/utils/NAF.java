@@ -151,7 +151,7 @@ public final class NAF {
         Reader fileReader = null;
 
         try {
-
+           
             InputStream is = new FileInputStream(file);
             if (null != is) {
                 fileReader = new InputStreamReader(is);
@@ -179,10 +179,10 @@ public final class NAF {
                     }
 
                 } catch (JDOMException e) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
+                    JOptionPane.showMessageDialog(null, e.getLocalizedMessage() +" Reading file: "+ file.getAbsolutePath());
 
                 } catch (IOException e) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage()+" Reading file: "+ file.getAbsolutePath());
                 }
             }
         } catch (FileNotFoundException e) {

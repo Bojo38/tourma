@@ -38,9 +38,11 @@ public class CoachMatchNGTest {
     public static void tearDownClass() throws Exception {
     }
 
+    Tournament t;
     @BeforeMethod
     public void setUpMethod() throws Exception {
-        Tournament.getTournament().loadXML(new File("./test/coachMatch.xml"));
+        t=Tournament.getTournament();
+        t.loadXML(new File("./test/coachMatch.xml"));
     }
 
     @AfterMethod
@@ -804,12 +806,11 @@ public class CoachMatchNGTest {
     @Test
     public void testIsRemotely() {
         System.out.println("isRemotely");
-        CoachMatch instance = null;
+        Coach c=t.getCoach(0);
+        CoachMatch instance = (CoachMatch)c.getMatch(0);
         boolean expResult = false;
         boolean result = instance.isRemotely();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -819,10 +820,11 @@ public class CoachMatchNGTest {
     public void testSetRemotely() {
         System.out.println("setRemotely");
         boolean isRemotely = false;
-        CoachMatch instance = null;
+        Coach c=t.getCoach(0);
+        CoachMatch instance = (CoachMatch)c.getMatch(0);
+
         instance.setRemotely(isRemotely);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertFalse(instance.isRemotely());
     }
 
     /**
@@ -831,12 +833,12 @@ public class CoachMatchNGTest {
     @Test
     public void testGetUID() {
         System.out.println("getUID");
-        CoachMatch instance = null;
-        int expResult = 0;
-        int result = instance.getUID();
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        int expResult = 242;
+        int result = c.getUID();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -846,10 +848,10 @@ public class CoachMatchNGTest {
     public void testSetUID() {
         System.out.println("setUID");
         int UID = 0;
-        CoachMatch instance = null;
+        Coach c=t.getCoach(0);
+        CoachMatch instance = (CoachMatch)c.getMatch(0);
         instance.setUID(UID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getUID(),UID);
     }
 
     /**
@@ -858,12 +860,12 @@ public class CoachMatchNGTest {
     @Test
     public void testIsUpdated() {
         System.out.println("isUpdated");
-        CoachMatch instance = null;
-        boolean expResult = false;
+        Coach c=t.getCoach(0);
+        CoachMatch instance = (CoachMatch)c.getMatch(0);
+
+        boolean expResult = true;
         boolean result = instance.isUpdated();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -874,9 +876,7 @@ public class CoachMatchNGTest {
         System.out.println("pull");
         Match match = null;
         CoachMatch instance = null;
-        instance.pull(match);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//        instance.pull(match);
     }
 
     /**
@@ -887,9 +887,7 @@ public class CoachMatchNGTest {
         System.out.println("push");
         Match match = null;
         CoachMatch instance = null;
-        instance.push(match);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+//        instance.push(match);
     }
 
     /**
@@ -899,10 +897,11 @@ public class CoachMatchNGTest {
     public void testSetUpdated() {
         System.out.println("setUpdated");
         boolean updated = false;
-        CoachMatch instance = null;
+                Coach c=t.getCoach(0);
+        CoachMatch instance = (CoachMatch)c.getMatch(0);
+
         instance.setUpdated(updated);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Assert.assertFalse(instance.isRemotely());
     }
 
     /**
@@ -911,13 +910,11 @@ public class CoachMatchNGTest {
     @Test
     public void testGetGroupModifier() {
         System.out.println("getGroupModifier");
-        Coach c = null;
-        CoachMatch m = null;
+Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
         int expResult = 0;
         int result = CoachMatch.getGroupModifier(c, m);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -926,13 +923,16 @@ public class CoachMatchNGTest {
     @Test
     public void testGetValue_Criteria() {
         System.out.println("getValue");
-        Criteria c = null;
-        CoachMatch instance = null;
-        Value expResult = null;
-        Value result = instance.getValue(c);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria crit = t.getParams().getCriteria(0);
+        
+                Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        Value expResult = new Value(crit);
+        expResult.setValue1(4);
+        expResult.setValue2(3);
+        Value result = m.getValue(crit);
+        assertEquals(result.getValue1(), expResult.getValue1());
+        assertEquals(result.getValue2(), expResult.getValue2());
     }
 
     /**
@@ -941,10 +941,10 @@ public class CoachMatchNGTest {
     @Test
     public void testRecomputeValues() {
         System.out.println("recomputeValues");
-        CoachMatch instance = null;
+        Coach c=t.getCoach(0);
+        CoachMatch instance = (CoachMatch)c.getMatch(0);
+
         instance.recomputeValues();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -954,11 +954,9 @@ public class CoachMatchNGTest {
     public void testGetSubtypeByValue() {
         System.out.println("getSubtypeByValue");
         int valueType = 0;
-        int expResult = 0;
+        int expResult = -1;
         int result = CoachMatch.getSubtypeByValue(valueType);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -971,8 +969,6 @@ public class CoachMatchNGTest {
         Criteria expResult = null;
         Criteria result = CoachMatch.getCriteriaByValue(valueType);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -982,13 +978,11 @@ public class CoachMatchNGTest {
     public void testRecomputeValue() {
         System.out.println("recomputeValue");
         int index = 0;
-        Competitor c = null;
-        CoachMatch instance = null;
+        Coach c=t.getCoach(0);
+        CoachMatch instance = (CoachMatch)c.getMatch(0);
         int expResult = 0;
         int result = instance.recomputeValue(index, c);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -997,14 +991,13 @@ public class CoachMatchNGTest {
     @Test
     public void testGetValue_Coach_int() {
         System.out.println("getValue");
-        Coach c = null;
+                Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        Criteria crit=t.getParams().getCriteria(0);
         int valueType = 0;
-        CoachMatch instance = null;
         int expResult = 0;
-        int result = instance.getValue(c, valueType);
+        int result = m.getValue(c, valueType);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1013,14 +1006,12 @@ public class CoachMatchNGTest {
     @Test
     public void testGetOppPointsByCoach() {
         System.out.println("getOppPointsByCoach");
-        Coach c = null;
-        CoachMatch m = null;
+Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
         boolean includeCurrent = false;
-        int expResult = 0;
+        int expResult = 1827;
         int result = CoachMatch.getOppPointsByCoach(c, m, includeCurrent);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1029,13 +1020,13 @@ public class CoachMatchNGTest {
     @Test
     public void testGetCoachNbMatchs() {
         System.out.println("getCoachNbMatchs");
-        Coach c = null;
-        CoachMatch m = null;
-        int expResult = 0;
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch)c.getMatch(0);
+        int expResult = 1;
+        
         int result = CoachMatch.getCoachNbMatchs(c, m);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -1044,13 +1035,11 @@ public class CoachMatchNGTest {
     @Test
     public void testGetCoachTablePoints() {
         System.out.println("getCoachTablePoints");
-        Coach c = null;
-        CoachMatch m = null;
-        int expResult = 0;
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        int expResult = 3;
         int result = CoachMatch.getCoachTablePoints(c, m);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1059,13 +1048,11 @@ public class CoachMatchNGTest {
     @Test
     public void testGetOppELOByCoach() {
         System.out.println("getOppELOByCoach");
-        Coach c = null;
-        CoachMatch m = null;
-        int expResult = 0;
+Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        int expResult = 853;
         int result = CoachMatch.getOppELOByCoach(c, m);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1074,13 +1061,11 @@ public class CoachMatchNGTest {
     @Test
     public void testGetVNDByCoach() {
         System.out.println("getVNDByCoach");
-        Coach c = null;
-        CoachMatch m = null;
-        int expResult = 0;
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        int expResult = 1000000;
         int result = CoachMatch.getVNDByCoach(c, m);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1089,13 +1074,11 @@ public class CoachMatchNGTest {
     @Test
     public void testGetELOByCoach() {
         System.out.println("getELOByCoach");
-        Coach c = null;
-        CoachMatch m = null;
-        int expResult = 0;
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        int expResult = 1012;
         int result = CoachMatch.getELOByCoach(c, m);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1104,14 +1087,12 @@ public class CoachMatchNGTest {
     @Test
     public void testGetCriteriaBonusPoints() {
         System.out.println("getCriteriaBonusPoints");
-        Coach c = null;
-        CoachMatch m = null;
-        Criteria crit = null;
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        Criteria crit = t.getParams().getCriteria(0);
         int expResult = 0;
         int result = CoachMatch.getCriteriaBonusPoints(c, m, crit);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1120,13 +1101,11 @@ public class CoachMatchNGTest {
     @Test
     public void testGetCriteriasBonusPoints() {
         System.out.println("getCriteriasBonusPoints");
-        Coach c = null;
-        CoachMatch m = null;
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
         int expResult = 0;
         int result = CoachMatch.getCriteriasBonusPoints(c, m);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1135,15 +1114,13 @@ public class CoachMatchNGTest {
     @Test
     public void testGetPointsByCoach() {
         System.out.println("getPointsByCoach");
-        Coach c = null;
-        CoachMatch m = null;
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
         boolean withMainPoints = false;
         boolean withBonusPOints = false;
         int expResult = 0;
         int result = CoachMatch.getPointsByCoach(c, m, withMainPoints, withBonusPOints);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1152,15 +1129,14 @@ public class CoachMatchNGTest {
     @Test
     public void testGetValue_3args() {
         System.out.println("getValue");
-        Criteria crit = null;
+        Criteria crit = t.getParams().getCriteria(0);
         int subtype = 0;
-        Competitor c = null;
-        CoachMatch instance = null;
-        int expResult = 0;
-        int result = instance.getValue(crit, subtype, c);
+                Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+
+        int expResult = 4;
+        int result = m.getValue(crit, subtype, c);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1169,12 +1145,14 @@ public class CoachMatchNGTest {
     @Test
     public void testIsEntered() {
         System.out.println("isEntered");
-        CoachMatch instance = null;
-        boolean expResult = false;
-        boolean result = instance.isEntered();
+                Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+
+        boolean expResult = true;
+        boolean result = m.isEntered();
+       
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -1183,10 +1161,13 @@ public class CoachMatchNGTest {
     @Test
     public void testSwitchCoachs() {
         System.out.println("switchCoachs");
-        CoachMatch instance = null;
+        Coach c=t.getCoach(0);
+        CoachMatch instance = (CoachMatch)c.getMatch(0);
+        Coach c1=(Coach)instance.getCompetitor1();
+        Coach c2=(Coach)instance.getCompetitor2();
         instance.switchCoachs();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals((Coach)instance.getCompetitor1(), c2);
+        assertEquals((Coach)instance.getCompetitor2(), c1);
     }
 
 }

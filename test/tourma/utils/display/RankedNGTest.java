@@ -5,6 +5,7 @@
  */
 package tourma.utils.display;
 
+import java.rmi.RemoteException;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -20,7 +21,7 @@ import tourma.utils.display.IRanked;
  * @author WFMJ7631
  */
 public class RankedNGTest {
-    
+
     public RankedNGTest() {
     }
 
@@ -43,70 +44,90 @@ public class RankedNGTest {
     /**
      * Test of getRowCount method, of class IRanked.
      */
-    @Test(enabled=false)
+    @Test(enabled = false)
     public void testGetRowCount() {
         System.out.println("getRowCount");
         IRanked instance = new RankedImpl();
         int expResult = 0;
-        int result = instance.getRowCount();
-        assertEquals(result, expResult);
+        try {
+            int result = instance.getRowCount();
+            assertEquals(result, expResult);
+        } catch (RemoteException e) {
+
+        }
     }
 
     /**
      * Test of getSortedObject method, of class IRanked.
      */
-    @Test(enabled=false)
+    @Test(enabled = false)
     public void testGetSortedObject() {
         System.out.println("getSortedObject");
         int i = 0;
         IRanked instance = new RankedImpl();
         ObjectRanking expResult = null;
-        ObjectRanking result = instance.getSortedObject(i);
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
+        try {
+            ObjectRanking result = instance.getSortedObject(i);
+            //assertEquals(result, expResult);
+            // TODO review the generated test code and remove the default call to fail.
+        } catch (RemoteException e) {
+
+        }
         fail("The test case is a prototype.");
     }
 
     /**
      * Test of getSortedValue method, of class IRanked.
      */
-    @Test(enabled=false)
+    @Test(enabled = false)
     public void testGetSortedValue() {
         System.out.println("getSortedValue");
         int i = 0;
         int valIndex = 0;
         IRanked instance = new RankedImpl();
         int expResult = 0;
-        int result = instance.getSortedValue(i, valIndex);
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
+        try {
+            int result = instance.getSortedValue(i, valIndex);
+            //assertEquals(result, expResult);
+            // TODO review the generated test code and remove the default call to fail.
+        } catch (RemoteException e) {
+
+        }
         fail("The test case is a prototype.");
     }
 
     /**
      * Test of getDetail method, of class IRanked.
      */
-    @Test(enabled=false)
+    @Test(enabled = false)
     public void testGetDetail() {
         System.out.println("getDetail");
         IRanked instance = new RankedImpl();
         String expResult = "";
-        String result = instance.getDetail();
-        //assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
+        try {
+            String result = instance.getDetail();
+            //assertEquals(result, expResult);
+            // TODO review the generated test code and remove the default call to fail.
+        } catch (RemoteException e) {
+
+        }
         fail("The test case is a prototype.");
     }
 
     /**
      * Test of setDetail method, of class IRanked.
      */
-    @Test(enabled=false)
+    @Test(enabled = false)
     public void testSetDetail() {
         System.out.println("setDetail");
         String s = "";
         IRanked instance = new RankedImpl();
-        instance.setDetail(s);
-        // TODO review the generated test code and remove the default call to fail.
+        try {
+            instance.setDetail(s);
+            // TODO review the generated test code and remove the default call to fail.
+        } catch (RemoteException e) {
+
+        }
         fail("The test case is a prototype.");
     }
 
@@ -131,5 +152,5 @@ public class RankedNGTest {
         public void setDetail(String s) {
         }
     }
-    
+
 }

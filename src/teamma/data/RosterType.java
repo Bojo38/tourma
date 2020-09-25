@@ -15,7 +15,7 @@ import teamma.languages.Translate;
  */
 public class RosterType implements Serializable {
 
-    teamma.data.LRB.E_Version version=LRB.E_Version.CRP1;
+    teamma.data.LRB.E_Version version=LRB.E_Version.BB2016;
     
     public LRB.E_Version getVersion()
     {
@@ -69,6 +69,8 @@ public class RosterType implements Serializable {
     private static int _apothecary_cost = 50000;
     private static final Logger LOG = Logger.getLogger(RosterType.class.getName());
 
+    private ArrayList<InducementType> _inducements=new ArrayList<>();
+    
     /**
      * @return the extraRerollCost
      */
@@ -232,16 +234,16 @@ public class RosterType implements Serializable {
         return _chaos_wizard_cost;
     }
 
-    public static void setChaos_wizard_cost(int _chaos_wizard_cost) {
-        _chaos_wizard_cost = _chaos_wizard_cost;
+    public static void setChaos_wizard_cost(int chaos_wizard_cost) {
+        _chaos_wizard_cost = chaos_wizard_cost;
     }
 
     public static int getHoratio_X_Schottenheim_cost() {
-        return Horatio_X_Schottenheim_cost;
+        return _Horatio_X_Schottenheim_cost;
     }
 
     public static void setHoratio_X_Schottenheim_cost(int Horatio_X_Schottenheim_cost) {
-        RosterType.Horatio_X_Schottenheim_cost = Horatio_X_Schottenheim_cost;
+        _Horatio_X_Schottenheim_cost = Horatio_X_Schottenheim_cost;
     }
 
     public boolean isKari_Coldstell() {
@@ -253,11 +255,11 @@ public class RosterType implements Serializable {
     }
 
     public static int getKari_Coldstell_cost() {
-        return Kari_Coldstell_cost;
+        return _Kari_Coldstell_cost;
     }
 
     public static void setKari_Coldstell_cost(int Kari_Coldstell_cost) {
-        Kari_Coldstell_cost = Kari_Coldstell_cost;
+        _Kari_Coldstell_cost = Kari_Coldstell_cost;
     }
 
     public boolean isFink_Da_Fixer() {
@@ -269,11 +271,11 @@ public class RosterType implements Serializable {
     }
 
     public static int getFink_Da_Fixer_cost() {
-        return Fink_Da_Fixer_cost;
+        return _Fink_Da_Fixer_cost;
     }
 
     public static void setFink_Da_Fixer_cost(int Fink_Da_Fixer_cost) {
-        Fink_Da_Fixer_cost = Fink_Da_Fixer_cost;
+        _Fink_Da_Fixer_cost = Fink_Da_Fixer_cost;
     }
 
     public boolean isPapa_Skullbones() {
@@ -285,11 +287,11 @@ public class RosterType implements Serializable {
     }
 
     public static int getPapa_Skullbones_cost() {
-        return Papa_Skullbones_cost;
+        return _Papa_Skullbones_cost;
     }
 
     public static void setPapa_Skullbones_cost(int Papa_Skullbones_cost) {
-        Papa_Skullbones_cost = Papa_Skullbones_cost;
+        _Papa_Skullbones_cost = Papa_Skullbones_cost;
     }
 
     public boolean isGalandril_Silverwater() {
@@ -301,11 +303,11 @@ public class RosterType implements Serializable {
     }
 
     public static int getGalandril_Silverwater_cost() {
-        return Galandril_Silverwater_cost;
+        return _Galandril_Silverwater_cost;
     }
 
     public static void setGalandril_Silverwater_cost(int Galandril_Silverwater_cost) {
-        Galandril_Silverwater_cost = Galandril_Silverwater_cost;
+        _Galandril_Silverwater_cost = Galandril_Silverwater_cost;
     }
 
     public boolean isKrot_Shockwhisker() {
@@ -317,14 +319,14 @@ public class RosterType implements Serializable {
     }
 
     public static int getKrot_Shockwhisker_cost() {
-        return Krot_Shockwhisker_cost;
+        return _Krot_Shockwhisker_cost;
     }
 
     /**
      * Chaos Wizard Allowed
      */
     public static void setKrot_Shockwhisker_cost(int Krot_Shockwhisker_cost) {
-        Krot_Shockwhisker_cost = Krot_Shockwhisker_cost;
+        _Krot_Shockwhisker_cost = Krot_Shockwhisker_cost;
     }
 
     private boolean _chaos_wizard;
@@ -332,21 +334,21 @@ public class RosterType implements Serializable {
      * Chaos Wizard cost
      */    
     
-    private static int Horatio_X_Schottenheim_cost=80000;
+    private static int _Horatio_X_Schottenheim_cost=80000;
     private boolean Kari_Coldstell;
-    private static int Kari_Coldstell_cost=50000;
+    private static int _Kari_Coldstell_cost=50000;
     
     private boolean Fink_Da_Fixer;
-    private static int Fink_Da_Fixer_cost=50000;
+    private static int _Fink_Da_Fixer_cost=50000;
     
     private boolean Papa_Skullbones;
-    private static int Papa_Skullbones_cost=80000;
+    private static int _Papa_Skullbones_cost=80000;
     
      private boolean Galandril_Silverwater;
-    private static int Galandril_Silverwater_cost=50000;
+    private static int _Galandril_Silverwater_cost=50000;
     
     private boolean Krot_Shockwhisker;
-    private static int Krot_Shockwhisker_cost=80000;
+    private static int _Krot_Shockwhisker_cost=80000;
     /**
      *
      */
@@ -530,10 +532,40 @@ public class RosterType implements Serializable {
         _player_types.clear();
     }
     
+     public void clearInducementType() {
+        _inducements.clear();
+    }
+    
     public void clearAvailableStarPlayerType() {
         _available_starplayers.clear();
     }
 
+    public void addInducementType(InducementType it)
+    {
+        _inducements.add(it);
+    }
+    
+    public int getInducementTypeSize()
+    {
+        return _inducements.size();
+    }
+    
+    public InducementType getInducementType(int i)
+    {
+        return _inducements.get(i);
+    }
+    
+    public InducementType getInducementType(String s)
+    {
+        for (InducementType it:_inducements)
+        {
+            if (it.getName().equals(s))
+            {
+                return it;
+            }
+        }
+        return null;
+    }
     /**
      * @return the _player_types
      */

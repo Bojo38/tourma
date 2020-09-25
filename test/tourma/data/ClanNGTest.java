@@ -9,11 +9,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import javax.swing.ImageIcon;
 import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -192,10 +194,10 @@ public class ClanNGTest {
         ImageIcon icon = new ImageIcon("./test/clan.png");
         BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Clan instance = new Clan("Test");
-        instance.setPicture(p);
+        instance.setPicture(icon);
 
         assertNotNull(instance.getPicture());
-        assertEquals(p,instance.getPicture());
+        assertEquals(icon,instance.getPicture());
     }
 
     /**
@@ -208,10 +210,10 @@ public class ClanNGTest {
         ImageIcon icon = new ImageIcon("./test/clan.png");
         BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Clan instance = new Clan("Test");
-        instance.setPicture(p);
+        instance.setPicture(icon);
 
         assertNotNull(instance.getPicture());
-        assertEquals(p,instance.getPicture());
+        assertEquals(icon,instance.getPicture());
     }
 
     /**
@@ -260,12 +262,10 @@ public class ClanNGTest {
     @Test
     public void testIsUpdated() {
         System.out.println("isUpdated");
-        Clan instance = null;
+        Clan instance = new Clan("Clan");
         boolean expResult = false;
         boolean result = instance.isUpdated();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -275,10 +275,16 @@ public class ClanNGTest {
     public void testSetUpdated() {
         System.out.println("setUpdated");
         boolean updated = false;
-        Clan instance = null;
+        Clan instance = new Clan("Clan");;
         instance.setUpdated(updated);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean result = instance.isUpdated();
+       assertEquals(result, updated);
+       
+        updated = true;
+        
+        instance.setUpdated(updated);
+        result = instance.isUpdated();
+       assertEquals(result, updated);
     }
 
     /**
@@ -287,12 +293,11 @@ public class ClanNGTest {
     @Test
     public void testGetUID() {
         System.out.println("getUID");
-        Clan instance = null;
-        int expResult = 0;
-        int result = instance.getUID();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+          Random ran=new Random(1000);
+        int UID = ran.nextInt();
+        Clan instance = new Clan("UID");
+        instance.setUID(UID);
+        assertEquals(UID, instance.getUID());
     }
 
     /**
@@ -300,12 +305,11 @@ public class ClanNGTest {
      */
     @Test
     public void testSetUID() {
-        System.out.println("setUID");
-        int UID = 0;
-        Clan instance = null;
+         Random ran=new Random(1000);
+        int UID = ran.nextInt();
+        Clan instance = new Clan("UID");
         instance.setUID(UID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(UID, instance.getUID());
     }
 
     /**
@@ -314,11 +318,7 @@ public class ClanNGTest {
     @Test
     public void testPull() {
         System.out.println("pull");
-        Clan clan = null;
-        Clan instance = null;
-        instance.pull(clan);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
 
     /**
@@ -327,11 +327,7 @@ public class ClanNGTest {
     @Test
     public void testPush() {
         System.out.println("push");
-        Clan clan = null;
-        Clan instance = null;
-        instance.push(clan);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
 }

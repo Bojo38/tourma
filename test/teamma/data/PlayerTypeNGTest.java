@@ -23,7 +23,7 @@ public class PlayerTypeNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB();
+        lrb = LRB.getLRB(LRB.E_Version.BB2016);
     }
 
     @AfterClass

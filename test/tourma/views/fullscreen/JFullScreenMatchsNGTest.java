@@ -55,7 +55,7 @@ public class JFullScreenMatchsNGTest {
     public void testClientLoop() throws Exception {
         System.out.println("clientLoop");
         JFullScreenMatchs instance = null;
-        instance.clientLoop();
+        instance.clientLoop(0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -114,7 +114,7 @@ public class JFullScreenMatchsNGTest {
         boolean right = false;
         JFullScreenMatchs instance = null;
         JPanel expResult = null;
-        JPanel result = instance.createClashCoachPane(t, score, right);
+        JPanel result = instance.createClashCoachPane(t, score, right,0);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

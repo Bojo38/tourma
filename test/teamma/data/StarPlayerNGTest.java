@@ -24,7 +24,7 @@ public class StarPlayerNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB();
+        lrb = LRB.getLRB(LRB.E_Version.BB2016);
     }
 
     @AfterClass
@@ -420,7 +420,11 @@ public class StarPlayerNGTest {
 
             if (instance != null) {
                 int result = instance.getCost();
-                if ((result == 0)&&(!instance.getName().equals("Grotty"))) {
+                if ((result == 0)&&(!instance.getName().equals("Grotty *CRP*"))
+                        &&(!instance.getName().equals("Crumbleberry *BB2016*"))
+                        &&(!instance.getName().equals("Valen Swift *BB2016*"))
+                        &&(!instance.getName().equals("Grombrindal, The White Dwarf *Special Event*"))
+                        &&(!instance.getName().equals("The Black Gobbo *Special Event*"))) {
                     fail("cost is null for "+instance.getName());
                 }
             } else {

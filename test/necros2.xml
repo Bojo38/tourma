@@ -1,4 +1,4 @@
-<Composition Roster="Necromantiques" Apothecary="false" Assistants="2" Cheerleaders="3" FanFactor="8" Rerolls="1">
+<Composition LRB="NAF2017" Roster="Necromantiques" Apothecary="false" Assistants="2" Cheerleaders="3" FanFactor="8" Rerolls="1">
   <Inducements Chef="true" Igor="true" Wizard="true" Babes="1" Cards="100000" Bribe="2" ExtraRerolls="2" LocalApothecary="0">
     <StarPlayer Name="Count Luthor Von Drakenborg" />
     <StarPlayer Name="Setekh" />
@@ -11,8 +11,8 @@
   </Player>
   <Player Name="" Position="Ghoul" />
   <Player Name="" Position="Ghoul" />
-  <Player Name="" Position="Wigth" />
-  <Player Name="" Position="Wigth" />
+  <Player Name="" Position="Wight" />
+  <Player Name="" Position="Wight" />
   <Player Name="" Position="Flesh Golem">
     <Skill Name="Guard" Color="-16769117" />
   </Player>

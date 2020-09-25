@@ -82,13 +82,14 @@ public class JFullScreenNGTest {
 
     public class JFullScreenImpl extends JFullScreen {
 
+
         @Override
-        protected void clientLoop() {
+        protected void setStop(boolean s) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
         @Override
-        protected void setStop(boolean s) {
+        protected void clientLoop(int screen) throws InterruptedException {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
      
@@ -101,7 +102,7 @@ public class JFullScreenNGTest {
     public void testClientLoop() throws Exception {
         System.out.println("clientLoop");
         JFullScreen instance = new JFullScreenImpl();
-        instance.clientLoop();
+        instance.clientLoop(0);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

@@ -39,7 +39,7 @@ public class MjtTeamPlayersNGTest {
     
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB();
+        lrb = LRB.getLRB(LRB.E_Version.BB2016);
     }
     
     @AfterClass
@@ -167,7 +167,7 @@ public class MjtTeamPlayersNGTest {
             
             Object o1 = instance.getValueAt(i, 1);
             Assert.assertTrue(o1 instanceof String);
-            Assert.assertEquals((String) o1, Translate.translate(player.getName()));
+            Assert.assertEquals((String) o1, player.getName());
             
             Object o2 = instance.getValueAt(i, 2);
             Assert.assertTrue(o2 instanceof String);

@@ -147,6 +147,7 @@ public class JdgSelectPosition extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jtPositions.setName("jtPositions"); // NOI18N
         jtPositions.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtPositionsMouseClicked(evt);

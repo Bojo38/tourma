@@ -8,9 +8,11 @@ package tourma.data;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -28,7 +30,8 @@ public class CategoryNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        Tournament.getTournament().loadXML(new File("./test/category.xml"));
+        Tournament t=Tournament.getTournament();
+        t.loadXML(new File("./test/category.xml"));
     }
 
     @AfterClass
@@ -239,12 +242,12 @@ public class CategoryNGTest {
     @Test
     public void testGetUID() {
         System.out.println("getUID");
-        Category instance = null;
-        int expResult = 0;
-        int result = instance.getUID();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+          Random ran=new Random(1000);
+        int UID = ran.nextInt();
+        Category instance = new Category("UID");
+        instance.setUID(UID);
+        assertEquals(UID, instance.getUID());
+      
     }
 
     /**
@@ -253,11 +256,11 @@ public class CategoryNGTest {
     @Test
     public void testSetUID() {
         System.out.println("setUID");
-        int UID = 0;
-        Category instance = null;
+        Random ran=new Random(1000);
+        int UID = ran.nextInt();
+        Category instance = new Category("UID");
         instance.setUID(UID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(UID, instance.getUID());
     }
 
     /**
@@ -265,12 +268,7 @@ public class CategoryNGTest {
      */
     @Test
     public void testPull() {
-        System.out.println("pull");
-        Category cat = null;
-        Category instance = null;
-        instance.pull(cat);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("pull - Ignore, RMI test");    
     }
 
 }

@@ -60,8 +60,6 @@ public class JdgPrintableRosterNGTest {
         roster = new Roster();
         roster.setXMLElement(racine);
 
-        // Remove local apothecary, because the team is an unded team
-        roster.setLocalapothecary(0);
 
         jdg = new JdgPrintableRoster(null, true,
                 roster, null, true);
@@ -91,7 +89,7 @@ public class JdgPrintableRosterNGTest {
             Thread.sleep(500);
             boolean equals = compareTwoFiles("tmp.html", "test/necros.html");
             Assert.assertTrue(equals);
-            Files.delete(f.toPath());
+            //Files.delete(f.toPath());
 
         } catch (InterruptedException ex) {
             fail("Exception catched");
