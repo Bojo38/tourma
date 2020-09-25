@@ -113,14 +113,14 @@ public final class JdgCoach extends javax.swing.JDialog {
         jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 1);
         jbtDelCategory.setEnabled((Tournament.getTournament().getCategoriesCount() > 1) && (jlsCategories.getSelectedValuesList().size() > 0));
 
-        jbtEditRoster.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jbtAdd.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jpnBtns.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jlsCompositions.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
+        jbtEditRoster.setEnabled(true);
+        jbtAdd.setEnabled(true);
+        jpnBtns.setEnabled(true);
+        jlsCompositions.setEnabled(true);
         updatelist();
 
-        jLabel4.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jtfNAF.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
+        jLabel4.setEnabled(true);
+        jtfNAF.setEnabled(true);
         jlbNafRanking.setText(Double.toString(mCoach.getNafRank()) + " (" + Double.toString(mCoach.getNafRankAvg()) + ")");
         jcbRoster.setModel(RosterType.getRostersNamesModel());
 
@@ -186,14 +186,14 @@ public final class JdgCoach extends javax.swing.JDialog {
         jbtAddCategory.setEnabled(Tournament.getTournament().getCategoriesCount() > 1);
         jbtDelCategory.setEnabled((Tournament.getTournament().getCategoriesCount() > 1) && (jlsCategories.getSelectedValuesList().size() > 0));
 
-        jbtEditRoster.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jLabel4.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jtfNAF.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
+        jbtEditRoster.setEnabled(true);
+        jLabel4.setEnabled(true);
+        jtfNAF.setEnabled(true);
         jlbNafRanking.setText(Double.toString(mCoach.getNafRank()) + " (" + Double.toString(mCoach.getNafRankAvg()) + ")");
 
-        jbtAdd.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jpnBtns.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jlsCompositions.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
+        jbtAdd.setEnabled(true);
+        jpnBtns.setEnabled(true);
+        jlsCompositions.setEnabled(true);
         updatelist();
 
         jcbRoster.setModel(RosterType.getRostersNamesModel());
@@ -293,14 +293,14 @@ public final class JdgCoach extends javax.swing.JDialog {
             jcbClan.setSelectedItem(mCoach.getClan().getName());
         }
 
-        jbtEditRoster.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jLabel4.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jtfNAF.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
+        jbtEditRoster.setEnabled(true);
+        jLabel4.setEnabled(true);
+        jtfNAF.setEnabled(true);
         jlbNafRanking.setText(Double.toString(mCoach.getNafRank()) + " (" + Double.toString(mCoach.getNafRankAvg()) + ")");
 
-        jbtAdd.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jpnBtns.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
-        jlsCompositions.setEnabled(Tournament.getTournament().getParams().getGame() == RosterType.C_BLOOD_BOWL);
+        jbtAdd.setEnabled(true);
+        jpnBtns.setEnabled(true);
+        jlsCompositions.setEnabled(true);
         updatelist();
 
         if (coach.getPicture() == null) {

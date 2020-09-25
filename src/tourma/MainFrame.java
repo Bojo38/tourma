@@ -298,7 +298,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
      */
     public void update() {
 
-        jmiEditTeam.setEnabled(mTournament.getParams().getGame() == RosterType.C_BLOOD_BOWL);
+        jmiEditTeam.setEnabled(true);
         jmiSubstitutePlayer.setEnabled(mTournament.getRoundsCount() > 0);
         final MainTreeModel dtm = new MainTreeModel();
         jtrPanels.setCellRenderer(dtm);
@@ -1155,15 +1155,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jdgParams.setVisible(true);
 
         mTournament = Tournament.getTournament();
-        if (mTournament.getParams().getGame() == RosterType.C_DREAD_BALL) {
-            RosterType.initCollection(RosterType.C_DREAD_BALL);
-            jmiExport.setEnabled(false);
-            jmiExportFbb.setEnabled(false);
-            jcxAllowSpecialSkill.setEnabled(false);
-        } else {
-            RosterType.initCollection(RosterType.C_BLOOD_BOWL);
-            //        LRB.getLRB();
-        }
+
+        RosterType.initCollection();
 
         mTournament.clearGroups();
         final Group group = new Group(Translate.translate(CS_None));
@@ -1841,20 +1834,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                 }
 
                 // Clean Cup
-                if (round.isCup())
-                {
-                    if (round.getCupTour()==0)
-                    {
+                if (round.isCup()) {
+                    if (round.getCupTour() == 0) {
                         mTournament.setCup(null);
-                    }
-                    else
-                    {
-                        mTournament.getCup().cleanRound( round);
+                    } else {
+                        mTournament.getCup().cleanRound(round);
                     }
                 }
-                
+
                 mTournament.removeRound(round);
-                
 
                 update();
                 updateTree();
