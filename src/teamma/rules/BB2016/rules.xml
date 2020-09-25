@@ -30,37 +30,7 @@
         <team image="bretonian.png">bretonians.xml</team>
     </teams>
     <inducements>
-        <chef>yes</chef>
-        <bribe>yes</bribe>
-        <mercenaries>yes</mercenaries>
-        <babes>yes</babes>
-        <wizard>yes</wizard>
-        <reroll>yes</reroll>
-        <apothecary>yes</apothecary>
-        <igor>yes</igor>
-        <cards>yes</cards>
         <starplayers>yes</starplayers>        
-        
-        <!--<chaos_wizard>yes</chaos_wizard>   
-        <kari_coldstell>yes</kari_coldstell>   
-        <fink_da_fixer>yes</fink_da_fixer>   
-        <papa_skullbones>yes</papa_skullbones>   
-        <galandril_silverwater>yes</galandril_silverwater>   
-        <krot_shockwhisker>yes</krot_shockwhisker>   
-        <horacio_x_schottenheim>yes</horacio_x_schottenheim>        
-        <add_assistant>yes</add_assistant>
-        <add_cheerleaders>yes</add_cheerleaders>
-        <weather_wizard>yes</weather_wizard>
-        <druchi_sport_sorcerer>yes</druchi_sport_sorcerer>    
-        <plague_doctors>yes</plague_doctors>
-        <nurglings>yes</nurglings>
-        <horticulturalist>yes</horticulturalist>
-        <joseph_bugman>yes</joseph_bugman>
-        <slann_mage_priest>yes</slann_mage_priest>   
-        <hot-pot>yes</hot-pot>
-        <heady_brew>yes</heady_brew>
-        <sports_necrotheurge>yes</sports_necrotheurge>-->
-        
     </inducements>
     <check_nb_big_guys>no</check_nb_big_guys>
     <min_ff>0</min_ff>
