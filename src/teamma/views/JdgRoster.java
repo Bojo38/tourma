@@ -130,7 +130,6 @@ public final class JdgRoster extends javax.swing.JDialog {
     @SuppressWarnings({"unchecked", "PMD"})
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jtpGoods = new javax.swing.JTabbedPane();
         jPanel14 = new javax.swing.JPanel();
@@ -478,7 +477,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jpnInducements.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle1.getString("Mercenaires et Champions"))); // NOI18N
         jpnInducements.setPreferredSize(new java.awt.Dimension(200, 250));
-        jpnInducements.setLayout(new java.awt.GridLayout(5, 3));
+        jpnInducements.setLayout(new java.awt.GridLayout(0, 3));
         jtpGoods.addTab(bundle.getString("Inducements"), jpnInducements); // NOI18N
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle1.getString("Mercenaires et Champions"))); // NOI18N
