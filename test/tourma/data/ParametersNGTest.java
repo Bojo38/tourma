@@ -259,31 +259,6 @@ public class ParametersNGTest {
         assertEquals(nb, instance.getCriteriaCount());
     }
 
-    /**
-     * Test of getGame method, of class Parameters.
-     */
-    @Test
-    public void testGetGame() {
-        System.out.println("getGame");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        instance.setGame(expResult);
-        int result = instance.getGame();
-        assertEquals(result, expResult);
-    }
-
-    /**
-     * Test of setGame method, of class Parameters.
-     */
-    @Test
-    public void testSetGame() {
-        System.out.println("setGame");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        instance.setGame(expResult);
-        int result = instance.getGame();
-        assertEquals(result, expResult);
-    }
 
     /**
      * Test of getPointsIndivVictory method, of class Parameters.
