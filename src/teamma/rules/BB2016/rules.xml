@@ -28,6 +28,8 @@
         <team image="vampire.png">vampires.xml</team>
         <team image="woodelf.png">woodelves.xml</team>
         <team image="bretonian.png">bretonians.xml</team>
+        <team image="snotlings.png">snotlings.xml</team>
+        <team image="owa.png">oldworldalliance.xml</team>
     </teams>
     <inducements>
         <starplayers>yes</starplayers>        
