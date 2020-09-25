@@ -99,7 +99,7 @@ public class Parameters implements IXMLExport, Serializable {
         this.mExceptBestAndWorstIndiv = params.mExceptBestAndWorstIndiv;
         this.mExceptBestAndWorstTeam = params.mExceptBestAndWorstTeam;
         this.mForeColor = params.mForeColor;
-        this.mGame = params.mGame;
+
         this.mGapLargeVictory = params.mGapLargeVictory;
         this.mGapLittleLost = params.mGapLittleLost;
         this.mGroupsEnable = params.mGroupsEnable;
@@ -243,10 +243,6 @@ public class Parameters implements IXMLExport, Serializable {
      */
     private static final Logger LOG = Logger.getLogger(Parameters.class.getName());
 
-    /**
-     *
-     */
-    private int mGame = RosterType.C_BLOOD_BOWL;
 
     public boolean isCrossPoolMatch() {
         return mCrossPoolMatch;
@@ -713,7 +709,6 @@ public class Parameters implements IXMLExport, Serializable {
 
         params.setAttribute(StringConstants.CS_GROUPENABLE, Boolean.toString(this.isGroupsEnable()));
         params.setAttribute(StringConstants.CS_SUBSTITUTES, Boolean.toString(this.isSubstitutes()));
-        params.setAttribute(StringConstants.CS_GAMETYPE, Integer.toString(this.getGame()));
 
         params.setAttribute(StringConstants.CS_ACTVATECLANS, Boolean.toString(this.isEnableClans()));
         params.setAttribute(StringConstants.CS_AVOIDFIRSTMATCH, Boolean.toString(this.isAvoidClansFirstMatch()));
@@ -861,13 +856,6 @@ public class Parameters implements IXMLExport, Serializable {
                 try {
                     this.setDate(format.parse(params.getAttribute(StringConstants.CS_DATE).getValue()));
                 } catch (ParseException | NullPointerException pe) {
-                }
-
-                try {
-                    this.setGame(params.getAttribute(StringConstants.CS_GAMETYPE).getIntValue());
-                } catch (DataConversionException | NullPointerException pe) {
-                    this.setGame(1);
-                    LOG.log(Level.FINE, pe.getLocalizedMessage());
                 }
 
             } catch (NullPointerException ne) {
@@ -1139,20 +1127,6 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void removeCriteria(int c) {
         mCriterias.remove(c);
-    }
-
-    /**
-     * @return the mGame
-     */
-    public int getGame() {
-        return mGame;
-    }
-
-    /**
-     * @param mGame the mGame to set
-     */
-    public void setGame(int mGame) {
-        this.mGame = mGame;
     }
 
     /**
@@ -1975,7 +1949,6 @@ public class Parameters implements IXMLExport, Serializable {
             result &= params.mBestResultsIndiv == this.mBestResultsIndiv;
             result &= params.mBestResultsTeam == this.mBestResultsTeam;
             result &= params.mClansMembersNumber == this.mClansMembersNumber;
-            result &= params.mGame == this.mGame;
 
             result &= params.mGapLargeVictory == this.mGapLargeVictory;
             result &= params.mGapLittleLost == this.mGapLittleLost;

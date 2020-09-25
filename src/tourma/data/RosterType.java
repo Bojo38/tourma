@@ -36,22 +36,6 @@ public class RosterType implements IXMLExport, Serializable {
     /**
      *
      */
-    public static final int C_BLOOD_BOWL = 1;
-
-    /**
-     *
-     */
-    public static final int C_DREAD_BALL = 2;
-    /*public static String[] p_Rosters={
-     "Amazone", "Bas-Fonds", "Chaos", "Elfe", "Elfe Sylvain", "Elfe Noir",
-     "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri",
-     "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique",
-     "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire"
-     };*/
-
-    /**
-     *
-     */
     private static ArrayList<String> mRostersNames = new ArrayList<>();
 
     public static HashMap<String, RosterType> getRosters() {
@@ -83,9 +67,8 @@ public class RosterType implements IXMLExport, Serializable {
                 rt.setUID(type.getUID());
             }
         }
-        
-        if (mRosterTypes.size()!=types.size())
-        {
+
+        if (mRosterTypes.size() != types.size()) {
             mRosterTypes.clear();
             pull(types);
         }
@@ -176,9 +159,9 @@ public class RosterType implements IXMLExport, Serializable {
         mRosterTypes.put(translate("ChaosPactKey"), new RosterType(translate("ChaosPactKey")));
         mRosterTypes.put(translate("SkavenKey"), new RosterType(translate("SkavenKey")));
         mRosterTypes.put(translate("SlannKey"), new RosterType(translate("SlannKey")));
-        mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));    
+        mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));
         mRosterTypes.put(translate("SnotlingsKey"), new RosterType(translate("SnotlingsKey")));
-        mRosterTypes.put(translate("OldWorldAllianceKey"), new RosterType(translate("OldWorldAllianceKey")));    
+        mRosterTypes.put(translate("OldWorldAllianceKey"), new RosterType(translate("OldWorldAllianceKey")));
 
     }
 
@@ -190,29 +173,8 @@ public class RosterType implements IXMLExport, Serializable {
 
         mRostersNames.clear();
 
-        switch (game) {
-            case C_BLOOD_BOWL:
-                initCollection();
-                break;
-            case C_DREAD_BALL:
-                mRostersNames.clear();
-                mRostersNames.add(translate("CORPORATION"));
-                mRostersNames.add(translate("ORX"));
-                mRostersNames.add(translate("VER-MYNS"));
-                mRostersNames.add(translate("FORGE FATHERS"));
-                mRostersNames.add(translate("JUDWANS"));
-                mRostersNames.add(translate("Z'ZORS"));
-                mRostersNames.add(translate("ROBOTS"));
-                mRostersNames.add(translate("FEMALES CORPORATION"));
-                mRostersNames.add(translate("ZEES"));
-                mRostersNames.add(translate("ASTERIANS"));
-                mRostersNames.add(translate("NAMELESS"));
-                mRostersNames.add(translate("TARATONS"));
-                break;
-            default:
-                initCollection();
-                break;
-        }
+        initCollection();
+
     }
 
     /**
@@ -255,7 +217,7 @@ public class RosterType implements IXMLExport, Serializable {
                 result = translate("UnderworldKey");
                 break;
             case "Bretonniens":
-                result=translate("BretonianKey");
+                result = translate("BretonianKey");
                 break;
             case "Chaos":
                 result = translate("ChaosKey");
@@ -329,7 +291,7 @@ public class RosterType implements IXMLExport, Serializable {
             case "Snotlings":
                 result = translate("SnotlingsKey");
                 break;
-             case "Alliance du Vieux Monde":
+            case "Alliance du Vieux Monde":
                 result = translate("OldWorldAllianceKey");
                 break;
         }
@@ -454,7 +416,7 @@ public class RosterType implements IXMLExport, Serializable {
             result = translate("Underworld");
         }
         if (translate("BretonianKey").equals(source)) {
-            result=translate("Bretonnians");
+            result = translate("Bretonnians");
         }
         if (translate("ChaosKey").equals(source)) {
             result = translate("Chaos");
@@ -462,10 +424,10 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("ElfKey"))) {
             result = translate("Elves");
         }
-        if ((source.equals(translate("WoodElfKey")))||(source.equals(translate("WoodElfKey2")))) {
+        if ((source.equals(translate("WoodElfKey"))) || (source.equals(translate("WoodElfKey2")))) {
             result = translate("Wood Elves");
         }
-        if ((source.equals(translate("DarkElfKey")))||(source.equals(translate("DarkElfKey2")))) {
+        if ((source.equals(translate("DarkElfKey"))) || (source.equals(translate("DarkElfKey2")))) {
             result = translate("Dark Elves");
         }
         if (source.equals(translate("GoblinKey"))) {
@@ -477,7 +439,7 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("HighElfKey"))) {
             result = translate("High Elves");
         }
-        if ((source.equals(translate("LizardmenKey")))||(source.equals(translate("LizardmenKey2")))) {
+        if ((source.equals(translate("LizardmenKey"))) || (source.equals(translate("LizardmenKey2")))) {
             result = translate("Lizardmen");
         }
         if (source.equals(translate("HumanKey"))) {
@@ -492,13 +454,13 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("DwarfKey"))) {
             result = translate("Dwarves");
         }
-        if ((source.equals(translate("ChaosDwarfKey")))||(source.equals(translate("ChaosDwarfKey2")))||(source.equals("Nain du Chaos"))) {
+        if ((source.equals(translate("ChaosDwarfKey"))) || (source.equals(translate("ChaosDwarfKey2"))) || (source.equals("Nain du Chaos"))) {
             result = translate("Chaos Dwarves");
         }
-        if ((source.equals(translate("NecromanticKey")))||(source.equals("Necromantiques"))) {
+        if ((source.equals(translate("NecromanticKey"))) || (source.equals("Necromantiques"))) {
             result = translate("Necromantic");
         }
-        if ((source.equals(translate("NorseKey")))||(source.equals("Nordiques"))) {
+        if ((source.equals(translate("NorseKey"))) || (source.equals("Nordiques"))) {
             result = translate("Norse");
         }
         if (source.equals(translate("NurgleKey"))) {
@@ -507,8 +469,8 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("OgreKey"))) {
             result = translate("Ogres");
         }
-        
-        String tmp=translate("OrcKey");
+
+        String tmp = translate("OrcKey");
         if (source.equals(translate("OrcKey"))) {
             result = translate("Orc");
         }
