@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import teamma.data.LRB;
@@ -103,6 +104,9 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         }
 
         this.setPreferredSize(new Dimension(400, 260));
+        
+        jbtColor.setBackground(_color);
+        
         pack();
 
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -132,7 +136,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         jbtCancel = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        ccColor = new net.java.dev.colorchooser.ColorChooser();
+        jbtColor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -144,7 +148,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         );
         jpnSkillsLayout.setVerticalGroup(
             jpnSkillsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 231, Short.MAX_VALUE)
+            .addGap(0, 234, Short.MAX_VALUE)
         );
 
         getContentPane().add(jpnSkills, java.awt.BorderLayout.CENTER);
@@ -173,26 +177,13 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         jLabel1.setText(bundle.getString("SelectColor")); // NOI18N
         jPanel1.add(jLabel1);
 
-        ccColor.setColor(new java.awt.Color(0, 0, 0));
-        ccColor.setName("colorChooser"); // NOI18N
-        ccColor.addActionListener(new java.awt.event.ActionListener() {
+        jbtColor.setText(" ");
+        jbtColor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ccColorActionPerformed(evt);
+                jbtColorActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout ccColorLayout = new javax.swing.GroupLayout(ccColor);
-        ccColor.setLayout(ccColorLayout);
-        ccColorLayout.setHorizontalGroup(
-            ccColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-        ccColorLayout.setVerticalGroup(
-            ccColorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 22, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(ccColor);
+        jPanel1.add(jbtColor);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
@@ -232,16 +223,17 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         }*/
     }//GEN-LAST:event_jbtOKActionPerformed
 
-    private void ccColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ccColorActionPerformed
-        setColor(ccColor.getColor());
-    }//GEN-LAST:event_ccColorActionPerformed
+    private void jbtColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtColorActionPerformed
+        Color c=JColorChooser.showDialog(this,"Choose",Color.CYAN);
+        this._color=c;
+    }//GEN-LAST:event_jbtColorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private net.java.dev.colorchooser.ColorChooser ccColor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton jbtCancel;
+    private javax.swing.JButton jbtColor;
     private javax.swing.JButton jbtOK;
     private javax.swing.JPanel jpnSkills;
     // End of variables declaration//GEN-END:variables
