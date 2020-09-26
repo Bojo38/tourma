@@ -24,19 +24,23 @@ import tourma.utility.StringConstants;
 @SuppressWarnings("serial")
 public class MjtCriterias extends AbstractTableModel implements TableCellRenderer {
 
+    /**
+     * String Key about Criterias that already exists
+     */
     private static final String CS_CriteriaAlreadyExists = "CriteriaAlreadyExists0";
 
-    private final Tournament mTour;
+/**
+ * 
+ */
     private Parameters mParams;
 
     /**
-     *
+     * 
      * @param tour
      */
     public MjtCriterias(final Tournament tour) {
 
         mParams = tour.getParams();
-        mTour = tour;
     }
 
     @Override

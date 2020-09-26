@@ -14,11 +14,9 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
-import tourma.MainFrame;
 import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
 
@@ -27,28 +25,56 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 public class CoachMatch extends Match implements Serializable {
-
+/**
+ * UID Seed
+ */
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    /**
+     * UNique ID
+     */
     protected int UID = sGenUID.incrementAndGet();
 
+    /**
+     * Remotely updated
+     */
     protected boolean remotely = false;
 
+    /**
+     * Is remotely
+     * @return 
+     */
     public boolean isRemotely() {
         return remotely;
     }
 
+    /**
+     * Set remotely
+     * @param isRemotely 
+     */
     public void setRemotely(boolean isRemotely) {
         this.remotely = isRemotely;
     }
 
+    /**
+     * Unique ID Getter
+     * @return 
+     */
     public int getUID() {
         return UID;
     }
 
+    /**
+     * Unique ID Setter
+     * @param UID 
+     */
     public void setUID(int UID) {
         this.UID = UID;
     }
 
+    /**
+     * Is match updated
+     * @return 
+     */
     public boolean isUpdated() {
         for (Value val : mValues.values()) {
             if (val.isUpdated()) {
@@ -59,6 +85,10 @@ public class CoachMatch extends Match implements Serializable {
         return updated;
     }
 
+    /**
+     * Coach Match Puller
+     * @param match 
+     */
     public void pull(Match match) {
         if (match instanceof CoachMatch) {
             CoachMatch coachmatch = (CoachMatch) match;
@@ -151,6 +181,10 @@ public class CoachMatch extends Match implements Serializable {
         }
     }
 
+    /**
+     * Match Pusher
+     * @param match 
+     */
     public void push(Match match) {
         if (match.isUpdated()) {
             if (match instanceof CoachMatch) {
@@ -257,6 +291,9 @@ public class CoachMatch extends Match implements Serializable {
         }
     }
 
+    /**
+     * Logger
+     */
     private static final Logger LOG = Logger.getLogger(CoachMatch.class.getName());
 
     @Override

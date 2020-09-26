@@ -196,7 +196,7 @@ public class CategoryNGTest {
     }
 
     /**
-     * Test of setmName method, of class Category.
+     * Test of setName method, of class Category.
      */
     @Test
     public void testSetmName() {
@@ -204,7 +204,7 @@ public class CategoryNGTest {
         String s = "TestCategory";
         Category c = new Category(s);
         assertEquals(c.getName(), s);
-        c.setmName("Test");
+        c.setName("Test");
         assertEquals(c.getName(), "Test");
 
     }
