@@ -31,29 +31,56 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
 
+    /**
+     * Is the Clan updated ?
+     * @return The clan hase been updated
+     */
     public boolean isUpdated() {
         return updated;
     }
 
+    /**
+     * Updated Setter
+     * @param updated 
+     */
     public void setUpdated(boolean updated) {
         this.updated = updated;
     }
+    /**
+     * updated status
+     */
     protected boolean updated = false;
 
+    /**
+     * Unique ID Getter
+     * @return Unique ID
+     */
     public int getUID() {
         return UID;
     }
 
+    /**
+     * Unique ID Setter
+     * @param UID Unique ID
+     */
     public void setUID(int UID) {
         this.UID = UID;
     }
 
+    /**
+     * Clan Puller
+     * @param clan 
+     */
     public void pull(Clan clan) {
         this.UID = clan.UID;
         this.mName = clan.mName;
         this.picture = clan.picture;
     }
 
+    /**
+     * Clan Pusher
+     * @param clan 
+     */
     public void push(Clan clan) {
         if (clan.updated) {
             this.UID = clan.UID;
@@ -63,36 +90,32 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
     }
 
     /**
-     *
+     * Clan HashMap indexed by a String
      */
     private static HashMap<String, Clan> sClanMap = new HashMap<>();
 
-    private static final Logger LOG = Logger.getLogger(Clan.class.getName());
-
+   
     /**
-     *
-     * @return
-     */
-    /*public static HashMap<String, Clan> getsClanMap() {
-        return sClanMap;
-    }*/
-    /**
-     *
-     * @param key
-     * @return
+     * Clan getter
+     * @param key 
+     * @return Clan from map
      */
     public static Clan getClan(String key) {
         return sClanMap.get(key);
     }
 
+    /**
+     * Delete Clan from HashMap
+     * @param key 
+     */
     public static void delClan(String key) {
         sClanMap.remove(key);
     }
 
     /**
-     *
-     * @param key
-     * @param c
+     * Clan Putter 
+     * @param key Key to index Clan
+     * @param c Clan
      */
     public static void putClan(String key, Clan c) {
         sClanMap.put(key, c);
@@ -111,7 +134,7 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
     private String mName;
 
     /**
-     *
+     * Icon of the Clan
      */
     private ImageIcon picture;
 
@@ -124,11 +147,7 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
         mName = name;
     }
 
-    /**
-     *
-     * @param obj
-     * @return
-     */
+  
     @Override
     public boolean equals(final Object obj) {
 
@@ -149,11 +168,7 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
         return hash;
     }
 
-    /**
-     *
-     * @param obj
-     * @return
-     */
+
     @Override
     public int compareTo(final Object obj) {
         int result = -1;
@@ -164,10 +179,7 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
         return result;
     }
 
-    /**
-     *
-     * @return
-     */
+  
     @Override
     public Element getXMLElement() {
         final Element clan = new Element(StringConstants.CS_CLAN);
@@ -196,10 +208,7 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
         return clan;
     }
 
-    /**
-     *
-     * @param e
-     */
+
     @Override
     public void setXMLElement(final Element e) {
         this.mName = e.getAttributeValue(StringConstants.CS_NAME);
@@ -222,37 +231,30 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
     }
 
     /**
-     *
-     * @return
+     * Logger
      */
+     private static final Logger LOG = Logger.getLogger(Clan.class.getName());
+    
+
     @Override
     public String getName() {
         return mName;
     }
 
-    /**
-     *
-     * @return
-     */
+
     @Override
     public ImageIcon getPicture() {
         return picture;
     }
 
-    /**
-     *
-     * @param p
-     */
+
     @Override
     public void setPicture(ImageIcon p) {
         picture = p;
         updated=true;
     }
 
-    /**
-     *
-     * @param name
-     */
+
     @Override
     public void setName(String name) {
         mName = name;

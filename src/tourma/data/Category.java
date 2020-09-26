@@ -22,10 +22,18 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
     protected static AtomicInteger sGenUID=new AtomicInteger(0);
     protected int UID=sGenUID.incrementAndGet();
 
+    /**
+     * Unique ID getter
+     * @return UID
+     */
     public int getUID() {
         return UID;
     }
 
+    /**
+     * Unique ID Setter
+     * @param UID Unique ID
+     */
     public void setUID(int UID) {
         this.UID = UID;
     }
@@ -33,12 +41,15 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
     
     
     /**
-     *
+     * Category map indexed by category name
      */
     private static HashMap<String, Category> sCategoryMap = new HashMap<>();
     
-    private static final Logger LOG = Logger.getLogger(Category.class.getName());
 
+    /**
+     * Category Puller
+     * @param cat Category to pull
+     */
     public void pull(Category cat)
     {
         this.UID=cat.UID;
@@ -46,18 +57,19 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
     }
     
     /**
-     * @param s
-     * @param c
+     * Category Map Putter
+     * @param s Key of the map
+     * @param c Catgory toput
      */
-    /*public static HashMap<String, Category> getsCategoryMap() {
-        return sCategoryMap;
-    }*/
-
     public static void putCategory(String s, Category c)
     {
         sCategoryMap.put(s, c);
     }
     
+    /**
+     * Remove catgory from map
+     * @param s Key
+     */
     public static void delCategory(String s)
     {
         sCategoryMap.remove(s);
@@ -70,23 +82,18 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
         sCategoryMap=new HashMap<>();                
     }
     /**
-     * 
-     * @param s
-     * @return 
+     * Get Category from Map
+     * @param s Key
+     * @return Category
      */
     public static Category getCategory(String s)
     {
         return sCategoryMap.get(s);
     }
     
+
     /**
-     * @param asCategoryMap the sCategoryMap to set
-     */
-    /*public static void setsCategoryMap(HashMap<String, Category> asCategoryMap) {
-        sCategoryMap = asCategoryMap;
-    }*/
-    /**
-     * Name of the clan
+     * Name of the category
      */
     private String mName;
 
@@ -113,8 +120,8 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
     }
 
     /**
-     * 
-     * @return 
+     * Hashcode of the instance
+     * @return hascode
      */
     @Override
     public int hashCode() {
@@ -134,10 +141,6 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
         return result;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Element getXMLElement() {
         final Element clan = new Element(StringConstants.CS_CATEGORY);
@@ -146,7 +149,7 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
     }
 
     /**
-     * 
+     * Test if Category map is null
      * @return 
      */
     public static boolean isCategoryMapNull()
@@ -154,15 +157,9 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
         return sCategoryMap==null;
     }
     
-    
-    
-    /**
-     *
-     * @param e
-     */
     @Override
     public void setXMLElement(final Element e) {
-        this.setmName(e.getAttributeValue(StringConstants.CS_NAME));
+        this.setName(e.getAttributeValue(StringConstants.CS_NAME));
         if (!isCategoryMapNull())
         {
             putCategory(getName(), this);
@@ -170,6 +167,7 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
     }
 
     /**
+     * Category name Getter
      * @return the mName
      */
     public String getName() {
@@ -177,9 +175,10 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
     }
 
     /**
+     * Category name Setter
      * @param mName the mName to set
      */
-    public void setmName(String mName) {
+    public void setName(String mName) {
         this.mName = mName;
     }
 

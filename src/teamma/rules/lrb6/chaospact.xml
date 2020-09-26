@@ -7,7 +7,15 @@ and open the template in the editor.
 
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
-
+    <inducements>
+        <inducement name="chef" max="1" cost="300000" />
+        <inducement name="bribe the ref" max="3" cost="100000" />
+        <inducement name="Bloodweisers' babes" max="2" cost="50000" />
+        <inducement name="wizard" max="1" cost="150000" />
+        <inducement name="extra reroll" max="4" cost="100000" />
+        <inducement name="local apothecary" max="1" cost="100000" />
+        <inducement name="cards" max="8" cost="50000" />
+     </inducements>
     <name>ChaosPactKey</name>
     <reroll>70000</reroll>
     <apothecary>true</apothecary>
