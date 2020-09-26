@@ -7,14 +7,14 @@ and open the template in the editor.
 
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
-
+    <inducements></inducements>
     <name>VampireKey</name>
     <reroll>70000</reroll>
     <apothecary>false</apothecary>
     <chef>300000</chef>
     <igor>true</igor>
     <bribe>100000</bribe>
-<max_big_guy>1</max_big_guy> 
+    <max_big_guy>1</max_big_guy> 
     <playertypes>               
         <playerType>
             <limit>6</limit>
