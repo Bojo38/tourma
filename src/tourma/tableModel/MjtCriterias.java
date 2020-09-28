@@ -170,7 +170,6 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                         val = Integer.parseInt(tmp);
                         c.setPointsFor(val);
                         Tournament.getTournament().recomputeAll();
-
                         break;
                     case 3:
 

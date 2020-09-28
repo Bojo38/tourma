@@ -886,7 +886,8 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             CoachMatch cm = this.mMatchs.get(row);
             Value val = cm.getValue(f);
 
-            int ivalue=val.getFormula().evaluate(cm.getValues(),side);
+            
+            int ivalue=f.evaluate(cm.getValues(),side);
             
             if (side==1)
             {

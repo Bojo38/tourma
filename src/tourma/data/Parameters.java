@@ -976,7 +976,7 @@ public class Parameters implements IXMLExport, Serializable {
                 this.addCriteria(crit);
             }
 
-            final List<Element> formulas = params.getChildren(StringConstants.CS_FORMULAS);
+            final List<Element> formulas = params.getChildren(StringConstants.CS_FORMULA);
             final Iterator<Element> fo = formulas.iterator();
 
             this.clearFormulas();

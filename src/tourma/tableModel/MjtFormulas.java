@@ -11,10 +11,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
+import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.Formula;
+import tourma.data.Match;
 import tourma.data.Parameters;
+import tourma.data.Round;
+import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.data.Value;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 
@@ -113,6 +118,32 @@ public class MjtFormulas extends AbstractTableModel implements TableCellRenderer
                     case 1:
                         if (f.isValid(tmp)) {
                             f.setFormula(tmp);
+                            for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+                                Round round = Tournament.getTournament().getRound(i);
+                                for (int j = 0; j < round.getMatchsCount(); j++) {
+                                    Match match = round.getMatch(j);
+                                    if (match instanceof TeamMatch) {
+                                        for (int k = 0; k < ((TeamMatch) match).getMatchCount(); k++) {
+                                            CoachMatch cm = ((TeamMatch) match).getMatch(k);
+                                            for (int l = 0; l < Tournament.getTournament().getParams().getFormulaCount(); l++) {
+                                                Formula formula = Tournament.getTournament().getParams().getFormula(l);
+                                                Value v = cm.getValue(formula);
+                                                v.setValue1(formula.evaluate(cm.getValues(), 1));
+                                                v.setValue2(formula.evaluate(cm.getValues(), 2));
+                                            }
+                                        }
+                                    }
+                                    if (match instanceof CoachMatch) {
+                                        CoachMatch cm = (CoachMatch) match;
+                                        for (int l = 0; l < Tournament.getTournament().getParams().getFormulaCount(); l++) {
+                                            Formula formula = Tournament.getTournament().getParams().getFormula(l);
+                                            Value v = cm.getValue(formula);
+                                            v.setValue1(formula.evaluate(cm.getValues(), 1));
+                                            v.setValue2(formula.evaluate(cm.getValues(), 2));
+                                        }
+                                    }
+                                }
+                            }
                         }
                         break;
                     default:

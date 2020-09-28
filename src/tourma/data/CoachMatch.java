@@ -384,7 +384,7 @@ public class CoachMatch extends Match implements Serializable {
             }
             mValues.put(crit, val);
         }
-        
+
         size = Tournament.getTournament().getParams().getFormulaCount();
         for (int i = 0; i < size; i++) {
             final Formula form = Tournament.getTournament().getParams().getFormula(i);
@@ -476,6 +476,16 @@ public class CoachMatch extends Match implements Serializable {
             match.addContent(value);
         }
 
+        for (int k = 0; k < Tournament.getTournament().getParams().getFormulaCount(); k++) {
+            final Value val = this.getValue(Tournament.getTournament().getParams().getFormula(k));
+            final Element value = new Element(StringConstants.CS_VALUE);
+            value.setAttribute(StringConstants.CS_NAME, val.getFormula().getName());
+            value.setAttribute(StringConstants.CS_VALUE + 1, Integer.toString(val.getValue1()));
+            value.setAttribute(StringConstants.CS_VALUE + 2, Integer.toString(val.getValue2()));
+
+            match.addContent(value);
+        }
+
         if (this.getRoster1() != null) {
             match.setAttribute(StringConstants.CS_ROSTER + 1, this.getRoster1().getName());
         }
@@ -551,16 +561,41 @@ public class CoachMatch extends Match implements Serializable {
                 for (int cpt = 0; cpt < Tournament.getTournament().getParams().getCriteriaCount(); cpt++) {
                     final Criteria criteria = Tournament.getTournament().getParams().getCriteria(cpt);
                     final String tmp = val.getAttribute(StringConstants.CS_NAME).getValue();
-
-                    if (criteria.getName().equals(tmp)) {
-                        crit = criteria;
-                        break;
+                    if (criteria != null) {
+                        if (criteria.getName().equals(tmp)) {
+                            crit = criteria;
+                            break;
+                        }
                     }
                 }
-                Value value = new Value(crit);
-                value.setValue1(val.getAttribute(StringConstants.CS_VALUE + 1).getIntValue());
-                value.setValue2(val.getAttribute(StringConstants.CS_VALUE + 2).getIntValue());
-                this.putValue(crit, value);
+                Value value = null;
+                if (crit != null) {
+                    value = new Value(crit);
+                    value.setValue1(val.getAttribute(StringConstants.CS_VALUE + 1).getIntValue());
+                    value.setValue2(val.getAttribute(StringConstants.CS_VALUE + 2).getIntValue());
+                    this.putValue(crit, value);
+                } else {
+                    Formula form = null;
+
+                    for (int cpt = 0; cpt < Tournament.getTournament().getParams().getFormulaCount(); cpt++) {
+                        final Formula formula = Tournament.getTournament().getParams().getFormula(cpt);
+                        final String tmp = val.getAttribute(StringConstants.CS_NAME).getValue();
+
+                        if (formula != null) {
+                            if (formula.getName().equals(tmp)) {
+                                form = formula;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (form != null) {
+                        value = new Value(form);
+                        value.setValue1(val.getAttribute(StringConstants.CS_VALUE + 1).getIntValue());
+                        value.setValue2(val.getAttribute(StringConstants.CS_VALUE + 2).getIntValue());
+                        this.putValue(form, value);
+                    }
+                }
             }
 
             Attribute att1 = match.getAttribute(StringConstants.CS_ROSTER + 1);
@@ -877,7 +912,7 @@ public class CoachMatch extends Match implements Serializable {
         }
         return null;
     }
-    
+
     /**
      *
      * @param c
@@ -908,6 +943,8 @@ public class CoachMatch extends Match implements Serializable {
     public int getComputedValueCount() {
         return mComputedValues.size();
     }
+
+
     
     /**
      *
@@ -950,7 +987,7 @@ public class CoachMatch extends Match implements Serializable {
         mComputedValues.remove(f);
         updated = true;
     }
-    
+
     @Override
     public Element getXMLElementForDisplay() {
         Element match = getXMLElement();
