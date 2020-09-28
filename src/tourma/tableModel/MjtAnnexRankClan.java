@@ -451,7 +451,15 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                 result = Translate.translate(Translate.CS_Clan);
                 break;
             case 2:
-                result = mCriteria.getName();
+                if (mCriteria!=null)
+                {
+                    result = mCriteria.getName();
+                }
+                else
+                {
+                    result = mFormula.getName();
+                }
+                
                 break;
             default:
 

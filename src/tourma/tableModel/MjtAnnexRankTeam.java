@@ -477,14 +477,18 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                 val = Translate.translate(Translate.CS_Team);
                 break;
             case 2:
-                if (mSubtype == 0) {
-                    val = mCriteria.getName() + " " + Translate.translate(Translate.CS_Team);
-                } else {
-                    if (mSubtype == 1) {
-                        val = mCriteria.getName() + " " + Translate.translate(Translate.CS_Opponent);
+                if (mCriteria != null) {
+                    if (mSubtype == 0) {
+                        val = mCriteria.getName() + " " + Translate.translate(Translate.CS_Team);
                     } else {
-                        val = mCriteria.getName() + " " + Translate.translate(Translate.CS_Difference);
+                        if (mSubtype == 1) {
+                            val = mCriteria.getName() + " " + Translate.translate(Translate.CS_Opponent);
+                        } else {
+                            val = mCriteria.getName() + " " + Translate.translate(Translate.CS_Difference);
+                        }
                     }
+                } else {
+                    val = mFormula.getName();
                 }
                 break;
             default:

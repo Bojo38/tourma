@@ -343,12 +343,16 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 result = Translate.translate(Translate.CS_Roster);
                 break;
             case 4:
-                if (mSubtype == 0) {
-                    result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Coach);
-                } else if (mSubtype == 1) {
-                    result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Opponent);
+                if (mCriteria != null) {
+                    if (mSubtype == 0) {
+                        result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Coach);
+                    } else if (mSubtype == 1) {
+                        result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Opponent);
+                    } else {
+                        result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Difference);
+                    }
                 } else {
-                    result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Difference);
+                    result = mFormula.getName();
                 }
                 break;
             default:
