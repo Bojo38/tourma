@@ -123,7 +123,8 @@ public interface StringConstants {
     public static final String CS_SUBSTITUTION = "Substitution";
     public static final String CS_CRITERIA = "Criteria";
     public static final String CS_CRITERIA_ACCRONYM = "Accronyme";
-
+    public static final String CS_FORMULAS="Formulas";
+    public static final String CS_FORMULA = "Formula";
     public static final String CS_POINTS_FOR = "PointsFor";
     public static final String CS_POINTS_AGAINST = "PointsAgainst";
     public static final String CS_TEAM_POINTS_FOR = "PointsTeamFor";

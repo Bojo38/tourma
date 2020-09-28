@@ -50,6 +50,15 @@ public class Parameters implements IXMLExport, Serializable {
         }
         return null;
     }
+    
+     public Formula getFormula(String name) {
+        for (Formula formula : mFormulas) {
+            if (formula.getName().equals(name) ) {
+                return formula;
+            }
+        }
+        return null;
+    }
 
     boolean mDisplayRoster = true;
 
@@ -91,6 +100,23 @@ public class Parameters implements IXMLExport, Serializable {
                 Criteria c = new Criteria(crit.getName());
                 c.pull(crit);
                 mCriterias.add(c);
+            }
+        }
+        
+          bFound = false;
+        for (int i = 0; i < params.getFormulaCount(); i++) {
+            bFound = false;
+            Formula form = params.getFormula(i);
+            for (Formula f : mFormulas) {
+                if ((form.getUID() == f.UID) || (form.getName().equals(f.getName()))) {
+                    bFound = true;
+                    f.pull(form);
+                }
+            }
+            if (!bFound) {
+                Formula f = new Formula(form.getName());
+                f.pull(form);
+                mFormulas.add(f);
             }
         }
 
@@ -336,9 +362,13 @@ public class Parameters implements IXMLExport, Serializable {
     private boolean mSubstitutes = false;
 
     /**
-     *
+     * Ranking criterias
      */
     private final ArrayList<Criteria> mCriterias;
+    /**
+     * Ranking Formulas
+     */
+    private final ArrayList<Formula> mFormulas;
 
     /**
      *
@@ -543,6 +573,7 @@ public class Parameters implements IXMLExport, Serializable {
         mTournamentName = StringConstants.CS_NULL;
         mTournamentOrga = StringConstants.CS_NULL;
         mCriterias = new ArrayList<>();
+         mFormulas = new ArrayList<>();
 
         Criteria c = new Criteria(Translate.translate(CS_Touchdowns));
         c.setPointsFor(2);
@@ -632,6 +663,11 @@ public class Parameters implements IXMLExport, Serializable {
         for (int i = 0; i < this.getCriteriaCount(); i++) {
             final Element crit = getCriteria(i).getXMLElement();
             params.addContent(crit);
+        }
+        
+        for (int i = 0; i < this.getFormulaCount(); i++) {
+            final Element form = getFormula(i).getXMLElement();
+            params.addContent(form);
         }
 
         params.setAttribute(StringConstants.CS_VICTORY, Integer.toString(this.getPointsIndivVictory()));
@@ -939,6 +975,19 @@ public class Parameters implements IXMLExport, Serializable {
                 crit.setXMLElement(criteria);
                 this.addCriteria(crit);
             }
+
+            final List<Element> formulas = params.getChildren(StringConstants.CS_FORMULAS);
+            final Iterator<Element> fo = formulas.iterator();
+
+            this.clearFormulas();
+
+            while (fo.hasNext()) {
+                final Element formula = fo.next();
+                final Formula form = new Formula(formula.getAttributeValue(StringConstants.CS_NAME));
+                form.setXMLElement(formula);
+                this.addFormula(form);
+            }
+
         } catch (DataConversionException dce) {
            // JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
         }
@@ -1127,6 +1176,48 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void removeCriteria(int c) {
         mCriterias.remove(c);
+    }
+    
+    /**
+     * @return the mCriterias
+     */
+    public int getFormulaCount() {
+        return mFormulas.size();
+    }
+
+    /**
+     * @param i
+     * @return the mCriterias
+     */
+    public Formula getFormula(int i) {
+        return mFormulas.get(i);
+    }
+
+    public int getIndexOfFormula(Formula f) {
+        return mFormulas.indexOf(f);
+    }
+
+    /**
+     * Clear the criterias array
+     */
+    public void clearFormulas() {
+        mFormulas.clear();
+    }
+
+    /**
+     *
+     * @param c
+     */
+    public void addFormula(Formula f) {
+        mFormulas.add(f);
+    }
+
+    /**
+     *
+     * @param c
+     */
+    public void removeFormula(int f) {
+        mFormulas.remove(f);
     }
 
     /**
@@ -2015,6 +2106,11 @@ public class Parameters implements IXMLExport, Serializable {
             result &= params.mCriterias.size() == this.mCriterias.size();
             for (Criteria c : mCriterias) {
                 result &= params.mCriterias.contains(c);
+            }
+            
+             result &= params.mFormulas.size() == this.mFormulas.size();
+            for (Formula f : mFormulas) {
+                result &= params.mFormulas.contains(f);
             }
         }
         return result;

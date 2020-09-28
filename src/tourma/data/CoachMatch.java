@@ -25,9 +25,10 @@ import tourma.utility.StringConstants;
  * @author Frederic Berger
  */
 public class CoachMatch extends Match implements Serializable {
-/**
- * UID Seed
- */
+
+    /**
+     * UID Seed
+     */
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     /**
      * UNique ID
@@ -41,7 +42,8 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * Is remotely
-     * @return 
+     *
+     * @return
      */
     public boolean isRemotely() {
         return remotely;
@@ -49,7 +51,8 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * Set remotely
-     * @param isRemotely 
+     *
+     * @param isRemotely
      */
     public void setRemotely(boolean isRemotely) {
         this.remotely = isRemotely;
@@ -57,7 +60,8 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * Unique ID Getter
-     * @return 
+     *
+     * @return
      */
     public int getUID() {
         return UID;
@@ -65,7 +69,8 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * Unique ID Setter
-     * @param UID 
+     *
+     * @param UID
      */
     public void setUID(int UID) {
         this.UID = UID;
@@ -73,7 +78,8 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * Is match updated
-     * @return 
+     *
+     * @return
      */
     public boolean isUpdated() {
         for (Value val : mValues.values()) {
@@ -87,7 +93,8 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * Coach Match Puller
-     * @param match 
+     *
+     * @param match
      */
     public void pull(Match match) {
         if (match instanceof CoachMatch) {
@@ -183,7 +190,8 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * Match Pusher
-     * @param match 
+     *
+     * @param match
      */
     public void push(Match match) {
         if (match.isUpdated()) {
@@ -317,6 +325,7 @@ public class CoachMatch extends Match implements Serializable {
      *
      */
     protected final HashMap<Criteria, Value> mValues;
+    protected final HashMap<Formula, Value> mComputedValues;
 
     /**
      *
@@ -359,12 +368,13 @@ public class CoachMatch extends Match implements Serializable {
     public CoachMatch(Round round) {
         super(round);
         mValues = new HashMap<>();
+        mComputedValues = new HashMap<>();
 
-        final int size = Tournament.getTournament().getParams().getCriteriaCount();
+        int size = Tournament.getTournament().getParams().getCriteriaCount();
         for (int i = 0; i < size; i++) {
             final Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
             final Value val = new Value(crit);
-            
+
             if (i == 0) {
                 val.setValue1(-1);
                 val.setValue2(-1);
@@ -373,6 +383,20 @@ public class CoachMatch extends Match implements Serializable {
                 val.setValue2(0);
             }
             mValues.put(crit, val);
+        }
+        
+        size = Tournament.getTournament().getParams().getFormulaCount();
+        for (int i = 0; i < size; i++) {
+            final Formula form = Tournament.getTournament().getParams().getFormula(i);
+            final Value val = new Value(form);
+            if (i == 0) {
+                val.setValue1(-1);
+                val.setValue2(-1);
+            } else {
+                val.setValue1(0);
+                val.setValue2(0);
+            }
+            mComputedValues.put(form, val);
         }
 
         setRound(round);
@@ -533,7 +557,7 @@ public class CoachMatch extends Match implements Serializable {
                         break;
                     }
                 }
-                Value value= new Value(crit);
+                Value value = new Value(crit);
                 value.setValue1(val.getAttribute(StringConstants.CS_VALUE + 1).getIntValue());
                 value.setValue2(val.getAttribute(StringConstants.CS_VALUE + 2).getIntValue());
                 this.putValue(crit, value);
@@ -853,7 +877,38 @@ public class CoachMatch extends Match implements Serializable {
         }
         return null;
     }
+    
+    /**
+     *
+     * @param c
+     * @return
+     */
+    public Value getValue(Formula f) {
 
+        Value val = mComputedValues.get(f);
+        if (val != null) {
+            return val;
+        } else {
+            // Find criteria ny name
+            String form = f.getName();
+
+            for (Formula formula : this.mComputedValues.keySet()) {
+                if (formula.getName().equals(form)) {
+                    return mComputedValues.get(formula);
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getComputedValueCount() {
+        return mComputedValues.size();
+    }
+    
     /**
      *
      * @return
@@ -875,12 +930,27 @@ public class CoachMatch extends Match implements Serializable {
     /**
      *
      * @param c
+     * @param v
+     */
+    public void putValue(Formula f, Value v) {
+        mComputedValues.put(f, v);
+        updated = true;
+    }
+
+    /**
+     *
+     * @param c
      */
     public void removeValue(Criteria c) {
         mValues.remove(c);
         updated = true;
     }
 
+    public void removeValue(Formula f) {
+        mComputedValues.remove(f);
+        updated = true;
+    }
+    
     @Override
     public Element getXMLElementForDisplay() {
         Element match = getXMLElement();

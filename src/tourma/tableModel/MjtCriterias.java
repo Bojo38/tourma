@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Criteria;
+import tourma.data.Formula;
 import tourma.data.Parameters;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -150,15 +151,19 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                 int val;
                 switch (col) {
                     case 0:
-                        c.setAccronym(tmp);
                         c.setName(tmp);
 
                         break;
                     case 1:
-
-                        c.setName(tmp);
+                        String oldAccro=c.getAccronym();
                         c.setAccronym(tmp);
-
+                        
+                        for (int i=0; i< Tournament.getTournament().getParams().getFormulaCount(); i++)
+                        {
+                            Formula f=Tournament.getTournament().getParams().getFormula(i);
+                            f.updateCriteria(oldAccro, tmp);
+                        }
+                        
                         break;
                     case 2:
 
