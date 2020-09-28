@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import tourma.data.Criteria;
+import tourma.data.Formula;
 import tourma.data.Tournament;
 
 /**
@@ -43,6 +44,7 @@ public abstract class MjtAnnexRank extends MjtRanking {
      */
     @SuppressWarnings("ProtectedField")
     protected Criteria mCriteria;
+    protected Formula mFormula;
     /**
      * 
      */
@@ -72,6 +74,15 @@ public abstract class MjtAnnexRank extends MjtRanking {
         mFullRanking = full;
     }
 
+    public MjtAnnexRank(final int round, final Formula formula, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5,final boolean round_only) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects,round_only);
+        mFormula = formula;
+        mCriteria=null;
+        mSubtype = subtype;
+        //_ranking_type = ranking_type;
+        mFullRanking = full;
+    }
+    
     /**
      * this function sort the data relative to current object.
      */
@@ -98,6 +109,16 @@ public abstract class MjtAnnexRank extends MjtRanking {
     public void setCriteria(Criteria c)
     {
         mCriteria=c;
+    }
+    
+     public Formula getFormula()
+    {
+        return mFormula;
+    }
+    
+    public void setFormula(Formula f)
+    {
+        mFormula=f;
     }
     
     @Override

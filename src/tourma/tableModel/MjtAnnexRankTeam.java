@@ -15,6 +15,7 @@ import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
+import tourma.data.Formula;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Parameters;
@@ -52,6 +53,11 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
         sortDatas();
     }
 
+    public MjtAnnexRankTeam(final int round, final Formula formula, final int subtype, final ArrayList<Team> teams, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only) {
+        super(round, formula, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+        sortDatas();
+    }
+
     /**
      *
      * @param teamVictory
@@ -65,6 +71,21 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
     public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only) {
 
         super(round, criteria, subtype, teams, full, Tournament.getTournament().getParams().getRankingTeam1(), Tournament.getTournament().getParams().gemRankingTeam2(), Tournament.getTournament().getParams().getRankingTeam3(), Tournament.getTournament().getParams().getRankingTeam4(), Tournament.getTournament().getParams().getRankingTeam5(), round_only);
+        Parameters params = Tournament.getTournament().getParams();
+        if (!teamVictory) {
+            this.mRankingType1 = params.getRankingIndiv1();
+            this.mRankingType2 = params.getRankingIndiv2();
+            this.mRankingType3 = params.getRankingIndiv3();
+            this.mRankingType4 = params.getRankingIndiv4();
+            this.mRankingType5 = params.getRankingIndiv5();
+        }
+        sortDatas();
+
+    }
+
+    public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Formula formula, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only) {
+
+        super(round, formula, subtype, teams, full, Tournament.getTournament().getParams().getRankingTeam1(), Tournament.getTournament().getParams().gemRankingTeam2(), Tournament.getTournament().getParams().getRankingTeam3(), Tournament.getTournament().getParams().getRankingTeam4(), Tournament.getTournament().getParams().getRankingTeam5(), round_only);
         Parameters params = Tournament.getTournament().getParams();
         if (!teamVictory) {
             this.mRankingType1 = params.getRankingIndiv1();
@@ -119,8 +140,11 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                     for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
                         final Round r = rounds.get(i);
                         if (r.containsMatch(tm)) {
-                            aValue.add(tm.getValue(mCriteria, mSubtype, t));
-
+                            if (mCriteria != null) {
+                                aValue.add(tm.getValue(mCriteria, mSubtype, t));
+                            } else {
+                                aValue.add(tm.getValue(mFormula, t));
+                            }
                             aValue1.add(tm.getValue(1, t));
                             aValue1.add(tm.getValue(2, t));
                             aValue1.add(tm.getValue(3, t));
@@ -208,8 +232,11 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                         }
 
                         if (bFound) {
-                            aValue.add(cm.getValue(mCriteria, mSubtype, c));
-
+                            if (mCriteria != null) {
+                                aValue.add(cm.getValue(mCriteria, mSubtype, c));
+                            } else {
+                                aValue.add(cm.getValue(mFormula, c));
+                            }
                             aValue1.add(cm.getValue(1, c));
                             aValue1.add(cm.getValue(2, c));
                             aValue1.add(cm.getValue(3, c));

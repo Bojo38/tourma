@@ -27,6 +27,7 @@ import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
+import tourma.data.Formula;
 import tourma.data.Group;
 import tourma.data.Parameters;
 import tourma.data.Pool;
@@ -156,6 +157,16 @@ public final class JPNRound extends javax.swing.JPanel {
             jtpAnnexRankings.add(criteria.getName(), jpn);
         }
 
+        for (int i = 0; i < mTournament.getParams().getFormulaCount(); i++) {
+            final Formula formula = mTournament.getParams().getFormula(i);
+            final ArrayList<Coach> coaches = new ArrayList<>();
+            for (int cpt = 0; cpt < t.getCoachsCount(); cpt++) {
+                coaches.add(t.getCoach(cpt));
+            }
+            final JPNAnnexRanking jpn = new JPNAnnexRanking(formula.getName(), formula, t, coaches, teams, mRound, false, false);
+            jtpAnnexRankings.add(formula.getName(), jpn);
+        }
+        
         mNafOnly = MainFrame.getMainFrame().isNafOnly();
         mRoundOnly = MainFrame.getMainFrame().isRoundOnly();
         update();

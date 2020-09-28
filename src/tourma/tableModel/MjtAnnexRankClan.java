@@ -16,6 +16,7 @@ import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.Formula;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Round;
@@ -64,6 +65,21 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
 
     }
 
+    public MjtAnnexRankClan(final int round,
+            final Formula formula,
+            final int subtype, final ArrayList<Clan> clans,
+            final boolean full,
+            final int ranking_type1,
+            final int ranking_type2,
+            final int ranking_type3,
+            final int ranking_type4,
+            final int ranking_type5,
+            final boolean round_only) {
+        super(round, formula, subtype, clans, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+        sortDatas();
+
+    }
+
     /**
      *
      * @param round
@@ -77,6 +93,13 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
     public MjtAnnexRankClan(final int round, final Criteria criteria, final int subtype, boolean full, final ArrayList clans, final boolean round_only) {
 
         this(round, criteria, subtype, clans, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
+                round_only);
+
+    }
+
+    public MjtAnnexRankClan(final int round, final Formula formula, final int subtype, boolean full, final ArrayList clans, final boolean round_only) {
+
+        this(round, formula, subtype, clans, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                 round_only);
 
     }
@@ -152,8 +175,14 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                             //for (int l = 0; (l <= mRound) && (!bFound); l++) {
                             final Round r = Tournament.getTournament().getRound(l);
                             if (r.containsMatch(tm)) {
-                                aValue.add(tm.getValue(mCriteria, mSubtype, t));
-
+                                if (mCriteria!=null)
+                                {
+                                    aValue.add(tm.getValue(mCriteria, mSubtype, t));
+                                }
+                                else
+                                {
+                                    aValue.add(tm.getValue(mFormula, t));
+                                }
                                 aValue1.add(tm.getValue(1, t));
                                 aValue2.add(tm.getValue(2, t));
                                 aValue3.add(tm.getValue(3, t));
@@ -304,7 +333,14 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                             //for (int l = 0; (l <= mRound) && (!bFound); l++) {
                             final Round r = Tournament.getTournament().getRound(l);
                             if (r.containsMatch(m)) {
-                                aValue.add(m.getValue(mCriteria, mSubtype, c));
+                                if (mCriteria!=null)
+                                {
+                                    aValue.add(m.getValue(mCriteria, mSubtype, c));
+                                }
+                                else
+                                {
+                                     aValue.add(m.getValue(mFormula, c));
+                                }
 
                                 aValue1.add(m.getValue(1, c));
                                 aValue3.add(m.getValue(2, c));
