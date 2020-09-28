@@ -944,8 +944,6 @@ public class CoachMatch extends Match implements Serializable {
         return mComputedValues.size();
     }
 
-
-    
     /**
      *
      * @return
@@ -1090,7 +1088,19 @@ public class CoachMatch extends Match implements Serializable {
         if (valueType <= Parameters.C_MAX_RANKING) {
             value = getValue((Coach) c, valueType);
         } else {
-            value = getValue(MjtRanking.getCriteriaByValue(valueType), MjtRanking.getSubtypeByValue(valueType), c);
+
+            int v = valueType - Parameters.C_MAX_RANKING - 1;
+            Criteria criteria = null;
+            Parameters params = Tournament.getTournament().getParams();
+            if (v / 3 < Tournament.getTournament().getParams().getCriteriaCount()) {
+                criteria = params.getCriteria(v / 3);
+                value = getValue(criteria, MjtRanking.getSubtypeByValue(valueType), c);
+            } else {
+                int f = valueType - 3 * Tournament.getTournament().getParams().getCriteriaCount() - Parameters.C_MAX_RANKING - 1;
+                Formula formula = Tournament.getTournament().getParams().getFormula(f);
+                value = getValue(formula, c);
+            }
+
         }
         return value;
     }
@@ -1741,6 +1751,23 @@ public class CoachMatch extends Match implements Serializable {
                         value = v.getValue2() - v.getValue1();
                         break;
                 }
+            }
+        }
+        return value;
+    }
+
+    public int getValue(Formula formula,  Competitor c) {
+        int value = 0;
+        Value v = getValue(formula);
+        if (v != null) {
+            if (c == mCompetitor1) {
+                value = v.getValue1();
+
+            }
+            if (c == mCompetitor2) {
+
+                value = v.getValue2();
+
             }
         }
         return value;

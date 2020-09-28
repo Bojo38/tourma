@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Criteria;
 import tourma.data.ETeamPairing;
+import tourma.data.Formula;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 
@@ -856,6 +857,12 @@ public final class JPNParamTeam extends javax.swing.JPanel {
             rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Difference));
         }
 
+         for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+            Formula formula = Tournament.getTournament().getParams().getFormula(i);
+            rankChoices.add(formula.getName() );
+           
+        }
+         
         jcxIndividualBalance.setSelected(mTournament.getParams().isIndivPairingIndivBalanced());
         jcxTeamBalance.setSelected(mTournament.getParams().isIndivPairingTeamBalanced());
 

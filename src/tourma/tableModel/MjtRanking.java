@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Criteria;
+import tourma.data.Formula;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Tournament;
@@ -52,6 +53,20 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         return vnd;
     }
 
+    public static Formula getFormulaByValue(final int valueType) {
+        Formula formula = null;
+
+        if (valueType > Parameters.C_MAX_RANKING) {
+            final int value = valueType - Parameters.C_MAX_RANKING - 1;
+
+            if (value / 3 >= Tournament.getTournament().getParams().getCriteriaCount()) {
+                Parameters params = Tournament.getTournament().getParams();
+                formula = params.getFormula(value / 3 - Tournament.getTournament().getParams().getCriteriaCount());
+            }
+        }
+        return formula;
+    }
+
     /**
      *
      * @param valueType
@@ -63,8 +78,11 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         if (valueType > Parameters.C_MAX_RANKING) {
             final int value = valueType - Parameters.C_MAX_RANKING - 1;
 
-            Parameters params = Tournament.getTournament().getParams();
-            criteria = params.getCriteria(value / 3);
+            if (value / 3 < Tournament.getTournament().getParams().getCriteriaCount()) {
+                Parameters params = Tournament.getTournament().getParams();
+                criteria = params.getCriteria(value / 3);
+            }
+
         }
         return criteria;
     }
@@ -139,53 +157,58 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         String result = StringConstants.CS_NULL;
         final Criteria c = MjtRanking.getCriteriaByValue(rankingType);
         if (c == null) {
-            switch (rankingType) {
-                case Parameters.C_RANKING_POINTS:
-                    result = Translate.translate(Translate.CS_Points);
-                    break;
-                case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
-                    result = Translate.translate(Translate.CS_Points_Without_Bonus);
-                    break;
-                case Parameters.C_RANKING_BONUS_POINTS:
-                    result = Translate.translate(Translate.CS_Bonus_Points);
-                    break;
-                case Parameters.C_RANKING_NONE:
-                    result = Translate.translate(Translate.CS_Nothing);
-                    break;
-                case Parameters.C_RANKING_OPP_POINTS:
-                    result = Translate.translate(Translate.CS_ACCR_Opponent_Points);
-                    break;
-                case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
-                    result = Translate.translate(Translate.CS_ACCR_Opponent_Points_Without_Bonus);
-                    break;
-                case Parameters.C_RANKING_VND:
-                    result = Translate.translate(Translate.CS_ACCR_Victory_Drawn_Lost);
-                    break;
-                case Parameters.C_RANKING_ELO:
-                    result = Translate.translate(Translate.CS_ELO);
-                    break;
-                case Parameters.C_RANKING_ELO_OPP:
-                    result = Translate.translate(Translate.CS_OpponentsElo);
-                    break;
-                case Parameters.C_RANKING_NB_MATCHS:
-                    result = Translate.translate(Translate.CS_MatchCount);
-                    break;
-                case Parameters.C_RANKING_TABLES:
-                    result = Translate.translate(Translate.CS_TablesPoints);
-                    break;
-                case Parameters.C_RANKING_HEAD_BY_HEAD:
-                    result = Translate.translate(Translate.CS_HeadByHead);
-                    break;
-                case Parameters.C_RANKING_TIER:
-                    result = Translate.translate(Translate.CS_Tier);
-                    break;
-                case Parameters.C_RANKING_TEAMMATES_POINTS:
-                    result = Translate.translate(Translate.CS_Teammates_Points);
-                    break;
-                case Parameters.C_RANKING_TEAMMATES_VND:
-                    result = Translate.translate(Translate.CS_Teammates_VND);
-                    break;
-                default:
+            Formula f = MjtRanking.getFormulaByValue(rankingType);
+            if (f == null) {
+                switch (rankingType) {
+                    case Parameters.C_RANKING_POINTS:
+                        result = Translate.translate(Translate.CS_Points);
+                        break;
+                    case Parameters.C_RANKING_POINTS_WITHOUT_BONUS:
+                        result = Translate.translate(Translate.CS_Points_Without_Bonus);
+                        break;
+                    case Parameters.C_RANKING_BONUS_POINTS:
+                        result = Translate.translate(Translate.CS_Bonus_Points);
+                        break;
+                    case Parameters.C_RANKING_NONE:
+                        result = Translate.translate(Translate.CS_Nothing);
+                        break;
+                    case Parameters.C_RANKING_OPP_POINTS:
+                        result = Translate.translate(Translate.CS_ACCR_Opponent_Points);
+                        break;
+                    case Parameters.C_RANKING_OPP_POINTS_OTHER_MATCHS:
+                        result = Translate.translate(Translate.CS_ACCR_Opponent_Points_Without_Bonus);
+                        break;
+                    case Parameters.C_RANKING_VND:
+                        result = Translate.translate(Translate.CS_ACCR_Victory_Drawn_Lost);
+                        break;
+                    case Parameters.C_RANKING_ELO:
+                        result = Translate.translate(Translate.CS_ELO);
+                        break;
+                    case Parameters.C_RANKING_ELO_OPP:
+                        result = Translate.translate(Translate.CS_OpponentsElo);
+                        break;
+                    case Parameters.C_RANKING_NB_MATCHS:
+                        result = Translate.translate(Translate.CS_MatchCount);
+                        break;
+                    case Parameters.C_RANKING_TABLES:
+                        result = Translate.translate(Translate.CS_TablesPoints);
+                        break;
+                    case Parameters.C_RANKING_HEAD_BY_HEAD:
+                        result = Translate.translate(Translate.CS_HeadByHead);
+                        break;
+                    case Parameters.C_RANKING_TIER:
+                        result = Translate.translate(Translate.CS_Tier);
+                        break;
+                    case Parameters.C_RANKING_TEAMMATES_POINTS:
+                        result = Translate.translate(Translate.CS_Teammates_Points);
+                        break;
+                    case Parameters.C_RANKING_TEAMMATES_VND:
+                        result = Translate.translate(Translate.CS_Teammates_VND);
+                        break;
+                    default:
+                }
+            } else {
+                result = f.getName();
             }
         } else {
             final int subRanking = MjtRanking.getSubtypeByValue(rankingType);
