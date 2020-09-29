@@ -10,7 +10,6 @@ import java.awt.GraphicsEnvironment;
 import tourma.data.EIndivPairing;
 import tourma.data.ETeamPairing;
 import tourma.data.Parameters;
-import tourma.data.RosterType;
 import tourma.data.Tournament;
 
 /**

@@ -84,7 +84,7 @@
                  classpath="tools/yguard.jar"/>
         <yguard>
            
-            <inoutpair in="store/TourMa.jar" out="store/TourMa_obf.jar" resources="copy"/>
+            <inoutpair in="dist/TourMa.jar" out="dist/TourMa_obf.jar" resources="copy"/>
 
             <externalclasses>
                 <pathelement location="deps/jython-2.2.jar"/>
@@ -104,73 +104,59 @@
                 <pathelement location="deps/org.apache.servicemix.bundles.xmlresolver-1.2_1.jar" />                               
             </externalclasses>
 
-            <shrink logfile="shrinklog.xml" createStubs="true">
-                <property name="error-checking" value="pedantic"/>
+            <shrink logfile="shrinklog.xml" createStubs="false">
+                <!--entrypointjar name="store/TourMa.jar"/>-->
+                <!--<property name="error-checking" value="pedantic"/>-->
                 <keep>
+                    <!-- Main Class -->
                     <method name="void main(java.lang.String[])" class="tourma.MainFrame" />
-                    <class name="freemarker.ext.xml.NodeOperator"/>
-                    <class name="freemarker.ext.xml.Navigator$XPathEx"/>
-                    <class classes="public"/>
-                    <class  classes="public" methods="public">
+                    <class name="tourma.MainFrame" />
+                   
+                </keep>
+            </shrink>
+          
+        </yguard>
+    </target>
+    
+    <target name="yguard-libs" depends="jar">
+        <taskdef name="yguard"
+                 classname="com.yworks.yguard.YGuardTask"
+                 classpath="tools/yguard.jar"/>
+        <yguard>
+            <inoutpairs resources="copy">
+                <fileset dir="libs">
+                  <include name="*.jar"/>
+                </fileset>
+                <mapper type="glob" from="*.jar" to="../obfuscate/libs/*.jar"/>
+             </inoutpairs>    
+            <!--<inoutpair in="libs/jfreechart-1.0.15.jar" out="../obfuscate/jfreechart-1.0.15.jar" resources="copy"/>  -->       
+            <shrink logfile="shrinklog.xml" createStubs="false">
+                <entrypointjar name="dist/TourMa.jar"/>
+                <!--<property name="error-checking" value="pedantic"/>-->
+                <keep>
+                    <class classes="none" methods="public">
                         <patternset>
-                            
+                            <!-- L'implémentation duparseur XML est choisie à la volée, donc difficile à gérer pour le "shrinker" -->
+                            <include name="org.apache.xerces.parsers.SAXParser"/>    
+                            <include name="org.apache.xerces.xni.parser.XMLConfigurationException"/>     
+                            <include name="org.apache.xerces.parsers.XIncludeAwareParserConfiguration"/>  
+                            <include name="org.apache.xerces.impl.dv.dtd.DTDDVFactoryImpl"/> 
+                            <include name="org.jfree.chart.resources.JFreeChartResources"/> 
+                            <include name="org.jfree.resources.JCommonResources"/> 
+                        </patternset>
+                    </class>
+                    <class >
+                        <patternset>
+                            <!-- Images de l'objet JCalendar -->
+                            <include name="com.toedter.calendar.images.*"/>
                         </patternset>
                     </class>
                 </keep>
             </shrink>
-
-            <rename mainclass="tourma.MainFrame" logfile="renamelog.xml" replaceClassNameStrings="true">
-                <property name="error-checking" value="pedantic"/> 
-                <property name="naming-scheme" value="small" />  
-                <keep>
-                    <class classes="public" methods="public" fields="public" >                    
-                        <patternset>
-                            <include name="org.jfree.chart.resources.*"/>
-                            <include name="tourma.views.report.*"/>
-                            <include name="teamma.views.report.*"/>
-                        </patternset>
-                    </class>
-                </keep>
-                <adjust replacePath="false">
-                    <include name="tourma/images/*"/>
-                    <include name="teamma/images/*"/>
-                    <include name="teamma/rules/*"/>
-                    <include name="com/toedter/calendar/images/*"/>
-                    <include name="org/jfree/chart/*"/>
-                    <include name="org/jfree/chart/editor/*"/>
-                    <include name="org/jfree/chart/plot/*"/>
-                    <include name="org/jfree/chart/resources/*"/>                    
-                    <include name="com/toedter/components/images/*"/>
-                    <include name="tourma/languages/*"/>
-                    <include name="tourma/views/report/*"/>
-                    <include name="teamma/views/report/*"/>
-                    <include name="tourma/*"/>
-                    <include name="org/jfree/chart/resources/*"/>
-                    <include name="org/jfree/resources/*"/>
-                    <include name="com/google/zxing/aztec/decoder/*"/>
-                    <include name="freemarker/ext/xml/*"/>
-                    <include name="javax/xml/bind/*"/>
-                </adjust>
-                <adjust replaceName="false">
-                    <include name="**/*.properties"/>
-                    <include name="**/*.html"/>
-                    <include name="**/*.xml"/>
-                    <include name="teamma/views/report/jdgPrintableRoster*"/>
-                    <include name="tourma/views/report/jdgRanking*"/>
-                    <include name="tourma/views/report/jdgGlobal*"/>
-                    <include name="tourma/views/report/jdgRound*"/>
-                    <include name="**/JFreeChartResources*"/>
-                    <include name="**/JCommonResources*"/>
-                    <include name="freemarker/ext/xml/*"/>
-                    <include name="javax/xml/bind/*"/>                    
-                </adjust>   
-   
-            </rename>
-
         </yguard>
     </target>
 
-    <target name="package-for-store" depends="jar">
+    <target name="package-for-store" depends="jar, yguard-libs,yguard">
 
         <!-- Change the value of this property to be the name of your JAR,
              minus the .jar extension. It should not have spaces.
@@ -181,7 +167,7 @@
         <!-- don't edit below this line -->
 
         <property name="store.dir" value="store"/>
-        <property name="libs.dir" value="libs"/>
+        <property name="libs.dir" value="obfuscate/libs"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
 
         <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
@@ -190,8 +176,8 @@
         <mkdir dir="${store.dir}"/>
 
         <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
-            <zipgroupfileset dir="dist" includes="*.jar"/>
-            <zipgroupfileset dir="dist/lib" includes="*.jar"/>
+            <zipgroupfileset dir="dist" includes="*_obf.jar"/>
+            <zipgroupfileset dir="obfuscate/libs" includes="*.jar"/>
 
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
@@ -224,101 +210,5 @@
        summaryclass="com.kirkk.analyzer.textui.XMLUISummary" packageFilter="java.*;javax.*;" jarFilter="Somejar.jar" />
         <xslt in="tools/dependencies.xml" out="tools/dependencies.html" style="tools/jaranalyzer.xsl"/>	
 </target>
-
-   <target name="proguard" depends="package-for-store">
-        
-       <property name="proguard.jar" value="tools/proguard.jar" />
-       
-        <taskdef resource="proguard/ant/task.properties"  classpath="${proguard.jar}" />
-        <proguard configuration="proguard.cfg"/>
-       
-       <!--<property name="proguard.jar.path" value="tools/proguard.jar" />
-        <property name="proguard.dir" value="tools/proguard.jar" />
-        <property name="java.home.path" value="C:/Program Files/Java/jdk1.8.0_151" />
-        <property name="dist.jar" value="store/TourMa.jar" />
-        
-        <taskdef resource="proguard/ant/task.properties" classpath="${proguard.jar.path}" />
-        
-        <echo message="Obfuscating ${dist.jar}..."/>
-        <mkdir dir="${build.dir}/obfuscated"/>
-        <proguard printmapping="store/obfuscated/tourma.map"    renamesourcefileattribute="SourceFile" ignorewarnings="true">
-            
-
-            <injar  file="store/TourMa.jar" />
-            <outjar file="store/TourMal.jar" />
-            
-            <libraryjar path="${javac.classpath}" />            
-            <libraryjar file="${java.home.path}/jre/lib/rt.jar" />
-            
-
-            <keepattribute name="InnerClasses" />
-            <keepattribute name="SourceFile" />
-            <keepattribute name="LineNumberTable" />
-            <keepattribute name="Deprecated" />
-            <keepattribute name="*Annotation*" />
-            <keepattribute name="Signature" />
-            
-            Preserve all public classes, and their public and protected fields and methods. 
-
-            <keep access="public">
-                <field  access="public protected" />
-                <method access="public protected" />
-            </keep>
-            
-            
-
-               <keepclassmembernames access="public">
-                <method type      ="java.lang.Class"
-                        name      ="class$"
-                        parameters="java.lang.String" />
-                <method type      ="java.lang.Class"
-                        name      ="class$"
-                        parameters="java.lang.String,boolean" />
-            </keepclassmembernames>
-            
-            <keepclasseswithmembernames>
-                <method access="native" />
-            </keepclasseswithmembernames>
-            
-            <keepclassmembers extends="java.lang.Enum">
-                <method access="public static"
-                        type="**[]"
-                        name="values"
-                        parameters="" />
-                <method access="public static"
-                        type="**"
-                        name="valueOf"
-                        parameters="java.lang.String" />
-            </keepclassmembers>
-            
-            <keepnames implements="java.io.Serializable"/>
-            <keepclassmembers implements="java.io.Serializable">
-                <field  access    ="final"
-                        type      ="long"
-                        name      ="serialVersionUID" />
-                <field  access    ="!static !transient"
-                        name      ="**"/>
-                <field  access    ="!private"
-                        name      ="**"/>
-                <method access    ="!private"
-                        name      ="**"/>
-                <method access    ="private"
-                        type      ="void"
-                        name      ="writeObject"
-                        parameters="java.io.ObjectOutputStream" />
-                <method access    ="private"
-                        type      ="void"
-                        name      ="readObject"
-                        parameters="java.io.ObjectOutputStream" />
-                <method type      ="java.lang.Object"
-                        name      ="writeReplace"
-                        parameters="" />
-                <method type      ="java.lang.Object"
-                        name      ="readResolve"
-                        parameters="" />
-            </keepclassmembers>
-            
-        </proguard>-->
-    </target>  
-                                                            
+                                                        
 </project>

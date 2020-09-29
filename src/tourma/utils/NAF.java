@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom.Element;
+import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import tourma.MainFrame;
@@ -159,7 +160,7 @@ public final class NAF {
                 final SAXBuilder sxb = new SAXBuilder();
 
                 try {
-                    final org.jdom.Document document = sxb.build(fileReader);
+                    final Document document = sxb.build(fileReader);
                     final Element racine = document.getRootElement();
 
                     try {

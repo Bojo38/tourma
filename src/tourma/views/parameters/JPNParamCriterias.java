@@ -34,6 +34,12 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         mTournament = Tournament.getTournament();
         initComponents();
 
+        jspCoef.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jspCoefStateChanged(evt);
+            }
+        });
+
         if ((!mTournament.getParams().isTeamTournament())
                 || ((mTournament.getParams().isTeamTournament())
                 && (mTournament.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING))) {
