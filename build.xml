@@ -74,15 +74,12 @@
 
     -->
 
-
     <target name="yguard">
         <taskdef name="yguard"
                  classname="com.yworks.yguard.YGuardTask"
                  classpath="tools/yguard.jar"/>
-        <yguard>
-           
+        <yguard>   
             <inoutpair in="dist/TourMa.jar" out="dist/TourMa_obf.jar" resources="copy"/>
-
             <externalclasses>
                 <pathelement location="deps/jython-2.2.jar"/>
                 <pathelement location="deps/j2ee-1.4.jar"/>
@@ -100,18 +97,15 @@
                 <pathelement location="deps/avalon-framework-impl-4.3.1.jar"/> 
                 <pathelement location="deps/org.apache.servicemix.bundles.xmlresolver-1.2_1.jar" />                               
             </externalclasses>
-
             <shrink logfile="shrinklog.xml" createStubs="false">
                 <!--entrypointjar name="store/TourMa.jar"/>-->
                 <!--<property name="error-checking" value="pedantic"/>-->
                 <keep>
                     <!-- Main Class -->
                     <method name="void main(java.lang.String[])" class="tourma.MainFrame" />
-                    <class name="tourma.MainFrame" />
-                   
+                    <class name="tourma.MainFrame" />                  
                 </keep>
-            </shrink>
-          
+            </shrink>         
         </yguard>
     </target>
     
@@ -154,61 +148,44 @@
     </target>
 
     <target name="package-for-store" depends="jar">
-
         <!-- Change the value of this property to be the name of your JAR,
              minus the .jar extension. It should not have spaces.
              <property name="store.jar.name" value="MyJarName"/>
         -->
         <property name="store.jar.name" value="TourMa"/>
-
         <!-- don't edit below this line -->
-
         <property name="store.dir" value="store"/>
         <property name="libs.dir" value="libs"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
-
         <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
-
         <delete file="${store.dir}/*.jar"/>
         <mkdir dir="${store.dir}"/>
-
         <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
             <zipgroupfileset dir="dist" includes="*.jar"/>
             <zipgroupfileset dir="libs" includes="*.jar"/>
-
             <manifest>
                 <attribute name="Main-Class" value="${main.class}"/>
             </manifest>
         </jar>
-
         <zip destfile="${store.jar}">
             <zipfileset src="${store.dir}/temp_final.jar"
                         excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
         </zip>
-
         <delete file="${store.dir}/temp_final.jar"/>
-
     </target>
     
     <target name="package-for-store_obf" depends="jar, yguard-libs,yguard">
-
         <!-- Change the value of this property to be the name of your JAR,
              minus the .jar extension. It should not have spaces.
              <property name="store.jar.name" value="MyJarName"/>
         -->
         <property name="store.jar.name" value="TourMa"/>
-
-        <!-- don't edit below this line -->
-
         <property name="store.dir" value="store"/>
         <property name="libs.dir" value="obfuscate/libs"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}_obf.jar"/>
-
         <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
-
         <delete file="${store.dir}/*_obf.jar"/>
         <mkdir dir="${store.dir}"/>
-
         <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
             <zipgroupfileset dir="dist" includes="*_obf.jar"/>
             <zipgroupfileset dir="obfuscate/libs" includes="*.jar"/>
@@ -217,16 +194,12 @@
                 <attribute name="Main-Class" value="${main.class}"/>
             </manifest>
         </jar>
-
         <zip destfile="${store.jar}">
             <zipfileset src="${store.dir}/temp_final.jar"
                         excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
         </zip>
-
         <delete file="${store.dir}/temp_final.jar"/>
-
     </target>
-
 
    <target name="analyzer" depends="compile">
    <taskdef name="jaranalyzer"
