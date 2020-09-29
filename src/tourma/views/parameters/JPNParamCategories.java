@@ -151,7 +151,7 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         final String newCategoryName = JOptionPane.showInputDialog(this, enterCategoryName, categoryName);
         if (!newCategoryName.equals(StringConstants.CS_NULL)) {
                 Category cat = mTournament.getCategory(jlsCategories.getSelectedIndex());
-                cat.setmName(newCategoryName);
+                cat.setName(newCategoryName);
                 Category.delCategory(categoryName);
                 Category.putCategory(newCategoryName, cat);
         }

@@ -34,6 +34,7 @@ public final class MjtRankingIndiv extends MjtRanking {
 
     private final boolean mTeamTournament;
     private final boolean mForPool;
+    private final boolean mForCup;
 
     public MjtRankingIndiv(final int round,
             final int ranking_type1,
@@ -41,10 +42,11 @@ public final class MjtRankingIndiv extends MjtRanking {
             final int ranking_type3,
             final int ranking_type4,
             final int ranking_type5,
-            final ArrayList coachs, final boolean tournament, final boolean round_only, final boolean forPool) {
+            final ArrayList coachs, final boolean tournament, final boolean round_only, final boolean forPool,boolean forCup) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs, round_only);
         mTeamTournament = tournament;
         mForPool = forPool;
+        mForCup = forCup;
         sortDatas();
     }
 
@@ -56,7 +58,7 @@ public final class MjtRankingIndiv extends MjtRanking {
                 Tournament.getTournament().getParams().getRankingIndiv3(),
                 Tournament.getTournament().getParams().getRankingIndiv4(),
                 Tournament.getTournament().getParams().getRankingIndiv5(),
-                coachs, teamTournament, round_only, false);
+                coachs, teamTournament, round_only, false, false);
     }
 
     /**
@@ -92,9 +94,7 @@ public final class MjtRankingIndiv extends MjtRanking {
                 ArrayList<Integer> aValue4 = new ArrayList<>();
                 ArrayList<Integer> aValue5 = new ArrayList<>();
 
-                if (c.getMatchCount() > 0) {
-
-                                        
+                if (c.getMatchCount() > 0) {                                        
                     for (int j = 0; j <= c.getMatchCount() - 1; j++) {
 
                         final CoachMatch m = (CoachMatch) c.getMatch(j);
@@ -284,7 +284,7 @@ public final class MjtRankingIndiv extends MjtRanking {
                 final ArrayList<MjtRankingIndiv> pRank = new ArrayList<>();
                 for (int j = 0; j < nbPool; j++) {
                     p = tour.getPool(j);
-                    final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.getCompetitors(), mTeamTournament, mRoundOnly, false);
+                    final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, p.getCompetitors(), mTeamTournament, mRoundOnly, false,false);
                     pRank.add(mjtr);
                 }
 
@@ -300,7 +300,7 @@ public final class MjtRankingIndiv extends MjtRanking {
 
                         }
                     }
-                    final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
+                    final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false,false);
 
                     for (int j = 0; j < mjtr.mDatas.size(); j++) {
                         datas.add(mjtr.mDatas.get(j));
@@ -314,7 +314,7 @@ public final class MjtRankingIndiv extends MjtRanking {
                         rank.add(tour.getCoach(i));
                     }
                 }
-                final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false);
+                final MjtRankingIndiv mjtr = new MjtRankingIndiv(mRound, mRankingType1, mRankingType2, mRankingType3, mRankingType4, mRankingType5, rank, mTeamTournament, mRoundOnly, false,false);
 
                 for (int j = 0; j < mjtr.mDatas.size(); j++) {
                     datas.add(mjtr.mDatas.get(j));

@@ -8,6 +8,7 @@ package tourma.data;
 import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -414,6 +415,33 @@ public class GroupNGTest {
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getPoints method, of class Group.
+     */
+    @Test
+    public void testGetPoints() {
+        System.out.println("getPoints");
+        Group instance = null;
+        int expResult = 0;
+        int result = instance.getPoints();
+        assertEquals(result, expResult);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPoints method, of class Group.
+     */
+    @Test
+    public void testSetPoints() {
+        System.out.println("setPoints");
+        int _points = 0;
+        Group instance = null;
+        instance.setPoints(_points);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

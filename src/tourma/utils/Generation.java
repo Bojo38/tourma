@@ -23,6 +23,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
+import tourma.JdgCupOptions;
+import tourma.JdgManualCupDraw;
 import tourma.JdgPairing;
 import tourma.MainFrame;
 import tourma.data.Category;
@@ -30,6 +32,7 @@ import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.Criteria;
+import tourma.data.Cup;
 import tourma.data.ETeamPairing;
 import tourma.data.Match;
 import tourma.data.ObjectRanking;
@@ -123,6 +126,7 @@ public final class Generation {
     private final static String CS_FirstRound = "FirstRound";
     private final static String CS_NumberByPool = "NumberByPool";
     private final static String CS_TheNumberOfTeamsIsNotAMultipleOfYourChoice = "LE NOMBRE D'ÉQUIPE N'EST PAS UN MULTIPLE DE VOTRE CHOIX";
+    private final static String CS_OddInPool = "Impair in pool";
     private final static String CS_DoYouWantToChooseRankTeam = "VOULEZ VOUS CHOISIR L'ÉQUIPE DU RANG {0} ?";
     private final static String CS_ChooseCompetitor = "CHOISISSEZ UN COACH";
     private final static String CS_ChooseOpponentFor = "ChooseOpponentFor";
@@ -416,7 +420,7 @@ public final class Generation {
 
         final JSpinner jspNb = new JSpinner();
 
-        final SpinnerNumberModel model = new SpinnerNumberModel(2, 2, comps.size() / 2, 2);
+        final SpinnerNumberModel model = new SpinnerNumberModel(2, 2, comps.size() / 2, 1);
         jspNb.setModel(model);
 
         message.add(jlb, BorderLayout.NORTH);
@@ -425,6 +429,17 @@ public final class Generation {
         JOptionPane.showMessageDialog(MainFrame.getMainFrame(), message, Translate.translate(CS_Pool), JOptionPane.QUESTION_MESSAGE);
 
         final int nb = (Integer) model.getValue();
+
+        boolean cross_matches = false;
+        if (nb % 2 != 0) {
+            cross_matches = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
+                    Translate.translate(CS_OddInPool),
+                    Translate.translate(CS_GenerationError),
+                    JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+
+        }
+
+        tour.getParams().setCrossPoolMatch(cross_matches);
 
         if (comps.size() % nb != 0) {
 
@@ -974,12 +989,11 @@ public final class Generation {
         final Round r = new Round();
         r.setCurrentHour();
 
-        r.setLooserCup(
+        /*r.setLooserCup(
                 JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
                         Translate.translate(CS_IsItDoubleKickTournament),
-                        Translate.translate(Translate.CS_Cup), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+                        Translate.translate(Translate.CS_Cup), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);*/
         // there is nb_tmp/matchs
-
         for (int i = 0; i < nb_matchs / 2; i++) {
             comps.get(2 * i).addMatch(comps.get(nb_tmp - 2 * i - 1), r);
         }
@@ -1046,6 +1060,24 @@ public final class Generation {
             }
         }
 
+        ArrayList<ObjectRanking> toRemove=new ArrayList<>();
+        // Remove Competitors from data if not in datas
+        for (ObjectRanking or:datas_tmp)
+        {
+            Object o=or.getObject();
+            if (o instanceof Competitor)
+            {
+                if (!competitors.contains(o))
+                {
+                    toRemove.add(or);
+                }
+            }
+        }
+        for(ObjectRanking or:toRemove)
+        {
+            datas_tmp.remove(or);
+        }
+        
         // If number of players is odd; add one null a the end
         if (comps.size() % 2 == 1) {
             if (comps.get(0) instanceof Coach) {
@@ -1067,7 +1099,7 @@ public final class Generation {
             JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
                     Translate.translate(CS_NotEnoughRoundToAvoidSameMatch));
 
-            while(datas_tmp.size()>0) {
+            while (datas_tmp.size() > 0) {
                 if (datas_tmp.size() == 3) {
                     if (Tournament.getTournament().getParams().isTeamTournament()
                             && Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
@@ -1081,16 +1113,12 @@ public final class Generation {
                         set3TeamsMatches(t1, t2, t3, r);
                         datas_tmp.clear();
 
-                    }
-                    else
-                    {
+                    } else {
                         Competitor c1 = (Competitor) datas_tmp.get(0).getObject();
-                        if (c1 instanceof Coach)
-                        {
+                        if (c1 instanceof Coach) {
                             c1.addMatch(Coach.getNullCoach(), r);
                         }
-                        if (c1 instanceof Team)
-                        {
+                        if (c1 instanceof Team) {
                             c1.addMatch(Team.getNullTeam(), r);
                         }
                     }
@@ -1534,7 +1562,7 @@ public final class Generation {
         @SuppressWarnings("unchecked")
         final ArrayList<Competitor> shuffle = new ArrayList<>(competitors);
         Collections.shuffle(shuffle);
-        while (shuffle.size() > 0) {
+        while (shuffle.size() > 1) {
             // Manage odd number of team with even number of coachs
             if (shuffle.size() == 3) {
                 if (Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
@@ -1543,6 +1571,12 @@ public final class Generation {
                     Team t3 = (Team) shuffle.get(2);
 
                     set3TeamsMatches(t1, t2, t3, r);
+                } else {
+                    Competitor c = shuffle.get(0);
+                    shuffle.remove(c);
+                    ArrayList<Competitor> opp = c.getPossibleOpponents(shuffle, r);
+                    c.addMatch(opp.get(0), r);
+                    shuffle.remove(opp.get(0));
                 }
             } else {
                 Competitor c = shuffle.get(0);
@@ -1560,14 +1594,36 @@ public final class Generation {
 
     /**
      *
-     * @param round
+     * @param previous_round
      * @param r
      * @param third_place
      */
-    private static void genCup(final Round round, final Round r, final boolean third_place) {
-        //final ArrayList<Match> matchs = new ArrayList<>(round.getMatchs());
+    private static void genCup(final Round previous_round, final Round r) {
+
         Parameters params = Tournament.getTournament().getParams();
-        int nb_match = (int) Math.pow(2, round.getCupMaxTour() - round.getCupTour() - 1);
+        Cup cup = Tournament.getTournament().getCup();
+        int roundIndex = previous_round.getCupTour();
+
+        ArrayList<Match> previousMatchs = new ArrayList<>();
+        for (int i = 0; i < previous_round.getMatchsCount(); i++) {
+            previousMatchs.add(previous_round.getMatch(i));
+        }
+
+        ArrayList<Competitor> comps = new ArrayList<Competitor>();
+
+        if (params.isTeamTournament() && params.getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+            for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+                comps.add(Tournament.getTournament().getTeam(i));
+            }
+        } else {
+            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                comps.add(Tournament.getTournament().getCoach(i));
+            }
+        }
+
+        ArrayList<Match> nextMatchs = cup.generateMatches(roundIndex + 1, r, previousMatchs, comps);
+
+        /*int nb_match = (int) Math.pow(2, previous_round.getCupMaxTour() - previous_round.getCupTour() - 1);
 
         final ArrayList<Competitor> _winners = new ArrayList<>();
         final ArrayList<Competitor> _loosers = new ArrayList<>();
@@ -1580,16 +1636,16 @@ public final class Generation {
         }
 
         if (nb_match == 0) {
-            if (round.getCupTour() == round.getCupMaxTour() + 1) {
-                _loosers.add(round.getMatch(0).getWinner());
+            if (previous_round.getCupTour() == previous_round.getCupMaxTour() + 1) {
+                _loosers.add(previous_round.getMatch(0).getWinner());
             } else {
-                _winners.add(round.getMatch(0).getWinner());
-                _loosers.add(round.getMatch(1).getWinner());
+                _winners.add(previous_round.getMatch(0).getWinner());
+                _loosers.add(previous_round.getMatch(1).getWinner());
             }
         }
         for (int i = 0; i < nb_match; i++) {
-            _winners.add(round.getMatch(i).getWinner());
-            _loosers.add(round.getMatch(i).getLooser());
+            _winners.add(previous_round.getMatch(i).getWinner());
+            _loosers.add(previous_round.getMatch(i).getLooser());
         }
         if (nb_match > 0) {
             final int option = JOptionPane.showConfirmDialog(
@@ -1626,12 +1682,12 @@ public final class Generation {
                 }
             }
         }
-        if (round.isLooserCup()) {
+        if (Tournament.getTournament().getCup().getType() == Cup.ROUND_TYPE.LOOSER) {
             int nb_remaining_match = 0;
-            if (round.getCupTour() > 0) {
+            if (previous_round.getCupTour() > 0) {
                 nb_remaining_match = nb_match;
             }
-            if (round.getCupTour() > 1) {
+            if (previous_round.getCupTour() > 1) {
                 nb_remaining_match += nb_match;
             }
 
@@ -1640,21 +1696,21 @@ public final class Generation {
             }
             if (nb_match == 0) {
                 nb_remaining_match = 1;
-                if (round.getCupTour() == round.getCupMaxTour() + 1) {
+                if (previous_round.getCupTour() == previous_round.getCupMaxTour() + 1) {
                     nb_match = 1;
                 } else {
                     nb_match = 2;
                 }
             }
-            for (int i = nb_match; (i < nb_match + nb_remaining_match) && (i < round.getMatchsCount()); i++) {
-                _loosers.add(round.getMatch(i).getWinner());
+            for (int i = nb_match; (i < nb_match + nb_remaining_match) && (i < previous_round.getMatchsCount()); i++) {
+                _loosers.add(previous_round.getMatch(i).getWinner());
             }
 
             /**
              * Patch For ensure that the winner of the last looser cup match is
              * pushed into the winners'cup All the coachs presents in winner cup
              * are removed from the looser cup
-             */
+             
             for (int i = 0; i < r.getMatchsCount(); i++) {
                 Competitor c1 = r.getMatch(i).getCompetitor1();
                 _loosers.remove(c1);
@@ -1673,7 +1729,10 @@ public final class Generation {
             for (int i = 0; i < _loosers.size() / 2; i++) {
                 _loosers.get(i).addMatch(_loosers.get(_loosers.size() / 2 + i), r);
             }
-        }
+        }*/
+        nextMatchs.forEach((m) -> {
+            m.getCompetitor1().addMatch(m.getCompetitor2(), r);
+        });
     }
 
     /**
@@ -1700,12 +1759,40 @@ public final class Generation {
             }
             comps.add(c);
         }
+
+        // Reorder to create pairing 1st against last
+        ArrayList<Competitor> comps2 = new ArrayList<>();
+
         for (int i = 0; i < nb_match / 2; i++) {
-            comps.get(2 * i).addMatch(comps.get(nbPlayers - 2 * i - 1), r);
+            comps2.add(comps.get(2 * i));
+            comps2.add(comps.get(nbPlayers - 2 * i - 1));
         }
         for (int i = 0; i < nb_match / 2; i++) {
-            comps.get(2 * i + 1).addMatch(comps.get(nbPlayers - 2 * i - 2), r);
+            comps2.add(comps.get(2 * i + 1));
+            comps2.add(comps.get(nbPlayers - 2 * i - 2));
         }
+
+        // If Order is a category one, job already done.
+        // If order is ranking, already done
+        // If order is random
+        if (Tournament.getTournament().getCup().getInitialDraw() == Cup.INITIAL_DRAW.RANDOM) {
+            Collections.shuffle(comps2);
+        }
+
+        // If draw is manual
+        if (Tournament.getTournament().getCup().getInitialDraw() == Cup.INITIAL_DRAW.MANUAL) {
+            /**
+             * Double selection list panel
+             */
+            JdgManualCupDraw jdg = new JdgManualCupDraw(MainFrame.getMainFrame(), true, comps2);
+            jdg.setVisible(true);
+        }
+
+        ArrayList<Match> matches = Tournament.getTournament().getCup().generateMatches(0, r, null, comps2);
+
+        matches.forEach((m) -> {
+            m.getCompetitor1().addMatch(m.getCompetitor2(), r);
+        });
     }
 
     /**
@@ -1846,9 +1933,61 @@ public final class Generation {
                 }
             }
         } else {
+            // If Cross match accepted, Take 1 competitor per pool which has not
+            // already played cross match
+            ArrayList<Competitor> comps = new ArrayList<>();
+            if (tour.getParams().isCrossPoolMatch()) {
+                // Collec coachs without matches                
+                for (int i = 0; i < tour.getPoolCount(); i++) {
+                    Pool p=tour.getPool(i);
+                    ArrayList<Competitor> pComps = p.getCompetitors();
+
+                    // Find the one without cross match match
+                    for (Competitor c : pComps) {
+                        boolean cross = false;
+                        for (int j=0; j<c.getMatchCount(); j++)
+                        {
+                            Match m=c.getMatch(j);
+                            if (m.getCompetitor1()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor2()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                            if (m.getCompetitor2()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor1()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                        }
+
+                        if (!cross) {
+                            comps.add(c);
+                            break;
+                        }
+                    }
+                }
+                datas = getSortedRankingData(roundnumber);
+                Generation.genQSwiss(comps,datas, r);
+                
+            }
+                                    
             for (int i = 0; i < tour.getPoolCount(); i++) {
                 datas = getSortedRankingData(tour.getPool(i), roundnumber);
-                Generation.genQSwiss(tour.getPool(i).getCompetitors(), datas, r);
+                
+                Pool p=tour.getPool(i);
+                ArrayList<Competitor> pComps=new ArrayList<>(p.getCompetitors());
+                // Remove the ones used for cross matches
+                for (Competitor c:comps)
+                {
+                    pComps.remove(c);
+                    
+                }
+                
+                genQSwiss(pComps, datas, r);
             }
         }
         return r;
@@ -1867,8 +2006,9 @@ public final class Generation {
         Round r = new Round();
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
+
         if ((round != null) && (round.isCup())) {
-            if (((round.getCupTour() == round.getCupMaxTour() - 1) && (!round.isLooserCup()))
+            if (((round.getCupTour() == round.getCupMaxTour() - 1) && (Tournament.getTournament().getCup().getType() != Cup.ROUND_TYPE.LOOSER))
                     || (round.getCupTour() == round.getCupMaxTour() + 2)) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(),
                         Translate.translate(CS_FinalRoundReached),
@@ -1876,29 +2016,34 @@ public final class Generation {
                 r = null;
             } else {
 
-                boolean _third_place = false;
-                if ((round.getCupTour() == round.getCupMaxTour() - 2) && (!round.isLooserCup())) {
+                /*                boolean _third_place = false;
+                if ((round.getCupTour() == round.getCupMaxTour() - 2) && (Tournament.getTournament().getCup().getType() != Cup.ROUND_TYPE.LOOSER)) {
                     _third_place = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
                             Translate.translate(CS_DoYouWantToGenerateThirdPlaceMatch),
                             Translate.translate(Translate.CS_Cup), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-                }
-
-                genCup(round, r, _third_place);
-                r.setThirdPlace(_third_place);
+                }*/
+                genCup(round, r);
+                //r.setThirdPlace(_third_place);
 
                 r.setCup(true);
                 r.setCupMaxTour(round.getCupMaxTour());
                 r.setCupTour(round.getCupTour() + 1);
-                r.setLooserCup(round.isLooserCup());
+                //r.setLooserCup(round.isLooserCup());
 
             }
-        } else {
+        } else /**
+         * First Round The purpose of this funcion block is to order the
+         * competitors for first pairing
+         */
+        {
             int cup_max_tour = 0;
             int nb_tmp = 1;
-            r.setLooserCup(JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
+
+            /* r.setLooserCup(JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
                     Translate.translate(CS_IsItDoubleKickTournament),
                     Translate.translate(Translate.CS_Cup),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
+             */
             if (tour.getParams().isTeamTournament()) {
                 if (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
                     while (nb_tmp < tour.getActiveCoachNumber()) {
@@ -1935,7 +2080,13 @@ public final class Generation {
             }
 
             if (r != null) {
-                final JPanel message = new JPanel();
+
+                if (!round.isCup()) {
+                    JdgCupOptions jdg = new JdgCupOptions(MainFrame.getMainFrame(), true, cup_max_tour);
+                    jdg.setVisible(true);
+                }
+
+                /*final JPanel message = new JPanel();
                 message.setLayout(new BorderLayout());
 
                 final JLabel jlb = new JLabel(
@@ -1950,18 +2101,20 @@ public final class Generation {
 
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), message, Translate.translate(Translate.CS_Cup), JOptionPane.QUESTION_MESSAGE);
 
-                cup_max_tour = (Integer) model.getValue();
-                final int nb = (int) Math.pow(2, cup_max_tour);
+                cup_max_tour = (Integer) model.getValue();*/
+                final int nb = (int) Math.pow(2, Tournament.getTournament().getCup().getRoundsCount());
 
-                boolean useCategories = false;
+                /* boolean useCategories = false;
                 if (tour.getCategoriesCount() > 1) {
                     useCategories = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(),
                             Translate.translate(CS_DoYouWantToUseCategoriesForTheCup),
                             Translate.translate(Translate.CS_Cup),
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-                }
+                }*/
                 MjtRanking datas;
-                if (!useCategories) {
+                if ((Tournament.getTournament().getCup().getInitialDraw() == Cup.INITIAL_DRAW.MANUAL)
+                        || (Tournament.getTournament().getCup().getInitialDraw() == Cup.INITIAL_DRAW.RANDOM)
+                        || (Tournament.getTournament().getCup().getInitialDraw() == Cup.INITIAL_DRAW.RANKING)) {
                     datas = getSortedRankingData(roundnumber);
                 } else {
                     ArrayList<Category> cats = new ArrayList<>();
@@ -1980,7 +2133,7 @@ public final class Generation {
                     jpn.add(jlb2, BorderLayout.NORTH);
                     jpn.add(jls, BorderLayout.CENTER);
 
-                    JPanel jpnsouth = new JPanel(new GridLayout(2, 2));
+                    /*JPanel jpnsouth = new JPanel(new GridLayout(2, 2));
                     JRadioButton jrbMixAll = new JRadioButton(Translate.translate(CS_MixAll));
                     jrbMixAll.setSelected(true);
                     JRadioButton jrbAbsoluteOrder = new JRadioButton(Translate.translate(CS_MixByAbsoluteRanking));
@@ -1998,19 +2151,34 @@ public final class Generation {
                     jpnsouth.add(jrbMixGroups);
                     jpnsouth.add(jrbKeepGroup);
 
-                    jpn.add(jpnsouth, BorderLayout.SOUTH);
-
+                    jpn.add(jpnsouth, BorderLayout.SOUTH);*/
                     while (jls.getSelectedValuesList().isEmpty()) {
                         JOptionPane.showMessageDialog(null, jpn, Translate.translate(Translate.CS_Cup), JOptionPane.QUESTION_MESSAGE);
                     }
 
-                    int mix = 0;
+                    CATEGORY_DRAW mix = CATEGORY_DRAW.MIX_ALL;
 
                     // 0: Mix all
                     // 1: Mix by absolute order
                     // 2: Mix by category ranking
                     // 3: No mix
-                    if (jrbMixAll.isSelected()) {
+                    switch (Tournament.getTournament().getCup().getInitialDraw()) {
+                        case CATEGORIES_MIXED:
+                            mix = CATEGORY_DRAW.MIX_ALL;
+                            break;
+                        case CATEGORIES_ABSOLUTE_RANKING:
+                            mix = CATEGORY_DRAW.ABSOLUTE_ORDER;
+                            break;
+                        case CATEGORIES_CROSSED:
+                            mix = CATEGORY_DRAW.CATEGORY_RANKING;
+                            break;
+                        case CATEGORIES_NOT_MIXED:
+                            mix = CATEGORY_DRAW.NO_MIX;
+                            break;
+                        default:
+                            mix = CATEGORY_DRAW.MIX_ALL;
+                    }
+                    /*if (jrbMixAll.isSelected()) {
                         mix = 0;
                     }
                     if (jrbAbsoluteOrder.isSelected()) {
@@ -2021,7 +2189,7 @@ public final class Generation {
                     }
                     if (jrbKeepGroup.isSelected()) {
                         mix = 3;
-                    }
+                    }*/
 
                     datas = getSortedRankingDataCategories(roundnumber, jls.getSelectedValuesList(), mix, nb);
                 }
@@ -2029,7 +2197,7 @@ public final class Generation {
                 genCupFirst(r, datas, nb);
 
                 r.setCup(true);
-                r.setCupMaxTour(cup_max_tour);
+                r.setCupMaxTour(Tournament.getTournament().getCup().getRoundsCount());
                 r.setCupTour(0);
 
             }
@@ -2314,15 +2482,75 @@ public final class Generation {
                 }
             }
         } else {
+            
+            // If Cross match accepted, Take 1 competitor per pool which has not
+            // already played cross match
+            ArrayList<Competitor> comps = new ArrayList<>();
+            if (tour.getParams().isCrossPoolMatch()) {
+                // Collec coachs without matches                
+                for (int i = 0; i < tour.getPoolCount(); i++) {
+                    Pool p=tour.getPool(i);
+                    ArrayList<Competitor> pComps = p.getCompetitors();
+
+                    // Find the one without cross match match
+                    for (Competitor c : pComps) {
+                        boolean cross = false;
+                        for (int j=0; j<c.getMatchCount(); j++)
+                        {
+                            Match m=c.getMatch(j);
+                            if (m.getCompetitor1()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor2()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                            if (m.getCompetitor2()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor1()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                        }
+
+                        if (!cross) {
+                            comps.add(c);
+                            break;
+                        }
+                    }
+                }
+                datas = getSortedRankingData(roundnumber);
+                Generation.genSwiss(comps,datas, r,topdown);
+                
+            }
+                                    
             for (int i = 0; i < tour.getPoolCount(); i++) {
                 datas = getSortedRankingData(tour.getPool(i), roundnumber);
-                genSwiss(tour.getPool(i).getCompetitors(), datas, r, topdown);
+                
+                Pool p=tour.getPool(i);
+                ArrayList<Competitor> pComps=new ArrayList<>(p.getCompetitors());
+                // Remove the ones used for cross matches
+                for (Competitor c:comps)
+                {
+                    pComps.remove(c);
+                    
+                }
+                
+                genSwiss(pComps, datas, r, topdown);
             }
         }
         return r;
     }
 
-    private static MjtRanking getSortedRankingDataCategories(int roundNumber, List<Category> categories, int mix, int nbPlayers) {
+    enum CATEGORY_DRAW {
+        MIX_ALL,
+        ABSOLUTE_ORDER,
+        CATEGORY_RANKING,
+        NO_MIX
+    };
+
+    private static MjtRanking getSortedRankingDataCategories(int roundNumber, List<Category> categories, CATEGORY_DRAW mix, int nbPlayers) {
         // First, collect coachs by categories  
         final Tournament tour = Tournament.getTournament();
         ArrayList<ArrayList<Competitor>> acomps = new ArrayList<>();
@@ -2384,12 +2612,12 @@ public final class Generation {
         // second vs last-1 etc.
         // In order to respect the draw, the newly created ranking has to take account the match order.
         // If mix by absolute order
-        if ((mix == 1) || (mix == 0)) {
+        if ((mix == CATEGORY_DRAW.ABSOLUTE_ORDER) || (mix == CATEGORY_DRAW.MIX_ALL)) {
             // Create the list of all elements and add them to one ranking.
 
             ArrayList<Competitor> c = new ArrayList<>();
 
-            if (mix == 1) {
+            if (mix == CATEGORY_DRAW.ABSOLUTE_ORDER) {
                 for (MjtRanking r : rankings) {
                     for (int i = 0; i < nb_players; i++) {
                         c.add((Competitor) r.getSortedObject(i).getObject());
@@ -2414,7 +2642,7 @@ public final class Generation {
             // The return this ranking
             // If mix==0, keep only the first players, and randomize them.
         } else {
-            if (mix == 2) {
+            if (mix == CATEGORY_DRAW.CATEGORY_RANKING) {
                 // According to the number of players, determine the first and the last of each
                 // category, then make the pairing to make the first vs the last of another cat, etc ...
                 ArrayList<Competitor> c = new ArrayList<>();
@@ -2439,7 +2667,7 @@ public final class Generation {
                 mjt = new MjtRankingManual(roundNumber, 0, 0, 0, 0, 0, c, false);
 
             } else {
-                if (mix == 3) {
+                if (mix == CATEGORY_DRAW.NO_MIX) {
                     // Order the match to force the category to meet themselves before
                     // meeting the others categories. (Conference ?)
 
@@ -2496,7 +2724,7 @@ public final class Generation {
                     tour.getParams().getRankingIndiv3(),
                     tour.getParams().getRankingIndiv4(),
                     tour.getParams().getRankingIndiv5(),
-                    coaches, false, false, forPool);
+                    coaches, false, false, forPool, tour.getRound(roundnumber).isCup());
 
         }
         return ranking;
@@ -2515,7 +2743,7 @@ public final class Generation {
                     tour.getParams().getRankingIndiv3(),
                     tour.getParams().getRankingIndiv4(),
                     tour.getParams().getRankingIndiv5(),
-                    p.getCompetitors(), false, false, forPool);
+                    p.getCompetitors(), false, false, forPool, false);
 
         }
         return ranking;
@@ -2565,9 +2793,60 @@ public final class Generation {
                 }
             }
         } else {
-            for (int i = 0; i < tour.getPoolCount(); i++) {
-                Generation.genRandom(tour.getPool(i).getCompetitors(), r);
+            
+            // If Cross match accepted, Take 1 competitor per pool which has not
+            // already played cross match
+            ArrayList<Competitor> comps = new ArrayList<>();
+            if (tour.getParams().isCrossPoolMatch()) {
+                // Collec coachs without matches                
+                for (int i = 0; i < tour.getPoolCount(); i++) {
+                    Pool p=tour.getPool(i);
+                    ArrayList<Competitor> pComps = p.getCompetitors();
+
+                    // Find the one without cross match match
+                    for (Competitor c : pComps) {
+                        boolean cross = false;
+                        for (int j=0; j<c.getMatchCount(); j++)
+                        {
+                            Match m=c.getMatch(j);
+                            if (m.getCompetitor1()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor2()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                            if (m.getCompetitor2()==c)
+                            {
+                                if (!pComps.contains(m.getCompetitor1()))
+                                {
+                                    cross=true;
+                                }
+                            }
+                        }
+
+                        if (!cross) {
+                            comps.add(c);
+                            break;
+                        }
+                    }
+                }
+                Generation.genRandom(comps, r);
+                
             }
+            
+            for (int i = 0; i < tour.getPoolCount(); i++) {
+                Pool p=tour.getPool(i);
+                ArrayList<Competitor> pComps=new ArrayList<>(p.getCompetitors());
+                // Remove the ones used for cross matches
+                for (Competitor c:comps)
+                {
+                    pComps.remove(c);
+                }
+                Generation.genRandom(pComps, r);
+            }
+
+            
         }
         return r;
     }

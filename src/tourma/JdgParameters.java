@@ -10,7 +10,6 @@ import java.awt.GraphicsEnvironment;
 import tourma.data.EIndivPairing;
 import tourma.data.ETeamPairing;
 import tourma.data.Parameters;
-import tourma.data.RosterType;
 import tourma.data.Tournament;
 
 /**
@@ -43,13 +42,7 @@ public final class JdgParameters extends javax.swing.JDialog {
 
         mParams = Tournament.getTournament().getParams();
 
-        // Load current parameters
-        if (mParams.getGame() == RosterType.C_BLOOD_BOWL) {
-            jrbBloodBowl.setSelected(true);
-        } else {
-            jrbDreadBall.setSelected(true);
-        }
-
+ 
         if (mParams.isTeamTournament()) {
             jrbTeam.setSelected(true);
         } else {
@@ -102,9 +95,6 @@ public final class JdgParameters extends javax.swing.JDialog {
         btgIndivTeamPairing = new javax.swing.ButtonGroup();
         jPanel5 = new javax.swing.JPanel();
         jcbMultiroster = new javax.swing.JCheckBox();
-        jpnGame = new javax.swing.JPanel();
-        jrbDreadBall = new javax.swing.JRadioButton();
-        jrbBloodBowl = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jpnByTeam = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -134,29 +124,6 @@ public final class JdgParameters extends javax.swing.JDialog {
         jPanel5.add(jcbMultiroster);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jpnGame.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GameKind"))); // NOI18N
-
-        btgGame.add(jrbDreadBall);
-        jrbDreadBall.setText("DreadBall");
-        jrbDreadBall.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbDreadBallActionPerformed(evt);
-            }
-        });
-        jpnGame.add(jrbDreadBall);
-
-        btgGame.add(jrbBloodBowl);
-        jrbBloodBowl.setSelected(true);
-        jrbBloodBowl.setText("Blood Bowl");
-        jrbBloodBowl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jrbBloodBowlActionPerformed(evt);
-            }
-        });
-        jpnGame.add(jrbBloodBowl);
-
-        getContentPane().add(jpnGame, java.awt.BorderLayout.NORTH);
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
@@ -317,24 +284,6 @@ public final class JdgParameters extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_jbtOKActionPerformed
 
-    private void jrbDreadBallActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbDreadBallActionPerformed
-        if (jrbDreadBall.isSelected()) {
-            mParams.setGame(RosterType.C_DREAD_BALL);
-        } else {
-            mParams.setGame(RosterType.C_BLOOD_BOWL);
-        }
-        update();
-    }//GEN-LAST:event_jrbDreadBallActionPerformed
-
-    private void jrbBloodBowlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbBloodBowlActionPerformed
-        if (jrbBloodBowl.isSelected()) {
-            mParams.setGame(RosterType.C_BLOOD_BOWL);
-        } else {
-            mParams.setGame(RosterType.C_DREAD_BALL);
-        }
-        update();
-    }//GEN-LAST:event_jrbBloodBowlActionPerformed
-
     private void jrbTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbTeamActionPerformed
         mParams.setTeamTournament(jrbTeam.isSelected());
         update();
@@ -469,15 +418,12 @@ public final class JdgParameters extends javax.swing.JDialog {
     private javax.swing.JCheckBox jcxMultipleRoster;
     private javax.swing.JLabel jlbNbCoachs;
     private javax.swing.JPanel jpnByTeam;
-    private javax.swing.JPanel jpnGame;
     private javax.swing.JPanel jpnIndivTeamRanking;
     private javax.swing.JPanel jpnMisc;
     private javax.swing.JPanel jpnNbCoachs;
     private javax.swing.JPanel jpnOK;
     private javax.swing.JPanel jpnPairing;
     private javax.swing.JPanel jpnTeam;
-    private javax.swing.JRadioButton jrbBloodBowl;
-    private javax.swing.JRadioButton jrbDreadBall;
     private javax.swing.JRadioButton jrbIndivPairingByRanking;
     private javax.swing.JRadioButton jrbIndivPairingManual;
     private javax.swing.JRadioButton jrbIndivPairingNaf;

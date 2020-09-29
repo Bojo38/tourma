@@ -124,7 +124,8 @@ public class TourmaProtocol {
                                         Tournament.getTournament().getParams().getRankingIndiv3(),
                                         Tournament.getTournament().getParams().getRankingIndiv4(),
                                         Tournament.getTournament().getParams().getRankingIndiv5(),
-                                        coachs, false, false, Tournament.getTournament().getPoolCount() > 0),
+                                        coachs, false, false, Tournament.getTournament().getPoolCount() > 0,
+                                Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
                                 Tournament.getTournament().getRankingTypes(false)
                         );
                     }
@@ -354,7 +355,8 @@ public class TourmaProtocol {
                                             Tournament.getTournament().getParams().getRankingIndiv3(),
                                             Tournament.getTournament().getParams().getRankingIndiv4(),
                                             Tournament.getTournament().getParams().getRankingIndiv5(),
-                                            coachs, false, false, Tournament.getTournament().getPoolCount() > 0),
+                                            coachs, false, false, Tournament.getTournament().getPoolCount() > 0,
+                                    Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
                                     Tournament.getTournament().getRankingTypes(false)
                             );
                             array.add(r);
@@ -383,7 +385,9 @@ public class TourmaProtocol {
                                             Tournament.getTournament().getParams().getRankingIndiv3(),
                                             Tournament.getTournament().getParams().getRankingIndiv4(),
                                             Tournament.getTournament().getParams().getRankingIndiv5(),
-                                            coachs, false, false, Tournament.getTournament().getPoolCount() > 0),
+                                            coachs, false, false, Tournament.getTournament().getPoolCount() > 0,
+                                    Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
+                                    
                                     Tournament.getTournament().getRankingTypes(false)
                             );
                             array.add(r);
@@ -554,7 +558,8 @@ public class TourmaProtocol {
                                             Tournament.getTournament().getParams().getRankingIndiv3(),
                                             Tournament.getTournament().getParams().getRankingIndiv4(),
                                             Tournament.getTournament().getParams().getRankingIndiv5(),
-                                            p.getCompetitors(), false, false, Tournament.getTournament().getPoolCount() > 0),
+                                            p.getCompetitors(), false, false, Tournament.getTournament().getPoolCount() > 0,
+                                    Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
                                     Tournament.getTournament().getRankingTypes(false)
                             );
                             array.add(r);

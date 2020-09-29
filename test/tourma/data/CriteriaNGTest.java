@@ -7,17 +7,19 @@ package tourma.data;
 
 import org.jdom.Element;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class CriteriaNGTest {
-    
+
     public CriteriaNGTest() {
     }
 
@@ -48,7 +50,7 @@ public class CriteriaNGTest {
         instance.setPointsFor(2);
         instance.setPointsTeamAgainst(3);
         instance.setPointsTeamFor(4);
-        
+
         Element result = instance.getXMLElement();
 
         Criteria crit = new Criteria("None");
@@ -67,7 +69,7 @@ public class CriteriaNGTest {
         instance.setPointsFor(2);
         instance.setPointsTeamAgainst(3);
         instance.setPointsTeamFor(4);
-        
+
         Element result = instance.getXMLElement();
 
         Criteria crit = new Criteria("None");
@@ -81,9 +83,9 @@ public class CriteriaNGTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        Criteria instance=new Criteria("Test");
+        Criteria instance = new Criteria("Test");
         instance.setName("Test2");
-        assertEquals(instance.getName(),"Test2");
+        assertEquals(instance.getName(), "Test2");
     }
 
     /**
@@ -92,9 +94,9 @@ public class CriteriaNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        Criteria instance=new Criteria("Test");
+        Criteria instance = new Criteria("Test");
         instance.setName("Test2");
-        assertEquals(instance.getName(),"Test2");
+        assertEquals(instance.getName(), "Test2");
     }
 
     /**
@@ -103,10 +105,10 @@ public class CriteriaNGTest {
     @Test
     public void testGetPointsFor() {
         System.out.println("getPointsFor");
-        Criteria instance=new Criteria("Test");
-        int value=15;
+        Criteria instance = new Criteria("Test");
+        int value = 15;
         instance.setPointsFor(value);
-        assertEquals(instance.getPointsFor(),value);
+        assertEquals(instance.getPointsFor(), value);
     }
 
     /**
@@ -115,10 +117,10 @@ public class CriteriaNGTest {
     @Test
     public void testSetPointsFor() {
         System.out.println("setPointsFor");
-       Criteria instance=new Criteria("Test");
-        int value=15;
+        Criteria instance = new Criteria("Test");
+        int value = 15;
         instance.setPointsFor(value);
-        assertEquals(instance.getPointsFor(),value);
+        assertEquals(instance.getPointsFor(), value);
     }
 
     /**
@@ -127,10 +129,10 @@ public class CriteriaNGTest {
     @Test
     public void testGetPointsAgainst() {
         System.out.println("getPointsAgainst");
-       Criteria instance=new Criteria("Test");
-        int value=18;
+        Criteria instance = new Criteria("Test");
+        int value = 18;
         instance.setPointsAgainst(value);
-        assertEquals(instance.getPointsAgainst(),value);
+        assertEquals(instance.getPointsAgainst(), value);
     }
 
     /**
@@ -139,10 +141,10 @@ public class CriteriaNGTest {
     @Test
     public void testSetPointsAgainst() {
         System.out.println("setPointsAgainst");
-         Criteria instance=new Criteria("Test");
-        int value=18;
+        Criteria instance = new Criteria("Test");
+        int value = 18;
         instance.setPointsAgainst(value);
-        assertEquals(instance.getPointsAgainst(),value);
+        assertEquals(instance.getPointsAgainst(), value);
     }
 
     /**
@@ -151,10 +153,10 @@ public class CriteriaNGTest {
     @Test
     public void testGetPointsTeamFor() {
         System.out.println("getPointsTeamFor");
-         Criteria instance=new Criteria("Test");
-        int value=21;
+        Criteria instance = new Criteria("Test");
+        int value = 21;
         instance.setPointsTeamFor(value);
-        assertEquals(instance.getPointsTeamFor(),value);
+        assertEquals(instance.getPointsTeamFor(), value);
     }
 
     /**
@@ -163,10 +165,10 @@ public class CriteriaNGTest {
     @Test
     public void testSetPointsTeamFor() {
         System.out.println("setPointsTeamFor");
-          Criteria instance=new Criteria("Test");
-        int value=21;
+        Criteria instance = new Criteria("Test");
+        int value = 21;
         instance.setPointsTeamFor(value);
-        assertEquals(instance.getPointsTeamFor(),value);
+        assertEquals(instance.getPointsTeamFor(), value);
     }
 
     /**
@@ -175,10 +177,10 @@ public class CriteriaNGTest {
     @Test
     public void testGetPointsTeamAgainst() {
         System.out.println("getPointsTeamAgainst");
-           Criteria instance=new Criteria("Test");
-        int value=21;
+        Criteria instance = new Criteria("Test");
+        int value = 21;
         instance.setPointsTeamAgainst(value);
-        assertEquals(instance.getPointsTeamAgainst(),value);
+        assertEquals(instance.getPointsTeamAgainst(), value);
     }
 
     /**
@@ -187,10 +189,10 @@ public class CriteriaNGTest {
     @Test
     public void testSetPointsTeamAgainst() {
         System.out.println("setPointsTeamAgainst");
-          Criteria instance=new Criteria("Test");
-        int value=21;
+        Criteria instance = new Criteria("Test");
+        int value = 21;
         instance.setPointsTeamAgainst(value);
-        assertEquals(instance.getPointsTeamAgainst(),value);
+        assertEquals(instance.getPointsTeamAgainst(), value);
     }
 
     /**
@@ -239,12 +241,14 @@ public class CriteriaNGTest {
     @Test
     public void testGetAccronym() {
         System.out.println("getAccronym");
-        Criteria instance = null;
-        String expResult = "";
+        Criteria instance = new Criteria("touchdown");
+        String expResult = "touchdown";
         String result = instance.getAccronym();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setAccronym("td");
+        result = instance.getAccronym();
+        assertEquals(result, "td");
+
     }
 
     /**
@@ -267,12 +271,10 @@ public class CriteriaNGTest {
     public void testEquals() {
         System.out.println("equals");
         Object obj = null;
-        Criteria instance = null;
+        Criteria instance = new Criteria("td");
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -281,12 +283,14 @@ public class CriteriaNGTest {
     @Test
     public void testGetCriticalThreshold() {
         System.out.println("getCriticalThreshold");
-        Criteria instance = null;
-        int expResult = 0;
+        Criteria instance = new Criteria("touchdowns");
+        int expResult = 10;
         int result = instance.getCriticalThreshold();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setCriticalThreshold(5);
+        result = instance.getCriticalThreshold();
+        assertEquals(result, 5);
+
     }
 
     /**
@@ -295,11 +299,13 @@ public class CriteriaNGTest {
     @Test
     public void testSetCriticalThreshold() {
         System.out.println("setCriticalThreshold");
-        int value = 0;
-        Criteria instance = null;
-        instance.setCriticalThreshold(value);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance = new Criteria("touchdowns");
+        int expResult = 10;
+        int result = instance.getCriticalThreshold();
+        assertEquals(result, expResult);
+        instance.setCriticalThreshold(5);
+        result = instance.getCriticalThreshold();
+        assertEquals(result, 5);
     }
 
     /**
@@ -335,12 +341,14 @@ public class CriteriaNGTest {
     @Test
     public void testGetDefensiveDiffThreshold() {
         System.out.println("getDefensiveDiffThreshold");
-        Criteria instance = null;
+        Criteria instance = new Criteria("td");
         int expResult = 0;
         int result = instance.getDefensiveDiffThreshold();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = 10;
+        instance.setDefensiveDiffThreshold(expResult);
+        result = instance.getDefensiveDiffThreshold();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -349,11 +357,14 @@ public class CriteriaNGTest {
     @Test
     public void testSetDefensiveDiffThreshold() {
         System.out.println("setDefensiveDiffThreshold");
-        int mDefensiveDiffThreshold = 0;
-        Criteria instance = null;
-        instance.setDefensiveDiffThreshold(mDefensiveDiffThreshold);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance = new Criteria("td");
+        int expResult = 0;
+        int result = instance.getDefensiveDiffThreshold();
+        assertEquals(result, expResult);
+        expResult = 10;
+        instance.setDefensiveDiffThreshold(expResult);
+        result = instance.getDefensiveDiffThreshold();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -389,12 +400,13 @@ public class CriteriaNGTest {
     @Test
     public void testGetDefensiveDiffBonuses() {
         System.out.println("getDefensiveDiffBonuses");
-        Criteria instance = null;
+        Criteria instance = new Criteria("td");
         int expResult = 0;
         int result = instance.getDefensiveDiffBonuses();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setDefensiveDiffBonuses(10);
+        result = instance.getDefensiveDiffBonuses();
+        assertEquals(result, 10);
     }
 
     /**
@@ -403,11 +415,13 @@ public class CriteriaNGTest {
     @Test
     public void testSetDefensiveDiffBonuses() {
         System.out.println("setDefensiveDiffBonuses");
-        int mDefensiveDiffBonuses = 0;
-        Criteria instance = null;
-        instance.setDefensiveDiffBonuses(mDefensiveDiffBonuses);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance = new Criteria("td");
+        int expResult = 0;
+        int result = instance.getDefensiveDiffBonuses();
+        assertEquals(result, expResult);
+        instance.setDefensiveDiffBonuses(10);
+        result = instance.getDefensiveDiffBonuses();
+        assertEquals(result, 10);
     }
 
     /**
@@ -524,12 +538,14 @@ public class CriteriaNGTest {
     @Test
     public void testGetDefensiveDiffThresholdByTeam() {
         System.out.println("getDefensiveDiffThresholdByTeam");
-        Criteria instance = null;
+        Criteria instance = new Criteria("td");
         int expResult = 0;
         int result = instance.getDefensiveDiffThresholdByTeam();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = 10;
+        instance.setDefensiveDiffThresholdByTeam(expResult);
+        result = instance.getDefensiveDiffThresholdByTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -538,11 +554,14 @@ public class CriteriaNGTest {
     @Test
     public void testSetDefensiveDiffThresholdByTeam() {
         System.out.println("setDefensiveDiffThresholdByTeam");
-        int mDefensiveDiffThresholdByTeam = 0;
-        Criteria instance = null;
-        instance.setDefensiveDiffThresholdByTeam(mDefensiveDiffThresholdByTeam);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance = new Criteria("td");
+        int expResult = 0;
+        int result = instance.getDefensiveDiffThresholdByTeam();
+        assertEquals(result, expResult);
+        expResult = 10;
+        instance.setDefensiveDiffThresholdByTeam(expResult);
+        result = instance.getDefensiveDiffThresholdByTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -578,12 +597,14 @@ public class CriteriaNGTest {
     @Test
     public void testGetDefensiveDiffBonusesByTeam() {
         System.out.println("getDefensiveDiffBonusesByTeam");
-        Criteria instance = null;
+        Criteria instance = new Criteria("td");
         int expResult = 0;
         int result = instance.getDefensiveDiffBonusesByTeam();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = 10;
+        instance.setDefensiveDiffBonusesByTeam(expResult);
+        result = instance.getDefensiveDiffBonusesByTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -592,11 +613,14 @@ public class CriteriaNGTest {
     @Test
     public void testSetDefensiveDiffBonusesByTeam() {
         System.out.println("setDefensiveDiffBonusesByTeam");
-        int mDefensiveDiffBonusesByTeam = 0;
-        Criteria instance = null;
-        instance.setDefensiveDiffBonusesByTeam(mDefensiveDiffBonusesByTeam);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance = new Criteria("td");
+        int expResult = 0;
+        int result = instance.getDefensiveDiffBonusesByTeam();
+        assertEquals(result, expResult);
+        expResult = 10;
+        instance.setDefensiveDiffBonusesByTeam(expResult);
+        result = instance.getDefensiveDiffBonusesByTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -659,12 +683,14 @@ public class CriteriaNGTest {
     @Test
     public void testGetDefensiveDiffBonusesForTeam() {
         System.out.println("getDefensiveDiffBonusesForTeam");
-        Criteria instance = null;
+        Criteria instance = new Criteria("td");
         int expResult = 0;
         int result = instance.getDefensiveDiffBonusesForTeam();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = 10;
+        instance.setDefensiveDiffBonusesForTeam(expResult);
+        result = instance.getDefensiveDiffBonusesForTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -673,11 +699,14 @@ public class CriteriaNGTest {
     @Test
     public void testSetDefensiveDiffBonusesForTeam() {
         System.out.println("setDefensiveDiffBonusesForTeam");
-        int mDefensiveDiffBonusesForTeam = 0;
-        Criteria instance = null;
-        instance.setDefensiveDiffBonusesForTeam(mDefensiveDiffBonusesForTeam);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criteria instance = new Criteria("td");
+        int expResult = 0;
+        int result = instance.getDefensiveDiffBonusesForTeam();
+        assertEquals(result, expResult);
+        expResult = 10;
+        instance.setDefensiveDiffBonusesForTeam(expResult);
+        result = instance.getDefensiveDiffBonusesForTeam();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -706,5 +735,5 @@ public class CriteriaNGTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
 }

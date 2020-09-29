@@ -20,6 +20,8 @@ import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.SplashScreen;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -42,7 +44,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
@@ -54,7 +58,6 @@ import javax.swing.ProgressMonitor;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-import net.java.dev.colorchooser.ColorChooser;
 import org.apache.commons.net.ftp.FTPClient;
 import org.jfree.ui.tabbedui.VerticalLayout;
 import teamma.data.LRB;
@@ -119,7 +122,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         return currentPath;
     }
 
-    
     /**
      * Creates new form MainFrame
      *
@@ -172,7 +174,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                 jmiDelRound.setEnabled(!isClient);
 
-                jmiGenerateNextRound.setEnabled((r.allMatchesEntered()) && (!isClient));
+                boolean generateNextRoundEnabled = (r.allMatchesEntered()) && (!isClient);
+                if (r.isCup()) {
+                    if (r.getCupMaxTour() - 1 == r.getCupTour()) {
+                        generateNextRoundEnabled = false;
+                    }
+                }
+
+                jmiGenerateNextRound.setEnabled(generateNextRoundEnabled);
 
                 jmiChangePairing.setEnabled(!isClient);
                 jmiAddFreeMatch.setEnabled(!isClient);
@@ -278,8 +287,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiGenerateFirstRound.setEnabled(!isClient);
         jcxmiAsServer.setEnabled(!isClient);
         jcxPatchPortugal.setEnabled(!isClient);
-        jcxDisplayRosters.setEnabled(true);        
-        jcxDisplayRosters.setSelected(Tournament.getTournament().getParams().isDisplayRoster());        
+        jcxDisplayRosters.setEnabled(true);
+        jcxDisplayRosters.setSelected(Tournament.getTournament().getParams().isDisplayRoster());
         jmiEditColors.setEnabled(!isClient);
         jmiEditWebPort.setEnabled(!isClient);
         jmiEditDescription.setEnabled(!isClient);
@@ -292,7 +301,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
      */
     public void update() {
 
-        jmiEditTeam.setEnabled(mTournament.getParams().getGame() == RosterType.C_BLOOD_BOWL);
+        jmiEditTeam.setEnabled(true);
         jmiSubstitutePlayer.setEnabled(mTournament.getRoundsCount() > 0);
         final MainTreeModel dtm = new MainTreeModel();
         jtrPanels.setCellRenderer(dtm);
@@ -345,6 +354,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jcxAllowSpecialSkill = new javax.swing.JCheckBoxMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jmiNafLoad = new javax.swing.JMenuItem();
+        jcxIgnoreCaps = new javax.swing.JCheckBoxMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
         jcxPatchPortugal = new javax.swing.JCheckBoxMenuItem();
         jSeparator13 = new javax.swing.JPopupMenu.Separator();
@@ -557,6 +567,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnTools.add(jmiNafLoad);
+
+        jcxIgnoreCaps.setSelected(true);
+        jcxIgnoreCaps.setText(bundle.getString("IgnoreCapitalLetter")); // NOI18N
+        jcxIgnoreCaps.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxIgnoreCapsActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxIgnoreCaps);
         jmnTools.add(jSeparator11);
 
         jcxPatchPortugal.setText(bundle.getString("PortugalPatch")); // NOI18N
@@ -1139,15 +1158,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jdgParams.setVisible(true);
 
         mTournament = Tournament.getTournament();
-        if (mTournament.getParams().getGame() == RosterType.C_DREAD_BALL) {
-            RosterType.initCollection(RosterType.C_DREAD_BALL);
-            jmiExport.setEnabled(false);
-            jmiExportFbb.setEnabled(false);
-            jcxAllowSpecialSkill.setEnabled(false);
-        } else {
-            RosterType.initCollection(RosterType.C_BLOOD_BOWL);
-    //        LRB.getLRB();
-        }
+
+        RosterType.initCollection();
 
         mTournament.clearGroups();
         final Group group = new Group(Translate.translate(CS_None));
@@ -1454,7 +1466,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         if (areRulesValid()) {
 
             if (JOptionPane.showConfirmDialog(this, java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("AreYouSure?ItWillEraseAllRounds"), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("FirstRound"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                if (mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) && mTournament.getCoachsCount() % 2 > 0) {
+                if (mTournament.getParams().isTeamTournament() && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) && mTournament.getTeamsCount() % 2 > 0) {
                     JOptionPane.showMessageDialog(this,
                             Translate.translate(CS_OddTeamNumber));
                 } else {
@@ -1824,6 +1836,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     m.getCompetitor2().removeMatch(m);
                 }
 
+                // Clean Cup
+                if (round.isCup()) {
+                    if (round.getCupTour() == 0) {
+                        mTournament.setCup(null);
+                    } else {
+                        mTournament.getCup().cleanRound(round);
+                    }
+                }
+
                 mTournament.removeRound(round);
 
                 update();
@@ -1858,27 +1879,21 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         int res = JOptionPane.showConfirmDialog(this, jpn, Translate.translate(CS_RoundCoefficient), JOptionPane.OK_CANCEL_OPTION);
         if (res == JOptionPane.OK_OPTION) {
-            try{
-            Double val1 = (Double) jftf1.getValue();
-            r.setMaxBonus(val1);
-            }
-            catch (ClassCastException ce)
-            {
-                if (jftf1.getValue() instanceof Long)
-                {
-                    String txt=((Long)jftf1.getValue()).toString()+".0";
+            try {
+                Double val1 = (Double) jftf1.getValue();
+                r.setMaxBonus(val1);
+            } catch (ClassCastException ce) {
+                if (jftf1.getValue() instanceof Long) {
+                    String txt = ((Long) jftf1.getValue()).toString() + ".0";
                     r.setMaxBonus(Double.valueOf(txt));
                 }
             }
-            try{
+            try {
                 Double val2 = (Double) jftf2.getValue();
                 r.setMinBonus(val2);
-            }
-            catch (ClassCastException cc)
-            {
-                if (jftf2.getValue() instanceof Long)
-                {
-                    String txt=((Long)jftf2.getValue()).toString()+".0";
+            } catch (ClassCastException cc) {
+                if (jftf2.getValue() instanceof Long) {
+                    String txt = ((Long) jftf2.getValue()).toString() + ".0";
                     r.setMinBonus(Double.valueOf(txt));
                 }
             }
@@ -1889,7 +1904,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     private final static String CS_SwissRound = "RONDE SUISSE";
     private final static String CS_SwissRound_TopDown = "RONDE SUISSE ALTERNEE";
-    
+
     private final static String CS_AcceleratedSwissRound = "RONDE SUISSE ACCELERÉE";
     private final static String CS_Animation = "Animation";
 
@@ -2007,7 +2022,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         if (jpnContent instanceof JPNRound) {
             JPNRound jpnr = (JPNRound) jpnContent;
-            Round round = jpnr.getRound();            
+            Round round = jpnr.getRound();
             final JdgChangePairing jdg = new JdgChangePairing(MainFrame.getMainFrame(), true, round);
             jdg.setVisible(true);
             jpnr.update();
@@ -2838,14 +2853,50 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
     private void jmiEditColorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditColorsActionPerformed
 
-        ColorChooser jccColor1 = new ColorChooser();
-        jccColor1.setColor(Tournament.getTournament().getParams().getColor1());
-        ColorChooser jccColor2 = new ColorChooser();
-        jccColor2.setColor(Tournament.getTournament().getParams().getColor2());
-        ColorChooser jccBorderColor = new ColorChooser();
-        jccBorderColor.setColor(Tournament.getTournament().getParams().getBorderColor());
-        ColorChooser jccForeColor = new ColorChooser();
-        jccForeColor.setColor(Tournament.getTournament().getParams().getForeColor());
+        JButton jbtColor1 = new JButton(" ");
+        jbtColor1.setBackground(Tournament.getTournament().getParams().getColor1());
+        JButton jbtColor2 = new JButton(" ");
+        jbtColor2.setBackground(Tournament.getTournament().getParams().getColor2());
+        JButton jbtBorderColor = new JButton(" ");
+        jbtBorderColor.setBackground(Tournament.getTournament().getParams().getBorderColor());
+        JButton jbtForeColor = new JButton(" ");
+        jbtForeColor.setBackground(Tournament.getTournament().getParams().getForeColor());
+
+        jbtColor1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(jpnContent, CS_None, Tournament.getTournament().getParams().getColor1());
+                Tournament.getTournament().getParams().setColor1(c);
+                jbtColor1.setBackground(c);
+            }
+        });
+
+        jbtColor2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(jpnContent, CS_None, Tournament.getTournament().getParams().getColor2());
+                Tournament.getTournament().getParams().setColor2(c);
+                jbtColor2.setBackground(c);
+            }
+        });
+
+        jbtBorderColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(jpnContent, CS_None, Tournament.getTournament().getParams().getBorderColor());
+                Tournament.getTournament().getParams().setBorderColor(c);
+                jbtBorderColor.setBackground(c);
+            }
+        });
+
+        jbtForeColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Color c = JColorChooser.showDialog(jpnContent, CS_None, Tournament.getTournament().getParams().getForeColor());
+                Tournament.getTournament().getParams().setForeColor(c);
+                jbtForeColor.setBackground(c);
+            }
+        });
 
         JLabel jlbColor1 = new JLabel(Translate.translate(COLOR_1));
         JLabel jlbColor2 = new JLabel(Translate.translate(COLOR_2));
@@ -2855,21 +2906,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         JPanel jpn = new JPanel(new GridLayout(4, 2));
 
         jpn.add(jlbColor1);
-        jpn.add(jccColor1);
+        jpn.add(jbtColor1);
         jpn.add(jlbColor2);
-        jpn.add(jccColor2);
+        jpn.add(jbtColor2);
         jpn.add(jlbBorderColor);
-        jpn.add(jccBorderColor);
+        jpn.add(jbtBorderColor);
         jpn.add(jlbForeColor);
-        jpn.add(jccForeColor);
+        jpn.add(jbtForeColor);
 
         JOptionPane.showConfirmDialog(this, jpn, "Couleurs", JOptionPane.OK_OPTION);
-
-        Tournament.getTournament().getParams().setColor1(jccColor1.getColor());
-        Tournament.getTournament().getParams().setColor2(jccColor2.getColor());
-        Tournament.getTournament().getParams().setBorderColor(jccBorderColor.getColor());
-        Tournament.getTournament().getParams().setForeColor(jccForeColor.getColor());
-
 
     }//GEN-LAST:event_jmiEditColorsActionPerformed
 
@@ -3019,14 +3064,19 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jmiMassAddActionPerformed
 
     private void jcxDisplayRostersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxDisplayRostersActionPerformed
-          Tournament.getTournament().getParams().setDisplayRoster(jcxDisplayRosters.getState());
+        Tournament.getTournament().getParams().setDisplayRoster(jcxDisplayRosters.getState());
 
     }//GEN-LAST:event_jcxDisplayRostersActionPerformed
 
     private void jmiEditRosterListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditRosterListActionPerformed
-        JdgRosters jdg=new JdgRosters(this,true);
+        JdgRosters jdg = new JdgRosters(this, true);
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiEditRosterListActionPerformed
+
+    private void jcxIgnoreCapsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxIgnoreCapsActionPerformed
+
+        NAF.setIgnoreCaps(jcxIgnoreCaps.isSelected());
+    }//GEN-LAST:event_jcxIgnoreCapsActionPerformed
 
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
@@ -3133,41 +3183,38 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
      */
     private static void appInit() {
 
-        
-        
         splashText("List NAF id Database");
         // Get Number of naf_id text
-        ArrayList<File> naf_list=NAF.getFileList();
-        int nb_steps=naf_list.size()+6;
-        int pct=100/nb_steps;
-        splashProgress(1*pct);
-        
+        ArrayList<File> naf_list = NAF.getFileList();
+        int nb_steps = naf_list.size() + 6;
+        int pct = 100 / nb_steps;
+        splashProgress(1 * pct);
+
         try {
             splashText("Initization of RMi Registry");
-            splashProgress(2*pct);
+            splashProgress(2 * pct);
 
             RMITournament tour = RMITournament.getInstance();
             ITournament stub = (ITournament) UnicastRemoteObject.exportObject(tour, 0);
 
             splashText("Binding Tournament");
-            splashProgress(3*pct);
+            splashProgress(3 * pct);
             Registry registry = LocateRegistry.createRegistry(1099);// getRegistry();
             registry.bind("TourMa", stub);
 
         } catch (RemoteException | AlreadyBoundException e) {
             System.out.println(e.getLocalizedMessage());
         }
-                
+
         splashText("Loading NAF coach XML base");
-        for (int i=0; i<naf_list.size(); i++)
-        {
-        splashProgress((4+i)*pct);
-        NAF.initCoachs(naf_list.get(i));
+        for (int i = 0; i < naf_list.size(); i++) {
+            splashProgress((4 + i) * pct);
+            NAF.initCoachs(naf_list.get(i));
         }
         for (int i = 1; i <= 2; i++) {
             int pctDone = i * 2;
             splashText("Initialization");
-            splashProgress((5+ naf_list.size())*pct);
+            splashProgress((5 + naf_list.size()) * pct);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
@@ -3203,7 +3250,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
      */
     private static void splashInit() {
         mySplash = SplashScreen.getSplashScreen();
-        
+
         if (mySplash != null) {   // if there are any problems displaying the splash this will be null
             Dimension ssDim = mySplash.getSize();
             int height = ssDim.height;
@@ -3496,6 +3543,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JCheckBoxMenuItem jcxDisplayRosters;
+    private javax.swing.JCheckBoxMenuItem jcxIgnoreCaps;
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
     private javax.swing.JCheckBoxMenuItem jcxUseColor;
     private javax.swing.JCheckBoxMenuItem jcxUseImage;

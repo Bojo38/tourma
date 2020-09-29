@@ -38,7 +38,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="231" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="234" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -92,30 +92,14 @@
             </Property>
           </Properties>
         </Component>
-        <Container class="net.java.dev.colorchooser.ColorChooser" name="ccColor">
+        <Component class="javax.swing.JButton" name="jbtColor">
           <Properties>
-            <Property name="color" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="0" type="rgb"/>
-            </Property>
-            <Property name="name" type="java.lang.String" value="colorChooser" noResource="true"/>
+            <Property name="text" type="java.lang.String" value=" "/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ccColorActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtColorActionPerformed"/>
           </Events>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="22" max="32767" attributes="0"/>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-        </Container>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

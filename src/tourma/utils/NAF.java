@@ -28,6 +28,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdom.Element;
+import org.jdom.Document;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import tourma.MainFrame;
@@ -41,6 +42,11 @@ import tourma.data.RosterType;
 public final class NAF {
 
     protected static ArrayList<NAFCoach> coachs = new ArrayList<>();
+    protected static boolean _sIgnoreCaps = true;
+
+    public static void setIgnoreCaps(boolean b) {
+        _sIgnoreCaps = b;
+    }
 
     public static ArrayList<NAFCoach> getCoachs() {
         return coachs;
@@ -52,6 +58,13 @@ public final class NAF {
             if (tmp.getName().equals(name)) {
                 c = tmp;
                 break;
+            } else {
+                if (_sIgnoreCaps) {
+                    if (tmp.getName().toLowerCase().equals(name.toLowerCase())) {
+                        c = tmp;
+                        break;
+                    }
+                }
             }
         }
         return c;
@@ -111,11 +124,9 @@ public final class NAF {
                             // Close the streams
                         }
                         out.close();
-                        
+
                         // Store this file in the cache list
                         list.add(tempFile);
-
-                       
 
                     } catch (IOException e) {
                         stop = true;
@@ -141,7 +152,7 @@ public final class NAF {
         Reader fileReader = null;
 
         try {
-
+           
             InputStream is = new FileInputStream(file);
             if (null != is) {
                 fileReader = new InputStreamReader(is);
@@ -149,7 +160,7 @@ public final class NAF {
                 final SAXBuilder sxb = new SAXBuilder();
 
                 try {
-                    final org.jdom.Document document = sxb.build(fileReader);
+                    final Document document = sxb.build(fileReader);
                     final Element racine = document.getRootElement();
 
                     try {
@@ -169,10 +180,10 @@ public final class NAF {
                     }
 
                 } catch (JDOMException e) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
+                    JOptionPane.showMessageDialog(null, e.getLocalizedMessage() +" Reading file: "+ file.getAbsolutePath());
 
                 } catch (IOException e) {
-                    JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+                    JOptionPane.showMessageDialog(null, e.getMessage()+" Reading file: "+ file.getAbsolutePath());
                 }
             }
         } catch (FileNotFoundException e) {

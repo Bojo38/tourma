@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.jdom.Element;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -258,31 +259,6 @@ public class ParametersNGTest {
         assertEquals(nb, instance.getCriteriaCount());
     }
 
-    /**
-     * Test of getGame method, of class Parameters.
-     */
-    @Test
-    public void testGetGame() {
-        System.out.println("getGame");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        instance.setGame(expResult);
-        int result = instance.getGame();
-        assertEquals(result, expResult);
-    }
-
-    /**
-     * Test of setGame method, of class Parameters.
-     */
-    @Test
-    public void testSetGame() {
-        System.out.println("setGame");
-        Parameters instance = new Parameters();
-        int expResult = 0;
-        instance.setGame(expResult);
-        int result = instance.getGame();
-        assertEquals(result, expResult);
-    }
 
     /**
      * Test of getPointsIndivVictory method, of class Parameters.

@@ -27,6 +27,9 @@ public class Roster implements IXMLExport, Serializable {
     private final static String CS_FanFactor = "FanFactor";
     private final static String CS_Rerolls = "Rerolls";
     private final static String CS_Inducements = "Inducements";
+    private final static String CS_Inducement = "Inducement";
+     private final static String CS_Nb = "Nb";
+      private final static String CS_Type = "Type";
     private final static String CS_Chef = "Chef";
     private final static String CS_Igor = "Igor";
     private final static String CS_Wizard = "Wizard";
@@ -50,6 +53,9 @@ public class Roster implements IXMLExport, Serializable {
      * Standard creation team
      */
     private final ArrayList<Player> _players;
+
+    private final ArrayList<Inducement> _inducements;
+
     /**
      *
      */
@@ -73,110 +79,9 @@ public class Roster implements IXMLExport, Serializable {
     /*
      * Inducements
      */
-    /**
-     *
-     */
-    private int _extrarerolls;
-    /**
-     *
-     */
-    private int _localapothecary;
-    /**
-     *
-     */
-    private int _bloodweiserbabes;
-    /**
-     *
-     */
-    private int _corruptions;
-    /**
-     *
-     */
-    private boolean _chef;
-    /**
-     *
-     */
-    private boolean _igor;
-    /**
-     *
-     */
-    private boolean _wizard;
-    
-    /**
-     * Chaos Wizard 
-     */
-    private boolean _chaos_wizard;
+   
 
-    public boolean isChaos_wizard() {
-        return _chaos_wizard;
-    }
-
-    public void setChaos_wizard(boolean _chaos_wizard) {
-        this._chaos_wizard = _chaos_wizard;
-    }
-
-    public boolean isHoratio_X_Schottenheim() {
-        return Horatio_X_Schottenheim;
-    }
-
-    public void setHoratio_X_Schottenheim(boolean Horatio_X_Schottenheim) {
-        this.Horatio_X_Schottenheim = Horatio_X_Schottenheim;
-    }
-    private boolean Horatio_X_Schottenheim;
-    
-    
-    private boolean Kari_Coldsteel;
-
-    public boolean isKari_Coldsteel() {
-        return Kari_Coldsteel;
-    }
-
-    public void setKari_Coldsteel(boolean Kari_Coldsteel) {
-        this.Kari_Coldsteel = Kari_Coldsteel;
-    }
-    
-    private boolean Fink_Da_Fixer;
-
-    public boolean isFink_Da_Fixer() {
-        return Fink_Da_Fixer;
-    }
-
-    public void setFink_Da_Fixer(boolean Fink_Da_Fixer) {
-        this.Fink_Da_Fixer = Fink_Da_Fixer;
-    }
-    
-     private boolean Papa_Skullbones;
-     private boolean Galandril_Silverwater;
-     private boolean Krot_Shockwhisker;
-
-    public boolean isPapa_Skullbones() {
-        return Papa_Skullbones;
-    }
-
-    public void setPapa_Skullbones(boolean Papa_Skullbones) {
-        this.Papa_Skullbones = Papa_Skullbones;
-    }
-
-    public boolean isGalandril_Silverwater() {
-        return Galandril_Silverwater;
-    }
-
-    public void setGalandril_Silverwater(boolean Galandril_Silverwater) {
-        this.Galandril_Silverwater = Galandril_Silverwater;
-    }
-
-    public boolean isKrot_Shockwhisker() {
-        return Krot_Shockwhisker;
-    }
-
-    public void setKrot_Shockwhisker(boolean Krot_Shockwhisker) {
-        this.Krot_Shockwhisker = Krot_Shockwhisker;
-    }
-    
-    /**
-     *
-     */
-    private int _cards;
+   
     /*
      * No mercenary ?
      */
@@ -201,22 +106,19 @@ public class Roster implements IXMLExport, Serializable {
     public Roster() {
         _players = new ArrayList<>();
         _champions = new ArrayList<>();
+        _inducements = new ArrayList<>();
     }
 
     public void pull(Roster roster) {
         this._apothecary = roster._apothecary;
         this._assistants = roster._assistants;
-        this._bloodweiserbabes = roster._bloodweiserbabes;
-        this._cards = roster._cards;
+
         this._cheerleaders = roster._cheerleaders;
-        this._chef = roster._chef;
-        this._corruptions = roster._corruptions;
-        this._extrarerolls = roster._extrarerolls;
+
         this._fanfactor = roster._fanfactor;
-        this._igor = roster._igor;
-        this._localapothecary = roster._localapothecary;
+
         this._rerolls = roster._rerolls;
-        this._wizard = roster._wizard;
+
 
         this._roster = LRB.getLRB(roster.getRoster().getVersion()).getRosterType(roster.getRoster().getName());
 
@@ -234,6 +136,42 @@ public class Roster implements IXMLExport, Serializable {
             _champions.add(sp);
         }
 
+    }
+
+    public int getInducementsSize() {
+        return _inducements.size();
+    }
+
+    public Inducement getInducement(int i) {
+        return _inducements.get(i);
+    }
+
+    public void setInducement(InducementType it, int nb) {
+        boolean found = false;
+        for (int cpt = 0; cpt < _inducements.size(); cpt++) {
+            Inducement induc = _inducements.get(cpt);
+            if (induc.getType() == it) {
+                induc.setNb(nb);
+                found = true;
+            }
+        }
+        if (!found) {
+            Inducement induc = new Inducement();
+            induc.setType(it);
+            induc.setNb(nb);
+            _inducements.add(induc);
+        }
+    }
+
+    public int getNbInduc(InducementType it) {
+        int value = 0;
+        for (int cpt = 0; cpt < _inducements.size(); cpt++) {
+            Inducement induc = _inducements.get(cpt);
+            if (induc.getType() == it) {
+                value = induc.getNb();
+            }
+        }
+        return value;
     }
 
     /**
@@ -268,23 +206,12 @@ public class Roster implements IXMLExport, Serializable {
             cost += _champion.getCost();
         }
 
-        cost += getBloodweiserbabes() * RosterType.getBabe_cost();
-        cost += getCards();
-        cost += getRoster() != null ? getCorruptions() * getRoster().getBribe_cost() : 0;
-        cost += getExtrarerolls() * RosterType.getExtraRerollCost();
-        cost += getLocalapothecary() * RosterType.getLocal_apo_cost();
-        cost += (isChef()) && (getRoster() != null) ? getRoster().getChef_cost() : 0;
-        cost += isIgor() ? RosterType.getIgor_cost() : 0;
-        cost += isWizard() ? RosterType.getWizard_cost() : 0;
-        
-        cost += isChaos_wizard()? RosterType.getChaos_wizard_cost() : 0;
-        cost += isHoratio_X_Schottenheim()? RosterType.getHoratio_X_Schottenheim_cost(): 0;
-        cost += isFink_Da_Fixer()? RosterType.getFink_Da_Fixer_cost(): 0;
-        cost += isGalandril_Silverwater()? RosterType.getGalandril_Silverwater_cost(): 0;
-        cost += isKari_Coldsteel()? RosterType.getKari_Coldstell_cost() : 0;
-        cost += isKrot_Shockwhisker()? RosterType.getKrot_Shockwhisker_cost(): 0;
-        cost += isPapa_Skullbones()? RosterType.getPapa_Skullbones_cost(): 0;
-        
+     
+        for (Inducement induc:_inducements)
+        {
+            cost+=induc.getNb()*induc.getType().getCost();
+        }
+       
 
         return cost;
     }
@@ -298,9 +225,8 @@ public class Roster implements IXMLExport, Serializable {
 
         Element compo = new Element(CS_Composition);
         if (this.getRoster() != null) {
-            if (this._version==null)
-            {
-                this._version=LRB.E_Version.NAF2017;
+            if (this._version == null) {
+                this._version = LRB.E_Version.BB2016;
             }
             switch (this._version) {
                 case LRB1:
@@ -324,7 +250,7 @@ public class Roster implements IXMLExport, Serializable {
                 case CRP1:
                     compo.setAttribute(CS_LRB, "CRP1");
                     break;
-                case NAF2017:
+                case BB2016:
                     compo.setAttribute(CS_LRB, "NAF2017");
                     break;
 
@@ -338,14 +264,14 @@ public class Roster implements IXMLExport, Serializable {
             compo.setAttribute(CS_Rerolls, Integer.toString(this.getRerolls()));
 
             final Element inducements = new Element(CS_Inducements);
-            inducements.setAttribute(CS_Chef, Boolean.toString(this.isChef()));
-            inducements.setAttribute(CS_Igor, Boolean.toString(this.isIgor()));
-            inducements.setAttribute(CS_Wizard, Boolean.toString(this.isWizard()));
-            inducements.setAttribute(CS_Babes, Integer.toString(this.getBloodweiserbabes()));
-            inducements.setAttribute(CS_Cards, Integer.toString(this.getCards()));
-            inducements.setAttribute(CS_Bribe, Integer.toString(this.getCorruptions()));
-            inducements.setAttribute(CS_ExtraRerolls, Integer.toString(this.getExtrarerolls()));
-            inducements.setAttribute(CS_LocalApothecary, Integer.toString(this.getLocalapothecary()));
+            for (Inducement induc: _inducements)
+            {
+                Element e_induc=new Element(CS_Inducement);
+                e_induc.setAttribute(CS_Nb,Integer.toString(induc._nb));
+                e_induc.setAttribute(CS_Type,induc._type.getName());
+                inducements.addContent(e_induc);
+            }
+          
 
             for (int cpt = 0; cpt < getChampionCount(); cpt++) {
                 StarPlayer _champion = getChampion(cpt);
@@ -430,14 +356,15 @@ public class Roster implements IXMLExport, Serializable {
 
         final Element inducements = e.getChild(CS_Inducements);
         if (inducements != null) {
-            this.setBloodweiserbabes(Integer.parseInt(inducements.getAttributeValue(CS_Babes)));
-            this.setCards(Integer.parseInt(inducements.getAttributeValue(CS_Cards)));
-            this.setChef(Boolean.parseBoolean(inducements.getAttributeValue(CS_Chef)));
-            this.setCorruptions(Integer.parseInt(inducements.getAttributeValue(CS_Bribe)));
-            this.setExtrarerolls(Integer.parseInt(inducements.getAttributeValue(CS_ExtraRerolls)));
-            this.setIgor(Boolean.parseBoolean(inducements.getAttributeValue(CS_Igor)));
-            this.setLocalapothecary(Integer.parseInt(inducements.getAttributeValue(CS_LocalApothecary)));
-            this.setWizard(Boolean.parseBoolean(inducements.getAttributeValue(CS_Wizard)));
+            
+            final List<Element> inducs = inducements.getChildren(CS_Inducement);
+            final Iterator<Element> i_induc = inducs.iterator();
+            while (i_induc.hasNext()) {
+                final Element e_induc = i_induc.next();
+                final String it_name = e_induc.getAttributeValue(CS_Type);
+                InducementType it= this.getRoster().getInducementType(it_name);
+                this.setInducement(it, Integer.parseInt( e_induc.getAttributeValue(CS_Nb)));
+            }
 
             final List<Element> stars = inducements.getChildren(CS_StarPlayer);
             final Iterator<Element> s = stars.iterator();
@@ -502,117 +429,7 @@ public class Roster implements IXMLExport, Serializable {
         this._assistants = _assistants;
     }
 
-    /**
-     * @return the _extrarerolls
-     */
-    public int getExtrarerolls() {
-        return _extrarerolls;
-    }
-
-    /**
-     * @param _extrarerolls the _extrarerolls to set
-     */
-    public void setExtrarerolls(int _extrarerolls) {
-        this._extrarerolls = _extrarerolls;
-    }
-
-    /**
-     * @return the _localapothecary
-     */
-    public int getLocalapothecary() {
-        return _localapothecary;
-    }
-
-    /**
-     * @param _localapothecary the _localapothecary to set
-     */
-    public void setLocalapothecary(int _localapothecary) {
-        this._localapothecary = _localapothecary;
-    }
-
-    /**
-     * @return the _bloodweiserbabes
-     */
-    public int getBloodweiserbabes() {
-        return _bloodweiserbabes;
-    }
-
-    /**
-     * @param _bloodweiserbabes the _bloodweiserbabes to set
-     */
-    public void setBloodweiserbabes(int _bloodweiserbabes) {
-        this._bloodweiserbabes = _bloodweiserbabes;
-    }
-
-    /**
-     * @return the _corruptions
-     */
-    public int getCorruptions() {
-        return _corruptions;
-    }
-
-    /**
-     * @param _corruptions the _corruptions to set
-     */
-    public void setCorruptions(int _corruptions) {
-        this._corruptions = _corruptions;
-    }
-
-    /**
-     * @return the _chef
-     */
-    public boolean isChef() {
-        return _chef;
-    }
-
-    /**
-     * @param _chef the _chef to set
-     */
-    public void setChef(boolean _chef) {
-        this._chef = _chef;
-    }
-
-    /**
-     * @return the _igor
-     */
-    public boolean isIgor() {
-        return _igor;
-    }
-
-    /**
-     * @param _igor the _igor to set
-     */
-    public void setIgor(boolean _igor) {
-        this._igor = _igor;
-    }
-
-    /**
-     * @return the _wizard
-     */
-    public boolean isWizard() {
-        return _wizard;
-    }
-
-    /**
-     * @param _wizard the _wizard to set
-     */
-    public void setWizard(boolean _wizard) {
-        this._wizard = _wizard;
-    }
-
-    /**
-     * @return the _cards
-     */
-    public int getCards() {
-        return _cards;
-    }
-
-    /**
-     * @param _cards the _cards to set
-     */
-    public void setCards(int _cards) {
-        this._cards = _cards;
-    }
+   
 
     /**
      * @param i

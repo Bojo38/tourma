@@ -18,6 +18,7 @@ import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criteria;
+import tourma.data.Formula;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.TeamMatch;
@@ -71,9 +72,9 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
     public int getColumnCount() {
         int res = 0;
         if (mTeamTournament) {
-            res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 5;
+            res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + Tournament.getTournament().getParams().getFormulaCount() * 2 + 5;
         } else {
-            res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3;
+            res = Tournament.getTournament().getParams().getCriteriaCount() * 2 + Tournament.getTournament().getParams().getFormulaCount() * 2 + 3;
         }
 
         return res;
@@ -113,12 +114,22 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     result = Translate.translate(Translate.CS_Team) + " 2";
                     break;
                 default:
-                    final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
-                    final int ind = (col - 5) % 2;
-                    if (ind == 0) {
-                        result = crit.getName() + " 1";
+                    if (col < Tournament.getTournament().getParams().getCriteriaCount() * 2 + 5) {
+                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
+                        final int ind = (col - 5) % 2;
+                        if (ind == 0) {
+                            result = crit.getName() + " 1";
+                        } else {
+                            result = crit.getName() + " 2";
+                        }
                     } else {
-                        result = crit.getName() + " 2";
+                        final Formula form = Tournament.getTournament().getParams().getFormula((col - 5 - Tournament.getTournament().getParams().getCriteriaCount() * 2) / 2);
+                        final int ind = (col - 5 - Tournament.getTournament().getParams().getCriteriaCount() * 2) % 2;
+                        if (ind == 0) {
+                            result = form.getName() + " 1";
+                        } else {
+                            result = form.getName() + " 2";
+                        }
                     }
             }
         } else {
@@ -139,11 +150,22 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     result = Translate.translate(Translate.CS_Coach) + " 2";
                     break;
                 default:
-                    final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
-                    if ((col - 3) % 2 > 0) {
-                        result = crit.getName() + " 2";
+                    if (col < Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3) {
+                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
+                        final int ind = (col - 3) % 2;
+                        if (ind == 0) {
+                            result = crit.getName() + " 1";
+                        } else {
+                            result = crit.getName() + " 2";
+                        }
                     } else {
-                        result = crit.getName() + " 1";
+                        final Formula form = Tournament.getTournament().getParams().getFormula((col - 3 - Tournament.getTournament().getParams().getCriteriaCount() * 2) / 2);
+                        final int ind = (col - 3 - Tournament.getTournament().getParams().getCriteriaCount() * 2) % 2;
+                        if (ind == 0) {
+                            result = form.getName() + " 1";
+                        } else {
+                            result = form.getName() + " 2";
+                        }
                     }
             }
         }
@@ -228,13 +250,22 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     obj = ((Coach) m.getCompetitor2()).getTeamMates().getName();
                     break;
                 default:
-                    index = (col - 5) / 2;
-                    final Criteria crit = Tournament.getTournament().getParams().getCriteria(index);
-                    val = m.getValue(crit);
-                    if ((col - 5) % 2 == 0) {
-                        obj = val.getValue1();
+                    if (col < Tournament.getTournament().getParams().getCriteriaCount() * 2 + 5) {
+                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
+                        val = m.getValue(crit);
+                        if ((col - 5) % 2 == 0) {
+                            obj = val.getValue1();
+                        } else {
+                            obj = val.getValue2();
+                        }
                     } else {
-                        obj = val.getValue2();
+                        final Formula form = Tournament.getTournament().getParams().getFormula((col - 5 - Tournament.getTournament().getParams().getCriteriaCount() * 2) / 2);
+                        val = m.getValue(form);
+                        if ((col - 5) % 2 == 0) {
+                            obj = val.getValue1();
+                        } else {
+                            obj = val.getValue2();
+                        }
                     }
             }
         } else {
@@ -301,13 +332,22 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 }
                 break;
                 default:
-                    index = (col - 3) / 2;
-                    final Criteria crit = Tournament.getTournament().getParams().getCriteria(index);
-                    val = m.getValue(crit);
-                    if ((col - 3) % 2 == 0) {
-                        obj = val.getValue1();
+                    if (col < Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3) {
+                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
+                        val = m.getValue(crit);
+                        if ((col - 3) % 2 == 0) {
+                            obj = val.getValue1();
+                        } else {
+                            obj = val.getValue2();
+                        }
                     } else {
-                        obj = val.getValue2();
+                        final Formula form = Tournament.getTournament().getParams().getFormula((col - 3 - Tournament.getTournament().getParams().getCriteriaCount() * 2) / 2);
+                        val = m.getValue(form);
+                        if ((col - 3) % 2 == 0) {
+                            obj = val.getValue1();
+                        } else {
+                            obj = val.getValue2();
+                        }
                     }
             }
         }
@@ -329,6 +369,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             val.setValue1(-1);
                         } else {
                             val.setValue1(Integer.parseInt(tmp));
+                            updateFormulasValues(row, 1);
                         }
                         break;
                     case 4:
@@ -337,6 +378,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             val.setValue2(-1);
                         } else {
                             val.setValue2(Integer.parseInt(tmp));
+                            updateFormulasValues(row, 2);
+                            /**
+                             * Update Formulas
+                             */
                         }
                         break;
                     default:
@@ -344,8 +389,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(index));
                         if ((col - 5) % 2 == 0) {
                             val.setValue1(Integer.parseInt(tmp));
+                            updateFormulasValues(row, 1);
                         } else {
                             val.setValue2(Integer.parseInt(tmp));
+                            updateFormulasValues(row, 2);
                         }
                 }
             } else {
@@ -356,6 +403,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             val.setValue1(-1);
                         } else {
                             val.setValue1(Integer.parseInt(tmp));
+                            updateFormulasValues(row, 1);
                         }
                         break;
                     case 3:
@@ -364,6 +412,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             val.setValue2(-1);
                         } else {
                             val.setValue2(Integer.parseInt(tmp));
+                            updateFormulasValues(row, 2);
                         }
                         break;
                     default:
@@ -371,8 +420,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         val = m.getValue(Tournament.getTournament().getParams().getCriteria(index));
                         if ((col - 3) % 2 == 0) {
                             val.setValue1(Integer.parseInt(tmp));
+                            updateFormulasValues(row, 1);
                         } else {
                             val.setValue2(Integer.parseInt(tmp));
+                            updateFormulasValues(row, 2);
                         }
                 }
             }
@@ -386,26 +437,21 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
                 Round r = Tournament.getTournament().getRound(i);
                 for (int j = 0; j < r.getMatchsCount(); j++) {
-                    Match match=r.getMatch(j);
-                    if (match instanceof TeamMatch)
-                    {
-                        for (int k=0; k<((TeamMatch) match).getMatchCount(); k++)
-                        {
-                            if (((TeamMatch)match).containsMatch(m))
-                            {
-                                ((TeamMatch)match).resetWL();
-                                ((TeamMatch)match).recomputeValues();
+                    Match match = r.getMatch(j);
+                    if (match instanceof TeamMatch) {
+                        for (int k = 0; k < ((TeamMatch) match).getMatchCount(); k++) {
+                            if (((TeamMatch) match).containsMatch(m)) {
+                                ((TeamMatch) match).resetWL();
+                                ((TeamMatch) match).recomputeValues();
                             }
                         }
-                    }
-                    else
-                    {
+                    } else {
                         break;
                     }
                 }
             }
         }
-        
+
         fireTableDataChanged();
         MainFrame.getMainFrame().updateMenus();
 
@@ -430,11 +476,11 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             result = false;
         } else {
             if (mTeamTournament) {
-                if ((col == 1) || (col == 2) || (col == 5) || (col == 6) || (col == 0)) {
+                if ((col == 1) || (col == 2) || (col == 5) || (col == 6) || (col == 0) || (col > 5 + Tournament.getTournament().getParams().getCriteriaCount()*2)) {
                     result = false;
                 }
             } else {
-                if ((col == 1) || (col == 4) || (col == 0)) {
+                if ((col == 1) || (col == 4) || (col == 0) || (col > 3 + Tournament.getTournament().getParams().getCriteriaCount()*2)) {
                     result = false;
                 }
             }
@@ -624,30 +670,33 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         }
                         int CritIndex = (column - 5) / 2;
                         int ValIndex = (column - 5) % 2;
-                        Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
-                        Value v = m.getValue(crit);
-                        if (ValIndex == 0) {
-                            if (v.getValue1() > crit.getCriticalThreshold()) {
-                                if (useColor) {
-                                    bkg = Color.RED;
-                                } else {
-                                    bkg = Color.DARK_GRAY;
+
+                        if (CritIndex < Tournament.getTournament().getParams().getCriteriaCount()) {
+                            Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
+                            Value v = m.getValue(crit);
+                            if (ValIndex == 0) {
+                                if (v.getValue1() > crit.getCriticalThreshold()) {
+                                    if (useColor) {
+                                        bkg = Color.RED;
+                                    } else {
+                                        bkg = Color.DARK_GRAY;
+                                    }
+                                    frg = Color.WHITE;
+                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                                 }
-                                frg = Color.WHITE;
-                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                             }
-                        }
-                        if (ValIndex == 1) {
-                            if (v.getValue2() > crit.getCriticalThreshold()) {
-                                if (useColor) {
-                                    bkg = Color.BLUE;
-                                } else {
-                                    bkg = Color.DARK_GRAY;
+                            if (ValIndex == 1) {
+                                if (v.getValue2() > crit.getCriticalThreshold()) {
+                                    if (useColor) {
+                                        bkg = Color.BLUE;
+                                    } else {
+                                        bkg = Color.DARK_GRAY;
+                                    }
+                                    frg = Color.WHITE;
+                                    jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                                 }
-                                frg = Color.WHITE;
-                                jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                             }
-                        }
+                        } 
                 }
             } else {
                 switch (column) {
@@ -786,9 +835,8 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         }
                 }
             }
-            if (m.isRemotely())
-            {
-                frg=Color.BLUE;
+            if (m.isRemotely()) {
+                frg = Color.BLUE;
             }
         }
 
@@ -830,6 +878,27 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         }
 
         return jlb;
+    }
+
+    private void updateFormulasValues(int row, int side) {
+        for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+            Formula f = Tournament.getTournament().getParams().getFormula(i);
+            CoachMatch cm = this.mMatchs.get(row);
+            Value val = cm.getValue(f);
+
+            
+            int ivalue=f.evaluate(cm.getValues(),side);
+            
+            if (side==1)
+            {
+                val.setValue1(ivalue);
+            }
+            else
+            {
+                val.setValue2(ivalue);
+            }
+            
+        }
     }
 
     private void writeObject(java.io.ObjectOutputStream stream) throws java.io.IOException {

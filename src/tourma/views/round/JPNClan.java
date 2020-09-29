@@ -15,6 +15,7 @@ import java.util.HashMap;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Criteria;
+import tourma.data.Formula;
 import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -62,10 +63,17 @@ public final class JPNClan extends javax.swing.JPanel {
         for (int cpt = 0; cpt < t.getCoachsCount(); cpt++) {
             coachs.add(t.getCoach(cpt));
         }
+        
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
             final Criteria criteria = mTournament.getParams().getCriteria(i);
             final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, t, coachs, teams, mRound, true, false);
             jtpAnnexRank.add(criteria.getName(), jpn);
+        }
+        
+        for (int i = 0; i < mTournament.getParams().getFormulaCount(); i++) {
+            final Formula formula = mTournament.getParams().getFormula(i);
+            final JPNAnnexRanking jpn = new JPNAnnexRanking(formula.getName(), formula, t, coachs, teams, mRound, true, false);
+            jtpAnnexRank.add(formula.getName(), jpn);
         }
 
         update();

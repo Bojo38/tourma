@@ -43,7 +43,7 @@ public class RosterNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        lrb = LRB.getLRB();
+        lrb = LRB.getLRB(LRB.E_Version.BB2016);
     }
 
     @AfterClass
@@ -142,7 +142,7 @@ public class RosterNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-       if (roster == null) {
+        if (roster == null) {
             fail("Roster not loaded");
         } else {
             try {
@@ -151,28 +151,23 @@ public class RosterNGTest {
                 final Element racine = document.getRootElement();
                 Roster tmp = new Roster();
                 tmp.setXMLElement(racine);
-                Assert.assertTrue(roster.getAssistants()==tmp.getAssistants());
-                Assert.assertTrue(roster.getBloodweiserbabes()==tmp.getBloodweiserbabes());
-                Assert.assertTrue(roster.getCards()==tmp.getCards());
-                Assert.assertTrue(roster.getChampionCount()==tmp.getChampionCount());
-                Assert.assertTrue(roster.getCheerleaders()==tmp.getCheerleaders());
-                Assert.assertTrue(roster.getCorruptions()==tmp.getCorruptions());
-                Assert.assertTrue(roster.getExtrarerolls()==tmp.getExtrarerolls());
-                Assert.assertTrue(roster.getFanfactor()==tmp.getFanfactor());
-                Assert.assertTrue(roster.getLocalapothecary()==tmp.getLocalapothecary());
-                Assert.assertTrue(roster.getPlayerCount()==tmp.getPlayerCount());
-                Assert.assertTrue(roster.getRerolls()==tmp.getRerolls());
-                Assert.assertTrue(roster.getRoster()==tmp.getRoster());
-                Assert.assertTrue(roster.getValue(true)==tmp.getValue(true));
-                Assert.assertTrue(roster.getValue(false)==tmp.getValue(false));
-                
+                Assert.assertTrue(roster.getAssistants() == tmp.getAssistants());
+                Assert.assertTrue(roster.getChampionCount() == tmp.getChampionCount());
+                Assert.assertTrue(roster.getCheerleaders() == tmp.getCheerleaders());
+                Assert.assertTrue(roster.getFanfactor() == tmp.getFanfactor());
+                Assert.assertTrue(roster.getPlayerCount() == tmp.getPlayerCount());
+                Assert.assertTrue(roster.getRerolls() == tmp.getRerolls());
+                Assert.assertTrue(roster.getRoster() == tmp.getRoster());
+                Assert.assertTrue(roster.getValue(true) == tmp.getValue(true));
+                Assert.assertTrue(roster.getValue(false) == tmp.getValue(false));
+
             } catch (JDOMException ex) {
                 Logger.getLogger(RosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {
                 Logger.getLogger(RosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
             }
-           
-       }
+
+        }
     }
 
     /**
@@ -237,247 +232,7 @@ public class RosterNGTest {
         }
     }
 
-    /**
-     * Test of getExtrarerolls method, of class Roster.
-     */
-    @Test
-    public void testGetExtrarerolls() {
-        System.out.println("getExtrarerolls");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int nb = roster.getExtrarerolls();
-            Assert.assertTrue(nb > 0);
-        }
-    }
 
-    /**
-     * Test of setExtrarerolls method, of class Roster.
-     */
-    @Test
-    public void testSetExtrarerolls() {
-        System.out.println("setExtrarerolls");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int save = roster.getExtrarerolls();
-            roster.setExtrarerolls(4);
-            int nb = roster.getExtrarerolls();
-            Assert.assertTrue(nb == 4);
-            roster.setExtrarerolls(save);
-        }
-    }
-
-    /**
-     * Test of getLocalapothecary method, of class Roster.
-     */
-    @Test
-    public void testGetLocalapothecary() {
-        System.out.println("getLocalapothecary");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int nb = roster.getLocalapothecary();
-            Assert.assertTrue(nb > 0);
-        }
-    }
-
-    /**
-     * Test of setLocalapothecary method, of class Roster.
-     */
-    @Test
-    public void testSetLocalapothecary() {
-        System.out.println("setLocalapothecary");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int save = roster.getExtrarerolls();
-            roster.setExtrarerolls(4);
-            int nb = roster.getExtrarerolls();
-            Assert.assertTrue(nb == 4);
-            roster.setExtrarerolls(save);
-        }
-    }
-
-    /**
-     * Test of getBloodweiserbabes method, of class Roster.
-     */
-    @Test
-    public void testGetBloodweiserbabes() {
-        System.out.println("getBloodweiserbabes");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int nb = roster.getBloodweiserbabes();
-            Assert.assertTrue(nb > 0);
-        }
-    }
-
-    /**
-     * Test of setBloodweiserbabes method, of class Roster.
-     */
-    @Test
-    public void testSetBloodweiserbabes() {
-        System.out.println("setBloodweiserbabes");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int save = roster.getBloodweiserbabes();
-            roster.setBloodweiserbabes(4);
-            int nb = roster.getBloodweiserbabes();
-            Assert.assertTrue(nb == 4);
-            roster.setBloodweiserbabes(save);
-        }
-    }
-
-    /**
-     * Test of getCorruptions method, of class Roster.
-     */
-    @Test
-    public void testGetCorruptions() {
-        System.out.println("getCorruptions");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int nb = roster.getCorruptions();
-            Assert.assertTrue(nb > 0);
-        }
-    }
-
-    /**
-     * Test of setCorruptions method, of class Roster.
-     */
-    @Test
-    public void testSetCorruptions() {
-        System.out.println("setCorruptions");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int save = roster.getCorruptions();
-            roster.setCorruptions(4);
-            int nb = roster.getCorruptions();
-            Assert.assertTrue(nb == 4);
-            roster.setCorruptions(save);
-        }
-    }
-
-    /**
-     * Test of isChef method, of class Roster.
-     */
-    @Test
-    public void testIsChef() {
-        System.out.println("isChef");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            Assert.assertTrue(roster.isChef());
-        }
-    }
-
-    /**
-     * Test of setChef method, of class Roster.
-     */
-    @Test
-    public void testSetChef() {
-        System.out.println("setChef");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            boolean save = roster.isChef();
-            roster.setChef(false);
-            Assert.assertFalse(roster.isChef());
-            roster.setChef(save);
-        }
-    }
-
-    /**
-     * Test of isIgor method, of class Roster.
-     */
-    @Test
-    public void testIsIgor() {
-        System.out.println("isIgor");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            Assert.assertTrue(roster.isIgor());
-        }
-    }
-
-    /**
-     * Test of setIgor method, of class Roster.
-     */
-    @Test
-    public void testSetIgor() {
-        System.out.println("setIgor");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            boolean save = roster.isIgor();
-            roster.setIgor(false);
-            Assert.assertFalse(roster.isIgor());
-            roster.setIgor(save);
-        }
-    }
-
-    /**
-     * Test of isWizard method, of class Roster.
-     */
-    @Test
-    public void testIsWizard() {
-        System.out.println("isWizard");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            Assert.assertTrue(roster.isWizard());
-        }
-    }
-
-    /**
-     * Test of setWizard method, of class Roster.
-     */
-    @Test
-    public void testSetWizard() {
-        System.out.println("setWizard");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            boolean save = roster.isWizard();
-            roster.setWizard(false);
-            Assert.assertFalse(roster.isWizard());
-            roster.setWizard(save);
-        }
-    }
-
-    /**
-     * Test of getCards method, of class Roster.
-     */
-    @Test
-    public void testGetCards() {
-        System.out.println("getCards");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int nb = roster.getCards();
-            Assert.assertTrue(nb > 0);
-        }
-    }
-
-    /**
-     * Test of setCards method, of class Roster.
-     */
-    @Test
-    public void testSetCards() {
-        System.out.println("setCards");
-        if (roster == null) {
-            fail("Roster not loaded");
-        } else {
-            int save = roster.getCards();
-            roster.setCards(4);
-            int nb = roster.getCards();
-            Assert.assertTrue(nb == 4);
-            roster.setCards(save);
-        }
-    }
 
     /**
      * Test of getChampion method, of class Roster.
@@ -640,7 +395,7 @@ public class RosterNGTest {
     @Test
     public void testGetPlayer() {
         System.out.println("getPlayer");
-       if (lrb == null) {
+        if (lrb == null) {
             fail("lrb is null");
         }
         if (lrb.getRosterTypeCount() == 0) {
@@ -658,10 +413,10 @@ public class RosterNGTest {
         }
         int nb = roster.getPlayerCount();
         for (int i = 0; i < nb; i++) {
-            Player pl=roster.getPlayer(i);
+            Player pl = roster.getPlayer(i);
             Assert.assertNotNull(pl);
         }
-        
+
     }
 
     /**
@@ -670,7 +425,7 @@ public class RosterNGTest {
     @Test
     public void testRemovePlayer() {
         System.out.println("removePlayer");
-       if (lrb == null) {
+        if (lrb == null) {
             fail("lrb is null");
         }
         if (lrb.getRosterTypeCount() == 0) {
@@ -785,7 +540,7 @@ public class RosterNGTest {
         }
         roster.clearPlayers();
         assertEquals(roster.getPlayerCount(), 0);
-        for (Player p:list) {
+        for (Player p : list) {
             roster.addPlayer(p);
         }
 
@@ -882,194 +637,7 @@ public class RosterNGTest {
         }
     }
 
-    /**
-     * Test of isChaos_wizard method, of class Roster.
-     */
-    @Test
-    public void testIsChaos_wizard() {
-        System.out.println("isChaos_wizard");
-        Roster instance = new Roster();
-        boolean expResult = false;
-        boolean result = instance.isChaos_wizard();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setChaos_wizard method, of class Roster.
-     */
-    @Test
-    public void testSetChaos_wizard() {
-        System.out.println("setChaos_wizard");
-        boolean _chaos_wizard = false;
-        Roster instance = new Roster();
-        instance.setChaos_wizard(_chaos_wizard);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isHoratio_X_Schottenheim method, of class Roster.
-     */
-    @Test
-    public void testIsHoratio_X_Schottenheim() {
-        System.out.println("isHoratio_X_Schottenheim");
-        Roster instance = new Roster();
-        boolean expResult = false;
-        boolean result = instance.isHoratio_X_Schottenheim();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setHoratio_X_Schottenheim method, of class Roster.
-     */
-    @Test
-    public void testSetHoratio_X_Schottenheim() {
-        System.out.println("setHoratio_X_Schottenheim");
-        boolean Horatio_X_Schottenheim = false;
-        Roster instance = new Roster();
-        instance.setHoratio_X_Schottenheim(Horatio_X_Schottenheim);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isKari_Coldsteel method, of class Roster.
-     */
-    @Test
-    public void testIsKari_Coldsteel() {
-        System.out.println("isKari_Coldsteel");
-        Roster instance = new Roster();
-        boolean expResult = false;
-        boolean result = instance.isKari_Coldsteel();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setKari_Coldsteel method, of class Roster.
-     */
-    @Test
-    public void testSetKari_Coldsteel() {
-        System.out.println("setKari_Coldsteel");
-        boolean Kari_Coldsteel = false;
-        Roster instance = new Roster();
-        instance.setKari_Coldsteel(Kari_Coldsteel);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isFink_Da_Fixer method, of class Roster.
-     */
-    @Test
-    public void testIsFink_Da_Fixer() {
-        System.out.println("isFink_Da_Fixer");
-        Roster instance = new Roster();
-        boolean expResult = false;
-        boolean result = instance.isFink_Da_Fixer();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setFink_Da_Fixer method, of class Roster.
-     */
-    @Test
-    public void testSetFink_Da_Fixer() {
-        System.out.println("setFink_Da_Fixer");
-        boolean Fink_Da_Fixer = false;
-        Roster instance = new Roster();
-        instance.setFink_Da_Fixer(Fink_Da_Fixer);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isPapa_Skullbones method, of class Roster.
-     */
-    @Test
-    public void testIsPapa_Skullbones() {
-        System.out.println("isPapa_Skullbones");
-        Roster instance = new Roster();
-        boolean expResult = false;
-        boolean result = instance.isPapa_Skullbones();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setPapa_Skullbones method, of class Roster.
-     */
-    @Test
-    public void testSetPapa_Skullbones() {
-        System.out.println("setPapa_Skullbones");
-        boolean Papa_Skullbones = false;
-        Roster instance = new Roster();
-        instance.setPapa_Skullbones(Papa_Skullbones);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isGalandril_Silverwater method, of class Roster.
-     */
-    @Test
-    public void testIsGalandril_Silverwater() {
-        System.out.println("isGalandril_Silverwater");
-        Roster instance = new Roster();
-        boolean expResult = false;
-        boolean result = instance.isGalandril_Silverwater();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setGalandril_Silverwater method, of class Roster.
-     */
-    @Test
-    public void testSetGalandril_Silverwater() {
-        System.out.println("setGalandril_Silverwater");
-        boolean Galandril_Silverwater = false;
-        Roster instance = new Roster();
-        instance.setGalandril_Silverwater(Galandril_Silverwater);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isKrot_Shockwhisker method, of class Roster.
-     */
-    @Test
-    public void testIsKrot_Shockwhisker() {
-        System.out.println("isKrot_Shockwhisker");
-        Roster instance = new Roster();
-        boolean expResult = false;
-        boolean result = instance.isKrot_Shockwhisker();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setKrot_Shockwhisker method, of class Roster.
-     */
-    @Test
-    public void testSetKrot_Shockwhisker() {
-        System.out.println("setKrot_Shockwhisker");
-        boolean Krot_Shockwhisker = false;
-        Roster instance = new Roster();
-        instance.setKrot_Shockwhisker(Krot_Shockwhisker);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+   
 
     /**
      * Test of getVersion method, of class Roster.
@@ -1081,8 +649,6 @@ public class RosterNGTest {
         LRB.E_Version expResult = null;
         LRB.E_Version result = instance.getVersion();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -1094,8 +660,8 @@ public class RosterNGTest {
         LRB.E_Version _version = null;
         Roster instance = new Roster();
         instance.setVersion(_version);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        LRB.E_Version result = instance.getVersion();
+        assertEquals(result, _version);
     }
 
     /**
@@ -1104,11 +670,12 @@ public class RosterNGTest {
     @Test
     public void testPull() {
         System.out.println("pull");
-        Roster roster = null;
+/*        Roster roster = null;
         Roster instance = new Roster();
         instance.pull(roster);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+  */      
+        // RMI Method, not testable in testng
+
     }
 
 }

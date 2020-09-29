@@ -10,6 +10,7 @@ import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
 import tourma.data.Criteria;
+import tourma.data.Formula;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Parameters;
 import tourma.data.Round;
@@ -44,6 +45,12 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
      */
     public MjtAnnexRankIndiv(final int round, final Criteria criteria, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
         super(round, criteria, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+        mTeamTournament = teamTournament;
+        sortDatas();
+    }
+
+    public MjtAnnexRankIndiv(final int round, final Formula formula, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
+        super(round, formula, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
         mTeamTournament = teamTournament;
         sortDatas();
 
@@ -95,8 +102,11 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 }
                 // test if match is in round
                 if (bFound) {
-                    aValue.add(m.getValue(mCriteria, mSubtype, c));
-
+                    if (mCriteria != null) {
+                        aValue.add(m.getValue(mCriteria, mSubtype, c));
+                    } else {
+                        aValue.add(m.getValue(mFormula, c));
+                    }
                     aValue1.add(m.getValue(1, c));
                     aValue3.add(m.getValue(2, c));
                     aValue3.add(m.getValue(3, c));
@@ -333,12 +343,16 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 result = Translate.translate(Translate.CS_Roster);
                 break;
             case 4:
-                if (mSubtype == 0) {
-                    result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Coach);
-                } else if (mSubtype == 1) {
-                    result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Opponent);
+                if (mCriteria != null) {
+                    if (mSubtype == 0) {
+                        result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Coach);
+                    } else if (mSubtype == 1) {
+                        result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Opponent);
+                    } else {
+                        result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Difference);
+                    }
                 } else {
-                    result = mCriteria.getName() + " " + Translate.translate(Translate.CS_Difference);
+                    result = mFormula.getName();
                 }
                 break;
             default:

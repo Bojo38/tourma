@@ -6,7 +6,10 @@
 package tourma.data;
 
 import java.awt.image.BufferedImage;
+import java.rmi.RemoteException;
+import javax.swing.ImageIcon;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -41,7 +44,7 @@ public class IWithNameAndPictureNGTest {
      * Test of getName method, of class IWithNameAndPicture.
      */
     @Test(enabled=false)
-    public void testGetName() {
+    public void testGetName() throws RemoteException {
         System.out.println("getName");
         IWithNameAndPicture instance = new IWithNameAndPictureImpl();
         String expResult = "";
@@ -53,7 +56,7 @@ public class IWithNameAndPictureNGTest {
      * Test of setName method, of class IWithNameAndPicture.
      */
     @Test(enabled=false)
-    public void testSetName() {
+    public void testSetName() throws RemoteException {
         System.out.println("setName");
         String name = "";
         IWithNameAndPicture instance = new IWithNameAndPictureImpl();
@@ -64,11 +67,11 @@ public class IWithNameAndPictureNGTest {
      * Test of getPicture method, of class IWithNameAndPicture.
      */
     @Test(enabled=false)
-    public void testGetPicture() {
+    public void testGetPicture() throws RemoteException {
         System.out.println("getPicture");
         IWithNameAndPicture instance = new IWithNameAndPictureImpl();
         BufferedImage expResult = null;
-        BufferedImage result = instance.getPicture();
+        ImageIcon result = instance.getPicture();
         assertEquals(result, expResult);
     }
 
@@ -76,9 +79,9 @@ public class IWithNameAndPictureNGTest {
      * Test of setPicture method, of class IWithNameAndPicture.
      */
     @Test(enabled=false)
-    public void testSetPicture() {
+    public void testSetPicture() throws RemoteException {
         System.out.println("setPicture");
-        BufferedImage p = null;
+        ImageIcon p = null;
         IWithNameAndPicture instance = new IWithNameAndPictureImpl();
         instance.setPicture(p);
     }
@@ -92,11 +95,16 @@ public class IWithNameAndPictureNGTest {
         public void setName(String name) {
         }
 
-        public BufferedImage getPicture() {
+        public ImageIcon getPicture() {
             return null;
         }
 
         public void setPicture(BufferedImage p) {
+        }
+
+        @Override
+        public void setPicture(ImageIcon p) throws RemoteException {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
     }
     

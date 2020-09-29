@@ -36,22 +36,6 @@ public class RosterType implements IXMLExport, Serializable {
     /**
      *
      */
-    public static final int C_BLOOD_BOWL = 1;
-
-    /**
-     *
-     */
-    public static final int C_DREAD_BALL = 2;
-    /*public static String[] p_Rosters={
-     "Amazone", "Bas-Fonds", "Chaos", "Elfe", "Elfe Sylvain", "Elfe Noir",
-     "Gobelin", "Halfling", "Haut Elfe", "Homme lézard", "Humain", "Khemri",
-     "Mort-Vivant", "Nain", "Nain du chaos", "Necromantique", "Nordique",
-     "Nurgle", "Ogre", "Orque", "Pacte Chaotique", "Skaven", "Slann", "Vampire"
-     };*/
-
-    /**
-     *
-     */
     private static ArrayList<String> mRostersNames = new ArrayList<>();
 
     public static HashMap<String, RosterType> getRosters() {
@@ -83,9 +67,8 @@ public class RosterType implements IXMLExport, Serializable {
                 rt.setUID(type.getUID());
             }
         }
-        
-        if (mRosterTypes.size()!=types.size())
-        {
+
+        if (mRosterTypes.size() != types.size()) {
             mRosterTypes.clear();
             pull(types);
         }
@@ -147,6 +130,8 @@ public class RosterType implements IXMLExport, Serializable {
         mRostersNames.add(translate("SlannKey"));
         mRostersNames.add(translate("VampireKey"));
         mRostersNames.add(translate("BretonianKey"));
+        mRostersNames.add(translate("SnotlingsKey"));
+        mRostersNames.add(translate("OldWorldAllianceKey"));
 
         mRosterTypes.clear();
         mRosterTypes.put(translate("AmazonKey"), new RosterType(translate("AmazonKey")));
@@ -174,7 +159,10 @@ public class RosterType implements IXMLExport, Serializable {
         mRosterTypes.put(translate("ChaosPactKey"), new RosterType(translate("ChaosPactKey")));
         mRosterTypes.put(translate("SkavenKey"), new RosterType(translate("SkavenKey")));
         mRosterTypes.put(translate("SlannKey"), new RosterType(translate("SlannKey")));
-        mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));    
+        mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));
+        mRosterTypes.put(translate("SnotlingsKey"), new RosterType(translate("SnotlingsKey")));
+        mRosterTypes.put(translate("OldWorldAllianceKey"), new RosterType(translate("OldWorldAllianceKey")));
+
     }
 
     /**
@@ -185,29 +173,8 @@ public class RosterType implements IXMLExport, Serializable {
 
         mRostersNames.clear();
 
-        switch (game) {
-            case C_BLOOD_BOWL:
-                initCollection();
-                break;
-            case C_DREAD_BALL:
-                mRostersNames.clear();
-                mRostersNames.add(translate("CORPORATION"));
-                mRostersNames.add(translate("ORX"));
-                mRostersNames.add(translate("VER-MYNS"));
-                mRostersNames.add(translate("FORGE FATHERS"));
-                mRostersNames.add(translate("JUDWANS"));
-                mRostersNames.add(translate("Z'ZORS"));
-                mRostersNames.add(translate("ROBOTS"));
-                mRostersNames.add(translate("FEMALES CORPORATION"));
-                mRostersNames.add(translate("ZEES"));
-                mRostersNames.add(translate("ASTERIANS"));
-                mRostersNames.add(translate("NAMELESS"));
-                mRostersNames.add(translate("TARATONS"));
-                break;
-            default:
-                initCollection();
-                break;
-        }
+        initCollection();
+
     }
 
     /**
@@ -250,7 +217,7 @@ public class RosterType implements IXMLExport, Serializable {
                 result = translate("UnderworldKey");
                 break;
             case "Bretonniens":
-                result=translate("BretonianKey");
+                result = translate("BretonianKey");
                 break;
             case "Chaos":
                 result = translate("ChaosKey");
@@ -320,6 +287,12 @@ public class RosterType implements IXMLExport, Serializable {
                 break;
             case "Bretonnien":
                 result = translate("BretonianKey");
+                break;
+            case "Snotlings":
+                result = translate("SnotlingsKey");
+                break;
+            case "Alliance du Vieux Monde":
+                result = translate("OldWorldAllianceKey");
                 break;
         }
         return result;
@@ -437,82 +410,90 @@ public class RosterType implements IXMLExport, Serializable {
     public static String getRosterTranslation(final String source) {
         String result = translate("UNKNOWN");
         if (source.equals(translate("AmazonKey"))) {
-            result = translate("AMAZONS");
+            result = translate("Amazons");
         }
         if (translate("UnderworldKey").equals(source)) {
-            result = translate("UNDERWORLD");
+            result = translate("Underworld");
         }
         if (translate("BretonianKey").equals(source)) {
-            result=translate("BRETONNIANS");
+            result = translate("Bretonnians");
         }
         if (translate("ChaosKey").equals(source)) {
-            result = translate("CHAOS");
+            result = translate("Chaos");
         }
         if (source.equals(translate("ElfKey"))) {
-            result = translate("ELVES");
+            result = translate("Elves");
         }
-        if ((source.equals(translate("WoodElfKey")))||(source.equals(translate("WoodElfKey2")))) {
-            result = translate("WOOD ELVES");
+        if ((source.equals(translate("WoodElfKey"))) || (source.equals(translate("WoodElfKey2")))) {
+            result = translate("Wood Elves");
         }
-        if ((source.equals(translate("DarkElfKey")))||(source.equals(translate("DarkElfKey2")))) {
-            result = translate("DARK ELVES");
+        if ((source.equals(translate("DarkElfKey"))) || (source.equals(translate("DarkElfKey2")))) {
+            result = translate("Dark Elves");
         }
         if (source.equals(translate("GoblinKey"))) {
-            result = translate("GOBLINS");
+            result = translate("Goblins");
         }
         if (source.equals(translate("HalflingKey"))) {
-            result = translate("HALFLINGS");
+            result = translate("Halflings");
         }
         if (source.equals(translate("HighElfKey"))) {
-            result = translate("HIGH ELVES");
+            result = translate("High Elves");
         }
-        if ((source.equals(translate("LizardmenKey")))||(source.equals(translate("LizardmenKey2")))) {
-            result = translate("LIZARDMEN");
+        if ((source.equals(translate("LizardmenKey"))) || (source.equals(translate("LizardmenKey2")))) {
+            result = translate("Lizardmen");
         }
         if (source.equals(translate("HumanKey"))) {
-            result = translate("HUMANS");
+            result = translate("Humans");
         }
         if (source.equals(translate("KhemriKey"))) {
-            result = translate("KHEMRI");
+            result = translate("Khemri");
         }
         if (source.equals(translate("UndeadKey"))) {
-            result = translate("UNDEAD");
+            result = translate("Undead");
         }
         if (source.equals(translate("DwarfKey"))) {
-            result = translate("DWARVES");
+            result = translate("Dwarves");
         }
-        if ((source.equals(translate("ChaosDwarfKey")))||(source.equals(translate("ChaosDwarfKey2")))||(source.equals("Nain du Chaos"))) {
-            result = translate("CHAOS DWARVES");
+        if ((source.equals(translate("ChaosDwarfKey"))) || (source.equals(translate("ChaosDwarfKey2"))) || (source.equals("Nain du Chaos"))) {
+            result = translate("Chaos Dwarves");
         }
-        if ((source.equals(translate("NecromanticKey")))||(source.equals("Necromantiques"))) {
-            result = translate("NECROMANTIC");
+        if ((source.equals(translate("NecromanticKey"))) || (source.equals("Necromantiques"))) {
+            result = translate("Necromantic");
         }
-        if ((source.equals(translate("NorseKey")))||(source.equals("Nordiques"))) {
-            result = translate("NORSE");
+        if ((source.equals(translate("NorseKey"))) || (source.equals("Nordiques"))) {
+            result = translate("Norse");
         }
         if (source.equals(translate("NurgleKey"))) {
-            result = translate("NURGLE'S ROTTERS");
+            result = translate("Nurgle's Rotters");
         }
         if (source.equals(translate("OgreKey"))) {
-            result = translate("OGRES");
+            result = translate("Ogres");
         }
+
+        String tmp = translate("OrcKey");
         if (source.equals(translate("OrcKey"))) {
-            result = translate("ORC");
+            result = translate("Orc");
         }
         if (source.equals(translate("ChaosPactKey"))) {
-            result = translate("CHAOS PACT");
+            result = translate("Chaos Pact");
         }
         if (source.equals(translate("SkavenKey"))) {
-            result = translate("SKAVEN");
+            result = translate("Skaven");
         }
         if (source.equals(translate("SlannKey"))) {
-            result = translate("SLANN");
+            result = translate("Slann");
         }
         if (source.equals(translate("VampireKey"))) {
-            result = translate("VAMPIRES");
+            result = translate("Vampires");
         }
         if (source.equals(translate("KhorneKey")) || source.equals(translate("KhornesDaemonsKey"))) {
-            result = translate("KHORNE");
+            result = translate("Khorne");
+        }
+        if (source.equals(translate("SnotlingsKey"))) {
+            result = translate("Snotlings");
+        }
+        if (source.equals(translate("OldWorldAllianceKey"))) {
+            result = translate("Old World Alliance");
         }
         return result;
     }

@@ -55,6 +55,20 @@ public class Value implements Serializable {
      * Name of the criteria
      */
     private Criteria mCriteria;
+
+    /**
+     * Name of the criteria
+     */
+    private Formula mFormula;
+    
+
+    public enum e_ValueType {
+        E_CRITERIA,
+        E_FORMULA;
+    };
+
+    private e_ValueType _valueType;
+    
     /**
      * Value for the coach 1
      */
@@ -70,21 +84,43 @@ public class Value implements Serializable {
      */
     public Value(final Criteria criteria) {
         mCriteria = criteria;
+        _valueType=e_ValueType.E_CRITERIA;
     }
 
+    
+    public Value(final Formula form) {
+        mFormula = form;
+        _valueType=e_ValueType.E_FORMULA;
+    }
     /**
      * @return the mCriteria
      */
     public Criteria getCriteria() {
-        return mCriteria;
+        if (_valueType==e_ValueType.E_CRITERIA)
+        {
+            return mCriteria;
+        }
+        else
+        {
+            return null;
+        }     
     }
-
+    public Formula getFormula() {
+        if (_valueType==e_ValueType.E_FORMULA)
+        {
+            return mFormula;
+        }
+        else
+        {
+            return null;
+        }     
+    }
     /**
      * @param mCriteria the mCriteria to set
      */
     public void setCriteria(Criteria mCriteria) {
         this.mCriteria = mCriteria;
-        updated=true;
+        updated = true;
     }
 
     /**
@@ -98,15 +134,16 @@ public class Value implements Serializable {
      * @param mValue1 the mValue1 to set
      */
     public void setValue1(int mValue1) {
-        updated=true;
+        updated = true;
         this.mValue1 = mValue1;
+
     }
 
     /**
      * @return the mValue2
      */
     public int getValue2() {
-        
+
         return mValue2;
     }
 
@@ -114,7 +151,7 @@ public class Value implements Serializable {
      * @param mValue2 the mValue2 to set
      */
     public void setValue2(int mValue2) {
-        updated=true;
+        updated = true;
         this.mValue2 = mValue2;
     }
 

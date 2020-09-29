@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -184,11 +185,11 @@ public class CompetitorNGTest {
         System.out.println("getPicture");
         Competitor instance = new CompetitorImpl();
         ImageIcon icon = new ImageIcon("./test/clan.png");
-        BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-        instance.setPicture(p);
+        //BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        instance.setPicture(icon);
 
         assertNotNull(instance.getPicture());
-        assertEquals(p, instance.getPicture());
+        assertEquals(icon, instance.getPicture());
     }
 
     /**
@@ -236,11 +237,11 @@ public class CompetitorNGTest {
         System.out.println("setPicture");
         Competitor instance = new CompetitorImpl();
         ImageIcon icon = new ImageIcon("./test/clan.png");
-        BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-        instance.setPicture(p);
+        //BufferedImage p = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        instance.setPicture(icon);
 
         assertNotNull(instance.getPicture());
-        assertEquals(p, instance.getPicture());
+        assertEquals(icon, instance.getPicture());
     }
 
     /**
@@ -250,8 +251,8 @@ public class CompetitorNGTest {
     public void testGetClan() {
         System.out.println("getClan");
         Competitor instance = new CompetitorImpl();
-        Clan expResult = new Clan("Test");
-        assertEquals(instance.getClan(), null);
+        Clan expResult = new Clan("Aucun");
+        assertEquals(instance.getClan(), Tournament.getTournament().getClan(0));
         instance.setClan(expResult);
         assertEquals(instance.getClan(), expResult);
 
@@ -265,7 +266,7 @@ public class CompetitorNGTest {
         System.out.println("setClan");
         Competitor instance = new CompetitorImpl();
         Clan expResult = new Clan("Test");
-        assertEquals(instance.getClan(), null);
+        assertEquals(instance.getClan(), Tournament.getTournament().getClan(0));
         instance.setClan(expResult);
         assertEquals(instance.getClan(), expResult);
     }
@@ -570,8 +571,9 @@ public class CompetitorNGTest {
         boolean expResult = false;
         boolean result = instance.isUpdated();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.setUpdated(true);
+        result = instance.isUpdated();
+        assertEquals(result, true);
     }
 
     /**
@@ -580,11 +582,13 @@ public class CompetitorNGTest {
     @Test
     public void testSetUpdated() {
         System.out.println("setUpdated");
-        boolean updated = false;
         Competitor instance = new CompetitorImpl();
-        instance.setUpdated(updated);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = false;
+        boolean result = instance.isUpdated();
+        assertEquals(result, expResult);
+        instance.setUpdated(true);
+        result = instance.isUpdated();
+        assertEquals(result, true);
     }
 
     /**
@@ -593,11 +597,9 @@ public class CompetitorNGTest {
     @Test
     public void testPull() {
         System.out.println("pull");
-        Competitor comp = null;
+/*        Competitor comp = null;
         Competitor instance = new CompetitorImpl();
-        instance.pull(comp);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.pull(comp);*/
     }
 
     /**
@@ -606,11 +608,9 @@ public class CompetitorNGTest {
     @Test
     public void testPush() {
         System.out.println("push");
-        Competitor comp = null;
+/*        Competitor comp = null;
         Competitor instance = new CompetitorImpl();
-        instance.push(comp);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.push(comp);*/
     }
 
     /**
@@ -620,11 +620,12 @@ public class CompetitorNGTest {
     public void testGetRawName() {
         System.out.println("getRawName");
         Competitor instance = new CompetitorImpl();
-        String expResult = "";
+        
         String result = instance.getRawName();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, null);
+        instance.setName("toto");
+        result = instance.getRawName();
+        assertEquals(result, "toto");
     }
 
     /**
@@ -633,13 +634,17 @@ public class CompetitorNGTest {
     @Test
     public void testContainsMatch() {
         System.out.println("containsMatch");
-        Match m = null;
-        Competitor instance = new CompetitorImpl();
+        Match m = new CoachMatch(Tournament.getTournament().getRound(0));
+        Competitor instance = Tournament.getTournament().getCoach(0);
+        
         boolean expResult = false;
         boolean result = instance.containsMatch(m);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        m=instance.getMatch(0);
+        expResult = true;
+        result = instance.containsMatch(m);
+        assertEquals(result, expResult);
     }
 
     /**
@@ -649,10 +654,9 @@ public class CompetitorNGTest {
     public void testEnableNafAvg() {
         System.out.println("enableNafAvg");
         boolean avg = false;
-        Competitor instance = new CompetitorImpl();
-        instance.enableNafAvg(avg);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Competitor instance = Tournament.getTournament().getCoach(0);
+        instance.enableNafAvg(avg);        
+
     }
 
 }

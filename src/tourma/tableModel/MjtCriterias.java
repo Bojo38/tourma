@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.Criteria;
+import tourma.data.Formula;
 import tourma.data.Parameters;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -24,19 +25,23 @@ import tourma.utility.StringConstants;
 @SuppressWarnings("serial")
 public class MjtCriterias extends AbstractTableModel implements TableCellRenderer {
 
+    /**
+     * String Key about Criterias that already exists
+     */
     private static final String CS_CriteriaAlreadyExists = "CriteriaAlreadyExists0";
 
-    private final Tournament mTour;
+/**
+ * 
+ */
     private Parameters mParams;
 
     /**
-     *
+     * 
      * @param tour
      */
     public MjtCriterias(final Tournament tour) {
 
         mParams = tour.getParams();
-        mTour = tour;
     }
 
     @Override
@@ -135,41 +140,57 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
                     }
                 }
             }
+
             if (exists) {
                 JOptionPane.showMessageDialog(null, Translate.translate(Translate.CS_Error),
                         Translate.translate(CS_CriteriaAlreadyExists), JOptionPane.ERROR_MESSAGE);
 
             } else {
-
                 String tmp = value.toString();
                 final Criteria c = mParams.getCriteria(row);
                 int val;
                 switch (col) {
                     case 0:
                         c.setName(tmp);
+
                         break;
                     case 1:
+                        String oldAccro=c.getAccronym();
                         c.setAccronym(tmp);
+                        
+                        for (int i=0; i< Tournament.getTournament().getParams().getFormulaCount(); i++)
+                        {
+                            Formula f=Tournament.getTournament().getParams().getFormula(i);
+                            f.updateCriteria(oldAccro, tmp);
+                        }
+                        
                         break;
                     case 2:
+
                         val = Integer.parseInt(tmp);
                         c.setPointsFor(val);
                         Tournament.getTournament().recomputeAll();
                         break;
                     case 3:
+
                         val = Integer.parseInt(tmp);
                         c.setPointsAgainst(val);
                         Tournament.getTournament().recomputeAll();
+
                         break;
                     case 4:
+
                         val = Integer.parseInt(tmp);
                         c.setPointsTeamFor(val);
                         Tournament.getTournament().recomputeAll();
+
                         break;
                     case 5:
+
                         val = Integer.parseInt(tmp);
                         c.setPointsTeamAgainst(val);
                         Tournament.getTournament().recomputeAll();
+
                         break;
                     case 6:
                         val = Integer.parseInt(tmp);

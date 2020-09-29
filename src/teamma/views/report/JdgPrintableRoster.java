@@ -42,6 +42,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
+import teamma.data.Inducement;
 import teamma.data.Player;
 import teamma.data.Roster;
 import teamma.data.RosterType;
@@ -324,6 +325,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
     private static final String CS_armor = "armor";
     private static final String CS_skills = "skills";
     private static final String CS_cost = "cost";
+    private static final String CS_nb = "nb";
     private static final String CS_single = "single";
     private static final String CS_double = "double";
     private static final String CS_NBSP = "&nbsp;";
@@ -371,29 +373,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
     private static final String CS_chef_cost = "chef_cost";
     private static final String CS_cards = "cards";
     private static final String CS_total = "total";
-    
-    private static final String CS_chaoswizard = "chaoswizard";
-    private static final String CS_chaoswizard_price = "chaoswizard_price";
-    private static final String CS_chaoswizard_cost = "chaoswizard_cost";
-    private static final String CS_horatio = "horatio";
-    private static final String CS_horatio_price = "horatio_price";
-    private static final String CS_horatio_cost = "horatio_cost";
-    private static final String CS_kari = "kari";
-    private static final String CS_kari_price = "kari_price";
-    private static final String CS_kari_cost = "kari_cost";
-    private static final String CS_fink = "fink";
-    private static final String CS_fink_price = "fink_price";
-    private static final String CS_fink_cost = "fink_cost";
-    private static final String CS_papa = "papa";
-    private static final String CS_papa_price = "papa_price";
-    private static final String CS_papa_cost = "papa_cost";
-    private static final String CS_galandril = "galandril";
-    private static final String CS_galandril_price = "galandril_price";
-    private static final String CS_galandril_cost = "galandril_cost";
-    private static final String CS_krot = "krot";
-    private static final String CS_krot_price = "krot_price";
-    private static final String CS_krot_cost = "krot_cost";
-
+    private static final String CS_inducements="inducements";
+   
     private File createReport() {
         File address = null;
         HtmlEscape html=new HtmlEscape();
@@ -543,77 +524,21 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             root.put(CS_pop_price, RosterType.getFan_factor_cost());
             root.put(CS_pop_cost, getmRoster().getFanfactor() * RosterType.getFan_factor_cost());
 
-            root.put(CS_extra, getmRoster().getExtrarerolls());
-            root.put(CS_extra_price, RosterType.getExtraRerollCost());
-            root.put(CS_extra_cost, getmRoster().getExtrarerolls() * RosterType.getExtraRerollCost());
+            ArrayList<HashMap<String, Object>> inducements = new ArrayList<>();
+             for (int i = 0; i < this.mRoster.getInducementsSize(); i++) {
+                 Inducement induc=mRoster.getInducement(i);
+                 HashMap<String, Object> inducement=new HashMap<>();
+                 
+                 inducement.put(CS_name, StringEscapeUtils.escapeHtml4(Translate.translate(induc.getType().getName())));
+                 inducement.put(CS_nb, induc.getNb());
+                 inducement.put(CS_cost, induc.getType().getCost());
+                 inducement.put(CS_total, induc.getType().getCost()*induc.getNb());
+                 
+                 inducements.add(inducement);
+             }
+             
+            root.put(CS_inducements,inducements);
 
-            root.put(CS_local, getmRoster().getLocalapothecary());
-            root.put(CS_local_price, RosterType.getLocal_apo_cost());
-            root.put(CS_local_cost, getmRoster().getLocalapothecary() * RosterType.getLocal_apo_cost());
-
-            root.put(CS_igor, getmRoster().isIgor() ? 1 : 0);
-            root.put(CS_igor_price, RosterType.getIgor_cost());
-            root.put(CS_igor_cost, getmRoster().isIgor() ? RosterType.getIgor_cost() : 0);
-
-            root.put(CS_bribe, getmRoster().getCorruptions());
-            if (getmRoster().getRoster() != null) {
-                root.put(CS_bribe_price, getmRoster().getRoster().getBribe_cost());
-                root.put(CS_bribe_cost, getmRoster().getCorruptions() * getmRoster().getRoster().getBribe_cost());
-            } else {
-                root.put(CS_bribe_price, 0);
-                root.put(CS_bribe_cost, 0);
-            }
-
-            
-            root.put(CS_wizard, getmRoster().isWizard() ? 1 : 0);
-            root.put(CS_wizard_price, RosterType.getWizard_cost());
-            root.put(CS_wizard_cost, getmRoster().isWizard() ? RosterType.getWizard_cost() : 0);
-
-            root.put(CS_babes, getmRoster().getBloodweiserbabes());
-            root.put(CS_babes_price, RosterType.getBabe_cost());
-            root.put(CS_babes_cost, getmRoster().getBloodweiserbabes() * RosterType.getBabe_cost());
-
-            root.put(CS_chef, getmRoster().isChef() ? 1 : 0);
-            if (getmRoster().getRoster() != null) {
-                root.put(CS_chef_price, getmRoster().getRoster().getChef_cost());
-                root.put(CS_chef_cost, getmRoster().isChef() ? getmRoster().getRoster().getChef_cost() : 0);
-            } else {
-                root.put(CS_chef_price, 0);
-                root.put(CS_chef_cost, 0);
-            }
-
-            root.put(CS_cards, getmRoster().getCards());
-
-            root.put(CS_chaoswizard, getmRoster().isChaos_wizard()? 1 : 0);
-            root.put(CS_chaoswizard_price, RosterType.getChaos_wizard_cost());
-            root.put(CS_chaoswizard_cost, getmRoster().isChaos_wizard() ? RosterType.getChaos_wizard_cost() : 0);
-            
-             root.put(CS_horatio, getmRoster().isHoratio_X_Schottenheim()? 1 : 0);
-            root.put(CS_horatio_price, RosterType.getHoratio_X_Schottenheim_cost());
-            root.put(CS_horatio_cost, getmRoster().isHoratio_X_Schottenheim() ? RosterType.getHoratio_X_Schottenheim_cost() : 0);
-            
-             root.put(CS_kari, getmRoster().isKari_Coldsteel()? 1 : 0);
-            root.put(CS_kari_price, RosterType.getKari_Coldstell_cost() );
-            root.put(CS_kari_cost, getmRoster().isKari_Coldsteel() ? RosterType.getKari_Coldstell_cost() : 0);
-            
-             root.put(CS_fink, getmRoster().isFink_Da_Fixer()? 1 : 0);
-            root.put(CS_fink_price, RosterType.getFink_Da_Fixer_cost());
-            root.put(CS_fink_cost, getmRoster().isFink_Da_Fixer() ? RosterType.getFink_Da_Fixer_cost() : 0);
-            
-             root.put(CS_papa, getmRoster().isPapa_Skullbones()? 1 : 0);
-            root.put(CS_papa_price, RosterType.getPapa_Skullbones_cost());
-            root.put(CS_papa_cost, getmRoster().isPapa_Skullbones() ? RosterType.getPapa_Skullbones_cost() : 0);
-            
-             root.put(CS_galandril, getmRoster().isGalandril_Silverwater()? 1 : 0);
-            root.put(CS_galandril_price, RosterType.getGalandril_Silverwater_cost());
-            root.put(CS_galandril_cost, getmRoster().isGalandril_Silverwater() ? RosterType.getGalandril_Silverwater_cost() : 0);
-            
-             root.put(CS_krot, getmRoster().isKrot_Shockwhisker()? 1 : 0);
-            root.put(CS_krot_price, RosterType.getKrot_Shockwhisker_cost());
-            root.put(CS_krot_cost, getmRoster().isKrot_Shockwhisker() ? RosterType.getKrot_Shockwhisker_cost() : 0);
-            
-            
-            
             root.put(CS_total, getmRoster().getValue(isWithSkill()));
             root.put(CS_rank, getmRoster().getValue(isWithSkill()) / 10000);
 
@@ -648,15 +573,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             root.put("RerollTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RerollTitle")));
             root.put("RankTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RankTitle")));
             
-            root.put("ChaosWizardTitle",StringEscapeUtils.escapeHtml4(Translate.translate("ChaosWizardTitle")));
-            root.put("HoratioTitle",StringEscapeUtils.escapeHtml4(Translate.translate("HoratioTitle")));
-            root.put("KariTitle",StringEscapeUtils.escapeHtml4(Translate.translate("KariTitle")));
-            root.put("FinkTitle",StringEscapeUtils.escapeHtml4(Translate.translate("FinkTitle")));
-            root.put("PapaTitle",StringEscapeUtils.escapeHtml4(Translate.translate("PapaTitle")));
-            root.put("GalandrilTitle",StringEscapeUtils.escapeHtml4(Translate.translate("GalandrilTitle")));
-            root.put("KrotTitle",StringEscapeUtils.escapeHtml4(Translate.translate("KrotTitle")));
-
-            
+                       
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));

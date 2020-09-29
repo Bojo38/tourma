@@ -44,8 +44,17 @@ public class Parameters implements IXMLExport, Serializable {
 
     public Criteria getCriteria(String name) {
         for (Criteria criteria : mCriterias) {
-            if (criteria.getName().equals(name)) {
+            if (criteria.getName().equals(name) || criteria.getAccronym().equals(name)) {
                 return criteria;
+            }
+        }
+        return null;
+    }
+    
+     public Formula getFormula(String name) {
+        for (Formula formula : mFormulas) {
+            if (formula.getName().equals(name) ) {
+                return formula;
             }
         }
         return null;
@@ -93,13 +102,30 @@ public class Parameters implements IXMLExport, Serializable {
                 mCriterias.add(c);
             }
         }
+        
+          bFound = false;
+        for (int i = 0; i < params.getFormulaCount(); i++) {
+            bFound = false;
+            Formula form = params.getFormula(i);
+            for (Formula f : mFormulas) {
+                if ((form.getUID() == f.UID) || (form.getName().equals(f.getName()))) {
+                    bFound = true;
+                    f.pull(form);
+                }
+            }
+            if (!bFound) {
+                Formula f = new Formula(form.getName());
+                f.pull(form);
+                mFormulas.add(f);
+            }
+        }
 
         this.mDate = params.mDate;
         this.mEnableClans = params.mEnableClans;
         this.mExceptBestAndWorstIndiv = params.mExceptBestAndWorstIndiv;
         this.mExceptBestAndWorstTeam = params.mExceptBestAndWorstTeam;
         this.mForeColor = params.mForeColor;
-        this.mGame = params.mGame;
+
         this.mGapLargeVictory = params.mGapLargeVictory;
         this.mGapLittleLost = params.mGapLittleLost;
         this.mGroupsEnable = params.mGroupsEnable;
@@ -153,6 +179,8 @@ public class Parameters implements IXMLExport, Serializable {
         this.mUseLittleLoss = params.mUseLittleLoss;
 
         this.mWebEdit = params.mWebEdit;
+
+        this.mCrossPoolMatch = params.mCrossPoolMatch;
 
     }
 
@@ -214,14 +242,14 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public static final int C_RANKING_BONUS_POINTS = 10;
     /**
-     * 
+     *
      */
     public static final int C_RANKING_HEAD_BY_HEAD = 11;
     /**
      *
      */
     public static final int C_RANKING_TIER = 12;
-    
+
     /**
      *
      */
@@ -241,15 +269,21 @@ public class Parameters implements IXMLExport, Serializable {
      */
     private static final Logger LOG = Logger.getLogger(Parameters.class.getName());
 
-    /**
-     *
-     */
-    private int mGame = RosterType.C_BLOOD_BOWL;
+
+    public boolean isCrossPoolMatch() {
+        return mCrossPoolMatch;
+    }
 
     /**
      *
      */
+    public void setCrossPoolMatch(boolean crossPoolMatch) {
+        this.mCrossPoolMatch = crossPoolMatch;
+    }
+
     private int mPointsIndivVictory = 1000;
+
+    private boolean mCrossPoolMatch = false;
 
     /**
      *
@@ -328,9 +362,13 @@ public class Parameters implements IXMLExport, Serializable {
     private boolean mSubstitutes = false;
 
     /**
-     *
+     * Ranking criterias
      */
     private final ArrayList<Criteria> mCriterias;
+    /**
+     * Ranking Formulas
+     */
+    private final ArrayList<Formula> mFormulas;
 
     /**
      *
@@ -535,6 +573,7 @@ public class Parameters implements IXMLExport, Serializable {
         mTournamentName = StringConstants.CS_NULL;
         mTournamentOrga = StringConstants.CS_NULL;
         mCriterias = new ArrayList<>();
+         mFormulas = new ArrayList<>();
 
         Criteria c = new Criteria(Translate.translate(CS_Touchdowns));
         c.setPointsFor(2);
@@ -625,6 +664,11 @@ public class Parameters implements IXMLExport, Serializable {
             final Element crit = getCriteria(i).getXMLElement();
             params.addContent(crit);
         }
+        
+        for (int i = 0; i < this.getFormulaCount(); i++) {
+            final Element form = getFormula(i).getXMLElement();
+            params.addContent(form);
+        }
 
         params.setAttribute(StringConstants.CS_VICTORY, Integer.toString(this.getPointsIndivVictory()));
         params.setAttribute(StringConstants.CS_LARGE_VICTORY, Integer.toString(this.getPointsIndivLargeVictory()));
@@ -701,7 +745,6 @@ public class Parameters implements IXMLExport, Serializable {
 
         params.setAttribute(StringConstants.CS_GROUPENABLE, Boolean.toString(this.isGroupsEnable()));
         params.setAttribute(StringConstants.CS_SUBSTITUTES, Boolean.toString(this.isSubstitutes()));
-        params.setAttribute(StringConstants.CS_GAMETYPE, Integer.toString(this.getGame()));
 
         params.setAttribute(StringConstants.CS_ACTVATECLANS, Boolean.toString(this.isEnableClans()));
         params.setAttribute(StringConstants.CS_AVOIDFIRSTMATCH, Boolean.toString(this.isAvoidClansFirstMatch()));
@@ -748,6 +791,8 @@ public class Parameters implements IXMLExport, Serializable {
         params.setAttribute(StringConstants.CS_WEB_COLOR2, Integer.toString(mColor2.getRGB()));
         params.setAttribute(StringConstants.CS_WEB_FORECOLOR, Integer.toString(mForeColor.getRGB()));
         params.setAttribute(StringConstants.CS_WEB_BORDERCOLOR, Integer.toString(mBorderColor.getRGB()));
+        
+        params.setAttribute(StringConstants.CS_CROSSMATCHPOOL, Boolean.toString(mCrossPoolMatch));
 
         return params;
     }
@@ -849,13 +894,6 @@ public class Parameters implements IXMLExport, Serializable {
                 } catch (ParseException | NullPointerException pe) {
                 }
 
-                try {
-                    this.setGame(params.getAttribute(StringConstants.CS_GAMETYPE).getIntValue());
-                } catch (DataConversionException | NullPointerException pe) {
-                    this.setGame(1);
-                    LOG.log(Level.FINE, pe.getLocalizedMessage());
-                }
-
             } catch (NullPointerException ne) {
                 this.setGapLargeVictory(3);
                 this.setGapLittleLost(1);
@@ -876,7 +914,7 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setRankingTeam4(params.getAttribute(StringConstants.CS_RANK + 4 + "_" + StringConstants.CS_TEAM).getIntValue());
                 this.setRankingTeam5(params.getAttribute(StringConstants.CS_RANK + 5 + "_" + StringConstants.CS_TEAM).getIntValue());
             } catch (NullPointerException ne2) {
-                JOptionPane.showMessageDialog(null, ne2.getLocalizedMessage());
+            //    JOptionPane.showMessageDialog(null, ne2.getLocalizedMessage());
             }
 
             try {
@@ -937,8 +975,21 @@ public class Parameters implements IXMLExport, Serializable {
                 crit.setXMLElement(criteria);
                 this.addCriteria(crit);
             }
+
+            final List<Element> formulas = params.getChildren(StringConstants.CS_FORMULA);
+            final Iterator<Element> fo = formulas.iterator();
+
+            this.clearFormulas();
+
+            while (fo.hasNext()) {
+                final Element formula = fo.next();
+                final Formula form = new Formula(formula.getAttributeValue(StringConstants.CS_NAME));
+                form.setXMLElement(formula);
+                this.addFormula(form);
+            }
+
         } catch (DataConversionException dce) {
-            JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
+           // JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
         }
 
         try {
@@ -955,6 +1006,16 @@ public class Parameters implements IXMLExport, Serializable {
             this._webport = 80;
         } catch (DataConversionException dce) {
             this._webport = 80;
+        }
+        try {
+            this.setCrossPoolMatch(params.getAttribute(StringConstants.CS_CROSSMATCHPOOL).getBooleanValue());
+
+        } catch (NullPointerException npe6) {
+            this.setCrossPoolMatch(false);
+        }
+        catch (DataConversionException dce2)
+        {
+            this.setCrossPoolMatch(false);
         }
     }
 
@@ -1116,19 +1177,47 @@ public class Parameters implements IXMLExport, Serializable {
     public void removeCriteria(int c) {
         mCriterias.remove(c);
     }
-
+    
     /**
-     * @return the mGame
+     * @return the mCriterias
      */
-    public int getGame() {
-        return mGame;
+    public int getFormulaCount() {
+        return mFormulas.size();
     }
 
     /**
-     * @param mGame the mGame to set
+     * @param i
+     * @return the mCriterias
      */
-    public void setGame(int mGame) {
-        this.mGame = mGame;
+    public Formula getFormula(int i) {
+        return mFormulas.get(i);
+    }
+
+    public int getIndexOfFormula(Formula f) {
+        return mFormulas.indexOf(f);
+    }
+
+    /**
+     * Clear the criterias array
+     */
+    public void clearFormulas() {
+        mFormulas.clear();
+    }
+
+    /**
+     *
+     * @param c
+     */
+    public void addFormula(Formula f) {
+        mFormulas.add(f);
+    }
+
+    /**
+     *
+     * @param c
+     */
+    public void removeFormula(int f) {
+        mFormulas.remove(f);
     }
 
     /**
@@ -1159,6 +1248,7 @@ public class Parameters implements IXMLExport, Serializable {
     public int getPointsTeamHugeVictory() {
         return mPointsTeamHugeVictory;
     }
+
     /**
      * @param mPointsIndivLargeVictory the mPointsIndivLargeVictory to set
      */
@@ -1169,7 +1259,7 @@ public class Parameters implements IXMLExport, Serializable {
     public void setPointsTeamLargeVictory(int mPointsTeamLargeVictory) {
         this.mPointsTeamLargeVictory = mPointsTeamLargeVictory;
     }
-    
+
     public void setPointsTeamHugeVictory(int points) {
         this.mPointsTeamHugeVictory = points;
     }
@@ -1290,7 +1380,7 @@ public class Parameters implements IXMLExport, Serializable {
     public float getGapTeamLargeVictory() {
         return mGapTeamLargeVictory;
     }
-    
+
     public float getGapTeamHugeVictory() {
         return mGapTeamHugeVictory;
     }
@@ -1305,7 +1395,7 @@ public class Parameters implements IXMLExport, Serializable {
     public void setGapTeamLargeVictory(float mGapLargeVictory) {
         this.mGapTeamLargeVictory = mGapLargeVictory;
     }
-    
+
     public void setGapTeamHugeVictory(float mGapLargeVictory) {
         this.mGapTeamHugeVictory = mGapLargeVictory;
     }
@@ -1883,6 +1973,7 @@ public class Parameters implements IXMLExport, Serializable {
     public void setUseTeamLargeVictory(boolean use) {
         this.mUseTeamLargeVictory = use;
     }
+
     public void setUseTeamHugeVictory(boolean use) {
         this.mUseTeamHugeVictory = use;
     }
@@ -1906,7 +1997,7 @@ public class Parameters implements IXMLExport, Serializable {
     public boolean isUseTeamLargeVictory() {
         return mUseTeamLargeVictory;
     }
-    
+
     public boolean isUseTeamHugeVictory() {
         return mUseTeamHugeVictory;
     }
@@ -1949,7 +2040,6 @@ public class Parameters implements IXMLExport, Serializable {
             result &= params.mBestResultsIndiv == this.mBestResultsIndiv;
             result &= params.mBestResultsTeam == this.mBestResultsTeam;
             result &= params.mClansMembersNumber == this.mClansMembersNumber;
-            result &= params.mGame == this.mGame;
 
             result &= params.mGapLargeVictory == this.mGapLargeVictory;
             result &= params.mGapLittleLost == this.mGapLittleLost;
@@ -2006,6 +2096,8 @@ public class Parameters implements IXMLExport, Serializable {
             result &= params.mUseLargeVictory == this.mUseLargeVictory;
             result &= params.mUseLittleLoss == this.mUseLittleLoss;
 
+            result &= params.mCrossPoolMatch;
+
             result &= params.mTeamPairing == this.mTeamPairing;
             result &= params.mTeamIndivPairing == this.mTeamIndivPairing;
 
@@ -2014,6 +2106,11 @@ public class Parameters implements IXMLExport, Serializable {
             result &= params.mCriterias.size() == this.mCriterias.size();
             for (Criteria c : mCriterias) {
                 result &= params.mCriterias.contains(c);
+            }
+            
+             result &= params.mFormulas.size() == this.mFormulas.size();
+            for (Formula f : mFormulas) {
+                result &= params.mFormulas.contains(f);
             }
         }
         return result;

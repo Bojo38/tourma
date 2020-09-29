@@ -7,6 +7,7 @@ package tourma.views;
 
 import javax.swing.JTabbedPane;
 import static org.testng.Assert.fail;
+import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;

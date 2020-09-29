@@ -358,37 +358,7 @@ public class RoundNGTest {
         assertEquals(result, expResult);
     }
 
-    /**
-     * Test of isLooserCup method, of class Round.
-     */
-    @Test
-    public void testIsLooserCup() {
-        System.out.println("isLooserCup");
-        if (Tournament.getTournament().getRoundsCount() == 0) {
-            fail("No round in file");
-        }
-        Round instance = Tournament.getTournament().getRound(0);
-        boolean expResult = true;
-        instance.setLooserCup(expResult);
-        boolean result = instance.isLooserCup();
-        assertEquals(result, expResult);
-    }
 
-    /**
-     * Test of setLooserCup method, of class Round.
-     */
-    @Test
-    public void testSetLooserCup() {
-        System.out.println("setLooserCup");
-         if (Tournament.getTournament().getRoundsCount() == 0) {
-            fail("No round in file");
-        }
-        Round instance = Tournament.getTournament().getRound(0);
-        boolean expResult = true;
-        instance.setLooserCup(expResult);
-        boolean result = instance.isLooserCup();
-        assertEquals(result, expResult);
-    }
 
     /**
      * Test of removeMatch method, of class Round.
@@ -679,32 +649,6 @@ public class RoundNGTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of isThirdPlace method, of class Round.
-     */
-    @Test
-    public void testIsThirdPlace() {
-        System.out.println("isThirdPlace");
-        Round instance = new Round();
-        boolean expResult = false;
-        boolean result = instance.isThirdPlace();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setThirdPlace method, of class Round.
-     */
-    @Test
-    public void testSetThirdPlace() {
-        System.out.println("setThirdPlace");
-        boolean b = false;
-        Round instance = new Round();
-        instance.setThirdPlace(b);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of recomputeMatchs method, of class Round.

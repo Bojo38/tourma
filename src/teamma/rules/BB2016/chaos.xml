@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>ChaosChosenKey</name>
+    <reroll>60000</reroll>
+    <apothecary>true</apothecary>
+    
+    <inducements>
+        <chef>300000</chef>
+        <bribe>100000</bribe>
+        <babes>50000</babes>
+        <wizard>150000</wizard>
+        <reroll>100000</reroll>
+        <apothecary>100000</apothecary>
+
+        <cards>yes</cards>
+        <starplayers>yes</starplayers>   
+        
+        <add_assistant>20000</add_assistant>
+        <add_cheerleaders>20000</add_cheerleaders>
+        <weather_wizard>30000</weather_wizard>
+        
+        <chaos_wizard>150000</chaos_wizard>
+        <horticulturalist>150000</horticulturalist>
+        <papa_skullbones>80000</papa_skullbones>
+        <horacio_x_schottenheim>80000</horacio_x_schottenheim>
+    </inducements>
+            
+    <playertypes>               
+        <playerType>
+            <limit>4</limit>
+            <position>Chaos Warrior</position>
+            <movement>5</movement>
+            <strength>4</strength>
+            <agility>3</agility>
+            <armor>9</armor>
+            <skills>
+            </skills>
+            <cost>100000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>16</limit>
+            <position>Beastman</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Horns</skill>              
+            </skills>
+            <cost>60000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Minotaur</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>2</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Loner</skill>
+                <skill>Wild Animal</skill>
+                <skill>Mighty Blow</skill>
+                <skill>Thick Skull</skill>
+                <skill>Frenzy</skill>
+                <skill>Horns</skill>              
+            </skills>
+            <cost>150000</cost>
+            <single>
+                <skillType>Strength</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

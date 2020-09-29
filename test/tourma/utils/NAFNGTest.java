@@ -9,6 +9,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -203,6 +204,18 @@ public class NAFNGTest {
         float expResult = 0.0F;
         float result = NAF.getDistance(target, other);
         assertEquals(result, expResult, 0.0);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setIgnoreCaps method, of class NAF.
+     */
+    @Test
+    public void testSetIgnoreCaps() {
+        System.out.println("setIgnoreCaps");
+        boolean b = false;
+        NAF.setIgnoreCaps(b);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

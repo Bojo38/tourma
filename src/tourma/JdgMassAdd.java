@@ -409,7 +409,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
                                 for (int j = 0; j < Tournament.getTournament().getTeamsCount(); j++) {
                                     Team team = Tournament.getTournament().getTeam(j);
                                     if (team.getName().equals(t)) {
-                                        JOptionPane.showMessageDialog(this, "Team " + t + " already exists");
+                                        //JOptionPane.showMessageDialog(this, "Team " + t + " already exists");
                                         found = true;
                                     }
                                 }
@@ -448,6 +448,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
                             }
                             if (!found) {
                                 Coach coach = new Coach(c);
+                                coach.setActive(true);
                                 Tournament.getTournament().addCoach(coach);
 
                                 // Roster Name
@@ -472,6 +473,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
                                 tmp = "";
                                 if (cell_tmp != null) {
                                     tmp = cell_tmp.getStringCellValue();
+
                                 }
                                 if (!tmp.equals("")) {
                                     RosterType rt = RosterType.getRosterType(tmp);

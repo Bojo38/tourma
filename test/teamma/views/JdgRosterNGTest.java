@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fest.swing.core.BasicRobot;
 import org.fest.swing.core.Robot;
+import org.fest.swing.finder.WindowFinder;
 import org.fest.swing.fixture.DialogFixture;
 import org.testng.Assert;
 import static org.testng.Assert.fail;
@@ -40,7 +41,7 @@ public class JdgRosterNGTest {
     }
 
     private static Robot robot;
-    
+
     @BeforeClass
     public static void setUpClass() throws Exception {
         robot = BasicRobot.robotWithNewAwtHierarchy();
@@ -56,7 +57,7 @@ public class JdgRosterNGTest {
     public void setUpMethod() throws Exception {
 
         jdg = new JdgRoster(null, true);
-        window = new DialogFixture(robot,jdg);
+        window = new DialogFixture(robot, jdg);
         window.show();
     }
 
@@ -80,15 +81,18 @@ public class JdgRosterNGTest {
             window.optionPane().okButton().click();
             Thread.sleep(200);
             String text = window.label("jlbRosterType").text();
-            Assert.assertEquals(text, "Roster: Chaos");
+            Assert.assertEquals(text, "Roster: Elus du Chaos");
 
             // Select tab and Add StarPlayers
             window.tabbedPane("jtpGoods").selectTab(2);
             Assert.assertFalse(window.button("jbtDelChampion").component().isEnabled());
             window.button("jbtAddChampion").click();
             Thread.sleep(500);
-            window.optionPane().comboBox().selectItem(1);
-            window.optionPane().okButton().click();
+
+            DialogFixture window2 = WindowFinder.findDialog(JdgSelectPosition.class).withTimeout(10000).using(robot);
+            Thread.sleep(500);
+            window2.table("jtPositions").selectRows(1);
+            window2.button("ok").click();
             Thread.sleep(200);
             Assert.assertTrue(window.table("jtbStars").rowCount() == 1);
             Assert.assertFalse(window.button("jbtDelChampion").component().isEnabled());
@@ -101,7 +105,7 @@ public class JdgRosterNGTest {
             // Select tab and Choose Inducements
             window.tabbedPane("jtpGoods").selectTab(1);
 
-            String array[] = {"ExtraReroll", "BribeTheRef", "LocalApothecary", "Wizard", "Igor", "Babes", "Chef"};
+            String array[] = {"ExtraReroll", "BribeTheRef", "LocalApothecary", "Wizard", "Igor", "Babes", "Chef", "ChaosWizard", "Horatio", "Kari", "Fink", "Papa", "Galandril", "Krot"};
             for (String ext : array) {
                 if (window.slider("jsl" + ext).component().isEnabled()) {
                     window.slider("jsl" + ext).slideToMaximum();
@@ -139,8 +143,8 @@ public class JdgRosterNGTest {
             for (String ext : array2) {
                 if (window.slider("jsl" + ext).component().isEnabled()) {
                     System.out.println(ext);
-               
-     window.slider("jsl" + ext).slideToMaximum();
+
+                    window.slider("jsl" + ext).slideToMaximum();
                     String cost = window.label("jlbCost" + ext).text();
                     String nb = window.label("jlbNb" + ext).text();
                     String price = window.label("jlbPrice" + ext).text();
@@ -152,8 +156,10 @@ public class JdgRosterNGTest {
             for (int i = 0; i < 5; i++) {
                 window.button("jbtAdd").click();
                 Thread.sleep(500);
-                window.optionPane().comboBox().selectItem(0);
-                window.optionPane().okButton().click();
+                DialogFixture window3 = WindowFinder.findDialog(JdgSelectPosition.class).withTimeout(10000).using(robot);
+                Thread.sleep(500);
+                window3.table("jtPositions").selectRows(0);
+                window3.button("ok").click();
                 Thread.sleep(200);
                 Assert.assertTrue(window.table("jtbPlayers").rowCount() == i + 1);
                 window.table("jtbPlayers").selectRows(i);
@@ -162,64 +168,61 @@ public class JdgRosterNGTest {
                 Assert.assertTrue(window.table("jtbPlayers").rowCount() == i);
                 window.button("jbtAdd").click();
                 Thread.sleep(500);
-                window.optionPane().comboBox().selectItem(0);
-                window.optionPane().okButton().click();
+                DialogFixture window4 = WindowFinder.findDialog(JdgSelectPosition.class).withTimeout(10000).using(robot);
+                Thread.sleep(500);
+                window4.table("jtPositions").selectRows(0);
+                window4.button("ok").click();
             }
-            LRB lrb=LRB.getLRB();
+            LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
 
             // Add Skills to Players
-            for (int i = 0; i <5; i++) {               
+            for (int i = 0; i < 5; i++) {
                 Thread.sleep(500);
-                for (int j=0; j<lrb.getSkillTypeCount(); j++)
-                {
+                for (int j = 0; j < lrb.getSkillTypeCount(); j++) {
                     window.table("jtbPlayers").selectRows(i);
-                    window.button("jbtAddSkill").click();  
+                    window.button("jbtAddSkill").click();
                     Thread.sleep(1000);
-                    String skText=lrb.getSkillType(j).getName();
-                    System.out.println("SkillType: "+skText);
-                    if (window.dialog("JdgSelectSkill").comboBox("jcb"+skText).component().isEnabled())
-                    {
-                        window.dialog("JdgSelectSkill").comboBox("jcb"+skText).selectItem(1);
+                    String skText = lrb.getSkillType(j).getName();
+                    System.out.println("SkillType: " + skText);
+                    if (window.dialog("JdgSelectSkill").comboBox("jcb" + skText).component().isEnabled()) {
+                        window.dialog("JdgSelectSkill").comboBox("jcb" + skText).selectItem(1);
                         Thread.sleep(100);
                         window.dialog("JdgSelectSkill").button("ok").click();
                         Thread.sleep(500);
-                        
-                    }
-                    else
-                    {
+
+                    } else {
                         window.dialog("JdgSelectSkill").button("cancel").click();
-                    }                    
+                    }
                 }
             }
-            
-             // Import Export
+
+            // Import Export
             window.button("jbtImport").click();
             Thread.sleep(500);
-             File d=new File("./test");
-            File f=new File("necros2.xml");
+            File d = new File("./test");
+            File f = new File("necros2.xml");
             window.fileChooser().setCurrentDirectory(d);
             window.fileChooser().selectFile(f);
             window.fileChooser().approve();
             Thread.sleep(500);
             window.button("jbtExport").click();
-            File d2=new File(".");
-            File f2=new File("necros_tmp.xml");
+            File d2 = new File(".");
+            File f2 = new File("necros_tmp.xml");
             window.fileChooser().setCurrentDirectory(d2);
             window.fileChooser().selectFile(f2);
             window.fileChooser().approve();
-            
+
             try {
-                Assert.assertTrue(compareTwoFiles("./test/necros2.xml","necros_tmp.xml"));
+                Assert.assertTrue(compareTwoFiles("./test/necros2.xml", "necros_tmp.xml"));
             } catch (IOException ex) {
                 Logger.getLogger(JdgRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             try {
                 Files.delete(f2.toPath());
             } catch (IOException ex) {
                 Logger.getLogger(JdgRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
 
             // Select title and choose roster
             // enable
@@ -228,7 +231,8 @@ public class JdgRosterNGTest {
             fail("exception catched");
         }
     }
-public boolean compareTwoFiles(String file1Path, String file2Path)
+
+    public boolean compareTwoFiles(String file1Path, String file2Path)
             throws IOException {
 
         File file1 = new File(file1Path);

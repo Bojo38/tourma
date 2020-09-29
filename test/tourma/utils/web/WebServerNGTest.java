@@ -7,6 +7,7 @@ package tourma.utils.web;
 
 import fi.iki.elonen.NanoHTTPD;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import static org.testng.Assert.*;
@@ -64,11 +65,17 @@ public class WebServerNGTest {
     public void testServe() {
         System.out.println("serve");
         NanoHTTPD.IHTTPSession session = null;
+        try{
         WebServer instance = new WebServer();
         NanoHTTPD.Response expResult = null;
         NanoHTTPD.Response result = instance.serve(session);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
+        }
+        catch (IOException e)
+        {
+            
+        }
         fail("The test case is a prototype.");
     }
 

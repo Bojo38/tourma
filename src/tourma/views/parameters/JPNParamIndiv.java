@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import tourma.data.Criteria;
+import tourma.data.Formula;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 
@@ -556,6 +557,11 @@ public class JPNParamIndiv extends javax.swing.JPanel {
             rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Player));
             rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Opponent));
             rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Difference));
+        }
+        
+        for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+            final Formula formula = Tournament.getTournament().getParams().getFormula(i);
+            rankChoices.add(formula.getName());
         }
 
         jcbRank1.setModel(new DefaultComboBoxModel(rankChoices.toArray()));

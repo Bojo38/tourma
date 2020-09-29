@@ -17,6 +17,7 @@ import org.fest.swing.fixture.DialogFixture;
 import org.fest.swing.fixture.JOptionPaneFixture;
 import org.fest.swing.fixture.JPanelFixture;
 import org.testng.Assert;
+import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;

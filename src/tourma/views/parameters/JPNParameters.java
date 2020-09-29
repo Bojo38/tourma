@@ -26,11 +26,13 @@ public final class JPNParameters extends javax.swing.JPanel {
     private final JPNParamClan mJpnClan;
     private final JPNParamTeam mJpnTeam;
     private final JPNParamCriterias mJpnCriterias;
+    private final JPNParamFormulas mJpnFormulas;
     private final JPNParamIndiv mJpnIndiv;
     private final JPNTeams jpnTeamTour;
 
     private final static String CS_Individual = "Individual";
     private final static String CS_Criterias = "Criterias";
+    private final static String CS_Formulas = "Formulas";
     private final static String CS_ByTeam = "ByTeam";
     private final static String CS_Clan = "Clan";
     private final static String CS_Group = "Group";
@@ -48,6 +50,7 @@ public final class JPNParameters extends javax.swing.JPanel {
 
         mJpnIndiv = new JPNParamIndiv();
         mJpnCriterias = new JPNParamCriterias();
+        mJpnFormulas = new JPNParamFormulas();
         mJpnTeam = new JPNParamTeam();
         mJpnGroup = new JPNParamGroup();
         mJpnClan = new JPNParamClan();
@@ -61,6 +64,10 @@ public final class JPNParameters extends javax.swing.JPanel {
                 Translate.translate(CS_Criterias),
                 new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")),
                 mJpnCriterias);
+        jtpOptions.addTab(
+                Translate.translate(CS_Formulas),
+                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Formula.png")),
+                mJpnFormulas);
         jtpOptions.addTab(
                 Translate.translate(CS_ByTeam),
                 new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")),
@@ -121,14 +128,14 @@ public final class JPNParameters extends javax.swing.JPanel {
 
         mJpnIndiv.update();
         mJpnCriterias.update();
+        mJpnFormulas.update();
         mJpnTeam.update();
         mJpnClan.update();
         mJpnGroup.update();
         mJpnCategories.update();
 
-        jtpOptions.setEnabledAt(4, !mTournament.getParams().isMultiRoster());
-        jtpOptions.setEnabledAt(2, mTournament.getParams().isTeamTournament());
-//        jtpOptions.setEnabledAt(3, !mTournament.getParams().mTeamTournament);
+        jtpOptions.setEnabledAt(5, !mTournament.getParams().isMultiRoster());
+        jtpOptions.setEnabledAt(3, mTournament.getParams().isTeamTournament());
 
         jtfOrgas.setText(mTournament.getParams().getTournamentOrga());
         jtfTournamentName.setText(mTournament.getParams().getTournamentName());
@@ -228,6 +235,12 @@ public final class JPNParameters extends javax.swing.JPanel {
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("RankingParametersKey"))); // NOI18N
         jPanel9.setLayout(new java.awt.BorderLayout());
+
+        jtpOptions.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtpOptionsMouseClicked(evt);
+            }
+        });
         jPanel9.add(jtpOptions, java.awt.BorderLayout.CENTER);
 
         jPanel1.add(jPanel9, java.awt.BorderLayout.CENTER);
@@ -347,6 +360,10 @@ public final class JPNParameters extends javax.swing.JPanel {
         mTournament.getParams().setPlace(jtfPlace.getText() + evt.getKeyChar());
 
     }//GEN-LAST:event_jtfPlaceKeyPressed
+
+    private void jtpOptionsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtpOptionsMouseClicked
+        mJpnFormulas.update();
+    }//GEN-LAST:event_jtpOptionsMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser jDate;

@@ -1,0 +1,972 @@
+<Tournament Version="3" RoundRobin="false">
+  <Description />
+  <Roster Name="Amazones" />
+  <Roster Name="Bas-fonds" />
+  <Roster Name="Bretonniens" />
+  <Roster Name="Chaos" />
+  <Roster Name="Elfes" />
+  <Roster Name="Elfes sylvains" />
+  <Roster Name="Elfes noirs" />
+  <Roster Name="Gobelins" />
+  <Roster Name="Halflings" />
+  <Roster Name="Haut-Elfes" />
+  <Roster Name="Hommes-Lézards" />
+  <Roster Name="Humains" />
+  <Roster Name="Khemri" />
+  <Roster Name="Démons de Khorne" />
+  <Roster Name="Morts-Vivants" />
+  <Roster Name="Nains" />
+  <Roster Name="Nains du chaos" />
+  <Roster Name="Necromantiques" />
+  <Roster Name="Nordiques" />
+  <Roster Name="Pourris de Nurgle" />
+  <Roster Name="Ogres" />
+  <Roster Name="Orques" />
+  <Roster Name="Chaos Pact" />
+  <Roster Name="Skavens" />
+  <Roster Name="Slanns" />
+  <Roster Name="Vampires" />
+  <Roster Name="Bretonniens" />
+  <Parameters Organizer="Blitz57" Name="Stress Cup Pool" Date="29/11/2018 13:49:49" Place="Stress Cup Pool" Victory="1000" Large_Victory="1000" Draw="400" Lost="0" Refused="0" Conceeded="0" Team_Large_Victory="1000" Team_Little_Lost="100" Team_Huge_Victory="1100" Little_Lost="100" Victory_Team="1000" Draw_Team="400" Team_Lost="0" Huge_Lost_Team="100" Large_Victory_Gap="3" Little_Lost_Gap="1" Team_Large_Victory_Gap="2.0" Team_Huge_Victory_Gap="4.0" Team_Little_Lost_Gap="1.0" Team_Huge_Lost_Gap="2.0" Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Rank1_Team="1" Rank2_Team="7" Rank3_Team="0" Rank4_Team="0" Rank5_Team="0" ByTeam="false" TeamMates="1" TeamPairing="1" TeamIndivPairing="0" TeamVictoryPoints="0" TeamDrawPoints="0" TeamVictoryOnly="false" GroupEnable="false" Substitutes="false" GameType="1" ActvateClans="false" AvoidFirstMatch="true" AvoidMatch="false" ClanTeammatesNumber="3" MultiRoster="false" IndivBalanced="false" TeamBalanced="false" Portugal="false" Color="false" UseImage="false" UseLargeVictory="false" UseLittleLost="true" UseTeamLargeVictory="false" UseTeamHugeVictory="false" UseTeamLittleLost="false" UseTeamHugeLost="false" TableBonus="false" TableBonusPerRound="false" TableBonusCoef="1.0" UseBestResultIndiv="false" UseBestResultTeam="false" BestResultIndiv="5" BestReasultTeam="5" ApplyToAnnexTeam="false" ApplyToAnnexIndiv="false" ExceptBestAndWorstIndiv="false" ExceptBestAndWorstTeam="false" WebEdit="false" Web_port="80" WebColor1="-6710887" WebColor="-4473925" WebForeColor="-1" WebBorderColor="-13421773">
+    <Criteria Criteria="Touchdowns" Accronyme="Tds" PointsFor="2" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" CriticalValueThreshold="10" DiffDefensiveBonus="0" OffensiveBonus="0" DiffOffensiveBonus="0" DiffDefensiveBinusThreshold="0" OffensiveBonusThreshold="0" DiffOffensiveBonusThreshold="0" ForTeamDiffDefensiveBonus="0" ForTeamOffensiveBonus="0" ForTeamDiffOffensiveBonus="0" TeamDiffDefensiveBonus="0" TeamOffensiveBonus="0" TeamDiffOffensiveBonus="0" TeamDiffDefensiveBinusThreshold="0" TeamOffensiveBonusThreshold="0" TeamDiffOffensiveBonusThreshold="0" />
+    <Criteria Criteria="Sorties" Accronyme="Sor" PointsFor="1" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" CriticalValueThreshold="10" DiffDefensiveBonus="0" OffensiveBonus="0" DiffOffensiveBonus="0" DiffDefensiveBinusThreshold="0" OffensiveBonusThreshold="0" DiffOffensiveBonusThreshold="0" ForTeamDiffDefensiveBonus="0" ForTeamOffensiveBonus="0" ForTeamDiffOffensiveBonus="0" TeamDiffDefensiveBonus="0" TeamOffensiveBonus="0" TeamDiffOffensiveBonus="0" TeamDiffDefensiveBinusThreshold="0" TeamOffensiveBonusThreshold="0" TeamDiffOffensiveBonusThreshold="0" />
+    <Criteria Criteria="Aggression" Accronyme="Aggr" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" CriticalValueThreshold="10" DiffDefensiveBonus="0" OffensiveBonus="0" DiffOffensiveBonus="0" DiffDefensiveBinusThreshold="0" OffensiveBonusThreshold="0" DiffOffensiveBonusThreshold="0" ForTeamDiffDefensiveBonus="0" ForTeamOffensiveBonus="0" ForTeamDiffOffensiveBonus="0" TeamDiffDefensiveBonus="0" TeamOffensiveBonus="0" TeamDiffOffensiveBonus="0" TeamDiffDefensiveBinusThreshold="0" TeamOffensiveBonusThreshold="0" TeamDiffOffensiveBonusThreshold="0" />
+    <Criteria Criteria="Temps" Accronyme="Tps" PointsFor="0" PointsAgainst="0" PointsTeamFor="60" PointsTeamAgainst="0" CriticalValueThreshold="10" DiffDefensiveBonus="0" OffensiveBonus="0" DiffOffensiveBonus="0" DiffDefensiveBinusThreshold="0" OffensiveBonusThreshold="0" DiffOffensiveBonusThreshold="0" ForTeamDiffDefensiveBonus="0" ForTeamOffensiveBonus="0" ForTeamDiffOffensiveBonus="0" TeamDiffDefensiveBonus="0" TeamOffensiveBonus="0" TeamDiffOffensiveBonus="0" TeamDiffDefensiveBinusThreshold="0" TeamOffensiveBonusThreshold="0" TeamDiffOffensiveBonusThreshold="0" />
+  </Parameters>
+  <Clan Name="Aucun" />
+  <Category Name="Aucun" />
+  <Group Name="Aucun" Points="0">
+    <Roster Name="Amazones" />
+    <Roster Name="Bas-fonds" />
+    <Roster Name="Bretonniens" />
+    <Roster Name="Chaos" />
+    <Roster Name="Elfes" />
+    <Roster Name="Elfes sylvains" />
+    <Roster Name="Elfes noirs" />
+    <Roster Name="Gobelins" />
+    <Roster Name="Halflings" />
+    <Roster Name="Haut-Elfes" />
+    <Roster Name="Hommes-Lézards" />
+    <Roster Name="Humains" />
+    <Roster Name="Khemri" />
+    <Roster Name="Démons de Khorne" />
+    <Roster Name="Morts-Vivants" />
+    <Roster Name="Nains" />
+    <Roster Name="Nains du chaos" />
+    <Roster Name="Necromantiques" />
+    <Roster Name="Nordiques" />
+    <Roster Name="Pourris de Nurgle" />
+    <Roster Name="Ogres" />
+    <Roster Name="Orques" />
+    <Roster Name="Chaos Pact" />
+    <Roster Name="Skavens" />
+    <Roster Name="Slanns" />
+    <Roster Name="Vampires" />
+    <Roster Name="Bretonniens" />
+  </Group>
+  <GroupModifierPoints Name="Aucun">
+    <Group Name="Aucun" Victory="0" Draw="0" Lost="0" />
+  </GroupModifierPoints>
+  <pool Name="1">
+    <Coach Name="Helborg" />
+    <Coach Name="Jugaka" />
+    <Coach Name="Nime" />
+    <Coach Name="Clement0" />
+    <Coach Name="Old Dwarf" />
+    <Coach Name="Berserker" />
+    <Coach Name="Manant" />
+    <Coach Name="Gundrabar" />
+  </pool>
+  <pool Name="2">
+    <Coach Name="Obsidian" />
+    <Coach Name="Haktar" />
+    <Coach Name="Carpenter" />
+    <Coach Name="Gilthanas" />
+    <Coach Name="Grol" />
+    <Coach Name="Deletio" />
+    <Coach Name="Mad Coach" />
+    <Coach Name="Ayvess" />
+  </pool>
+  <pool Name="3">
+    <Coach Name="Kirou" />
+    <Coach Name="Rremy" />
+    <Coach Name="Gorgoth" />
+    <Coach Name="Pitmartinz" />
+    <Coach Name="Zig" />
+    <Coach Name="Sakanene" />
+    <Coach Name="Kroxi" />
+    <Coach Name="Orga team" />
+  </pool>
+  <pool Name="4">
+    <Coach Name="Budmilka" />
+    <Coach Name="PinkCharlie" />
+    <Coach Name="Jerem" />
+    <Coach Name="Petitof" />
+    <Coach Name="Pilaf" />
+    <Coach Name="Pandaye" />
+    <Coach Name="Mleud" />
+    <Coach Name="D'jo" />
+  </pool>
+  <Coach Name="Helborg" Team="Helborg team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Jugaka" Team="Jugaka team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Nime" Team="Nime team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Clement0" Team="Clement0 team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Old Dwarf" Team="Old Dwarf team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Berserker" Team="Berserker team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Manant" Team="Manat team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Gundrabar" Team="Gundrabar team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Obsidian" Team="Obsidian team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Haktar" Team="Haktar team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Carpenter" Team="Carpenter team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Gilthanas" Team="Gilthanas team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Grol" Team="Grol team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Deletio" Team="Deletio team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Mad Coach" Team="Mad Coach team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Ayvess" Team="Ayvess team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Kirou" Team="Kirou team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Rremy" Team="Rremy team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Gorgoth" Team="Gorgoth team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Pitmartinz" Team="Pitmartinz team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Zig" Team="Zig team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Sakanene" Team="Sakanene team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Kroxi" Team="Kroxi team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Orga team" Team="Orga team team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Budmilka" Team="Budmilka team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="PinkCharlie" Team="PinkCharlie team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Jerem" Team="Jerem team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Petitof" Team="Petitof team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Pandaye" Team="Pandaye team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Mleud" Team="Mleud team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="D'jo" Team="D'jo team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Coach Name="Pilaf" Team="Pilaf team" Roster="Amazones" NAF="0" Rank="0" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0" />
+  <Round Date="29/11/2018 14:16:58" LooserCup="false" ThirdPlace="false" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Nime" Coach2="Old Dwarf" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Manant" Coach2="Gundrabar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="65" Value2="65" />
+    </Match>
+    <Match Coach1="Clement0" Coach2="Helborg" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="4" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Berserker" Coach2="Jugaka" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Mad Coach" Coach2="Ayvess" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="4" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="60" Value2="60" />
+    </Match>
+    <Match Coach1="Grol" Coach2="Haktar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Deletio" Coach2="Gilthanas" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="5" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="2" />
+      <Value Name="Temps" Value1="75" Value2="75" />
+    </Match>
+    <Match Coach1="Obsidian" Coach2="Carpenter" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pitmartinz" Coach2="Kroxi" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="5" Value2="2" />
+      <Value Name="Aggression" Value1="1" Value2="0" />
+      <Value Name="Temps" Value1="15" Value2="15" />
+    </Match>
+    <Match Coach1="Rremy" Coach2="Gorgoth" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Zig" Coach2="Orga team" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="3" Value2="0" />
+      <Value Name="Sorties" Value1="11" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="75" Value2="75" />
+    </Match>
+    <Match Coach1="Sakanene" Coach2="Kirou" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Aggression" Value1="1" Value2="0" />
+      <Value Name="Temps" Value1="55" Value2="55" />
+    </Match>
+    <Match Coach1="Mleud" Coach2="Pandaye" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Petitof" Coach2="Jerem" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="65" Value2="65" />
+    </Match>
+    <Match Coach1="Budmilka" Coach2="D'jo" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="PinkCharlie" Coach2="Pilaf" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="4" Value2="0" />
+      <Value Name="Temps" Value1="70" Value2="70" />
+    </Match>
+  </Round>
+  <Round Date="06/12/2018 13:20:31" LooserCup="false" ThirdPlace="false" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Old Dwarf" Coach2="Gundrabar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Aggression" Value1="1" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Manant" Coach2="Nime" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="5" Value2="1" />
+      <Value Name="Aggression" Value1="1" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Clement0" Coach2="Jugaka" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="4" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Berserker" Coach2="Helborg" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Mad Coach" Coach2="Haktar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Grol" Coach2="Ayvess" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="4" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="40" Value2="40" />
+    </Match>
+    <Match Coach1="Deletio" Coach2="Carpenter" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Gilthanas" Coach2="Obsidian" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="3" Value2="3" />
+      <Value Name="Aggression" Value1="2" Value2="0" />
+      <Value Name="Temps" Value1="75" Value2="75" />
+    </Match>
+    <Match Coach1="Pitmartinz" Coach2="Gorgoth" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="3" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Rremy" Coach2="Kroxi" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="30" Value2="30" />
+    </Match>
+    <Match Coach1="Zig" Coach2="Kirou" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="35" Value2="0" />
+    </Match>
+    <Match Coach1="Orga team" Coach2="Sakanene" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="4" />
+      <Value Name="Aggression" Value1="0" Value2="2" />
+      <Value Name="Temps" Value1="30" Value2="30" />
+    </Match>
+    <Match Coach1="Mleud" Coach2="Jerem" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Aggression" Value1="1" Value2="3" />
+      <Value Name="Temps" Value1="25" Value2="25" />
+    </Match>
+    <Match Coach1="Petitof" Coach2="Pandaye" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="5" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Budmilka" Coach2="Pilaf" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="5" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="3" />
+      <Value Name="Temps" Value1="5" Value2="5" />
+    </Match>
+    <Match Coach1="PinkCharlie" Coach2="D'jo" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="5" Value2="3" />
+      <Value Name="Aggression" Value1="2" Value2="0" />
+      <Value Name="Temps" Value1="45" Value2="45" />
+    </Match>
+  </Round>
+  <Round Date="06/12/2018 15:36:50" LooserCup="false" ThirdPlace="false" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Old Dwarf" Coach2="Helborg" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Aggression" Value1="6" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Manant" Coach2="Jugaka" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="3" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="15" Value2="15" />
+    </Match>
+    <Match Coach1="Clement0" Coach2="Nime" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="5" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="15" Value2="15" />
+    </Match>
+    <Match Coach1="Berserker" Coach2="Gundrabar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Mad Coach" Coach2="Gilthanas" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="5" Value2="6" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="35" Value2="35" />
+    </Match>
+    <Match Coach1="Grol" Coach2="Carpenter" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="6" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Ayvess" Coach2="Deletio" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="4" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="50" Value2="50" />
+    </Match>
+    <Match Coach1="Haktar" Coach2="Obsidian" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pitmartinz" Coach2="Orga team" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="4" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="45" Value2="45" />
+    </Match>
+    <Match Coach1="Rremy" Coach2="Kirou" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Aggression" Value1="1" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Zig" Coach2="Kroxi" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="5" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="60" Value2="60" />
+    </Match>
+    <Match Coach1="Gorgoth" Coach2="Sakanene" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="5" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="4" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Mleud" Coach2="D'jo" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Petitof" Coach2="Pilaf" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="4" />
+      <Value Name="Aggression" Value1="0" Value2="3" />
+      <Value Name="Temps" Value1="45" Value2="45" />
+    </Match>
+    <Match Coach1="Budmilka" Coach2="Pandaye" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Jerem" Coach2="PinkCharlie" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Aggression" Value1="1" Value2="2" />
+      <Value Name="Temps" Value1="10" Value2="10" />
+    </Match>
+  </Round>
+  <Round Date="06/12/2018 15:44:36" LooserCup="false" ThirdPlace="false" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Old Dwarf" Coach2="Jugaka" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="4" Value2="1" />
+      <Value Name="Aggression" Value1="4" Value2="0" />
+      <Value Name="Temps" Value1="20" Value2="20" />
+    </Match>
+    <Match Coach1="Manant" Coach2="Helborg" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="4" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="60" Value2="60" />
+    </Match>
+    <Match Coach1="Clement0" Coach2="Gundrabar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="5" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Nime" Coach2="Berserker" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="3" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Mad Coach" Coach2="Carpenter" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Grol" Coach2="Gilthanas" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="4" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="65" Value2="65" />
+    </Match>
+    <Match Coach1="Deletio" Coach2="Haktar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Obsidian" Coach2="Ayvess" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="5" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="40" Value2="40" />
+    </Match>
+    <Match Coach1="Pitmartinz" Coach2="Kirou" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Aggression" Value1="2" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Rremy" Coach2="Orga team" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="2" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Gorgoth" Coach2="Zig" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="3" />
+      <Value Name="Temps" Value1="25" Value2="25" />
+    </Match>
+    <Match Coach1="Sakanene" Coach2="Kroxi" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="45" Value2="45" />
+    </Match>
+    <Match Coach1="Mleud" Coach2="Pilaf" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Petitof" Coach2="D'jo" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Budmilka" Coach2="Jerem" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="3" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="3" />
+      <Value Name="Aggression" Value1="1" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pandaye" Coach2="PinkCharlie" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="3" />
+      <Value Name="Temps" Value1="75" Value2="75" />
+    </Match>
+  </Round>
+  <Round Date="06/12/2018 15:50:43" LooserCup="false" ThirdPlace="false" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Old Dwarf" Coach2="Manant" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="50" Value2="50" />
+    </Match>
+    <Match Coach1="Clement0" Coach2="Berserker" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="5" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="10" Value2="0" />
+    </Match>
+    <Match Coach1="Nime" Coach2="Gundrabar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="3" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="5" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Helborg" Coach2="Jugaka" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="4" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Mad Coach" Coach2="Grol" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Carpenter" Coach2="Gilthanas" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="5" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="75" Value2="125" />
+    </Match>
+    <Match Coach1="Haktar" Coach2="Ayvess" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="4" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="6" />
+      <Value Name="Aggression" Value1="0" Value2="2" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Deletio" Coach2="Obsidian" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Orga team" Coach2="Kirou" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="5" />
+      <Value Name="Aggression" Value1="2" Value2="0" />
+      <Value Name="Temps" Value1="30" Value2="30" />
+    </Match>
+    <Match Coach1="Pitmartinz" Coach2="Rremy" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="20" Value2="20" />
+    </Match>
+    <Match Coach1="Zig" Coach2="Sakanene" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="5" />
+      <Value Name="Aggression" Value1="0" Value2="4" />
+      <Value Name="Temps" Value1="75" Value2="75" />
+    </Match>
+    <Match Coach1="Gorgoth" Coach2="Kroxi" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="20" Value2="20" />
+    </Match>
+    <Match Coach1="Budmilka" Coach2="PinkCharlie" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="75" Value2="75" />
+    </Match>
+    <Match Coach1="Pandaye" Coach2="Jerem" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="50" Value2="50" />
+    </Match>
+    <Match Coach1="Petitof" Coach2="Mleud" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="25" Value2="25" />
+    </Match>
+    <Match Coach1="Pilaf" Coach2="D'jo" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="55" Value2="55" />
+    </Match>
+  </Round>
+  <Round Date="06/12/2018 15:56:20" LooserCup="false" ThirdPlace="false" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Helborg" Coach2="Gundrabar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="25" Value2="25" />
+    </Match>
+    <Match Coach1="Jugaka" Coach2="Nime" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Clement0" Coach2="Old Dwarf" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Aggression" Value1="1" Value2="1" />
+      <Value Name="Temps" Value1="20" Value2="20" />
+    </Match>
+    <Match Coach1="Berserker" Coach2="Manant" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="2" />
+      <Value Name="Temps" Value1="25" Value2="25" />
+    </Match>
+    <Match Coach1="Obsidian" Coach2="Grol" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Gilthanas" Coach2="Haktar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="3" />
+      <Value Name="Sorties" Value1="3" Value2="2" />
+      <Value Name="Aggression" Value1="1" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Carpenter" Coach2="Ayvess" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="3" Value2="9" />
+      <Value Name="Aggression" Value1="2" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Mad Coach" Coach2="Deletio" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="4" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Kroxi" Coach2="Kirou" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Rremy" Coach2="Sakanene" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="5" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pitmartinz" Coach2="Zig" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="6" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Orga team" Coach2="Gorgoth" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="6" />
+      <Value Name="Sorties" Value1="1" Value2="6" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Mleud" Coach2="Budmilka" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="5" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="PinkCharlie" Coach2="Petitof" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="3" />
+      <Value Name="Aggression" Value1="3" Value2="0" />
+      <Value Name="Temps" Value1="75" Value2="75" />
+    </Match>
+    <Match Coach1="D'jo" Coach2="Jerem" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pandaye" Coach2="Pilaf" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="5" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="50" Value2="50" />
+    </Match>
+  </Round>
+  <Round Date="06/12/2018 16:01:46" LooserCup="false" ThirdPlace="false" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Helborg" Coach2="Nime" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Jugaka" Coach2="Gundrabar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Clement0" Coach2="Manant" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="1" />
+      <Value Name="Temps" Value1="55" Value2="55" />
+    </Match>
+    <Match Coach1="Berserker" Coach2="Old Dwarf" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="3" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Obsidian" Coach2="Mad Coach" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="4" Value2="0" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Haktar" Coach2="Carpenter" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="75" Value2="75" />
+    </Match>
+    <Match Coach1="Grol" Coach2="Deletio" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Gilthanas" Coach2="Ayvess" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="50" Value2="50" />
+    </Match>
+    <Match Coach1="Gorgoth" Coach2="Kirou" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="0" Value2="3" />
+      <Value Name="Aggression" Value1="1" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Rremy" Coach2="Zig" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="20" Value2="20" />
+    </Match>
+    <Match Coach1="Pitmartinz" Coach2="Sakanene" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="3" />
+      <Value Name="Sorties" Value1="3" Value2="4" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Orga team" Coach2="Kroxi" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="0" Value2="6" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Budmilka" Coach2="Petitof" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="20" Value2="20" />
+    </Match>
+    <Match Coach1="PinkCharlie" Coach2="Mleud" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pilaf" Coach2="Jerem" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="2" Value2="2" />
+      <Value Name="Aggression" Value1="1" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pandaye" Coach2="D'jo" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="1" />
+      <Value Name="Sorties" Value1="7" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+  </Round>
+  <Round Date="06/12/2018 16:13:51" LooserCup="true" ThirdPlace="false" Cup="true" Tour="0" MaxTour="3" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Obsidian" Coach2="PinkCharlie" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="3" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Budmilka" Coach2="Haktar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Jugaka" Coach2="Kirou" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="25" Value2="25" />
+    </Match>
+    <Match Coach1="Helborg" Coach2="Rremy" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Gorgoth" Coach2="Nime" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Jerem" Coach2="Carpenter" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pitmartinz" Coach2="Clement0" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Petitof" Coach2="Grol" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Pilaf" Coach2="Zig" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Old Dwarf" Coach2="Gilthanas" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Deletio" Coach2="Berserker" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Sakanene" Coach2="Mleud" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Mad Coach" Coach2="Pandaye" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Kroxi" Coach2="Manant" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="D'jo" Coach2="Orga team" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Ayvess" Coach2="Gundrabar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+  </Round>
+  <Round Date="06/12/2018 16:17:09" LooserCup="true" ThirdPlace="false" Cup="true" Tour="1" MaxTour="3" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Obsidian" Coach2="Helborg" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="3" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="3" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Jugaka" Coach2="Budmilka" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="2" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Rremy" Coach2="PinkCharlie" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="0" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="15" Value2="15" />
+    </Match>
+    <Match Coach1="Haktar" Coach2="Kirou" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="2" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+  </Round>
+  <Round Date="06/12/2018 16:18:49" LooserCup="true" ThirdPlace="false" Cup="true" Tour="2" MaxTour="3" mincoef="1.0" maxcoef="1.0">
+    <Match Coach1="Obsidian" Coach2="Budmilka" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="1" Value2="0" />
+      <Value Name="Sorties" Value1="1" Value2="1" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Helborg" Coach2="Jugaka" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="2" Value2="1" />
+      <Value Name="Sorties" Value1="1" Value2="0" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+    <Match Coach1="Rremy" Coach2="Haktar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+      <Value Name="Touchdowns" Value1="0" Value2="1" />
+      <Value Name="Sorties" Value1="3" Value2="2" />
+      <Value Name="Aggression" Value1="0" Value2="0" />
+      <Value Name="Temps" Value1="0" Value2="0" />
+    </Match>
+  </Round>
+</Tournament>

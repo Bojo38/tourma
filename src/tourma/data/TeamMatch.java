@@ -1059,9 +1059,9 @@ public class TeamMatch extends Match implements Serializable {
                     if ((includeCurrent) || ((!includeCurrent) && (om != tm))) {
                         value += getPointsByTeam((Team) opponent, om, true, true);
                     }
-                    if (om == tm) {
+                    /*if (om == tm) {
                         break;
-                    }
+                    }*/
                 }
             }
         }
@@ -1239,7 +1239,15 @@ public class TeamMatch extends Match implements Serializable {
                     break;
                 default:
                     if (rankingType > Parameters.C_MAX_RANKING) {
-                        value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                        if (rankingType<Parameters.C_MAX_RANKING+Tournament.getTournament().getParams().getCriteriaCount()*3)
+                        {
+                            value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                        }
+                        else
+                        {
+                            int f=rankingType-Parameters.C_MAX_RANKING-Tournament.getTournament().getParams().getCriteriaCount()*3-1;
+                            value+=getValue(Tournament.getTournament().getParams().getFormula(f),t);
+                        }
                     }
             }
         } else {
@@ -1372,7 +1380,13 @@ public class TeamMatch extends Match implements Serializable {
                     break;
                 default:
                     if (rankingType > Parameters.C_MAX_RANKING) {
-                        value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                        if (rankingType < Parameters.C_MAX_RANKING + 3 * Tournament.getTournament().getParams().getCriteriaCount()) {
+                            value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                        } else {
+                            int f = rankingType - 3 * Tournament.getTournament().getParams().getCriteriaCount() - Parameters.C_MAX_RANKING - 1;
+                            Formula formula = Tournament.getTournament().getParams().getFormula(f);
+                            value += getValue(formula, t);
+                        }
                     }
             }
         }
@@ -1417,6 +1431,23 @@ public class TeamMatch extends Match implements Serializable {
             for (int i = 0; i < this.getMatchCount(); i++) {
                 CoachMatch cm = getMatch(i);
                 value += cm.getValue(crit, subtype, cm.getCompetitor2());
+            }
+        }
+        return value;
+    }
+    
+    public int getValue(Formula  form, Competitor c) {
+        int value = 0;
+        if (c == mCompetitor1) {
+            for (int i = 0; i < this.getMatchCount(); i++) {
+                CoachMatch cm = getMatch(i);
+                value += cm.getValue(form, cm.getCompetitor1());
+            }
+        }
+        if (c == mCompetitor2) {
+            for (int i = 0; i < this.getMatchCount(); i++) {
+                CoachMatch cm = getMatch(i);
+                value += cm.getValue(form, cm.getCompetitor2());
             }
         }
         return value;
