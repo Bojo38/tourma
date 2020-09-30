@@ -19,6 +19,11 @@ and open the template in the editor.
         <inducement name="extra reroll" max="4" cost="100000" />
         <inducement name="local apothecary" max="1" cost="100000" />
         <inducement name="cards" max="8" cost="50000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
+        <inducement name="Galandril Silverwater" max="1" cost="50000" />
     </inducements>
     <playertypes>               
         <playerType>
