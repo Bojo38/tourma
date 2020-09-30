@@ -1156,6 +1156,10 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private void update() {
 
+        if (lrbversion==null)
+        {
+            lrbversion=LRB.E_Version.BB2016;
+        }
         switch (lrbversion) {
             case LRB1:
                 jcbLRB.setSelectedIndex(0);

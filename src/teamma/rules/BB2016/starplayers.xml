@@ -10,568 +10,8 @@ and open the template in the editor.
     xsi:noNamespaceSchemaLocation='roster.xsd'>
 
     <starplayer>
-        <name>Gretchen Wätcher 'The Blood Bowl Widow'</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Banshee</position>
-        <movement>7</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Disturbing Presence</skill>
-            <skill>Dodge</skill>
-            <skill>Foul Appearance</skill>
-            <skill>Jump Up</skill>
-            <skill>No Hand</skill>
-            <skill>Regeneration</skill>
-            <skill>Shadowing</skill>
-            <skill>Side Step</skill>
-        </skills>
-        <cost>280000</cost>
-        <team>VampireKey</team>
-        <team>NecromanticHorrorKey</team>
-        <team>ShamblingUndeadKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Throttlesnot 'The Impaler'</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Zombie Goblin</position>
-        <movement>6</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dirty Player</skill>
-            <skill>Dodge</skill>
-            <skill>Regeneration</skill>
-            <skill>Leap</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Stab</skill>
-            <skill>Stunty</skill>
-        </skills>
-        <cost>100000</cost>
-        <team>ShamblingUndeadKey</team>
-        <team>NecromanticHorrorKey</team>
-    </starplayer>
-    
-        <starplayer>
-        <name>'Rotten' Rick Bupkeis</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Zombie</position>
-        <movement>4</movement>
-        <strength>3</strength>
-        <agility>2</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dirty Player</skill>
-            <skill>Sneaky Git</skill>
-            <skill>Regeneration</skill>
-        </skills>
-        <cost>110000</cost>
-        <team>ShamblingUndeadKey</team>
-        <team>NecromanticHorrorKey</team>
-    </starplayer>
-    
-     <starplayer>
-        <name>Skrull Halfheight</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Skeletal Dwarf</position>
-        <movement>6</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Accurate</skill>
-            <skill>Nerves of Steel</skill>
-            <skill>Pass</skill>
-            <skill>Regeneration</skill>
-            <skill>Sure Hands</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>190000</cost>
-        <team>KhemriTombKingsKey</team>
-        <team>ShamblingUndeadKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Ivan 'The Animal' Deathshourd</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Wight</position>
-        <movement>6</movement>
-        <strength>4</strength>
-        <agility>2</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Disturbing Presence</skill>
-            <skill>Juggernaut</skill>
-            <skill>Regeneration</skill>
-            <skill>Strip Ball</skill>
-            <skill>Tackle</skill>
-        </skills>
-        <cost>230000</cost>
-        <team>KhemriTombKingsKey</team>
-        <team>ShamblingUndeadKey</team>
-        <team>NecromanticHorrorKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Bryce 'The Slice' Cambuel</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Looney</position>
-        <movement>5</movement>
-        <strength>3</strength>
-        <agility>2</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Chainsaw</skill>
-            <skill>Regeneration</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Stand Firm</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>130000</cost>
-         <team>KhemriTombKingsKey</team>
-        <team>ShamblingUndeadKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>G'Ral Blodschüker</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Ghoul</position>
-        <movement>7</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Catch</skill>
-            <skill>Dodge</skill>
-            <skill>Sure Feet</skill>
-            <skill>Wrestle</skill>
-        </skills>
-        <cost>160000</cost>
-        <team>VampireKey</team>
-        <team>NecromanticHorrorKey</team>
-        <team>ShamblingUndeadKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Frank'N'Stein</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Golem</position>
-        <movement>4</movement>
-        <strength>5</strength>
-        <agility>1</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Break Tackle</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Regeneration</skill>
-            <skill>Stand Firm</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>270000</cost>
-        <team>HumanKey</team>
-        <team>NecromanticHorrorKey</team>
-        <team>ShamblingUndeadKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Count Luthor Von Drakenborg</name>
-          <sources>
-            <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Vampire</position>
-        <movement>6</movement>
-        <strength>5</strength>
-        <agility>4</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Hypnotic Gaze</skill>
-            <skill>Block</skill>
-            <skill>Regeneration</skill>
-            <skill>Side Step</skill>
-        </skills>
-        <cost>390000</cost>
-        <team>ShamblingUndeadKey</team>
-        <team>NecromanticHorrorKey</team>
-        <team>VampireKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Ratmut III</name>
-        <sources>
-            <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Mummy</position>
-        <movement>5</movement>
-        <strength>6</strength>
-        <agility>1</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Break Tackle</skill>
-            <skill>Wrestle</skill>
-            <skill>Regeneration</skill>
-        </skills>
-        <cost>380000</cost>
-        <team>KhemriTombKingsKey</team>
-        <team>ShamblingUndeadKey</team>
-        <team>NecromanticHorrorKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Big Jobo Hairyfoor</name>
-                <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Blocker</position>
-        <movement>4</movement>
-        <strength>3</strength>
-        <agility>2</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dirty Player</skill>
-            <skill>Stand Firm</skill>
-            <skill>Stunty</skill>
-            <skill>Tackle</skill>
-            <skill>Wrestle</skill>
-        </skills>
-        <cost>120000</cost>
-        <team>OgreKey</team>
-        <team>HalflingKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Rumbelow Sheepskin</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>halfling</position>
-        <movement>6</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Horns</skill>
-            <skill>Juggernaut</skill>
-            <skill>No Hand</skill>
-            <skill>Tackle</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>170000</cost>
-        <team>HalflingKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Cindy Piewhistle</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>halfling</position>
-        <movement>5</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>6</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Accurate</skill>
-            <skill>Bombardier</skill>
-            <skill>Dodge</skill>
-            <skill>Stunty</skill>
-            <skill>Secret Weapon</skill>
-        </skills>
-        <cost>50000</cost>
-        <team>HalflingKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Neddley Verrüca</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>halfling</position>
-        <movement>5</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>6</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Stab</skill>
-            <skill>Stunty</skill>
-            <skill>Trademark Stilts</skill>
-        </skills>
-        <cost>70000</cost>
-        <team>HalflingKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Deeproot Strongbranch</name>
-        <sources>
-            <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Treeman</position>
-        <movement>2</movement>
-        <strength>7</strength>
-        <agility>1</agility>
-        <armor>10</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Stand Firm</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Block</skill>
-            <skill>Strong Arm</skill>
-            <skill>Thick Skull</skill>
-            <skill>Throw Team-Mate</skill>
-            <skill>Timm-ber!</skill>
-        </skills>
-        <cost>300000</cost>
-        <team>HalflingKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Puggy Baconbreath</name>
-        <sources>
-            <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Halfling</position>
-        <movement>5</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>6</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Dodge</skill>
-            <skill>Nerves of Steel</skill>
-            <skill>Stunty</skill>
-            <skill>Right Stuff</skill>
-        </skills>
-        <cost>140000</cost>
-        <team>HumanKey</team>
-        <team>HalflingKey</team>
-    </starplayer>
-    
-
-    <starplayer>
-        <name>Curnoth Darkwold</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Witch</position>
-        <movement>7</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Frenzy</skill>
-            <skill>Jump Up</skill>
-            <skill>Leap</skill>
-            <skill>Wrestle</skill>
-        </skills>
-        <cost>240000</cost>
-        <team>WoodElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Maple Highgrove</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Treeman</position>
-        <movement>3</movement>
-        <strength>5</strength>
-        <agility>1</agility>
-        <armor>10</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Grab</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Stand Firm</skill>
-            <skill>Tentacles</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>300000</cost>
-        <team>WoodElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Swiftvine Climmershard</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Fairy</position>
-        <movement>7</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>6</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Disturbing Presence</skill>
-            <skill>Fend</skill>
-            <skill>Side Step</skill>
-            <skill>Stab</skill>
-            <skill>Stunty</skill>
-        </skills>
-        <cost>130000</cost>
-        <team>WoodElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Gloriel Summerbloom</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Thrower</position>
-        <movement>7</movement>
-        <strength>2</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Accurate</skill>
-            <skill>Dodge</skill>
-            <skill>Pass</skill>
-            <skill>Side Step</skill>
-            <skill>Sure Hands</skill>
-        </skills>
-        <cost>160000</cost>
-        <team>WoodElfKey</team>
-    </starplayer>
-    
-     <starplayer>
-        <name>Zolcat The Zoat</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Blocker</position>
-        <movement>5</movement>
-        <strength>5</strength>
-        <agility>2</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Disturbing Presence</skill>
-            <skill>Juggernaut</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Prehensile Tail</skill>
-            <skill>Regeneration</skill>
-            <skill>Sure Feet</skill>
-        </skills>
-        <cost>280000</cost>
-        <team>LizardmenKey</team>
-        <team>AmazonKey</team>
-        <team>WoodElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Glotl Stop</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Blocker</position>
-        <movement>6</movement>
-        <strength>6</strength>
-        <agility>1</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Frenzy</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Piling On</skill>
-            <skill>Prehensile Tail</skill>
-            <skill>Thick Skull</skill>
-            <skill>Wild Animal</skill>
-        </skills>
-        <cost>360000</cost>
-        <team>LizardmenKey</team>
-        <team>AmazonKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Drull</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Skink</position>
-        <movement>8</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Side Step</skill>
-            <skill>Stab</skill>
-            <skill>Stunty</skill>
-        </skills>
-        <cost>190000</cost>
-        <team>LizardmenKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Dribl</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Skink</position>
-        <movement>8</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Side Step</skill>
-            <skill>Sneaky Git</skill>
-            <skill>Dirty Player</skill>
-            <skill>Stunty</skill>
-        </skills>
-        <cost>190000</cost>
-        <team>LizardmenKey</team>
-    </starplayer>
-    
-    <starplayer>
         <name>Anqi Panqi</name>
-         <sources>
+        <sources>
             <source>Spike</source>
         </sources>
         <position>Saurus</position>
@@ -587,768 +27,7 @@ and open the template in the editor.
         </skills>
         <cost>210000</cost>
         <team>LizardmenKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Willow Rosebark</name>
-         <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Dryad</position>
-        <movement>5</movement>
-        <strength>4</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dauntless</skill>
-            <skill>Side Step</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>150000</cost>
-        <team>AmazonKey</team>
-        <team>HalflingKey</team>
-        <team>WoodElfKey</team>
-        <team>BretonianKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Varag Ghoul-Chewer</name>
-        <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Blitzer</position>
-        <movement>6</movement>
-        <strength>4</strength>
-        <agility>3</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Jump Up</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>290000</cost>
-        <team>OrcKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Lucien Swift</name>
-         <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Blitzer</position>
-        <movement>7</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Tackle</skill>            
-            <skill>Mighty Blow</skill>
-        </skills>
-        <cost>390000</cost>
-        <team>ElfUnionKey</team>
-        <team>HighElfKey</team>
-        <team>WoodElfKey</team>
-    </starplayer>
-    <starplayer>
-        <name>Valen Swift *BB2016*</name>
-                 <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Thrower</position>
-        <movement>7</movement>
-        <strength>3</strength>
-        <agility>5</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Accurate</skill>
-            <skill>Loner</skill>
-            <skill>Nerves of Steel</skill>
-            <skill>Sure Hands</skill>
-            <skill>Pass</skill>
-            <skill>Safe Throw</skill>
-        </skills>
-        <cost>0</cost>
-        <team>ElfUnionKey</team>
-        <team>HighElfKey</team>
-        <team>WoodElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Scrappa Sorehead</name>
-         <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Pogo Stick</position>
-        <movement>7</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dirty Player</skill>
-            <skill>Dodge</skill>
-            <skill>Leap</skill>
-            <skill>Right Stuff</skill>
-            <skill>Sprint</skill>
-            <skill>Stunty</skill>
-            <skill>Very Long Legs</skill>
-            <skill>Sure Feet</skill>
-        </skills>
-        <cost>150000</cost>
-        <team>GoblinKey</team>
-        <team>OgreKey</team>
-        <team>OrcKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Ripper Bolgrot</name>
-        <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Troll</position>
-        <movement>4</movement>
-        <strength>6</strength>
-        <agility>1</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Throw Team-Mate</skill>
-            <skill>Grab</skill>
-            <skill>Regeneration</skill>
-        </skills>
-        <cost>270000</cost>
-        <team>GoblinKey</team>
-        <team>OrcKey</team>       
-    </starplayer>
-    
-    <starplayer>
-        <name>Prince Moranion</name>
-         <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Prince Dragon</position>
-        <movement>7</movement>
-        <strength>4</strength>
-        <agility>4</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Dauntless</skill>
-            <skill>Tackle</skill>
-            <skill>Wrestle</skill>
-        </skills>
-        <cost>230000</cost>
-        <team>ElfUnionKey</team>
-        <team>HighElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Mighty Zug</name>
-         <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Blocker</position>
-        <movement>4</movement>
-        <strength>5</strength>
-        <agility>2</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Mighty Blow</skill>
-        </skills>
-        <cost>260000</cost>
-        <team>HumanKey</team>
-        <team>BretonianKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Madcap Miggz</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Squig</position>
-        
-        <movement>6</movement>
-        <strength>4</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Break Tackle</skill>
-            <skill>Claws</skill>
-            <skill>Leap</skill>
-            <skill>Loner</skill>
-            <skill>No Hand</skill>
-            <skill>Very Long Legs</skill>
-            <skill>Wild Animal</skill>
-        </skills>
-        <cost>170000</cost>
-        <team>GoblinKey</team>
-        <team>UnderworldDenizenKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Kreek Rustgouger</name>
-         <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Skaven Blocker</position>
-        <movement>5</movement>
-        <strength>7</strength>
-        <agility>2</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Ball And Chain</skill>
-            <skill>Loner</skill>
-            <skill>Mighty Blow</skill>
-            <skill>No Hand</skill>
-            <skill>Prehensile Tail</skill>
-            <skill>Secret Weapon</skill>
-        </skills>
-        <cost>130000</cost>
-        <team>SkavenKey</team>
-        <team>UnderworldDenizenKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Karla Von Kill</name>
-         <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Human Blitzer</position>
-        <movement>6</movement>
-        <strength>4</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Block</skill>
-            <skill>Dauntless</skill>
-            <skill>Dodge</skill>
-            <skill>Jump Up</skill>
-            <skill>Loner</skill>
-        </skills>
-        <cost>220000</cost>
-        <name>AmazonKey</name>
-        <name>BretonianKey</name>
-        <team>HalflingKey</team>
-        <team>HumanKey</team>
-        <team>NorseKey</team>
-    </starplayer>
-    
-
-    <starplayer>
-        <name>Jordell Freshbreeze</name>
-        <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Wardancer</position>
-        <movement>8</movement>
-        <strength>3</strength>
-        <agility>5</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Dodge</skill>
-            <skill>Leap</skill>
-            <skill>Side Step</skill>
-            <skill>Diving Catch</skill>
-        </skills>
-        <cost>230000</cost>
-        <team>ElfUnionKey</team>
-        <team>WoodElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Helmut Wulf</name>
-        <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Lineman</position>
-        <movement>6</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Chainsaw</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Stand Firm</skill>
-        </skills>
-        <cost>110000</cost>
-        <team>AmazonKey</team>
-        <team>LizardmenKey</team>
-        <team>HumanKey</team>
-        <team>NorseKey</team>
-        <team>VampireKey</team>
         <team>SlannKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Hakflem Skuttlespike</name>
-        <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Gutter Runner</position>
-        <movement>9</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Extra Arms</skill>
-            <skill>Two Heads</skill>
-            <skill>Dodge</skill>
-            <skill>Prehensile Tail</skill>
-        </skills>
-        <cost>200000</cost>
-        <team>SkavenKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Grim Ironjaw</name>
-        <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Dragon Slayer</position>
-        <movement>5</movement>
-        <strength>4</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Dauntless</skill>
-            <skill>Frenzy</skill>
-            <skill>Multiple Block</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>220000</cost>
-        <team>DwarfKey</team>
-    </starplayer>
-    
-     <starplayer>
-        <name>Griff Oberwald</name>
-         <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Blitzer</position>
-        <movement>7</movement>
-        <strength>4</strength>
-        <agility>4</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Dodge</skill>
-            <skill>Fend</skill>
-            <skill>Sprint</skill>
-            <skill>Sure Feet</skill>
-        </skills>
-        <cost>320000</cost>
-        <team>HumanKey</team>
-        <team>BretonianKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Glart Smashrip</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Skaven Blocker</position>
-        <movement>5</movement>
-        <strength>4</strength>
-        <agility>2</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Claws</skill>
-            <skill>Juggernaut</skill>
-            <skill>Grab</skill>
-            <skill>Stand Firm</skill>
-        </skills>
-        <cost>190000</cost>
-        <team>SkavenKey</team>
-        <team>UnderworldDenizenKey</team>
-    </starplayer>
-    
-     <starplayer>
-        <name>Flint Churnblade</name>
-         <sources>
-            <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Troll Slayer</position>
-        <movement>5</movement>
-        <strength>3</strength>
-        <agility>2</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Chainsaw</skill>
-            <skill>Block</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>130000</cost>
-        <team>DwarfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Boomer Ezaiasson</name>
-        <sources>
-            <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Longbeard</position>
-        <movement>4</movement>
-        <strength>3</strength>
-        <agility>2</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Accurate</skill>
-            <skill>Block</skill>
-            <skill>Bombardier</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Loner</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>60000</cost>
-        <team>DwarfKey</team>
-        <team>NorseKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Bo Gallanté</name>
-        <sources>
-            <source>Spike</source>
-        </sources>
-        <position>High-elf catcher</position>
-        <movement>8</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Dodge</skill>
-            <skill>Loner</skill>
-            <skill>Side Step</skill>
-            <skill>Sure Feet</skill>
-            <skill>Sprint</skill>
-        </skills>
-        <cost>160000</cost>
-        <team>HighElfKey</team>
-    </starplayer>
-    
-     <starplayer>
-        <name>Grombrindal, The White Dwarf</name>
-        <sources>
-            <source>Special Event</source>
-        </sources>
-            
-        <position>Dwarf Blocker</position>
-        <movement>5</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Dauntless</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Stand Firm</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>0</cost>
-        <team>DwarfKey</team>
-        <team>HalflingKey</team>
-        <team>HumanKey</team>
-        <team>NorseKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>The Black Gobbo *Special Event*</name>
-                <sources>
-            <source>Special Event</source>
-        </sources>
-        <position>Bombardier</position>
-        <movement>6</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Disturbing Presence</skill>
-            <skill>Bombardier</skill>
-            <skill>Sneaky Git</skill>
-            <skill>Stab</skill>
-            <skill>Side Step</skill>
-            <skill>Stunty</skill>
-        </skills>
-        <cost>0</cost>
-        <team>ChaosRenegadesKey</team>
-        <team>GoblinKey</team>
-        <team>OrcKey</team>
-        <team>UnderworldDenizenKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Tolly Glocklinger</name>
-         <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Ball and Chain</position>
-        <movement>3</movement>
-        <strength>7</strength>
-        <agility>2</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Disturbing Presence</skill>
-            <skill>Foul Appearance</skill>
-            <skill>No Hand</skill>
-            <skill>Nurgle's Rot</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Stand Firm</skill>
-        </skills>
-        <cost>110000</cost>
-        <team>NurgleKey</team>
-    </starplayer>
-    
-        <starplayer>
-        <name>Bulla Shardhorn</name>
-         <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Pestigor</position>
-        <movement>6</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Extra Arms</skill>
-            <skill>Foul Appearance</skill>
-            <skill>Horns</skill>
-            <skill>Nurgle's Rot</skill>
-            <skill>Two Heads</skill>
-            <skill>Regeneration</skill>
-            <skill>Stab</skill>
-        </skills>
-        <cost>230000</cost>
-        <team>NurgleKey</team>
-    </starplayer>
-    
-    
-        <starplayer>
-        <name>Jeremiah Kool</name>
-                    <sources>
-            <source>Spike Golden age</source>
-        </sources>
-        <position>Starplayer</position>
-        <movement>8</movement>
-        <strength>3</strength>
-        <agility>5</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Dodge</skill>
-            <skill>Dump-Off</skill>
-            <skill>Diving Catch</skill>
-            <skill>Nerves of Steel</skill>
-            <skill>Kick-off Return</skill>
-            <skill>Pass</skill>
-            <skill>Side Step</skill>
-        </skills>
-        <cost>390000</cost>
-        <team>DarkElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Roxanna Darknails</name>
-                    <sources>
-            <source>Spike</source>
-            <source>CRP</source>
-        </sources>
-        <position>With Elf</position>
-        <movement>8</movement>
-        <strength>3</strength>
-        <agility>5</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Frenzy</skill>
-            <skill>Jump Up</skill>
-            <skill>Juggernaut</skill>
-            <skill>Leap</skill>
-        </skills>
-        <cost>250000</cost>
-        <team>DarkElfKey</team>
-        <team>AmazonKey</team>
-    </starplayer>
-    
-            <starplayer>
-        <name>Mordrix Hex</name>
-                <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Blitzer</position>
-        <movement>7</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Dauntless</skill>
-            <skill>Dodge</skill>
-            <skill>Fend</skill>
-            <skill>Frenzy</skill>
-            <skill>Mighty Blow</skill>
-        </skills>
-        <cost>230000</cost>
-        <team>DarkElfKey</team>
-    </starplayer>
-    
-        <starplayer>
-        <name>Kiroth Krakeneye</name>
-                <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Blitzer</position>
-        <movement>7</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Disturbing Presence</skill>
-            <skill>Foul Appearance</skill>
-            <skill>Tackle</skill>
-            <skill>Pass Block</skill>
-            <skill>Tentacles</skill>
-        </skills>
-        <cost>170000</cost>
-        <team>ElfUnionKey</team>
-        <team>DarkElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Hubris Rakarth</name>
-                <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Blitzer</position>
-        <movement>7</movement>
-        <strength>4</strength>
-        <agility>4</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Strip Ball</skill>
-            <skill>Jump Up</skill>
-            <skill>Block</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Dirty Player</skill>
-        </skills>
-        <cost>260000</cost>
-        <team>ElfUnionKey</team>
-        <team>DarkElfKey</team>
-    </starplayer>
-    
-     <starplayer>
-        <name>Horkon Heartripper</name>
-         <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Assassin</position>
-        <movement>7</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Multiple Block</skill>
-            <skill>Dodge</skill>
-            <skill>Stab</skill>
-            <skill>Shadowing</skill>
-            <skill>Leap</skill>
-        </skills>
-        <cost>210000</cost>
-        <team>DarkElfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Elijah Doom</name>
-         <sources>
-            <source>Spike</source>
-        </sources>
-        <position>Blocker</position>
-        <movement>6</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Fend</skill>
-            <skill>Guard</skill>
-            <skill>Stand Firm</skill>
-            <skill>Wrestle</skill>
-        </skills>
-        <cost>190000</cost>
-        <team>DarkElfKey</team>
-        <team>ElfUnionKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Eldril Sidewinder</name>
-         <sources>
-             <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Catcher</position>
-        <movement>8</movement>
-        <strength>3</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Pass Block</skill>
-            <skill>Dodge</skill>
-            <skill>Nerves of Steel</skill>
-            <skill>Catch</skill>
-            <skill>Hypnotic Gaze</skill>
-        </skills>
-        <cost>200000</cost>
-        <team>DarkElfKey</team>
-        <team>ElfUnionKey</team>
-        <team>HighElfKey</team>
-        <team>WoodElfKey</team>
     </starplayer>
     
     <starplayer>
@@ -1377,6 +56,773 @@ and open the template in the editor.
     </starplayer>
     
     <starplayer>
+        <name>Barik Farblast</name>
+        <sources>
+            <source>Spike</source>
+            <source>CRP</source>
+        </sources>
+        <position>Runner</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Hail Mary Pass</skill>
+            <skill>Pass</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Strong Arm</skill>
+            <skill>Sure Hands</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>60000</cost>
+        <team>DwarfKey</team>
+        <team>OldWorldAllianceKey</team>
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Big Jobo Hairyfoor</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Blocker</position>
+        <movement>4</movement>
+        <strength>3</strength>
+        <agility>2</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dirty Player</skill>
+            <skill>Stand Firm</skill>
+            <skill>Stunty</skill>
+            <skill>Tackle</skill>
+            <skill>Wrestle</skill>
+        </skills>
+        <cost>120000</cost>
+        <team>OgreKey</team>
+        <team>HalflingKey</team>
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Bilerot Vomitflesh</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Nurgle</position>
+        <movement>4</movement>
+        <strength>5</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dirty Player</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Foul Appearance</skill>
+        </skills>
+        <cost>180000</cost>
+        <name>ChaosChosenKey</name>
+        <team>NurgleKey</team>
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Bo Gallanté</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>High-elf catcher</position>
+        <movement>8</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Dodge</skill>
+            <skill>Loner</skill>
+            <skill>Side Step</skill>
+            <skill>Sure Feet</skill>
+            <skill>Sprint</skill>
+        </skills>
+        <cost>160000</cost>
+        <team>HighElfKey</team>
+        <team>BretonianKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Boomer Dribblesnot</name>
+        <sources>
+            <source>CRP</source>
+        </sources>
+        <position>Bombardier</position>
+        <movement>6</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Accurate</skill>
+            <skill>Bombardier</skill>
+            <skill>Dodge</skill>
+            <skill>Stunty</skill>
+            <skill>Right Stuff</skill>
+            <skill>Secret Weapon</skill>
+        </skills>
+        <cost>60000</cost>
+        <team>GoblinKey</team>
+        <team>OrcKey</team>
+        <team>OgreKey</team>
+        <team>ChaosRenegadesKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>SnotlingKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Boomer Ezaiasson</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Longbeard</position>
+        <movement>4</movement>
+        <strength>3</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Accurate</skill>
+            <skill>Block</skill>
+            <skill>Bombardier</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Loner</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>60000</cost>
+        <team>DwarfKey</team>
+        <team>NorseKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Bryce 'The Slice' Cambuel</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Looney</position>
+        <movement>5</movement>
+        <strength>3</strength>
+        <agility>2</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Chainsaw</skill>
+            <skill>Regeneration</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Stand Firm</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>130000</cost>
+        <team>KhemriTombKingsKey</team>
+        <team>ShamblingUndeadKey</team>
+    </starplayer>
+
+    <starplayer>
+        <name>Bulla Shardhorn</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Pestigor</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Extra Arms</skill>
+            <skill>Foul Appearance</skill>
+            <skill>Horns</skill>
+            <skill>Nurgle's Rot</skill>
+            <skill>Two Heads</skill>
+            <skill>Regeneration</skill>
+            <skill>Stab</skill>
+        </skills>
+        <cost>230000</cost>
+        <team>NurgleKey</team>
+    </starplayer>
+
+    <starplayer>
+        <name>Cindy Piewhistle</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>halfling</position>
+        <movement>5</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>6</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Accurate</skill>
+            <skill>Bombardier</skill>
+            <skill>Dodge</skill>
+            <skill>Stunty</skill>
+            <skill>Secret Weapon</skill>
+        </skills>
+        <cost>50000</cost>
+        <team>HalflingKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Count Luthor Von Drakenborg</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Vampire</position>
+        <movement>6</movement>
+        <strength>5</strength>
+        <agility>4</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Hypnotic Gaze</skill>
+            <skill>Block</skill>
+            <skill>Regeneration</skill>
+            <skill>Side Step</skill>
+        </skills>
+        <cost>390000</cost>
+        <team>ShamblingUndeadKey</team>
+        <team>NecromanticHorrorKey</team>
+        <team>VampireKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Curnoth Darkwold</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Witch</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Frenzy</skill>
+            <skill>Jump Up</skill>
+            <skill>Leap</skill>
+            <skill>Wrestle</skill>
+        </skills>
+        <cost>240000</cost>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Deeproot Strongbranch</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Treeman</position>
+        <movement>2</movement>
+        <strength>7</strength>
+        <agility>1</agility>
+        <armor>10</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Stand Firm</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Block</skill>
+            <skill>Strong Arm</skill>
+            <skill>Thick Skull</skill>
+            <skill>Throw Team-Mate</skill>
+            <skill>Timm-ber!</skill>
+        </skills>
+        <cost>300000</cost>
+        <team>HalflingKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Drull</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Skink</position>
+        <movement>8</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Side Step</skill>
+            <skill>Stab</skill>
+            <skill>Stunty</skill>
+        </skills>
+        <cost>190000</cost>
+        <pair_with>Dribl</pair_with>
+        <team>LizardmenKey</team>
+        <team>SlannKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Dribl</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Skink</position>
+        <movement>8</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Side Step</skill>
+            <skill>Sneaky Git</skill>
+            <skill>Dirty Player</skill>
+            <skill>Stunty</skill>
+        </skills>
+        <cost>0</cost>
+        <pair_with>Drull</pair_with>
+        <team>LizardmenKey</team>
+        <team>SlannKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Eldril Sidewinder</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Catcher</position>
+        <movement>8</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Pass Block</skill>
+            <skill>Dodge</skill>
+            <skill>Nerves of Steel</skill>
+            <skill>Catch</skill>
+            <skill>Hypnotic Gaze</skill>
+        </skills>
+        <cost>200000</cost>
+        <team>DarkElfKey</team>
+        <team>ElfUnionKey</team>
+        <team>HighElfKey</team>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Elijah Doom</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Blocker</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Fend</skill>
+            <skill>Guard</skill>
+            <skill>Stand Firm</skill>
+            <skill>Wrestle</skill>
+        </skills>
+        <cost>190000</cost>
+        <team>DarkElfKey</team>
+        <team>ElfUnionKey</team>
+    </starplayer>
+
+    <starplayer>
+        <name>Flint Churnblade</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Troll Slayer</position>
+        <movement>5</movement>
+        <strength>3</strength>
+        <agility>2</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Chainsaw</skill>
+            <skill>Block</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>130000</cost>
+        <team>DwarfKey</team>
+        <team>OldWorldAllianceKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Frank'N'Stein</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Golem</position>
+        <movement>4</movement>
+        <strength>5</strength>
+        <agility>1</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Break Tackle</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Regeneration</skill>
+            <skill>Stand Firm</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>270000</cost>
+        <team>HumanKey</team>
+        <team>NecromanticHorrorKey</team>
+        <team>ShamblingUndeadKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Fungus The Loon</name>
+        <sources>
+            <source>CRP</source>
+        </sources>
+        <position>Fanatic</position>
+        <movement>4</movement>
+        <strength>7</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Ball And Chain</skill>
+            <skill>No Hand</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Stunty</skill>
+        </skills>
+        <cost>80000</cost>
+        <team>GoblinKey</team>
+        <team>SnotlingKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Glart Smashrip</name>
+        <sources>
+            <source>Spike</source>
+            <source>CRP</source>
+        </sources>
+        <position>Skaven Blocker</position>
+        <movement>5</movement>
+        <strength>4</strength>
+        <agility>2</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Claws</skill>
+            <skill>Juggernaut</skill>
+            <skill>Grab</skill>
+            <skill>Stand Firm</skill>
+        </skills>
+        <cost>190000</cost>
+        <team>SkavenKey</team>
+        <team>UnderworldDenizenKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Gloriel Summerbloom</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Thrower</position>
+        <movement>7</movement>
+        <strength>2</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Accurate</skill>
+            <skill>Dodge</skill>
+            <skill>Pass</skill>
+            <skill>Side Step</skill>
+            <skill>Sure Hands</skill>
+        </skills>
+        <cost>160000</cost>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Glotl Stop</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Blocker</position>
+        <movement>6</movement>
+        <strength>6</strength>
+        <agility>1</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Frenzy</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Piling On</skill>
+            <skill>Prehensile Tail</skill>
+            <skill>Thick Skull</skill>
+            <skill>Wild Animal</skill>
+        </skills>
+        <cost>360000</cost>
+        <team>LizardmenKey</team>
+        <team>SlannKey</team>
+        <team>AmazonKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Gobbler Grimlich</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Catcher</position>
+        <movement>5</movement>
+        <strength>4</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Big Hand</skill>
+            <skill>Leap</skill>
+            <skill>Tentacles</skill>
+            <skill>Monstrous Mouth</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Regeneration</skill>
+            <skill>Very Long Legs</skill>
+        </skills>
+        <cost>230000</cost>
+        <name>ChaosChosenKey</name>
+        <team>ChaosRenegadesKey</team>
+        <team>UnderworldDenizenKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Grak</name>
+        <sources>
+            <source>BB2016</source>
+        </sources>
+        <position>Ogre</position>
+        <movement>5</movement>
+        <strength>5</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Thick Skull</skill>
+            <skill>Kick Team-Mate</skill>
+            <skill>Bone Head</skill>
+        </skills>
+        <cost>300000</cost>
+        <pair_with>Crumbleberry</pair_with>
+        <name>AmazonKey</name>
+        <name>BretonianKey</name>
+        <name>ChaosChosenKey</name>
+        <team>ChaosRenegadesKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>DarkElfKey</team>
+        <team>DwarfKey</team>
+        <team>ElfUnionKey</team>
+        <team>GoblinKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>HumanKey</team>
+        <team>KhemriTombKingsKey</team>
+        <team>KhornesDaemonsKey</team>
+        <team>LizardmenKey</team>
+        <team>NecromanticHorrorKey</team>
+        <team>NorseKey</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SkavenKey</team>
+        <team>SlannKey</team>
+        <team>ShamblingUndeadKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>VampireKey</team>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Crumbleberry</name>
+        <sources>
+            <source>BB2016</source>
+        </sources>
+        <position>Halfling catcher</position>
+        <movement>5</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>6</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Stunty</skill>
+            <skill>Right Stuff</skill>
+            <skill>Sure Hands</skill>
+        </skills>
+        <cost>0</cost>
+        <pair_with>Grak</pair_with>
+        <name>AmazonKey</name>
+        <name>BretonianKey</name>
+        <name>ChaosChosenKey</name>
+        <team>ChaosRenegadesKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>DarkElfKey</team>
+        <team>DwarfKey</team>
+        <team>ElfUnionKey</team>
+        <team>GoblinKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>HumanKey</team>
+        <team>KhemriTombKingsKey</team>
+        <team>KhornesDaemonsKey</team>
+        <team>LizardmenKey</team>
+        <team>NecromanticHorrorKey</team>
+        <team>NorseKey</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SkavenKey</team>
+        <team>SlannKey</team>
+        <team>ShamblingUndeadKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>VampireKey</team>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>G'Ral Blodschüker</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Ghoul</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Catch</skill>
+            <skill>Dodge</skill>
+            <skill>Sure Feet</skill>
+            <skill>Wrestle</skill>
+        </skills>
+        <cost>160000</cost>
+        <team>VampireKey</team>
+        <team>NecromanticHorrorKey</team>
+        <team>ShamblingUndeadKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Grashnak Blackhoof</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Minotaur</position>
+        <movement>6</movement>
+        <strength>6</strength>
+        <agility>2</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Horns</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Thick Skull</skill>
+            <skill>Frenzy</skill>
+        </skills>
+        <cost>310000</cost>
+        <team>ChaosChosenKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>NurgleKey</team>
+        <team>KhornesDaemonsKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Gretchen Wätcher 'The Blood Bowl Widow'</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Banshee</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Dodge</skill>
+            <skill>Foul Appearance</skill>
+            <skill>Jump Up</skill>
+            <skill>No Hand</skill>
+            <skill>Regeneration</skill>
+            <skill>Shadowing</skill>
+            <skill>Side Step</skill>
+        </skills>
+        <cost>280000</cost>
+        <team>VampireKey</team>
+        <team>NecromanticHorrorKey</team>
+        <team>ShamblingUndeadKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Griff Oberwald</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Blitzer</position>
+        <movement>7</movement>
+        <strength>4</strength>
+        <agility>4</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Dodge</skill>
+            <skill>Fend</skill>
+            <skill>Sprint</skill>
+            <skill>Sure Feet</skill>
+        </skills>
+        <cost>320000</cost>
+        <team>HumanKey</team>
+        <team>BretonianKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Grim Ironjaw</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Dragon Slayer</position>
+        <movement>5</movement>
+        <strength>4</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Dauntless</skill>
+            <skill>Frenzy</skill>
+            <skill>Multiple Block</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>220000</cost>
+        <team>DwarfKey</team>
+        <team>OldWorldAllianceKey</team>
+    </starplayer>
+    
+    <starplayer>
         <name>Guffle Pusmaw</name>
         <sources>
             <source>Spike</source>
@@ -1400,9 +846,436 @@ and open the template in the editor.
     </starplayer>
     
     <starplayer>
-        <name>Morg'N'Torg</name>
+        <name>Hakflem Skuttlespike</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Gutter Runner</position>
+        <movement>9</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Extra Arms</skill>
+            <skill>Two Heads</skill>
+            <skill>Dodge</skill>
+            <skill>Prehensile Tail</skill>
+        </skills>
+        <cost>200000</cost>
+        <team>SkavenKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Headsplitter</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Rat Ogre</position>
+        <movement>6</movement>
+        <strength>6</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Frenzy</skill>
+            <skill>Prehensile Tail</skill>
+            <skill>Mighty Blow</skill>
+        </skills>
+        <cost>340000</cost>
+        <team>SkavenKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Helmut Wulf</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Lineman</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Chainsaw</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Stand Firm</skill>
+        </skills>
+        <cost>110000</cost>
+        <team>AmazonKey</team>
+        <team>LizardmenKey</team>
+        <team>HumanKey</team>
+        <team>NorseKey</team>
+        <team>VampireKey</team>
+        <team>SlannKey</team>
+        <team>OldWorldAllianceKey</team>
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Horkon Heartripper</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Assassin</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Multiple Block</skill>
+            <skill>Dodge</skill>
+            <skill>Stab</skill>
+            <skill>Shadowing</skill>
+            <skill>Leap</skill>
+        </skills>
+        <cost>210000</cost>
+        <team>DarkElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Hthark the Unstoppable</name>
          <sources>
-             <source>CRP</source>
+            <source>CRP</source>
+        </sources>
+        <position>Bull Centaur</position>
+        <movement>6</movement>
+        <strength>5</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Thick Skull</skill>
+            <skill>Sure Feet</skill>
+            <skill>Break Tackle</skill>
+            <skill>Sprint</skill>
+            <skill>Juggernaut</skill>
+        </skills>
+        <cost>330000</cost>
+        <team>ChaosDwarfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Hubris Rakarth</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Blitzer</position>
+        <movement>7</movement>
+        <strength>4</strength>
+        <agility>4</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Strip Ball</skill>
+            <skill>Jump Up</skill>
+            <skill>Block</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Dirty Player</skill>
+        </skills>
+        <cost>260000</cost>
+        <team>ElfUnionKey</team>
+        <team>DarkElfKey</team>
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Ivan 'The Animal' Deathshourd</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Wight</position>
+        <movement>6</movement>
+        <strength>4</strength>
+        <agility>2</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Juggernaut</skill>
+            <skill>Regeneration</skill>
+            <skill>Strip Ball</skill>
+            <skill>Tackle</skill>
+        </skills>
+        <cost>230000</cost>
+        <team>KhemriTombKingsKey</team>
+        <team>ShamblingUndeadKey</team>
+        <team>NecromanticHorrorKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Jordell Freshbreeze</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Wardancer</position>
+        <movement>8</movement>
+        <strength>3</strength>
+        <agility>5</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Dodge</skill>
+            <skill>Leap</skill>
+            <skill>Side Step</skill>
+            <skill>Diving Catch</skill>
+        </skills>
+        <cost>230000</cost>
+        <team>ElfUnionKey</team>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Karla Von Kill</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Human Blitzer</position>
+        <movement>6</movement>
+        <strength>4</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Block</skill>
+            <skill>Dauntless</skill>
+            <skill>Dodge</skill>
+            <skill>Jump Up</skill>
+            <skill>Loner</skill>
+        </skills>
+        <cost>220000</cost>
+        <name>AmazonKey</name>
+        <name>BretonianKey</name>
+        <team>HalflingKey</team>
+        <team>HumanKey</team>
+        <team>NorseKey</team>
+        <team>OldWorldAllianceKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Kiroth Krakeneye</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Blitzer</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Foul Appearance</skill>
+            <skill>Tackle</skill>
+            <skill>Pass Block</skill>
+            <skill>Tentacles</skill>
+        </skills>
+        <cost>170000</cost>
+        <team>ElfUnionKey</team>
+        <team>DarkElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Kreek Rustgouger</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Skaven Blocker</position>
+        <movement>5</movement>
+        <strength>7</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Ball And Chain</skill>
+            <skill>Loner</skill>
+            <skill>Mighty Blow</skill>
+            <skill>No Hand</skill>
+            <skill>Prehensile Tail</skill>
+            <skill>Secret Weapon</skill>
+        </skills>
+        <cost>130000</cost>
+        <team>SkavenKey</team>
+        <team>UnderworldDenizenKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Lewdgrip Whiparm </name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Thrower</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Pass</skill>
+            <skill>Strong Arm</skill>
+            <skill>Sure Hands</skill>
+            <skill>Tentacles</skill>
+        </skills>
+        <cost>160000</cost>
+        <team>ChaosChosenKey</team>
+        <team>ChaosRenegadesKey</team>
+        <team>NurgleKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Lord Borak The Despoiler</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Chaos Lord</position>
+        <movement>5</movement>
+        <strength>5</strength>
+        <agility>3</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Dirty Player</skill>
+        </skills>
+        <cost>300000</cost>
+        <team>ChaosChosenKey</team>
+        <team>NurgleKey</team>
+        <team>KhornesDaemonsKey</team>
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Max Spleenripper</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Chaos Warrior</position>
+        <movement>5</movement>
+        <strength>4</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Chainsaw</skill>
+            <skill>Secret Weapon</skill>
+        </skills>
+        <cost>130000</cost>
+        <team>ChaosChosenKey</team>
+        <team>NurgleKey</team>
+        <team>KhornesDaemonsKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Madcap Miggz</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Squig</position>
+        
+        <movement>6</movement>
+        <strength>4</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Break Tackle</skill>
+            <skill>Claws</skill>
+            <skill>Leap</skill>
+            <skill>Loner</skill>
+            <skill>No Hand</skill>
+            <skill>Very Long Legs</skill>
+            <skill>Wild Animal</skill>
+        </skills>
+        <cost>170000</cost>
+        <team>GoblinKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>SnotlingKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Maple Highgrove</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Treeman</position>
+        <movement>3</movement>
+        <strength>5</strength>
+        <agility>1</agility>
+        <armor>10</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Grab</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Stand Firm</skill>
+            <skill>Tentacles</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>300000</cost>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Mighty Zug</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Blocker</position>
+        <movement>4</movement>
+        <strength>5</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Mighty Blow</skill>
+        </skills>
+        <cost>260000</cost>
+        <team>HumanKey</team>
+        <team>BretonianKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Mordrix Hex</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Blitzer</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Dauntless</skill>
+            <skill>Dodge</skill>
+            <skill>Fend</skill>
+            <skill>Frenzy</skill>
+            <skill>Mighty Blow</skill>
+        </skills>
+        <cost>230000</cost>
+        <team>DarkElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Morg'N'Torg</name>
+        <sources>
+            <source>CRP</source>
             <source>Spike</source>
         </sources>
         <position>Superstar</position>
@@ -1441,32 +1314,290 @@ and open the template in the editor.
         <team>WoodElfKey</team>
         <team>KhornesDaemonsKey</team>
         <team>BretonianKey</team>
+        <team>SnotlingKey</team>
+        <team>OldWorldAllianceKey</team>
     </starplayer>
     
     <starplayer>
-        <name>Gobbler Grimlich</name>
+        <name>Neddley Verrüca</name>
         <sources>
             <source>Spike</source>
         </sources>
-        <position>Catcher</position>
+        <position>halfling</position>
         <movement>5</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>6</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Stab</skill>
+            <skill>Stunty</skill>
+            <skill>Trademark Stilts</skill>
+        </skills>
+        <cost>70000</cost>
+        <team>HalflingKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Nobbla Blackwart</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Goblin</position>
+        <movement>6</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Dodge</skill>
+            <skill>Chainsaw</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Stunty</skill>
+        </skills>
+        <cost>130000</cost>
+        <team>GoblinKey</team>
+        <team>OgreKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>SnotlingKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Prince Moranion</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Prince Dragon</position>
+        <movement>7</movement>
         <strength>4</strength>
+        <agility>4</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Dauntless</skill>
+            <skill>Tackle</skill>
+            <skill>Wrestle</skill>
+        </skills>
+        <cost>230000</cost>
+        <team>ElfUnionKey</team>
+        <team>HighElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>'Rotten' Rick Bupkeis</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Zombie</position>
+        <movement>4</movement>
+        <strength>3</strength>
         <agility>2</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dirty Player</skill>
+            <skill>Sneaky Git</skill>
+            <skill>Regeneration</skill>
+        </skills>
+        <cost>110000</cost>
+        <team>ShamblingUndeadKey</team>
+        <team>NecromanticHorrorKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Puggy Baconbreath</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Halfling</position>
+        <movement>5</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>6</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Dodge</skill>
+            <skill>Nerves of Steel</skill>
+            <skill>Stunty</skill>
+            <skill>Right Stuff</skill>
+        </skills>
+        <cost>140000</cost>
+        <team>HumanKey</team>
+        <team>HalflingKey</team>
+        <team>OldWorldAllianceKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Ratmut III</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Mummy</position>
+        <movement>5</movement>
+        <strength>6</strength>
+        <agility>1</agility>
         <armor>9</armor>
         <skills>
             <skill>Loner</skill>
-            <skill>Big Hand</skill>
-            <skill>Leap</skill>
-            <skill>Tentacles</skill>
-            <skill>Monstrous Mouth</skill>
-            <skill>Disturbing Presence</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Break Tackle</skill>
+            <skill>Wrestle</skill>
             <skill>Regeneration</skill>
-            <skill>Very Long Legs</skill>
         </skills>
-        <cost>230000</cost>
-        <name>ChaosChosenKey</name>
-        <team>ChaosRenegadesKey</team>
-        <team>UnderworldDenizenKey</team>
+        <cost>380000</cost>
+        <team>KhemriTombKingsKey</team>
+        <team>ShamblingUndeadKey</team>
+        <team>NecromanticHorrorKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Rasta Tailspike</name>
+        <sources>
+            <source>Bugman's</source>
+        </sources>
+        <position>Skaven</position>
+        <movement>8</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Extra Arms</skill>
+            <skill>Catch</skill>
+        </skills>
+        <cost>110000</cost>
+        <team>SkavenKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Rashnak Backstab</name>
+        <sources>
+            <source>CRP</source>
+        </sources>
+        <position>Assassin</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Side Step</skill>
+            <skill>Stab</skill>
+            <skill>Sneaky Git</skill>
+        </skills>
+        <cost>200000</cost>
+        <team>ChaosDwarfKey</team>
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Ripper Bolgrot</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Troll</position>
+        <movement>4</movement>
+        <strength>6</strength>
+        <agility>1</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Throw Team-Mate</skill>
+            <skill>Grab</skill>
+            <skill>Regeneration</skill>
+        </skills>
+        <cost>270000</cost>
+        <team>GoblinKey</team>
+        <team>OrcKey</team>      
+        <team>SnotlingKey</team>       
+    </starplayer>
+    
+    <starplayer>
+        <name>Roxanna Darknails</name>
+        <sources>
+            <source>Spike</source>
+            <source>CRP</source>
+        </sources>
+        <position>With Elf</position>
+        <movement>8</movement>
+        <strength>3</strength>
+        <agility>5</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Frenzy</skill>
+            <skill>Jump Up</skill>
+            <skill>Juggernaut</skill>
+            <skill>Leap</skill>
+        </skills>
+        <cost>250000</cost>
+        <team>DarkElfKey</team>
+        <team>AmazonKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Rumbelow Sheepskin</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>halfling</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Horns</skill>
+            <skill>Juggernaut</skill>
+            <skill>No Hand</skill>
+            <skill>Tackle</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>170000</cost>
+        <team>HalflingKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Scrappa Sorehead</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Pogo Stick</position>
+        <movement>7</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dirty Player</skill>
+            <skill>Dodge</skill>
+            <skill>Leap</skill>
+            <skill>Right Stuff</skill>
+            <skill>Sprint</skill>
+            <skill>Stunty</skill>
+            <skill>Very Long Legs</skill>
+            <skill>Sure Feet</skill>
+        </skills>
+        <cost>150000</cost>
+        <team>GoblinKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SnotlingKey</team>
     </starplayer>
     
     <starplayer>
@@ -1491,6 +1622,213 @@ and open the template in the editor.
         <name>ChaosChosenKey</name>        
         <name>KhornesDaemonsKey</name>        
         <team>NorseKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Skitter Stab-Stab</name>
+        <sources>
+            <source>CRP</source>
+        </sources>
+        <position>Assassin</position>
+        <movement>9</movement>
+        <strength>2</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Stab</skill>
+            <skill>Prehensile Tail</skill>
+            <skill>Shadowing</skill>
+        </skills>
+        <cost>160000</cost>
+        <team>SkavenKey</team>
+        <team>UnderworldDenizenKey</team>
+    </starplayer>
+    
+     <starplayer>
+        <name>Skrull Halfheight</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Skeletal Dwarf</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Accurate</skill>
+            <skill>Nerves of Steel</skill>
+            <skill>Pass</skill>
+            <skill>Regeneration</skill>
+            <skill>Sure Hands</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>190000</cost>
+        <team>KhemriTombKingsKey</team>
+        <team>ShamblingUndeadKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Swiftvine Climmershard</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Fairy</position>
+        <movement>7</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>6</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Fend</skill>
+            <skill>Side Step</skill>
+            <skill>Stab</skill>
+            <skill>Stunty</skill>
+        </skills>
+        <cost>130000</cost>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Lucien Swift</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Blitzer</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Tackle</skill>            
+            <skill>Mighty Blow</skill>
+        </skills>
+        <cost>390000</cost>
+        <pair_with>Valen Swift</pair_with>
+        <team>ElfUnionKey</team>
+        <team>HighElfKey</team>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Valen Swift</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Thrower</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>5</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Accurate</skill>
+            <skill>Loner</skill>
+            <skill>Nerves of Steel</skill>
+            <skill>Sure Hands</skill>
+            <skill>Pass</skill>
+            <skill>Safe Throw</skill>
+        </skills>
+        <cost>0</cost>
+        <pair_with>Lucien Swift</pair_with>
+        <team>ElfUnionKey</team>
+        <team>HighElfKey</team>
+        <team>WoodElfKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Tolly Glocklinger</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Ball and Chain</position>
+        <movement>3</movement>
+        <strength>7</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Foul Appearance</skill>
+            <skill>No Hand</skill>
+            <skill>Nurgle's Rot</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Stand Firm</skill>
+        </skills>
+        <cost>110000</cost>
+        <team>NurgleKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Throttlesnot 'The Impaler'</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Zombie Goblin</position>
+        <movement>6</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dirty Player</skill>
+            <skill>Dodge</skill>
+            <skill>Regeneration</skill>
+            <skill>Leap</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Stab</skill>
+            <skill>Stunty</skill>
+        </skills>
+        <cost>100000</cost>
+        <team>ShamblingUndeadKey</team>
+        <team>NecromanticHorrorKey</team>
+    </starplayer>
+ 
+   <starplayer>
+        <name>Ugroth Bolgrot</name>
+        <sources>
+            <source>CRP</source>
+        </sources>
+        <position>Lineman</position>
+        <movement>5</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Chainsaw</skill>
+            <skill>Secret Weapon</skill>
+        </skills>
+        <cost>100000</cost>
+        <team>OrcKey</team>
+        <team>ChaosRenegadesKey</team>
+        <team>SnotlingKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Varag Ghoul-Chewer</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Blitzer</position>
+        <movement>6</movement>
+        <strength>4</strength>
+        <agility>3</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Jump Up</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>290000</cost>
+        <team>OrcKey</team>
     </starplayer>
     
     <starplayer>
@@ -1519,128 +1857,276 @@ and open the template in the editor.
     </starplayer>
     
     <starplayer>
-        <name>Bilerot Vomitflesh</name>
+        <name>Wilhelm Chaney</name>
          <sources>
-            <source>Spike</source>
+            <source>CRP</source>
         </sources>
-        <position>Nurgle</position>
-        <movement>4</movement>
-        <strength>5</strength>
-        <agility>2</agility>
-        <armor>9</armor>
+        <position>Werewolf</position>
+        <movement>8</movement>
+        <strength>4</strength>
+        <agility>3</agility>
+        <armor>8</armor>
         <skills>
             <skill>Loner</skill>
-            <skill>Dirty Player</skill>
-            <skill>Disturbing Presence</skill>
-            <skill>Foul Appearance</skill>
+            <skill>Catch</skill>
+            <skill>Claws</skill>
+            <skill>Frenzy</skill>
+            <skill>Wrestle</skill>
+            <skill>Regeneration</skill>
         </skills>
-        <cost>180000</cost>
-        <name>ChaosChosenKey</name>
-        <team>NurgleKey</team>
+        <cost>240000</cost>
+        <team>NecromanticHorrorKey</team>
+        <team>NorseKey</team>
+        <team>VampireKey</team>
     </starplayer>
     
     <starplayer>
-        <name>Max Spleenripper</name>
-         <sources>
+        <name>Willow Rosebark</name>
+        <sources>
             <source>CRP</source>
             <source>Spike</source>
         </sources>
-        <position>Chaos Warrior</position>
+        <position>Dryad</position>
         <movement>5</movement>
         <strength>4</strength>
         <agility>3</agility>
         <armor>8</armor>
         <skills>
             <skill>Loner</skill>
-            <skill>Chainsaw</skill>
-            <skill>Secret Weapon</skill>
+            <skill>Dauntless</skill>
+            <skill>Side Step</skill>
+            <skill>Thick Skull</skill>
         </skills>
-        <cost>130000</cost>
-        <team>ChaosChosenKey</team>
-        <team>NurgleKey</team>
-        <team>KhornesDaemonsKey</team>
+        <cost>150000</cost>
+        <team>AmazonKey</team>
+        <team>HalflingKey</team>
+        <team>WoodElfKey</team>
+        <team>BretonianKey</team>
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Zolcat The Zoat</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Blocker</position>
+        <movement>5</movement>
+        <strength>5</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Juggernaut</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Prehensile Tail</skill>
+            <skill>Regeneration</skill>
+            <skill>Sure Feet</skill>
+        </skills>
+        <cost>280000</cost>
+        <team>LizardmenKey</team>
+        <team>AmazonKey</team>
+        <team>WoodElfKey</team>
     </starplayer>
     
     <starplayer>
-        <name>Lord Borak The Despoiler</name>
-        <sources>
+        <name>Zzharg Madeye</name>
+         <sources>
             <source>CRP</source>
-            <source>Spike</source>
         </sources>
-        <position>Chaos Lord</position>
-        <movement>5</movement>
-        <strength>5</strength>
+        <position>Chaos Dwarf</position>
+        <movement>4</movement>
+        <strength>4</strength>
         <agility>3</agility>
         <armor>9</armor>
         <skills>
             <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Dirty Player</skill>
-        </skills>
-        <cost>300000</cost>
-        <team>ChaosChosenKey</team>
-        <team>NurgleKey</team>
-        <team>KhornesDaemonsKey</team>
-    </starplayer>
-    
-        <starplayer>
-        <name>Grashnak Blackhoof *CRP* </name>
-        <sources>
-            <source>CRP</source>
-            <source>Spike</source>
-        </sources>
-        <position>Minotaur</position>
-        <movement>6</movement>
-        <strength>6</strength>
-        <agility>2</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Horns</skill>
-            <skill>Mighty Blow</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Strong Arm</skill>
             <skill>Thick Skull</skill>
-            <skill>Frenzy</skill>
+            <skill>Sure Hands</skill>
+            <skill>Hail Mary Pass</skill>
+            <skill>Pass</skill>
+            <skill>Tackle</skill> 
         </skills>
-        <cost>310000</cost>
-        <team>ChaosChosenKey</team>
+        <cost>60000</cost>
+        <team>ChaosRenegadesKey</team>
         <team>ChaosDwarfKey</team>
-        <team>NurgleKey</team>
         <team>KhornesDaemonsKey</team>
     </starplayer>
+
+   <!-- Optionnal Starplayers --> 
     
-         <starplayer>
-        <name>Lewdgrip Whiparm </name>
+    <starplayer>
+        <name>Grombrindal, The White Dwarf</name>
         <sources>
-            <source>CRP</source>
-            <source>Spike</source>
+            <source>Special Event</source>
         </sources>
-        <position>Thrower</position>
-        <movement>6</movement>
+            
+        <position>Dwarf Blocker</position>
+        <movement>5</movement>
         <strength>3</strength>
         <agility>3</agility>
         <armor>9</armor>
         <skills>
             <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Pass</skill>
-            <skill>Strong Arm</skill>
-            <skill>Sure Hands</skill>
-            <skill>Tentacles</skill>
+            <skill>Block</skill>
+            <skill>Dauntless</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Stand Firm</skill>
+            <skill>Thick Skull</skill>
         </skills>
-        <cost>160000</cost>
-        <team>ChaosChosenKey</team>
-        <team>ChaosRenegadesKey</team>
-        <team>NurgleKey</team>
+        <cost>0</cost>
+        <team>DwarfKey</team>
+        <team>HalflingKey</team>
+        <team>HumanKey</team>
+        <team>NorseKey</team>
     </starplayer>
-      
-         
-    
-    
-    
     
     <starplayer>
-        <name>Bertha Bigfist *CRP*</name>
+        <name>The Black Gobbo *Special Event*</name>
+        <sources>
+            <source>Special Event</source>
+        </sources>
+        <position>Bombardier</position>
+        <movement>6</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Bombardier</skill>
+            <skill>Sneaky Git</skill>
+            <skill>Stab</skill>
+            <skill>Side Step</skill>
+            <skill>Stunty</skill>
+        </skills>
+        <cost>0</cost>
+        <team>ChaosRenegadesKey</team>
+        <team>GoblinKey</team>
+        <team>OrcKey</team>
+        <team>UnderworldDenizenKey</team>
+    </starplayer>
+    
+    
+     <!-- Golden Era --> 
+
+    <starplayer>
+        <name>Bob Bifford</name>
+        <sources>
+            <source>Spike Golden age</source>
+        </sources>
+        <position>Ogre</position>
+        <movement>5</movement>
+        <strength>6</strength>
+        <agility>2</agility>
+        <armor>10</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Break Tackle</skill>
+            <skill>Juggernaut</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Multiple Block</skill>
+            <skill>Throw Team-Mate</skill>
+            <skill>Thick Skull</skill>
+        </skills>
+        <cost>380000</cost>
+        <team>AmazonKey</team>
+        <team>ChaosChosenKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>ChaosRenegadesKey</team>
+        <team>DarkElfKey</team>
+        <team>DwarfKey</team>
+        <team>ElfUnionKey</team>
+        <team>GoblinKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>HumanKey</team>
+        <team>LizardmenKey</team>
+        <team>NorseKey</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SkavenKey</team>
+        <team>SlannKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>VampireKey</team>
+        <team>WoodElfKey</team>
+        <team>KhornesDaemonsKey</team>
+        <team>BretonianKey</team>
+        <team>SnotlingKey</team>
+        <team>OldWorldAllianceKey</team>
+        <team>KhemriTombKingsKey</team>
+        <team>ShamblingUndeadKey</team>
+        <team>NecromanticHorrorKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Captain Colander</name>
+        <sources>
+            <source>Spike Golden age</source>
+        </sources>
+        <position>Halfling</position>
+        <movement>6</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Catch</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Dodge</skill>
+            <skill>Fend</skill>
+            <skill>Jump Up</skill>
+            <skill>Loner</skill>
+            <skill>Regeneration</skill>
+            <skill>Right Stuff</skill>
+            <skill>Side Step</skill>
+            <skill>Stunty</skill>
+        </skills>
+        <cost>100000</cost>
+        
+        <team>HalflingKey</team>
+       
+    </starplayer>
+    
+    <starplayer>
+        <name>Jeremiah Kool</name>
+        <sources>
+            <source>Spike Golden age</source>
+        </sources>
+        <position>Runner</position>
+        <movement>8</movement>
+        <strength>3</strength>
+        <agility>5</agility>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Block</skill>
+            <skill>Dodge</skill>
+            <skill>Dump-Off</skill>
+            <skill>Diving Catch</skill>
+            <skill>Nerves of Steel</skill>
+            <skill>Kick-off Return</skill>
+            <skill>Pass</skill>
+            <skill>Side Step</skill>
+        </skills>
+        <cost>390000</cost>
+        <team>DarkElfKey</team>
+    </starplayer>
+    
+    
+    <!-- Legacy -->
+  
+    <starplayer>
+        <name>Bertha Bigfist</name>
+         <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Ogre</position>
         <movement>6</movement>
         <strength>5</strength>
@@ -1661,70 +2147,82 @@ and open the template in the editor.
     </starplayer>
     
     <starplayer>
-        <name>Barik Farblast *CRP/BB2016*</name>
-        <position>Runner</position>
+        <name>Brick Far'th</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
+        <position>Ogre</position>
+        <movement>5</movement>
+        <strength>5</strength>
+        <agility>2</agility>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Bone Head</skill>
+            <skill>Mighty Blow</skill>
+            <skill>Thick Skull</skill>
+            <skill>Strong Arm</skill>
+            <skill>Throw Team-Mate</skill>
+            <skill>Nerves of Steel</skill>
+        </skills>
+        <cost>290000</cost>
+        <pair_with>Grotty</pair_with>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+    </starplayer>
+    <starplayer>
+        <name>Grotty</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
+        <position>Goblin</position>
+        <movement>6</movement>
+        <strength>2</strength>
+        <agility>4</agility>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner</skill>
+            <skill>Dodge</skill>
+            <skill>Stunty</skill>
+            <skill>Right Stuff</skill>
+        </skills>
+        <cost>0</cost>
+        <pair_with>Brick Far'th</pair_with>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Crazy Igor</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
+        <position>Thrall</position>
         <movement>6</movement>
         <strength>3</strength>
         <agility>3</agility>
         <armor>8</armor>
         <skills>
             <skill>Loner</skill>
-            <skill>Hail Mary Pass</skill>
-            <skill>Pass</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Strong Arm</skill>
-            <skill>Sure Hands</skill>
+            <skill>Dauntless</skill>
+            <skill>Regeneration</skill>
             <skill>Thick Skull</skill>
         </skills>
-        <cost>60000</cost>
-        <team>DwarfKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Boomer Dribblesnot *CRP*</name>
-        <position>Bombardier</position>
-        <movement>6</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Accurate</skill>
-            <skill>Bombardier</skill>
-            <skill>Dodge</skill>
-            <skill>Stunty</skill>
-            <skill>Right Stuff</skill>
-            <skill>Secret Weapon</skill>
-        </skills>
-        <cost>60000</cost>
-        <team>GoblinKey</team>
-        <team>OrcKey</team>
-        <team>OgreKey</team>
+        <cost>130000</cost>
+        <team>VampireKey</team>
         <team>ChaosRenegadesKey</team>
-        <team>UnderworldDenizenKey</team>
+        <team>KhornesDaemonsKey</team>
     </starplayer>
     
     <starplayer>
-        <name>Headsplitter *CRP*</name>
-        <position>Rat Ogre</position>
-        <movement>6</movement>
-        <strength>6</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Frenzy</skill>
-            <skill>Prehensile Tail</skill>
-            <skill>Mighty Blow</skill>
-        </skills>
-        <cost>340000</cost>
-        <team>SkavenKey</team>
-    </starplayer>
-    
-    
-    
-    <starplayer>
-        <name>Dolfar Longstride *CRP*</name>
+        <name>Dolfar Longstride</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Thrower</position>
         <movement>7</movement>
         <strength>3</strength>
@@ -1748,7 +2246,11 @@ and open the template in the editor.
     
     
     <starplayer>
-        <name>Fezglish *CRP* </name>
+        <name>Fezglish</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Fanatic</position>
         <movement>4</movement>
         <strength>7</strength>
@@ -1767,27 +2269,14 @@ and open the template in the editor.
         <team>UnderworldDenizenKey</team>
     </starplayer>
     
-    <starplayer>
-        <name>Fungus The Loon *CRP*</name>
-        <position>Fanatic</position>
-        <movement>4</movement>
-        <strength>7</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Ball And Chain</skill>
-            <skill>No Hand</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Stunty</skill>
-        </skills>
-        <cost>80000</cost>
-        <team>GoblinKey</team>
-    </starplayer>
+    
     
     <starplayer>
-        <name>Glart Smarship Jr *CRP* </name>
+        <name>Glart Smarship Jr</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Blitzer</position>
         <movement>7</movement>
         <strength>4</strength>
@@ -1806,7 +2295,11 @@ and open the template in the editor.
     
   
     <starplayer>
-        <name>Hack Enslash *CRP*</name>
+        <name>Hack Enslash</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Skeleton</position>
         <movement>6</movement>
         <strength>3</strength>
@@ -1826,11 +2319,12 @@ and open the template in the editor.
     </starplayer>
     
     
-    
-    
-    
     <starplayer>
-        <name>Hemlock *CRP*</name>
+        <name>Hemlock</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Assassin</position>
         <movement>8</movement>
         <strength>2</strength>
@@ -1850,32 +2344,13 @@ and open the template in the editor.
         <team>SlannKey</team>
     </starplayer>
     
-   
     
     <starplayer>
-        <name>Hthark the Unstoppable *CRP* </name>
-        <position>Bull Centaur</position>
-        <movement>6</movement>
-        <strength>5</strength>
-        <agility>2</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Thick Skull</skill>
-            <skill>Sure Feet</skill>
-            <skill>Break Tackle</skill>
-            <skill>Sprint</skill>
-            <skill>Juggernaut</skill>
-        </skills>
-        <cost>330000</cost>
-        <team>ChaosDwarfKey</team>
-    </starplayer>
-    
-    
-    
-    <starplayer>
-        <name>Icepelt Hammerblow *CRP*</name>
+        <name>Icepelt Hammerblow</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Yetee</position>
         <movement>5</movement>
         <strength>6</strength>
@@ -1893,27 +2368,14 @@ and open the template in the editor.
         <team>NorseKey</team>
     </starplayer>
     
-    <starplayer>
-        <name>Crazy Igor *CRP*</name>
-        <position>Thrall</position>
-        <movement>6</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dauntless</skill>
-            <skill>Regeneration</skill>
-            <skill>Thick Skull</skill>
-        </skills>
-        <cost>130000</cost>
-        <team>VampireKey</team>
-        <team>ChaosRenegadesKey</team>
-        <team>KhornesDaemonsKey</team>
-    </starplayer>
+    
     
     <starplayer>
-        <name>Humerus Carpa *CRP*</name>
+        <name>Humerus Carpal</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Catcher</position>
         <movement>7</movement>
         <strength>2</strength>
@@ -1931,7 +2393,11 @@ and open the template in the editor.
     </starplayer>
     
     <starplayer>
-        <name>Ithaca Benoin *CRP*</name>
+        <name>Ithaca Benoin</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Runner</position>
         <movement>7</movement>
         <strength>3</strength>
@@ -1952,7 +2418,11 @@ and open the template in the editor.
     </starplayer>
     
     <starplayer>
-        <name>J Earlice *CRP*</name>
+        <name>J Earlice</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Ghoul</position>
         <movement>8</movement>
         <strength>3</strength>
@@ -1970,14 +2440,13 @@ and open the template in the editor.
         <team>ShamblingUndeadKey</team>
         <team>VampireKey</team>
     </starplayer>
-    
-    
-    
-    
-    
-    
+  
     <starplayer>
-        <name>Boutaïdo *CRP*</name>
+        <name>Lottabottol</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Blitzer</position>
         <movement>8</movement>
         <strength>3</strength>
@@ -1997,71 +2466,13 @@ and open the template in the editor.
         <team>LizardmenKey</team>
         <team>SlannKey</team>
     </starplayer>
-    
-    
-    
+       
     <starplayer>
-        <name>Nobbla Blackwart *CRP*</name>
-        <position>Goblin</position>
-        <movement>6</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Block</skill>
-            <skill>Dodge</skill>
-            <skill>Chainsaw</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Stunty</skill>
-        </skills>
-        <cost>130000</cost>
-        <team>GoblinKey</team>
-        <team>OgreKey</team>
-        <team>ChaosDwarfKey</team>
-        <team>UnderworldDenizenKey</team>
-    </starplayer>
-    <starplayer>
-        <name>Brick Far'th *CRP*</name>
-        <position>Ogre</position>
-        <movement>5</movement>
-        <strength>5</strength>
-        <agility>2</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Bone Head</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Thick Skull</skill>
-            <skill>Strong Arm</skill>
-            <skill>Throw Team-Mate</skill>
-            <skill>Nerves of Steel</skill>
-        </skills>
-        <cost>290000</cost>
-        <team>NurgleKey</team>
-        <team>OgreKey</team>
-    </starplayer>
-    <starplayer>
-        <name>Grotty *CRP*</name>
-        <position>Goblin</position>
-        <movement>6</movement>
-        <strength>2</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Stunty</skill>
-            <skill>Right Stuff</skill>
-        </skills>
-        <cost>0</cost>
-        <team>NurgleKey</team>
-        <team>OgreKey</team>
-    </starplayer>
-    
-    
-    <starplayer>
-        <name>Quetzal Leap *CRP*</name>
+        <name>Quetzal Leap</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Catcher</position>
         <movement>8</movement>
         <strength>2</strength>
@@ -2084,26 +2495,11 @@ and open the template in the editor.
     
     
     <starplayer>
-        <name>Rashnak Backstab *CRP*</name>
-        <position>Assassin</position>
-        <movement>7</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Side Step</skill>
-            <skill>Stab</skill>
-            <skill>Sneaky Git</skill>
-        </skills>
-        <cost>200000</cost>
-        <team>ChaosDwarfKey</team>
-    </starplayer>
-    
-    
-    <starplayer>
-        <name>Setekh *CRP*</name>
+        <name>Setekh</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Blitz-Ra</position>
         <movement>6</movement>
         <strength>4</strength>
@@ -2122,26 +2518,13 @@ and open the template in the editor.
         <team>ShamblingUndeadKey</team>
         <team>NecromanticHorrorKey</team>
     </starplayer>
+    
     <starplayer>
-        <name>Skitter Stab-Stab *CRP*</name>
-        <position>Assassin</position>
-        <movement>9</movement>
-        <strength>2</strength>
-        <agility>4</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Stab</skill>
-            <skill>Prehensile Tail</skill>
-            <skill>Shadowing</skill>
-        </skills>
-        <cost>160000</cost>
-        <team>SkavenKey</team>
-        <team>UnderworldDenizenKey</team>
-    </starplayer>
-    <starplayer>
-        <name>Silibili *CRP*</name>
+        <name>Silibili</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Saurus</position>
         <movement>7</movement>
         <strength>4</strength>
@@ -2159,7 +2542,11 @@ and open the template in the editor.
         <team>SlannKey</team>
     </starplayer>
     <starplayer>
-        <name>Sinnedbad *CRP*</name>
+        <name>Sinnedbad</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Assassin</position>
         <movement>6</movement>
         <strength>3</strength>
@@ -2180,7 +2567,11 @@ and open the template in the editor.
         <team>KhemriTombKingsKey</team>
     </starplayer>
     <starplayer>
-        <name>Soaren Hightower *CRP*</name>
+        <name>Soaren Hightower</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Thrower</position>
         <movement>6</movement>
         <strength>3</strength>
@@ -2199,46 +2590,13 @@ and open the template in the editor.
         <team>HighElfKey</team>
     </starplayer>
    
-    <starplayer>
-        <name>Ugroth Bolgrot *CRP*</name>
-        <position>Lineman</position>
-        <movement>5</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Chainsaw</skill>
-            <skill>Secret Weapon</skill>
-        </skills>
-        <cost>100000</cost>
-        <team>OrcKey</team>
-        <team>ChaosRenegadesKey</team>
-    </starplayer>
     
     <starplayer>
-        <name>Wilhelm Chaney *CRP*</name>
-        <position>Werewolf</position>
-        <movement>8</movement>
-        <strength>4</strength>
-        <agility>3</agility>
-        <armor>8</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Catch</skill>
-            <skill>Claws</skill>
-            <skill>Frenzy</skill>
-            <skill>Wrestle</skill>
-            <skill>Regeneration</skill>
-        </skills>
-        <cost>240000</cost>
-        <team>NecromanticHorrorKey</team>
-        <team>NorseKey</team>
-        <team>VampireKey</team>
-    </starplayer>
-    
-    <starplayer>
-        <name>Zara The Slayer *CRP*</name>
+        <name>Zara The Slayer</name>
+        <sources>
+            <source>Legacy</source>
+            <source>CRP</source>
+        </sources>
         <position>Assassin</position>
         <movement>6</movement>
         <strength>4</strength>
@@ -2264,130 +2622,8 @@ and open the template in the editor.
         <team>BretonianKey</team>
     </starplayer>
     
-    <starplayer>
-        <name>Zzharg Madeye *CRP*</name>
-        <position>Chaos Dwarf</position>
-        <movement>4</movement>
-        <strength>4</strength>
-        <agility>3</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Secret Weapon</skill>
-            <skill>Strong Arm</skill>
-            <skill>Thick Skull</skill>
-            <skill>Sure Hands</skill>
-            <skill>Hail Mary Pass</skill>
-            <skill>Pass</skill>
-            <skill>Tackle</skill> 
-        </skills>
-        <cost>60000</cost>
-        <team>ChaosRenegadesKey</team>
-        <team>ChaosDwarfKey</team>
-        <team>KhornesDaemonsKey</team>
-    </starplayer>
-   
-    <starplayer>
-        <name>Grak *BB2016*</name>
-        <position>Ogre</position>
-        <movement>5</movement>
-        <strength>5</strength>
-        <agility>2</agility>
-        <armor>9</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Mighty Blow</skill>
-            <skill>Thick Skull</skill>
-            <skill>Kick Team-Mate</skill>
-            <skill>Bone Head</skill>
-        </skills>
-        <cost>300000</cost>
-        <name>AmazonKey</name>
-        <name>BretonianKey</name>
-        <name>ChaosChosenKey</name>
-        <team>ChaosRenegadesKey</team>
-        <team>ChaosDwarfKey</team>
-        <team>DarkElfKey</team>
-        <team>DwarfKey</team>
-        <team>ElfUnionKey</team>
-        <team>GoblinKey</team>
-        <team>HalflingKey</team>
-        <team>HighElfKey</team>
-        <team>HumanKey</team>
-        <team>KhemriTombKingsKey</team>
-        <team>KhornesDaemonsKey</team>
-        <team>LizardmenKey</team>
-        <team>NecromanticHorrorKey</team>
-        <team>NorseKey</team>
-        <team>NurgleKey</team>
-        <team>OgreKey</team>
-        <team>OrcKey</team>
-        <team>SkavenKey</team>
-        <team>SlannKey</team>
-        <team>ShamblingUndeadKey</team>
-        <team>UnderworldDenizenKey</team>
-        <team>VampireKey</team>
-        <team>WoodElfKey</team>
-    </starplayer>
-    <starplayer>
-        <name>Crumbleberry *BB2016*</name>
-        <position>Halfling catcher</position>
-        <movement>5</movement>
-        <strength>2</strength>
-        <agility>3</agility>
-        <armor>6</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Dodge</skill>
-            <skill>Stunty</skill>
-            <skill>Right Stuff</skill>
-            <skill>Sure Hands</skill>
-        </skills>
-        <cost>0</cost>
-        <name>AmazonKey</name>
-        <name>BretonianKey</name>
-        <name>ChaosChosenKey</name>
-        <team>ChaosRenegadesKey</team>
-        <team>ChaosDwarfKey</team>
-        <team>DarkElfKey</team>
-        <team>DwarfKey</team>
-        <team>ElfUnionKey</team>
-        <team>GoblinKey</team>
-        <team>HalflingKey</team>
-        <team>HighElfKey</team>
-        <team>HumanKey</team>
-        <team>KhemriTombKingsKey</team>
-        <team>KhornesDaemonsKey</team>
-        <team>LizardmenKey</team>
-        <team>NecromanticHorrorKey</team>
-        <team>NorseKey</team>
-        <team>NurgleKey</team>
-        <team>OgreKey</team>
-        <team>OrcKey</team>
-        <team>SkavenKey</team>
-        <team>SlannKey</team>
-        <team>ShamblingUndeadKey</team>
-        <team>UnderworldDenizenKey</team>
-        <team>VampireKey</team>
-        <team>WoodElfKey</team>
-    </starplayer>
     
-    
-    <starplayer>
-        <name>Rasta Tailspike *Bugman's*</name>
-        <position>Skaven</position>
-        <movement>8</movement>
-        <strength>3</strength>
-        <agility>3</agility>
-        <armor>7</armor>
-        <skills>
-            <skill>Loner</skill>
-            <skill>Extra Arms</skill>
-            <skill>Catch</skill>
-        </skills>
-        <cost>110000</cost>
-        <team>SkavenKey</team>
-    </starplayer>
+ 
     
     
 </StarPlayerList>

@@ -130,7 +130,7 @@ public class RosterType implements IXMLExport, Serializable {
         mRostersNames.add(translate("SlannKey"));
         mRostersNames.add(translate("VampireKey"));
         mRostersNames.add(translate("BretonianKey"));
-        mRostersNames.add(translate("SnotlingsKey"));
+        mRostersNames.add(translate("SnotlingKey"));
         mRostersNames.add(translate("OldWorldAllianceKey"));
 
         mRosterTypes.clear();
@@ -160,7 +160,7 @@ public class RosterType implements IXMLExport, Serializable {
         mRosterTypes.put(translate("SkavenKey"), new RosterType(translate("SkavenKey")));
         mRosterTypes.put(translate("SlannKey"), new RosterType(translate("SlannKey")));
         mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));
-        mRosterTypes.put(translate("SnotlingsKey"), new RosterType(translate("SnotlingsKey")));
+        mRosterTypes.put(translate("SnotlingKey"), new RosterType(translate("SnotlingKey")));
         mRosterTypes.put(translate("OldWorldAllianceKey"), new RosterType(translate("OldWorldAllianceKey")));
 
     }
@@ -289,7 +289,7 @@ public class RosterType implements IXMLExport, Serializable {
                 result = translate("BretonianKey");
                 break;
             case "Snotlings":
-                result = translate("SnotlingsKey");
+                result = translate("SnotlingKey");
                 break;
             case "Alliance du Vieux Monde":
                 result = translate("OldWorldAllianceKey");
@@ -489,7 +489,7 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("KhorneKey")) || source.equals(translate("KhornesDaemonsKey"))) {
             result = translate("Khorne");
         }
-        if (source.equals(translate("SnotlingsKey"))) {
+        if (source.equals(translate("SnotlingKey"))) {
             result = translate("Snotlings");
         }
         if (source.equals(translate("OldWorldAllianceKey"))) {
