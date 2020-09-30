@@ -4313,6 +4313,7 @@
 		<field name="CS_Skill" class="teamma.data.LRB" />
 		<field name="CS_Reroll" class="teamma.data.LRB" />
 		<field name="CS_Apothecary" class="teamma.data.LRB" />
+		<field name="CS_MaxBigGuys" class="teamma.data.LRB" />
 		<field name="CS_Chef" class="teamma.data.LRB" />
 		<field name="CS_Igor" class="teamma.data.LRB" />
 		<field name="CS_Bribe" class="teamma.data.LRB" />
@@ -4325,6 +4326,7 @@
 		<field name="CS_Agility" class="teamma.data.LRB" />
 		<field name="CS_Armor" class="teamma.data.LRB" />
 		<field name="CS_Cost" class="teamma.data.LRB" />
+		<field name="CS_Pair_With" class="teamma.data.LRB" />
 		<field name="CS_Max" class="teamma.data.LRB" />
 		<field name="CS_Single" class="teamma.data.LRB" />
 		<field name="CS_SkillType" class="teamma.data.LRB" />
@@ -4336,27 +4338,11 @@
 		<field name="CS_Starplayer" class="teamma.data.LRB" />
 		<method signature="boolean isChef_enabled()" class="teamma.data.LRB" />
 		<method signature="teamma.data.LRB$E_Version getVersion()" class="teamma.data.LRB" />
-		<method signature="void setChef_enabled(boolean)" class="teamma.data.LRB" />
-		<method signature="boolean isMercenaries_enabled()" class="teamma.data.LRB" />
-		<method signature="void setMercenaries_enabled(boolean)" class="teamma.data.LRB" />
-		<method signature="boolean isBabes_enabled()" class="teamma.data.LRB" />
-		<method signature="void setBabes_enabled(boolean)" class="teamma.data.LRB" />
-		<method signature="boolean isWizard_enabled()" class="teamma.data.LRB" />
-		<method signature="void setWizard_enabled(boolean)" class="teamma.data.LRB" />
-		<method signature="boolean isReroll_enabled()" class="teamma.data.LRB" />
-		<method signature="void setReroll_enabled(boolean)" class="teamma.data.LRB" />
-		<method signature="boolean isLocal_apothecaries_enabled()" class="teamma.data.LRB" />
-		<method signature="void setLocal_apothecaries_enabled(boolean)" class="teamma.data.LRB" />
-		<method signature="boolean isIgor_enabled()" class="teamma.data.LRB" />
-		<method signature="void setIgor_enabled(boolean)" class="teamma.data.LRB" />
-		<method signature="boolean isCards_enabled()" class="teamma.data.LRB" />
-		<method signature="void setCards_enabled(boolean)" class="teamma.data.LRB" />
 		<method signature="boolean isStarplayers_enabled()" class="teamma.data.LRB" />
 		<method signature="void setStarplayers_enabled(boolean)" class="teamma.data.LRB" />
 		<method signature="boolean isBribes_enabled()" class="teamma.data.LRB" />
 		<method signature="void setBribes_enabled(boolean)" class="teamma.data.LRB" />
-		<method signature="boolean isCheck_nb_big_guys()" class="teamma.data.LRB" />
-		<method signature="void setCheck_nb_big_guys(boolean)" class="teamma.data.LRB" />
+		<method signature="void setCheckNbBigGuys(boolean)" class="teamma.data.LRB" />
 		<method signature="java.lang.String getName()" class="teamma.data.LRB" />
 		<method signature="void unloadLRB()" class="teamma.data.LRB" />
 		<field name="CS_Plus1Movement" class="teamma.data.Player" />
@@ -4395,63 +4381,13 @@
 		<field name="CS_Position" class="teamma.data.Roster" />
 		<field name="CS_Skill" class="teamma.data.Roster" />
 		<field name="CS_Color" class="teamma.data.Roster" />
-		<field name="_bribe_cost" class="teamma.data.RosterType" />
-		<field name="_chef_cost" class="teamma.data.RosterType" />
-		<field name="_igor" class="teamma.data.RosterType" />
-		<field name="_chaos_wizard" class="teamma.data.RosterType" />
-		<field name="Kari_Coldstell" class="teamma.data.RosterType" />
-		<field name="Fink_Da_Fixer" class="teamma.data.RosterType" />
-		<field name="Papa_Skullbones" class="teamma.data.RosterType" />
-		<field name="Galandril_Silverwater" class="teamma.data.RosterType" />
-		<field name="Krot_Shockwhisker" class="teamma.data.RosterType" />
-		<method signature="int getExtraRerollCost()" class="teamma.data.RosterType" />
-		<method signature="void setExtraRerollCost(int)" class="teamma.data.RosterType" />
-		<method signature="int getBabe_cost()" class="teamma.data.RosterType" />
-		<method signature="void setBabe_cost(int)" class="teamma.data.RosterType" />
-		<method signature="int getWizard_cost()" class="teamma.data.RosterType" />
-		<method signature="void setWizard_cost(int)" class="teamma.data.RosterType" />
-		<method signature="int getLocal_apo_cost()" class="teamma.data.RosterType" />
-		<method signature="void setLocal_apo_cost(int)" class="teamma.data.RosterType" />
-		<method signature="int getIgor_cost()" class="teamma.data.RosterType" />
-		<method signature="void setIgor_cost(int)" class="teamma.data.RosterType" />
+		<method signature="void removeChampion(int)" class="teamma.data.Roster" />
 		<method signature="void setAssistant_cost(int)" class="teamma.data.RosterType" />
 		<method signature="void setFan_factor_cost(int)" class="teamma.data.RosterType" />
 		<method signature="void setCheerleader_cost(int)" class="teamma.data.RosterType" />
 		<method signature="void setApothecary_cost(int)" class="teamma.data.RosterType" />
-		<method signature="boolean isChaos_wizard()" class="teamma.data.RosterType" />
-		<method signature="void setChaos_wizard(boolean)" class="teamma.data.RosterType" />
-		<method signature="int getChaos_wizard_cost()" class="teamma.data.RosterType" />
-		<method signature="void setChaos_wizard_cost(int)" class="teamma.data.RosterType" />
-		<method signature="int getHoratio_X_Schottenheim_cost()" class="teamma.data.RosterType" />
-		<method signature="void setHoratio_X_Schottenheim_cost(int)" class="teamma.data.RosterType" />
-		<method signature="boolean isKari_Coldstell()" class="teamma.data.RosterType" />
-		<method signature="void setKari_Coldstell(boolean)" class="teamma.data.RosterType" />
-		<method signature="int getKari_Coldstell_cost()" class="teamma.data.RosterType" />
-		<method signature="void setKari_Coldstell_cost(int)" class="teamma.data.RosterType" />
-		<method signature="boolean isFink_Da_Fixer()" class="teamma.data.RosterType" />
-		<method signature="void setFink_Da_Fixer(boolean)" class="teamma.data.RosterType" />
-		<method signature="int getFink_Da_Fixer_cost()" class="teamma.data.RosterType" />
-		<method signature="void setFink_Da_Fixer_cost(int)" class="teamma.data.RosterType" />
-		<method signature="boolean isPapa_Skullbones()" class="teamma.data.RosterType" />
-		<method signature="void setPapa_Skullbones(boolean)" class="teamma.data.RosterType" />
-		<method signature="int getPapa_Skullbones_cost()" class="teamma.data.RosterType" />
-		<method signature="void setPapa_Skullbones_cost(int)" class="teamma.data.RosterType" />
-		<method signature="boolean isGalandril_Silverwater()" class="teamma.data.RosterType" />
-		<method signature="void setGalandril_Silverwater(boolean)" class="teamma.data.RosterType" />
-		<method signature="int getGalandril_Silverwater_cost()" class="teamma.data.RosterType" />
-		<method signature="void setGalandril_Silverwater_cost(int)" class="teamma.data.RosterType" />
-		<method signature="boolean isKrot_Shockwhisker()" class="teamma.data.RosterType" />
-		<method signature="void setKrot_Shockwhisker(boolean)" class="teamma.data.RosterType" />
-		<method signature="int getKrot_Shockwhisker_cost()" class="teamma.data.RosterType" />
-		<method signature="void setKrot_Shockwhisker_cost(int)" class="teamma.data.RosterType" />
 		<method signature="teamma.data.StarPlayer getStarPlayer(java.lang.String,boolean)" class="teamma.data.RosterType" />
 		<method signature="void setName(java.lang.String)" class="teamma.data.RosterType" />
-		<method signature="int getBribe_cost()" class="teamma.data.RosterType" />
-		<method signature="void setBribe_cost(int)" class="teamma.data.RosterType" />
-		<method signature="int getChef_cost()" class="teamma.data.RosterType" />
-		<method signature="void setChef_cost(int)" class="teamma.data.RosterType" />
-		<method signature="boolean isIgor()" class="teamma.data.RosterType" />
-		<method signature="void setIgor(boolean)" class="teamma.data.RosterType" />
 		<method signature="void clearAvailableStarPlayerType()" class="teamma.data.RosterType" />
 		<field name="_C_SINGLE_COST" class="teamma.data.Skill" />
 		<field name="_C_DOUBLE_COST" class="teamma.data.Skill" />
@@ -4518,6 +4454,7 @@
 		<field name="CS_CoachChoice" class="teamma.views.JdgRoster" />
 		<field name="CS_SelectSkillToRemove" class="teamma.views.JdgRoster" />
 		<field name="CS_Skill" class="teamma.views.JdgRoster" />
+		<field name="CS_Big_Guy" class="teamma.views.JdgRoster" />
 		<field name="CS_RosterTypeNotSelectedClieckOnRoster" class="teamma.views.JdgRoster" />
 		<field name="CS_ChooseKindOfplayer" class="teamma.views.JdgRoster" />
 		<field name="CS_PlayerChoice" class="teamma.views.JdgRoster" />
@@ -5256,9 +5193,9 @@
 	</removed-code>
 	<removed-resources>
 	</removed-resources>
-<!-- 	shrinked C:\Perso\tourma\dist\TourMa.jar BY 60,05 %. -->
-<!-- 	size before: 16828 KB, size after: 6722 KB. -->
-<!-- 	removed 857 classes, 2531 methods, 1836 fields, 0 resources. -->
+<!-- 	shrinked C:\Perso\tourma\dist\TourMa.jar BY 60,10 %. -->
+<!-- 	size before: 16833 KB, size after: 6716 KB. -->
+<!-- 	removed 857 classes, 2474 methods, 1830 fields, 0 resources. -->
 <!-- 	1009 classes remaining of 1866 total. -->
 </inOutPair>
 </yshrink>
