@@ -24,7 +24,7 @@ and open the template in the editor.
         <inducement name="weather mage" max="1" cost="30000" />
         <inducement name="halfling hot pot" max="1" cost="60000" />
         <inducement name="riotous rookies" max="1" cost="100000" />
-        <inducement name="bottles of heady breaw" max="3" cost="40000" />
+        <inducement name="bottles of heady brew" max="3" cost="40000" />
         <inducement name="firebelly" max="1" cost="150000" />
         <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
         <inducement name="Fink da Fixer" max="1" cost="50000" />
