@@ -8,11 +8,11 @@ and open the template in the editor.
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
 
-    <name>AmazonKey</name>
-    <reroll>50000</reroll>
+    <name>OldWorldAllianceKey</name>
+    <reroll>70000</reroll>
     <apothecary>true</apothecary>
     
-    <inducements>
+   <inducements>
         <inducement name="chef" max="1" cost="300000" />
         <inducement name="bribe the ref" max="3" cost="100000" />
         <inducement name="Bloodweisers' babes" max="2" cost="50000" />
@@ -20,68 +20,46 @@ and open the template in the editor.
         <inducement name="extra reroll" max="4" cost="100000" />
         <inducement name="local apothecary" max="1" cost="100000" />
         <inducement name="cards" max="8" cost="50000" />
-        <inducement name="Additional assistants" max="3" cost="20000" />
-        <inducement name="Additional cheerleaders" max="3" cost="20000" />
-        <inducement name="Weather wizard" max="1" cost="30000" />
-        <inducement name="Slann mage priest" max="1" cost="150000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
         <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
         <inducement name="Kari Coldsteal" max="1" cost="50000" />
-        <inducement name="Joseph Bugman" max="1" cost="70000" />
-
-       <!-- <chef max="1">300000</chef>
-        <bribe max="3">100000</bribe>
-        <babes max="2">50000</babes>
-        <wizard max="1">150000</wizard>
-        <reroll>100000</reroll>
-        <apothecary max="1">100000</apothecary>
-
-        <cards>yes</cards>
-        <starplayers>yes</starplayers>   
-        
-        <add_assistant>20000</add_assistant>
-        <add_cheerleaders>20000</add_cheerleaders>
-        <weather_wizard>30000</weather_wizard>
-
-        <slann_mage_priest>150000</slann_mage_priest>
-        
-        <horacio_x_schottenheim>80000</horacio_x_schottenheim>
-        <kari_coldstell>50000</kari_coldstell>
-        <joseph_bugman>70000</joseph_bugman>    -->   
-
-    </inducements>    
+    </inducements>   
     
     <playertypes>               
         <playerType>
-            <limit>4</limit>
-            <position>Amazon Blitzer</position>
+            <limit>12</limit>
+            <position>Human Lineman</position>
             <movement>6</movement>
             <strength>3</strength>
             <agility>3</agility>
-            <armor>7</armor>
+            <armor>8</armor>
             <skills>
-                <skill>Dodge</skill>
-                <skill>Block</skill>
+                <skill>Animosity</skill>>
             </skills>
-            <cost>90000</cost>
+            <cost>80000</cost>
             <single>
                 <skillType>General</skillType>
-                <skillType>Strength</skillType>                
+                            
             </single>
             <double>
+                <skillType>Strength</skillType>    
                 <skillType>Agility</skillType>
                 <skillType>Pass</skillType>
             </double>
         </playerType>
         <playerType>
-            <limit>2</limit>
-            <position>Amazon Thrower</position>
+            <limit>1</limit>
+            <position>Human Thrower</position>
             <movement>6</movement>
             <strength>3</strength>
             <agility>3</agility>
-            <armor>7</armor>
+            <armor>8</armor>
             <skills>
-                <skill>Dodge</skill>
+                <skill>Sure Hands</skill>
                 <skill>Pass</skill>
+                <skill>Animosity</skill>
             </skills>
             <cost>70000</cost>
             <single>
@@ -94,15 +72,16 @@ and open the template in the editor.
             </double>
         </playerType>
         <playerType>
-            <limit>2</limit>
-            <position>Amazon Catcher</position>
-            <movement>6</movement>
-            <strength>3</strength>
+            <limit>1</limit>
+            <position>Human Catcher</position>
+            <movement>8</movement>
+            <strength>2</strength>
             <agility>3</agility>
             <armor>7</armor>
             <skills>
                 <skill>Dodge</skill>
                 <skill>Catch</skill>
+                <skill>Animosity</skill>
             </skills>
             <cost>70000</cost>
             <single>
@@ -115,21 +94,160 @@ and open the template in the editor.
             </double>
         </playerType>
         <playerType>
-            <limit>16</limit>
-            <position>Amazon Linewoman</position>
+            <limit>1</limit>
+            <position>Human Blitzer</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Block</skill>
+                 <skill>Animosity</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Dwarf Blocker</position>
+            <movement>4</movement>
+            <strength>3</strength>
+            <agility>2</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Loner</skill>
+                <skill>Tackle</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Dwarf Runner</position>
             <movement>6</movement>
             <strength>3</strength>
             <agility>3</agility>
-            <armor>7</armor>
+            <armor>8</armor>
             <skills>
-                <skill>Dodge</skill>
+                <skill>Sure Hands</skill>
+                <skill>Loner</skill>
+                <skill>Thick Skull</skill>
             </skills>
-            <cost>50000</cost>
+            <cost>80000</cost>
             <single>
                 <skillType>General</skillType>
+                <skillType>Pass</skillType>
             </single>
             <double>
                 <skillType>Strength</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Dwarf Blitzer</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Loner</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>80000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Troll Slayer</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>2</agility>
+            <armor>8</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Loner</skill>
+                <skill>Thick Skull</skill>
+                <skill>Frenzy</skill>
+                <skill>Dauntless</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Halfling</position>
+            <movement>5</movement>
+            <strength>2</strength>
+            <agility>3</agility>
+            <armor>6</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Stunty</skill>
+                <skill>Right Stuff</skill>
+                <skill>Loner</skill>
+            </skills>
+            <cost>30000</cost>
+            <single>
+                <skillType>Agility</skillType> 
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Ogre</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>2</agility>
+            <armor>9</armor>
+            <skills>
+                <skill>Loner</skill>
+                <skill>Bone Head</skill>
+                <skill>Mighty Blow</skill>
+                <skill>Thick Skull</skill>
+                <skill>Throw Team-Mate</skill>
+            </skills>
+            <cost>140000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>                
                 <skillType>Pass</skillType>
                 <skillType>Agility</skillType>
             </double>

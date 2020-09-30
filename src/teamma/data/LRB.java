@@ -53,72 +53,12 @@ public final class LRB {
         return _version;
     }
 
-    public static void setChef_enabled(boolean _chef_enabled) {
-        LRB._chef_enabled = _chef_enabled;
-    }
-
-    public static boolean isMercenaries_enabled() {
-        return _mercenaries_enabled;
-    }
-
-    public static void setMercenaries_enabled(boolean _mercenaries_enabled) {
-        LRB._mercenaries_enabled = _mercenaries_enabled;
-    }
-
-    public static boolean isBabes_enabled() {
-        return _babes_enabled;
-    }
-
-    public static void setBabes_enabled(boolean _babes_enabled) {
-        LRB._babes_enabled = _babes_enabled;
-    }
-
-    public static boolean isWizard_enabled() {
-        return _wizard_enabled;
-    }
-
-    public static void setWizard_enabled(boolean _wizard_enabled) {
-        LRB._wizard_enabled = _wizard_enabled;
-    }
-
-    public static boolean isReroll_enabled() {
-        return _reroll_enabled;
-    }
-
-    public static void setReroll_enabled(boolean _reroll_enabled) {
-        LRB._reroll_enabled = _reroll_enabled;
-    }
-
-    public static boolean isLocal_apothecaries_enabled() {
-        return _local_apothecaries_enabled;
-    }
-
-    public static void setLocal_apothecaries_enabled(boolean _local_apothecaries_enabled) {
-        LRB._local_apothecaries_enabled = _local_apothecaries_enabled;
-    }
-
-    public static boolean isIgor_enabled() {
-        return _igor_enabled;
-    }
-
-    public static void setIgor_enabled(boolean _igor_enabled) {
-        LRB._igor_enabled = _igor_enabled;
-    }
-
-    public static boolean isCards_enabled() {
-        return _cards_enabled;
-    }
-
-    public static void setCards_enabled(boolean _cards_enabled) {
-        LRB._cards_enabled = _cards_enabled;
-    }
-
-    public static boolean isStarplayers_enabled() {
+    public boolean isStarplayers_enabled() {
         return _starplayers_enabled;
     }
 
-    public static void setStarplayers_enabled(boolean _starplayers_enabled) {
-        LRB._starplayers_enabled = _starplayers_enabled;
+    public void setStarplayers_enabled(boolean starplayers_enabled) {
+        _starplayers_enabled = starplayers_enabled;
     }
 
     private static boolean _chef_enabled = true;
@@ -131,33 +71,19 @@ public final class LRB {
     public static void setBribes_enabled(boolean _bribes_enabled) {
         LRB._bribes_enabled = _bribes_enabled;
     }
-    private static boolean _mercenaries_enabled = true;
-    private static boolean _babes_enabled = true;
-    private static boolean _wizard_enabled = true;
-    private static boolean _reroll_enabled = true;
-    private static boolean _local_apothecaries_enabled = true;
-    private static boolean _igor_enabled = true;
-    private static boolean _cards_enabled = true;
-    private static boolean _starplayers_enabled = true;
-    private static boolean _check_nb_big_guys = false;
+
+    private boolean _starplayers_enabled = true;
+    private boolean _check_nb_big_guys = false;
 
     private int _min_ff = 0;
     private int _max_ff = 18;
 
-    private static boolean _chaos_wizard;
-    private static boolean _kari_coldstell;
-    private static boolean _fink_da_fixer;
-    private static boolean _papa_skullbones;
-    private static boolean _galandril_silverwater;
-    private static boolean _krot_shockwhisker;
-    private static boolean _horacio_x_schottenheim;
-
-    public static boolean isCheck_nb_big_guys() {
+    public boolean isCheckNbBigGuys() {
         return _check_nb_big_guys;
     }
 
-    public static void setCheck_nb_big_guys(boolean _check_nb_big_guys) {
-        LRB._check_nb_big_guys = _check_nb_big_guys;
+    public void setCheckNbBigGuys(boolean check_nb_big_guys) {
+        _check_nb_big_guys = check_nb_big_guys;
     }
 
     /**
@@ -325,73 +251,12 @@ public final class LRB {
              */
             try {
                 Element e_inducements = racine.getChild(CS_Inducements);
-                Element e_chef = e_inducements.getChild(CS_Chef);
-                _chef_enabled = e_chef.getText().equals("yes");
-                Element e_bribe = e_inducements.getChild(CS_Bribe);
-                _bribes_enabled = e_bribe.getText().equals("yes");
-                Element e_mercenaries = e_inducements.getChild(CS_Mercenaries);
-                _mercenaries_enabled = e_mercenaries.getText().equals("yes");
-                Element e_babes = e_inducements.getChild(CS_Babes);
-                _babes_enabled = e_babes.getText().equals("yes");
-                Element e_wizard = e_inducements.getChild(CS_Wizard);
-                _wizard_enabled = e_wizard.getText().equals("yes");
-                Element e_reroll = e_inducements.getChild(CS_Reroll);
-                _reroll_enabled = e_reroll.getText().equals("yes");
-                Element e_apothecary = e_inducements.getChild(CS_Apothecary);
-                _local_apothecaries_enabled = e_apothecary.getText().equals("yes");
-                Element e_igor = e_inducements.getChild(CS_Igor);
-                _igor_enabled = e_igor.getText().equals("yes");
-                Element e_cards = e_inducements.getChild(CS_Cards);
-                _cards_enabled = e_cards.getText().equals("yes");
+
                 Element e_starplayers = e_inducements.getChild(CS_Starplayers);
                 _starplayers_enabled = e_starplayers.getText().equals("yes");
 
                 try {
-                    Element e_chaoswizard = e_inducements.getChild(CS_ChaosWizard);
-                    _chaos_wizard = e_chaoswizard.getText().equals("yes");
-                } catch (Exception e) {
-
-                }
-                try {
-                    Element e_coldstell = e_inducements.getChild(CS_KariColdstell);
-                    _kari_coldstell = e_coldstell.getText().equals("yes");
-                } catch (Exception e) {
-
-                }
-                try {
-                    Element e_fink_da_fixer = e_inducements.getChild(CS_FinkDaFixer);
-                    _fink_da_fixer = e_fink_da_fixer.getText().equals("yes");
-                } catch (Exception e) {
-
-                }
-                try {
-                    Element e_papa_skullbones = e_inducements.getChild(CS_PapaSkullbones);
-                    _papa_skullbones = e_papa_skullbones.getText().equals("yes");
-                } catch (Exception e) {
-
-                }
-                try {
-                    Element e_silverwater = e_inducements.getChild(CS_GalandrilSilverWater);
-                    _galandril_silverwater = e_silverwater.getText().equals("yes");
-                } catch (Exception e) {
-
-                }
-                try {
-                    Element e_krot = e_inducements.getChild(CS_KrotShockwhisker);
-                    _krot_shockwhisker = e_krot.getText().equals("yes");
-                } catch (Exception e) {
-
-                }
-
-                try {
-                    Element e_horacio = e_inducements.getChild(CS_HoracioXSchottenheim);
-                    _horacio_x_schottenheim = e_horacio.getText().equals("yes");
-                } catch (Exception e) {
-
-                }
-
-                try {
-                    Element e_checkBG = e_inducements.getChild(CS_Check_nb_big_guys);
+                    Element e_checkBG = racine.getChild(CS_Check_nb_big_guys);
                     _check_nb_big_guys = e_checkBG.getText().equals("yes");
                 } catch (Exception e) {
 
@@ -486,6 +351,7 @@ public final class LRB {
 
     private final static String CS_Reroll = "reroll";
     private final static String CS_Apothecary = "apothecary";
+    private final static String CS_MaxBigGuys = "max_big_guy";
     private final static String CS_Chef = "chef";
     private final static String CS_Igor = "igor";
     private final static String CS_Bribe = "bribe";
@@ -498,6 +364,7 @@ public final class LRB {
     private final static String CS_Agility = "agility";
     private final static String CS_Armor = "armor";
     private final static String CS_Cost = "cost";
+    private final static String CS_Pair_With = "pair_with";
     private final static String CS_Max = "max";
     private final static String CS_Single = "single";
     private final static String CS_SkillType = "skillType";
@@ -531,9 +398,14 @@ public final class LRB {
             Element e_apo = racine.getChild(CS_Apothecary);
             rt.setApothecary(Boolean.parseBoolean(e_apo.getValue()));
 
+            try {
+                Element e_max_big_guy = racine.getChild(CS_MaxBigGuys);
+                rt.setMaxBigGuys(Integer.parseInt(e_max_big_guy.getValue()));
+            } catch (Exception e) {
+
+            }
 
             Element e_inducements = racine.getChild(CS_Inducements);
-
             if (e_inducements != null) {
                 List<Element> l_inducType = e_inducements.getChildren(CS_Inducement);
                 Iterator<Element> cr = l_inducType.iterator();
@@ -648,6 +520,12 @@ public final class LRB {
                 sp.setArmor(Integer.parseInt(e_star.getChild(CS_Armor).getValue()));
                 sp.setCost(Integer.parseInt(e_star.getChild(CS_Cost).getValue()));
 
+                try {
+                    sp.setPair_name(e_star.getChild(CS_Pair_With).getValue());
+                } catch (Exception e) {
+
+                }
+
                 List<Element> skilllist = e_star.getChild(CS_Skills).getChildren(CS_Skill);
                 Iterator<Element> i = skilllist.iterator();
                 while (i.hasNext()) {
@@ -677,7 +555,22 @@ public final class LRB {
                 }
 
                 addStarPlayer(sp);
+            }
 
+            /**
+             * Resolve Pairs
+             */
+            for (StarPlayer sp : _starPlayers) {
+                if (!sp.getPair_name().equals("")) {
+                    for (StarPlayer s : _starPlayers) {
+                        if (s != sp) {
+                            if (s.getName().equals(sp.getPair_name())) {
+                                sp.setPair(s);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
 
         } catch (JDOMException | IOException jdomexception) {

@@ -11,27 +11,20 @@ and open the template in the editor.
     <name>VampireKey</name>
     <reroll>70000</reroll>
     <apothecary>false</apothecary>
-    <chef>300000</chef>
-    <igor>true</igor>
-    <bribe>100000</bribe>
-    <add_assistant>true</add_assistant>
-    <add_cheerleaders>true</add_cheerleaders>
-    <weather_wizard>true</weather_wizard>
-    <druchi_sport_sorcerer>false</druchi_sport_sorcerer>
-        <plague_doctors>false</plague_doctors>
-    <nurglings>false</nurglings>
-    <horticulturalist>false</horticulturalist>
-    <joseph_bugman>false</joseph_bugman>
-    <slann_mage_priest>false</slann_mage_priest>
-        <hot-pot>false</hot-pot>
-    <heady_brew>false</heady_brew>
-    <sports_necrotheurge>true</sports_necrotheurge>
-        <chaos_wizard>false</chaos_wizard>
-    <kari_coldstell>false</kari_coldstell>
-    <fink_da_fixer>false</fink_da_fixer>
-    <papa_skullbones>false</papa_skullbones>
-    <galandril_silverwater>false</galandril_silverwater>
-    <krot_shockwhisker>false</krot_shockwhisker>
+    <inducements>
+        <inducement name="chef" max="1" cost="300000" />
+        <inducement name="bribe the ref" max="3" cost="100000" />
+        <inducement name="Bloodweisers' babes" max="2" cost="50000" />
+        <inducement name="wizard" max="1" cost="150000" />
+        <inducement name="extra reroll" max="4" cost="100000" />
+        <inducement name="igor" max="1" cost="100000" />
+        <inducement name="cards" max="8" cost="50000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="sports necrotheurge" max="1" cost="150000" />
+        <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
+    </inducements>
     <playertypes>               
         <playerType>
             <limit>6</limit>

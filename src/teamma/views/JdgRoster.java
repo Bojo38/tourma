@@ -60,6 +60,7 @@ public final class JdgRoster extends javax.swing.JDialog {
     private Coach _coach = null;
     private LRB.E_Version lrbversion = LRB.E_Version.BB2016;
     private LRB _lrb = LRB.getLRB(LRB.E_Version.BB2016);
+    private int _max_champions = 2;
 
     /**
      * Creates new form JdgRoster
@@ -880,6 +881,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private final static String CS_SelectSkillToRemove = "Select skill to remove";
     private final static String CS_Skill = "Skill";
+    private final static String CS_Big_Guy = "Big Guy";
 
     private void jbtRemoveSkillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveSkillActionPerformed
         int index = jtbPlayers.getSelectedRow();
@@ -954,6 +956,39 @@ public final class JdgRoster extends javax.swing.JDialog {
                         limit--;
                     }
                 }
+
+                /**
+                 * Check the number of big guys
+                 */
+                if (_lrb.isCheckNbBigGuys()) {
+
+                    boolean isABigGuy = false;
+                    for (j = 0; j < pt.getSkillCount(); j++) {
+                        Skill s = pt.getSkill(j);
+                        if (s.getmName().equals(CS_Big_Guy)) {
+                            isABigGuy = true;
+                            break;
+                        }
+                    }
+                    if (isABigGuy) {
+                        int nbBigGuys = 0;
+
+                        for (j = 0; j < _data.getPlayerCount(); j++) {
+                            Player p = _data.getPlayer(j);
+                            for (int k = 0; k < p.getPlayertype().getSkillCount(); k++) {
+                                Skill s = p.getPlayertype().getSkill(k);
+                                if (s.getmName().equals(CS_Big_Guy)) {
+                                    nbBigGuys++;
+                                    break;
+                                }
+                            }
+                            if (nbBigGuys >= _data.getRoster().getMaxBigGuys()) {
+                                limit = 0;
+                            }
+                        }
+                    }
+                }
+
                 if (limit > 0) {
                     positions.add(pt);
                 }
@@ -982,7 +1017,12 @@ public final class JdgRoster extends javax.swing.JDialog {
     private void jbtRemoveStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveStarActionPerformed
         int i = jtbStars.getSelectedRow();
         if (i > -1) {
-            _data.removeChampion(i);
+            StarPlayer sp = _data.getChampion(i);
+            if (sp.getPair() != null) {
+                _data.removeChampion(sp.getPair());
+                _max_champions = _max_champions - 1;
+            }
+            _data.removeChampion(sp);
         }
         update();
     }//GEN-LAST:event_jbtRemoveStarActionPerformed
@@ -1008,12 +1048,6 @@ public final class JdgRoster extends javax.swing.JDialog {
                     names.add(sp);
                 }
             }
-            /*
-            String input = (String) JOptionPane.showInputDialog(this,
-                    Translate.translate(CS_ChooseKindOfplayer), Translate.translate(CS_PlayerChoice),
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null, names.toArray(), "");
-            StarPlayer sp = _data.getRoster().getStarPlayer(input, true);*/
 
             StarPlayer sp = names.get(0);
             JdgSelectPosition jdg = new JdgSelectPosition(null, true, names, sp);
@@ -1022,6 +1056,12 @@ public final class JdgRoster extends javax.swing.JDialog {
             sp = jdg.getStarPlayer();
 
             _data.addChampion(sp);
+
+            if (sp.getPair() != null) {
+                _data.addChampion(sp.getPair());
+                _max_champions = _max_champions + 1;
+            }
+
         }
         update();
     }//GEN-LAST:event_jbtAddStarActionPerformed
@@ -1156,6 +1196,18 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private void update() {
 
+        int count_paired_stars = 0;
+        for (int i = 0; i < _data.getChampionCount(); i++) {
+            if (_data.getChampion(i).getPair() != null) {
+                count_paired_stars++;
+            }
+        }
+        count_paired_stars = count_paired_stars / 2;
+        _max_champions = 2 + count_paired_stars;
+
+        if (lrbversion == null) {
+            lrbversion = LRB.E_Version.BB2016;
+        }
         switch (lrbversion) {
             case LRB1:
                 jcbLRB.setSelectedIndex(0);
@@ -1314,7 +1366,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             }
         }
 
-        jbtAddStar.setEnabled(_data.getChampionCount() < 2);
+        jbtAddStar.setEnabled(_data.getChampionCount() < _max_champions);
         jbtRemoveStar.setEnabled(jtbStars.getSelectedRow() > -1);
 
         /**

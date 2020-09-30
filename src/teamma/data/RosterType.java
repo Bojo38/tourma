@@ -26,35 +26,20 @@ public class RosterType implements Serializable {
     {
         version=v;
     }
-    
-    /**
-     *
-     */
-    private static int extraRerollCost = 100000;
-    /**
-     *
-     */
-    private static int _babe_cost = 50000;
-    /**
-     *
-     */
-    private static int _wizard_cost = 150000;
-    
-    private static int _chaos_wizard_cost = 150000;
-    /**
-     *
-     */
-    private static int _local_apo_cost = 100000;
-    /**
-     *
-     */
-    private static int _igor_cost = 100000;
-    
-
+   
+    private  int _maxBigGuys = 1;
     /**
      *
      */
     private static int _assistant_cost = 10000;
+
+    public  int getMaxBigGuys() {
+        return _maxBigGuys;
+    }
+
+    public  void setMaxBigGuys(int maxBigGuys) {
+        _maxBigGuys = maxBigGuys;
+    }
     /**
      *
      */
@@ -71,76 +56,7 @@ public class RosterType implements Serializable {
 
     private ArrayList<InducementType> _inducements=new ArrayList<>();
     
-    /**
-     * @return the extraRerollCost
-     */
-    public static int getExtraRerollCost() {
-        return extraRerollCost;
-    }
-
-    /**
-     * @param aExtra_reroll_cost the extraRerollCost to set
-     */
-    public static void setExtraRerollCost(int aExtra_reroll_cost) {
-        extraRerollCost = aExtra_reroll_cost;
-    }
-
-    /**
-     * @return the _babe_cost
-     */
-    public static int getBabe_cost() {
-        return _babe_cost;
-    }
-
-    /**
-     * @param aBabe_cost the _babe_cost to set
-     */
-    public static void setBabe_cost(int aBabe_cost) {
-        _babe_cost = aBabe_cost;
-    }
-
-    /**
-     * @return the _wizard_cost
-     */
-    public static int getWizard_cost() {
-        return _wizard_cost;
-    }
-    
  
-    /**
-     * @param aWizard_cost the _wizard_cost to set
-     */
-    public static void setWizard_cost(int aWizard_cost) {
-        _wizard_cost = aWizard_cost;
-    }
-
-    /**
-     * @return the _local_apo_cost
-     */
-    public static int getLocal_apo_cost() {
-        return _local_apo_cost;
-    }
-
-    /**
-     * @param aLocal_apo_cost the _local_apo_cost to set
-     */
-    public static void setLocal_apo_cost(int aLocal_apo_cost) {
-        _local_apo_cost = aLocal_apo_cost;
-    }
-
-    /**
-     * @return the _igor_cost
-     */
-    public static int getIgor_cost() {
-        return _igor_cost;
-    }
-
-    /**
-     * @param aIgor_cost the _igor_cost to set
-     */
-    public static void setIgor_cost(int aIgor_cost) {
-        _igor_cost = aIgor_cost;
-    }
 
     /**
      * @return the _assistant_cost
@@ -209,146 +125,7 @@ public class RosterType implements Serializable {
      *
      */
     private boolean _apothecary;
-    /**
-     *
-     */
-    private int _bribe_cost;
-    /**
-     *
-     */
-    private int _chef_cost;
-    /**
-     *
-     */
-    private boolean _igor;
-
-    public boolean isChaos_wizard() {
-        return _chaos_wizard;
-    }
-
-    public void setChaos_wizard(boolean _chaos_wizard) {
-        this._chaos_wizard = _chaos_wizard;
-    }
-
-    public static int getChaos_wizard_cost() {
-        return _chaos_wizard_cost;
-    }
-
-    public static void setChaos_wizard_cost(int chaos_wizard_cost) {
-        _chaos_wizard_cost = chaos_wizard_cost;
-    }
-
-    public static int getHoratio_X_Schottenheim_cost() {
-        return _Horatio_X_Schottenheim_cost;
-    }
-
-    public static void setHoratio_X_Schottenheim_cost(int Horatio_X_Schottenheim_cost) {
-        _Horatio_X_Schottenheim_cost = Horatio_X_Schottenheim_cost;
-    }
-
-    public boolean isKari_Coldstell() {
-        return Kari_Coldstell;
-    }
-
-    public void setKari_Coldstell(boolean Kari_Coldstell) {
-        this.Kari_Coldstell = Kari_Coldstell;
-    }
-
-    public static int getKari_Coldstell_cost() {
-        return _Kari_Coldstell_cost;
-    }
-
-    public static void setKari_Coldstell_cost(int Kari_Coldstell_cost) {
-        _Kari_Coldstell_cost = Kari_Coldstell_cost;
-    }
-
-    public boolean isFink_Da_Fixer() {
-        return Fink_Da_Fixer;
-    }
-
-    public void setFink_Da_Fixer(boolean Fink_Da_Fixer) {
-        this.Fink_Da_Fixer = Fink_Da_Fixer;
-    }
-
-    public static int getFink_Da_Fixer_cost() {
-        return _Fink_Da_Fixer_cost;
-    }
-
-    public static void setFink_Da_Fixer_cost(int Fink_Da_Fixer_cost) {
-        _Fink_Da_Fixer_cost = Fink_Da_Fixer_cost;
-    }
-
-    public boolean isPapa_Skullbones() {
-        return Papa_Skullbones;
-    }
-
-    public void setPapa_Skullbones(boolean Papa_Skullbones) {
-        this.Papa_Skullbones = Papa_Skullbones;
-    }
-
-    public static int getPapa_Skullbones_cost() {
-        return _Papa_Skullbones_cost;
-    }
-
-    public static void setPapa_Skullbones_cost(int Papa_Skullbones_cost) {
-        _Papa_Skullbones_cost = Papa_Skullbones_cost;
-    }
-
-    public boolean isGalandril_Silverwater() {
-        return Galandril_Silverwater;
-    }
-
-    public void setGalandril_Silverwater(boolean Galandril_Silverwater) {
-        this.Galandril_Silverwater = Galandril_Silverwater;
-    }
-
-    public static int getGalandril_Silverwater_cost() {
-        return _Galandril_Silverwater_cost;
-    }
-
-    public static void setGalandril_Silverwater_cost(int Galandril_Silverwater_cost) {
-        _Galandril_Silverwater_cost = Galandril_Silverwater_cost;
-    }
-
-    public boolean isKrot_Shockwhisker() {
-        return Krot_Shockwhisker;
-    }
-
-    public void setKrot_Shockwhisker(boolean Krot_Shockwhisker) {
-        this.Krot_Shockwhisker = Krot_Shockwhisker;
-    }
-
-    public static int getKrot_Shockwhisker_cost() {
-        return _Krot_Shockwhisker_cost;
-    }
-
-    /**
-     * Chaos Wizard Allowed
-     */
-    public static void setKrot_Shockwhisker_cost(int Krot_Shockwhisker_cost) {
-        _Krot_Shockwhisker_cost = Krot_Shockwhisker_cost;
-    }
-
-    private boolean _chaos_wizard;
-    /**
-     * Chaos Wizard cost
-     */    
-    
-    private static int _Horatio_X_Schottenheim_cost=80000;
-    private boolean Kari_Coldstell;
-    private static int _Kari_Coldstell_cost=50000;
-    
-    private boolean Fink_Da_Fixer;
-    private static int _Fink_Da_Fixer_cost=50000;
-    
-    private boolean Papa_Skullbones;
-    private static int _Papa_Skullbones_cost=80000;
-    
-     private boolean Galandril_Silverwater;
-    private static int _Galandril_Silverwater_cost=50000;
-    
-    private boolean Krot_Shockwhisker;
-    private static int _Krot_Shockwhisker_cost=80000;
+  
     /**
      *
      */
@@ -462,47 +239,6 @@ public class RosterType implements Serializable {
         this._apothecary = _apothecary;
     }
 
-    /**
-     * @return the _bribe_cost
-     */
-    public int getBribe_cost() {
-        return _bribe_cost;
-    }
-
-    /**
-     * @param _bribe_cost the _bribe_cost to set
-     */
-    public void setBribe_cost(int _bribe_cost) {
-        this._bribe_cost = _bribe_cost;
-    }
-
-    /**
-     * @return the _chef_cost
-     */
-    public int getChef_cost() {
-        return _chef_cost;
-    }
-
-    /**
-     * @param _chef_cost the _chef_cost to set
-     */
-    public void setChef_cost(int _chef_cost) {
-        this._chef_cost = _chef_cost;
-    }
-
-    /**
-     * @return the _igor
-     */
-    public boolean isIgor() {
-        return _igor;
-    }
-
-    /**
-     * @param _igor the _igor to set
-     */
-    public void setIgor(boolean _igor) {
-        this._igor = _igor;
-    }
 
     /**
      * @return the _image

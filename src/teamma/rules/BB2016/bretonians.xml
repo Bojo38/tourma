@@ -12,24 +12,18 @@ and open the template in the editor.
     <reroll>70000</reroll>
     <apothecary>true</apothecary>
     
-    <chef>300000</chef>
-    <bribe>100000</bribe>
-    
     <inducements>
-        <chef>300000</chef>
-        <bribe>100000</bribe>
-        <babes>50000</babes>
-        <wizard>150000</wizard>
-        <reroll>100000</reroll>
-        <apothecary>100000</apothecary>
-
-        <cards>yes</cards>
-        <starplayers>yes</starplayers>   
-        
-        <add_assistant>20000</add_assistant>
-        <add_cheerleaders>20000</add_cheerleaders>
-        <weather_wizard>30000</weather_wizard>
-        <horacio_x_schottenheim>80000</horacio_x_schottenheim>
+        <inducement name="chef" max="1" cost="300000" />
+        <inducement name="bribe the ref" max="3" cost="100000" />
+        <inducement name="Bloodweisers' babes" max="2" cost="50000" />
+        <inducement name="wizard" max="1" cost="150000" />
+        <inducement name="extra reroll" max="4" cost="100000" />
+        <inducement name="local apothecary" max="1" cost="100000" />
+        <inducement name="cards" max="8" cost="50000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
     </inducements>
     <playertypes>               
         <playerType>

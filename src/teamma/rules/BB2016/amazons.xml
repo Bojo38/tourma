@@ -20,34 +20,14 @@ and open the template in the editor.
         <inducement name="extra reroll" max="4" cost="100000" />
         <inducement name="local apothecary" max="1" cost="100000" />
         <inducement name="cards" max="8" cost="50000" />
-        <inducement name="Additional assistants" max="3" cost="20000" />
-        <inducement name="Additional cheerleaders" max="3" cost="20000" />
-        <inducement name="Weather wizard" max="1" cost="30000" />
-        <inducement name="Slann mage priest" max="1" cost="150000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="slann mage priest" max="1" cost="150000" />
+        
         <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
         <inducement name="Kari Coldsteal" max="1" cost="50000" />
         <inducement name="Joseph Bugman" max="1" cost="70000" />
-
-       <!-- <chef max="1">300000</chef>
-        <bribe max="3">100000</bribe>
-        <babes max="2">50000</babes>
-        <wizard max="1">150000</wizard>
-        <reroll>100000</reroll>
-        <apothecary max="1">100000</apothecary>
-
-        <cards>yes</cards>
-        <starplayers>yes</starplayers>   
-        
-        <add_assistant>20000</add_assistant>
-        <add_cheerleaders>20000</add_cheerleaders>
-        <weather_wizard>30000</weather_wizard>
-
-        <slann_mage_priest>150000</slann_mage_priest>
-        
-        <horacio_x_schottenheim>80000</horacio_x_schottenheim>
-        <kari_coldstell>50000</kari_coldstell>
-        <joseph_bugman>70000</joseph_bugman>    -->   
-
     </inducements>    
     
     <playertypes>               
