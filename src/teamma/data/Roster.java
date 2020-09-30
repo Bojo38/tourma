@@ -446,6 +446,12 @@ public class Roster implements IXMLExport, Serializable {
         _champions.remove(i);
     }
 
+     /**
+     * @param i
+     */
+    public void removeChampion(StarPlayer sp) {
+        _champions.remove(sp);
+    }
     /**
      * @param sp
      */

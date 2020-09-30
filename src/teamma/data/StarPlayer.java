@@ -56,6 +56,18 @@ public class StarPlayer implements Serializable{
      */
     private final ArrayList<RosterType> _rosters;
     
+    private StarPlayer _pair;
+    
+    private String _pair_name="";
+
+    public String getPair_name() {
+        return _pair_name;
+    }
+
+    public void setPair_name(String _pair_name) {
+        this._pair_name = _pair_name;
+    }
+    
     /**
      * 
      * @param name 
@@ -65,6 +77,15 @@ public class StarPlayer implements Serializable{
         _name=name;
         _skills=new ArrayList<>();
         _rosters=new ArrayList<>();
+        _pair=null;
+    }
+
+    public StarPlayer getPair() {
+        return _pair;
+    }
+
+    public void setPair(StarPlayer _pair) {
+        this._pair = _pair;
     }
 
     /**
