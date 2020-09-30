@@ -11,9 +11,15 @@ and open the template in the editor.
     <name>DarkElfKey</name>
     <reroll>50000</reroll>
     <apothecary>true</apothecary>
-    <chef>300000</chef>
-    <igor>false</igor>
-    <bribe>100000</bribe>
+<inducements>
+        <inducement name="chef" max="1" cost="300000" />
+        <inducement name="bribe the ref" max="3" cost="100000" />
+        <inducement name="Bloodweisers' babes" max="2" cost="50000" />
+        <inducement name="wizard" max="1" cost="150000" />
+        <inducement name="extra reroll" max="4" cost="100000" />
+        <inducement name="local apothecary" max="1" cost="100000" />
+        <inducement name="cards" max="8" cost="50000" />
+    </inducements>  
     <playertypes>               
         <playerType>
             <limit>4</limit>

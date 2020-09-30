@@ -7,13 +7,12 @@ and open the template in the editor.
 
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
-    <inducements></inducements>
+     <inducements>
+        <inducement name="chef" max="5" cost="20000"/>
+    </inducements>
     <name>HalflingKey</name>
     <reroll>60000</reroll>
     <apothecary>true</apothecary>
-    <chef>0</chef>
-    <igor>false</igor>
-    <bribe>100000</bribe>
     <max_big_guy>2</max_big_guy>
     <playertypes>               
         <playerType>

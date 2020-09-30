@@ -723,6 +723,7 @@ and open the template in the editor.
             <skill>Throw Team-Mate</skill>
             <skill>Nerves of Steel</skill>
         </skills>
+        <pair_with>Grotty</pair_with>
         <cost>290000</cost>
         <team>NurgleKey</team>
         <team>OgreKey</team>
@@ -740,6 +741,7 @@ and open the template in the editor.
             <skill>Stunty</skill>
             <skill>Right Stuff</skill>
         </skills>
+        <pair_with>Brick Far'th</pair_with>
         <cost>0</cost>
         <team>NurgleKey</team>
         <team>OgreKey</team>

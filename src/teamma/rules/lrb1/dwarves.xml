@@ -7,18 +7,12 @@ and open the template in the editor.
 
 <rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
             xsi:noNamespaceSchemaLocation='roster.xsd'>
-<inducements></inducements>
+    <inducements>
+        <inducement name="alchemist" max="1" cost="30000"/>
+    </inducements>
     <name>DwarfKey</name>
     <reroll>40000</reroll>
     <apothecary>true</apothecary>
-        <wizard>
-        <possible>no</possible>
-        <special>
-            <possible>yes</possible>
-            <name>alchemist</name>
-            <cost>30000</cost>            
-        </special>
-    </wizard>
 
     <max_big_guy>1</max_big_guy>
     <playertypes>               
