@@ -312,7 +312,7 @@ public class CoachMatch extends Match implements Serializable {
         }
     }
     /**
-     *
+     * Roster Type of Team1
      */
     protected RosterType mRoster1;
 
@@ -322,48 +322,57 @@ public class CoachMatch extends Match implements Serializable {
     protected RosterType mRoster2;
 
     /**
-     *
+     * Hash map of values corresponding of criteria
      */
     protected final HashMap<Criteria, Value> mValues;
+    /**
+     * Hash map of values corresponding of Formula
+     */
     protected final HashMap<Formula, Value> mComputedValues;
 
     /**
-     *
+     * Substitute for coach 1
      */
     protected Substitute mSubstitute1;
 
     /**
-     *
+     * Substitute for coach 2
      */
     protected Substitute mSubstitute2;
 
     /**
-     *
+     * Match is refused by Coach 1
      */
     protected boolean refusedBy1 = false;
 
     /**
-     *
+     * Match is refused by Coach 2
      */
     protected boolean refusedBy2 = false;
 
     /**
-     *
+     * Match is conceded by Coach 1
      */
     protected boolean concedeedBy1 = false;
 
     /**
-     *
+     * Match is conceded by Coach 2
      */
     protected boolean concedeedBy2 = false;
 
+    /**
+     * Values Getter
+     *
+     * @return
+     */
     public HashMap<Criteria, Value> getValues() {
         return mValues;
     }
 
     /**
+     * Public constructor
      *
-     * @param round
+     * @param round current round
      */
     public CoachMatch(Round round) {
         super(round);
@@ -451,10 +460,6 @@ public class CoachMatch extends Match implements Serializable {
         return hash;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Element getXMLElement() {
         final Element match = new Element(StringConstants.CS_MATCH);
@@ -502,10 +507,6 @@ public class CoachMatch extends Match implements Serializable {
         return match;
     }
 
-    /**
-     *
-     * @param match
-     */
     @Override
     public void setXMLElement(final Element match
     ) {
@@ -729,6 +730,8 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * Roster 1 Getter
+     *
      * @return the mRoster1
      */
     public RosterType getRoster1() {
@@ -736,6 +739,8 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * Roster 1 setter
+     *
      * @param mRoster1 the mRoster1 to set
      */
     public void setRoster1(RosterType mRoster1) {
@@ -744,6 +749,8 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * Roster 2 Getter
+     *
      * @return the mRoster2
      */
     public RosterType getRoster2() {
@@ -751,6 +758,8 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * Roster 2 Getter
+     *
      * @param mRoster2 the mRoster2 to set
      */
     public void setRoster2(RosterType mRoster2) {
@@ -759,6 +768,8 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * Substitute 1 Getter
+     *
      * @return the mSubstitute1
      */
     public Substitute getSubstitute1() {
@@ -766,7 +777,9 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
-     * @param mSubstitute1 the mSubstitute1 to set
+     * Substitute 1 Setter
+     *
+     * @return the mSubstitute1
      */
     public void setSubstitute1(Substitute mSubstitute1) {
         this.mSubstitute1 = mSubstitute1;
@@ -774,6 +787,8 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * Substitute 2 Getter
+     *
      * @return the mSubstitute2
      */
     public Substitute getSubstitute2() {
@@ -781,7 +796,8 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
-     * @param mSubstitute2 the mSubstitute2 to set
+     * Substitute 2 Setter
+     *
      */
     public void setSubstitute2(Substitute mSubstitute2) {
         this.mSubstitute2 = mSubstitute2;
@@ -789,6 +805,7 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * IS match refused by coach 1
      * @return the refusedBy1
      */
     public boolean isRefusedBy1() {
@@ -796,6 +813,7 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * Refused 1 Setter
      * @param refusedBy1 the refusedBy1 to set
      */
     public void setRefusedBy1(boolean refusedBy1) {
@@ -804,6 +822,7 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * IS match refused by coach 2
      * @return the refusedBy2
      */
     public boolean isRefusedBy2() {
@@ -811,6 +830,7 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     /**
+     * Refused 2 Setter
      * @param refusedBy2 the refusedBy2 to set
      */
     public void setRefusedBy2(boolean refusedBy2) {
@@ -1756,7 +1776,7 @@ public class CoachMatch extends Match implements Serializable {
         return value;
     }
 
-    public int getValue(Formula formula,  Competitor c) {
+    public int getValue(Formula formula, Competitor c) {
         int value = 0;
         Value v = getValue(formula);
         if (v != null) {
