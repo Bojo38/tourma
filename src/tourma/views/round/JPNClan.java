@@ -24,6 +24,7 @@ import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtRankingClan;
+import tourma.tableModel.MjtRankingIndiv;
 import tourma.utils.display.TableFormat;
 import tourma.views.report.JdgGlobal;
 import tourma.views.report.JdgRanking;
@@ -37,6 +38,9 @@ public final class JPNClan extends javax.swing.JPanel {
     private final Round mRound;
     private final Tournament mTournament;
 //    private final JTable mJtbTeamMatch = null;
+
+    private int mPageCount = 0;
+    private int mPageIndex = 0;
 
     /**
      *
@@ -54,6 +58,12 @@ public final class JPNClan extends javax.swing.JPanel {
         mRound = r;
         mTournament = t;
 
+        mPageCount = t.getClansCount() / t.getParams().getPageSize();
+        if (mPageCount * t.getParams().getPageSize() < t.getClansCount()) {
+            mPageCount = mPageCount + 1;
+        }
+        mPageIndex = 1;
+
         ArrayList<Team> teams = new ArrayList<>();
         for (int cpt = 0; cpt < t.getTeamsCount(); cpt++) {
             teams.add(t.getTeam(cpt));
@@ -63,13 +73,13 @@ public final class JPNClan extends javax.swing.JPanel {
         for (int cpt = 0; cpt < t.getCoachsCount(); cpt++) {
             coachs.add(t.getCoach(cpt));
         }
-        
+
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
             final Criteria criteria = mTournament.getParams().getCriteria(i);
             final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, t, coachs, teams, mRound, true, false);
             jtpAnnexRank.add(criteria.getName(), jpn);
         }
-        
+
         for (int i = 0; i < mTournament.getParams().getFormulaCount(); i++) {
             final Formula formula = mTournament.getParams().getFormula(i);
             final JPNAnnexRanking jpn = new JPNAnnexRanking(formula.getName(), formula, t, coachs, teams, mRound, true, false);
@@ -95,6 +105,9 @@ public final class JPNClan extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jbtGeneralClan = new javax.swing.JButton();
         jbtGGlobalClan = new javax.swing.JButton();
+        jbtBack = new javax.swing.JButton();
+        jlbPage = new javax.swing.JLabel();
+        jbtNext = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jtpAnnexRank = new javax.swing.JTabbedPane();
 
@@ -141,6 +154,26 @@ public final class JPNClan extends javax.swing.JPanel {
             }
         });
         jPanel3.add(jbtGGlobalClan);
+
+        jbtBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtBackActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtBack);
+
+        jlbPage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPage.setText("jLabel1");
+        jPanel3.add(jlbPage);
+
+        jbtNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtNextActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtNext);
 
         jPanel2.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
@@ -200,14 +233,34 @@ public final class JPNClan extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_jbtGGlobalClanActionPerformed
+
+    private void jbtBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBackActionPerformed
+        mPageIndex = mPageIndex - 1;
+        if (mPageIndex <= 1) {
+            mPageIndex = 1;
+        }
+        updateMain();
+    }//GEN-LAST:event_jbtBackActionPerformed
+
+    private void jbtNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextActionPerformed
+        mPageIndex = mPageIndex + 1;
+        if (mPageIndex >= mPageCount) {
+            mPageIndex = mPageCount;
+        }
+        updateMain();
+    }//GEN-LAST:event_jbtNextActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JButton jbtBack;
     private javax.swing.JButton jbtGGlobalClan;
     private javax.swing.JButton jbtGeneralClan;
+    private javax.swing.JButton jbtNext;
+    private javax.swing.JLabel jlbPage;
     private javax.swing.JTable jtbRankingClan;
     private javax.swing.JTabbedPane jtpAnnexRank;
     // End of variables declaration//GEN-END:variables
@@ -225,6 +278,15 @@ public final class JPNClan extends javax.swing.JPanel {
      */
     public void update() {
 
+        updateMain();
+
+        for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
+            ((JPNAnnexRanking) jtpAnnexRank.getComponent(i)).update();
+        }
+        jtbRankingClan.setRowHeight(25);
+    }
+
+    private void updateMain() {
         final ArrayList<Round> v = new ArrayList<>();
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
@@ -234,23 +296,48 @@ public final class JPNClan extends javax.swing.JPanel {
         v.add(mRound);
 
         MjtRankingClan mRankingClan;
+
+        jbtBack.setEnabled(mTournament.getParams().isDisplayByPages());
+        jbtNext.setEnabled(mTournament.getParams().isDisplayByPages());
+        jlbPage.setEnabled(mTournament.getParams().isDisplayByPages());
+
+        jlbPage.setText(Integer.toString(mPageIndex) + " / " + Integer.toString(mPageCount));
+
         if ((mTournament.getParams().isTeamTournament()) && ((mTournament.getParams().isTeamVictoryOnly()))) {
-            mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingTeam1(), mTournament.getParams().gemRankingTeam2(), mTournament.getParams().getRankingTeam3(), mTournament.getParams().getRankingTeam4(), mTournament.getParams().getRankingTeam5(),
-                    mTournament.getDisplayClans(), mRoundOnly);
+
+            if (this.mTournament.getParams().isDisplayByPages()) {
+                int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
+                int max = mPageIndex * mTournament.getParams().getPageSize();
+                if (max > mTournament.getDisplayClans().size()) {
+                    max = mTournament.getDisplayClans().size();
+                }
+                mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingTeam1(), mTournament.getParams().gemRankingTeam2(), mTournament.getParams().getRankingTeam3(), mTournament.getParams().getRankingTeam4(), mTournament.getParams().getRankingTeam5(),
+                        mTournament.getDisplayClans(), mRoundOnly, min, max);
+            } else {
+                mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingTeam1(), mTournament.getParams().gemRankingTeam2(), mTournament.getParams().getRankingTeam3(), mTournament.getParams().getRankingTeam4(), mTournament.getParams().getRankingTeam5(),
+                        mTournament.getDisplayClans(), mRoundOnly);
+            }
+
         } else {
-            mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                    mTournament.getDisplayClans(), mRoundOnly);
+
+            if (this.mTournament.getParams().isDisplayByPages()) {
+                int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
+                int max = mPageIndex * mTournament.getParams().getPageSize();
+                if (max > mTournament.getDisplayClans().size()) {
+                    max = mTournament.getDisplayClans().size();
+                }
+                mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                        mTournament.getDisplayClans(), mRoundOnly, min, max);
+            } else {
+                mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                        mTournament.getDisplayClans(), mRoundOnly);
+            }
         }
+
         jtbRankingClan.setModel(mRankingClan);
         jtbRankingClan.setDefaultRenderer(String.class, mRankingClan);
         jtbRankingClan.setDefaultRenderer(Integer.class, mRankingClan);
-        TableFormat.setColumnSize(jtbRankingClan);
-
-        for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
-            ((JPNAnnexRanking) jtpAnnexRank.getComponent(i)).update();
-        }
-        jtbRankingClan.setRowHeight(25);
-
+        //TableFormat.setColumnSize(jtbRankingClan);
     }
 
 }

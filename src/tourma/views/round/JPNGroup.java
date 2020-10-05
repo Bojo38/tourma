@@ -31,6 +31,9 @@ public final class JPNGroup extends javax.swing.JPanel {
     private final Group mGroup;
     private final int mRoundNumber;
 
+    private int mPageCount = 0;
+    private int mPageIndex = 0;
+
     /**
      *
      */
@@ -108,7 +111,7 @@ public final class JPNGroup extends javax.swing.JPanel {
      */
     public void update() {
 
-        final ArrayList<Coach> ArrayList = new ArrayList<>();
+        final ArrayList<Coach> list = new ArrayList<>();
 
         for (int i = 0; i < mTournament.getCoachsCount(); i++) {
             final Coach c = mTournament.getCoach(i);
@@ -118,7 +121,7 @@ public final class JPNGroup extends javax.swing.JPanel {
                         if (c != null) {
                             if (c.getRoster() != null) {
                                 if (mGroup.getRoster(j).getName().equals(c.getRoster().getName())) {
-                                    ArrayList.add(c);
+                                    list.add(c);
                                     break;
                                 }
                             } else {
@@ -136,14 +139,32 @@ public final class JPNGroup extends javax.swing.JPanel {
             }
         }
 
-        final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                ArrayList, mTournament.getParams().isTeamTournament(), mRoundOnly, false,false);
+        mPageCount = list.size() / this.mTournament.getParams().getPageSize();
+        if (mPageCount * this.mTournament.getParams().getPageSize() < list.size()) {
+            mPageCount = mPageCount + 1;
+        }
+        mPageIndex = 1;
+
+        MjtRankingIndiv tableModel;
+        if (this.mTournament.getParams().isDisplayByPages()) {
+            int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
+            int max = mPageIndex * mTournament.getParams().getPageSize();
+            if (max > mTournament.getCoachsCount()) {
+                max = mTournament.getCoachsCount();
+            }
+            tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                    list, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false, min, max);
+        } else {
+            tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                    list, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
+        }
+
         jtbGroup.setModel(tableModel);
         jtbGroup.setDefaultRenderer(String.class, tableModel);
         jtbGroup.setDefaultRenderer(Integer.class, tableModel);
 
         jtbGroup.setRowHeight(25);
-        TableFormat.setColumnSize(jtbGroup);
+        //TableFormat.setColumnSize(jtbGroup);
 
     }
 
