@@ -799,23 +799,6 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
                 }
             }
         }
-        // Compute the number of match per opponent
-        /*for (int i = 0; i < getMatchCount(); i++) {
-            Match mMatch = getMatch(i);
-            CoachMatch m = (CoachMatch) mMatch;
-            Coach opp;
-            if (this == m.getCompetitor1()) {
-                opp = (Coach) m.getCompetitor2();
-            } else {
-                opp = (Coach) m.getCompetitor1();
-            }
-            Team Other = opp.getTeamMates();
-            if (map.get(Other) != null) {
-                int nb = map.get(Other);
-                nb += 1;
-                map.put(Other, nb);
-            }
-        }*/
 
         if (r != null) {
             for (int i = 0; i < r.getCoachMatchs().size(); i++) {

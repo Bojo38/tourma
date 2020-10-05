@@ -256,6 +256,12 @@ public final class JPNRound extends javax.swing.JPanel {
             }
         }
 
+        for (int i = 0; i < jtpAnnexRankings.getComponentCount(); i++) {
+            ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).setRoundOnly(mRoundOnly);
+            ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).update();
+        }
+        TableFormat.setColumnSize(jtbRankingIndiv);
+
         repaint();
     }
 
@@ -296,22 +302,15 @@ public final class JPNRound extends javax.swing.JPanel {
             int min = (mPageIndivIndex - 1) * mTournament.getParams().getPageSize();
             int max = mPageIndivIndex * mTournament.getParams().getPageSize();
             if (max > mTournament.getCoachsCount()) {
-                max =  mTournament.getCoachsCount();
+                max = mTournament.getCoachsCount();
             }
             mRanking = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool, forCup, min, max);
         } else {
             mRanking = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool, forCup);
         }
-
         jtbRankingIndiv.setModel(mRanking);
         jtbRankingIndiv.setDefaultRenderer(String.class, mRanking);
         jtbRankingIndiv.setDefaultRenderer(Integer.class, mRanking);
-
-        for (int i = 0; i < jtpAnnexRankings.getComponentCount(); i++) {
-            ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).setRoundOnly(mRoundOnly);
-            ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).update();
-        }
-        TableFormat.setColumnSize(jtbRankingIndiv);
     }
 
     private void updateMatches(boolean locked) {

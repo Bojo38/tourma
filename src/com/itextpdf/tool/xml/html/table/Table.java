@@ -417,10 +417,7 @@ public class Table extends AbstractTagProcessor {
 			for (TableRowElement row : tableRows) {
 				int columnNumber = -1;
                 Float computedRowHeight = null;
-                /*if (tableHeight != null &&  tableRows.indexOf(row) == tableRows.size() - 1) {
-                    float computedTableHeigt = table.calculateHeights();
-                    computedRowHeight = tableHeight - computedTableHeigt;
-                }*/
+ 
                 List<HtmlCell> rowContent = row.getContent();
                 if (rowContent.size() < 1)
                     continue;

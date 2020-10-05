@@ -413,11 +413,17 @@ public class CoachMatch extends Match implements Serializable {
 
     @Override
     public boolean equals(Object c) {
+        
         if (this == c) {
             return true;
         }
 
-        if (c instanceof CoachMatch) {
+        if (c instanceof CoachMatch)
+        {
+            return UID==((CoachMatch)c).UID;
+        }
+        
+       /*if (c instanceof CoachMatch) {
             CoachMatch cm = (CoachMatch) c;
             boolean equality = (this.concedeedBy1 == cm.concedeedBy1);
             equality &= (this.concedeedBy2 == cm.concedeedBy2);
@@ -438,11 +444,11 @@ public class CoachMatch extends Match implements Serializable {
                 equality &= v.getValue1() == this.mValues.get(crit).getValue1();
                 equality &= v.getValue2() == this.mValues.get(crit).getValue2();
             }
-            //equality &= this.getRound() == cm.getRound();
+            
 
             return equality;
 
-        }
+        }*/
 
         return false;
     }

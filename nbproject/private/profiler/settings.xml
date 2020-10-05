@@ -2,5 +2,8 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 <comment/>
+<entry key="org.netbeans.modules.profiler.v2.features.MethodsFeature_SelectedMethodsMode_SELECTION_FLAG">tourma.data.Round,getCoachMatchs,()Ljava/util/ArrayList; </entry>
 <entry key="ACTIVATED_FEATURES">#org.netbeans.modules.profiler.v2.features.MethodsFeature@</entry>
+<entry key="org.netbeans.modules.profiler.v2.features.MethodsFeature_SETTINGS_FLAG">true</entry>
+<entry key="org.netbeans.modules.profiler.v2.features.MethodsFeature_MODE_FLAG">AllClassesMode</entry>
 </properties>
