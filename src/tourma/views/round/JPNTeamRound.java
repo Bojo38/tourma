@@ -430,7 +430,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         jtbRankingTeam.setDefaultRenderer(String.class, mRankingTeam);
         jtbRankingTeam.setDefaultRenderer(Integer.class, mRankingTeam);
 
-        TableFormat.setColumnSize(jtbRankingTeam);
+        //TableFormat.setColumnSize(jtbRankingTeam);
         jtbRankingTeam.setRowHeight(30);
     }
 
@@ -474,8 +474,8 @@ public final class JPNTeamRound extends javax.swing.JPanel {
             if (this.mTournament.getParams().isDisplayByPages()) {
                 int min = (mPageMatchIndex - 1) * mTournament.getParams().getPageSize();
                 int max = mPageMatchIndex * mTournament.getParams().getPageSize();
-                if (max > mTournament.getTeamsCount()) {
-                    max = mTournament.getTeamsCount();
+                if (max > mTournament.getTeamsCount() / 2) {
+                    max = mTournament.getTeamsCount() / 2;
                 }
                 model = new MjtMatchTeams(teams, mRound, min, max);
             } else {
@@ -485,7 +485,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
             mJtbTeamMatch.setModel(model);
             mJtbTeamMatch.setDefaultRenderer(String.class, model);
             mJtbTeamMatch.setDefaultRenderer(Integer.class, model);
-            TableFormat.setColumnSize(mJtbTeamMatch);
+            //TableFormat.setColumnSize(mJtbTeamMatch);
             mJtbTeamMatch.setRowHeight(30);
 
         }

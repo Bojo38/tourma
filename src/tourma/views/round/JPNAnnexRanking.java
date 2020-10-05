@@ -558,8 +558,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                     if (this.mTour.getParams().isDisplayByPages()) {
                         int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
                         int max = mPagePosIndex * mTour.getParams().getPageSize();
-                        if (max > mTour.getCoachsCount()) {
-                            max = mTour.getCoachsCount();
+                        if (max > mTour.getDisplayClans().size()) {
+                            max = mTour.getDisplayClans().size();
                         }
                         modelPos
                                 = new MjtAnnexRankClan(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
@@ -578,8 +578,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                         if (this.mTour.getParams().isDisplayByPages()) {
                             int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
                             int max = mPagePosIndex * mTour.getParams().getPageSize();
-                            if (max > mTour.getCoachsCount()) {
-                                max = mTour.getCoachsCount();
+                            if (max > mTeams.size()) {
+                                max = mTeams.size();
                             }
                             modelPos
                                     = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
@@ -615,8 +615,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                         if (this.mTour.getParams().isDisplayByPages()) {
                             int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
                             int max = mPagePosIndex * mTour.getParams().getPageSize();
-                            if (max > mTour.getCoachsCount()) {
-                                max = mTour.getCoachsCount();
+                            if (max > mTour.getTeamsCount()) {
+                                max = mTour.getTeamsCount();
                             }
                             modelPos
                                     = new MjtAnnexRankTeam(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
@@ -655,7 +655,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             jtbPositive.setDefaultRenderer(String.class, modelPos);
             jtbPositive.setDefaultRenderer(Integer.class, modelPos);
 
-            TableFormat.setColumnSize(jtbPositive);
+            //TableFormat.setColumnSize(jtbPositive);
 
             jtbPositive.setRowHeight(25);
 
@@ -682,8 +682,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                     if (this.mTour.getParams().isDisplayByPages()) {
                         int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
                         int max = mPageNegIndex * mTour.getParams().getPageSize();
-                        if (max > mTour.getCoachsCount()) {
-                            max = mTour.getCoachsCount();
+                        if (max > mTour.getDisplayClans().size()) {
+                            max = mTour.getDisplayClans().size();
                         }
                         modelNeg = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                 mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), 
@@ -698,8 +698,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                     if (this.mTour.getParams().isDisplayByPages()) {
                         int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
                         int max = mPageNegIndex * mTour.getParams().getPageSize();
-                        if (max > mTour.getCoachsCount()) {
-                            max = mTour.getCoachsCount();
+                        if (max > mTour.getDisplayClans().size()) {
+                            max = mTour.getDisplayClans().size();
                         }
                         modelNeg
                                 = new MjtAnnexRankClan(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
@@ -718,8 +718,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                         if (this.mTour.getParams().isDisplayByPages()) {
                             int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
                             int max = mPageNegIndex * mTour.getParams().getPageSize();
-                            if (max > mTour.getCoachsCount()) {
-                                max = mTour.getCoachsCount();
+                            if (max > mTeams.size()) {
+                                max = mTeams.size();
                             }
                             modelNeg
                                     = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
@@ -755,8 +755,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                         if (this.mTour.getParams().isDisplayByPages()) {
                             int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
                             int max = mPageNegIndex * mTour.getParams().getPageSize();
-                            if (max > mTour.getCoachsCount()) {
-                                max = mTour.getCoachsCount();
+                            if (max > mTeams.size()) {
+                                max = mTeams.size();
                             }
                             modelNeg
                                     = new MjtAnnexRankTeam(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
@@ -795,7 +795,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             jtbNegative.setDefaultRenderer(String.class, modelNeg);
             jtbNegative.setDefaultRenderer(Integer.class, modelNeg);
 
-            TableFormat.setColumnSize(jtbNegative);
+            //TableFormat.setColumnSize(jtbNegative);
 
             jtbNegative.setRowHeight(25);
 

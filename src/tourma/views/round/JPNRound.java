@@ -260,7 +260,7 @@ public final class JPNRound extends javax.swing.JPanel {
             ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).setRoundOnly(mRoundOnly);
             ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).update();
         }
-        TableFormat.setColumnSize(jtbRankingIndiv);
+        //TableFormat.setColumnSize(jtbRankingIndiv);
 
         repaint();
     }
@@ -340,7 +340,7 @@ public final class JPNRound extends javax.swing.JPanel {
 
         jtbRankingIndiv.setRowHeight(30);
 
-        TableFormat.setColumnSize(jtbMatches);
+        //TableFormat.setColumnSize(jtbMatches);
     }
 
     /**
