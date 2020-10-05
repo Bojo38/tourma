@@ -154,10 +154,12 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                 for (int j = 0; j <= t.getMatchCount() - 1; j++) {
 
                     final TeamMatch tm = (TeamMatch) t.getMatch(j);
+                    
                     boolean bFound = false;
                     for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
                         final Round r = rounds.get(i);
-                        if (r.containsMatch(tm)) {
+                        if (tm.getRound()==r)
+                        /*if (r.containsMatch(tm))*/ {
                             if (mCriteria != null) {
                                 aValue.add(tm.getValue(mCriteria, mSubtype, t));
                             } else {
@@ -170,7 +172,6 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                             aValue1.add(tm.getValue(5, t));
                         }
                     }
-
                 }
 
                 if (Tournament.getTournament().getParams().isApplyToAnnexTeam()) {
@@ -244,7 +245,8 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
                         boolean bFound = false;
                         for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
                             final Round r = rounds.get(i);
-                            if (r.containsMatch(cm)) {
+                            if (r==cm.getRound())
+                            /*if (r.containsMatch(cm))*/ {
                                 bFound = true;
                             }
                         }

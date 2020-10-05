@@ -106,7 +106,8 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 boolean bFound = false;
                 for (int i = 0; (i < rounds.size()) && (!bFound); i++) {
                     final Round r = rounds.get(i);
-                    if (r.getCoachMatchs().contains(m)) {
+                    if (r==m.getRound())
+                    /*if (r.getCoachMatchs().contains(m))*/ {
                         bFound = true;
                     }
                 }
