@@ -542,8 +542,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                     if (this.mTour.getParams().isDisplayByPages()) {
                         int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
                         int max = mPagePosIndex * mTour.getParams().getPageSize();
-                        if (max > mTour.getCoachsCount()) {
-                            max = mTour.getCoachsCount();
+                        if (max > mTour.getDisplayClans().size()) {
+                            max = mTour.getDisplayClans().size();
                         }
                         modelPos = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                 mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), 
@@ -595,8 +595,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                         if (this.mTour.getParams().isDisplayByPages()) {
                             int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
                             int max = mPagePosIndex * mTour.getParams().getPageSize();
-                            if (max > mTour.getCoachsCount()) {
-                                max = mTour.getCoachsCount();
+                            if (max > mCoachs.size()) {
+                                max = mCoachs.size();
                             }
                             modelPos
                                     = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, 
@@ -615,8 +615,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                         if (this.mTour.getParams().isDisplayByPages()) {
                             int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
                             int max = mPagePosIndex * mTour.getParams().getPageSize();
-                            if (max > mTour.getTeamsCount()) {
-                                max = mTour.getTeamsCount();
+                            if (max > mTeams.size()) {
+                                max = mTeams.size();
                             }
                             modelPos
                                     = new MjtAnnexRankTeam(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
@@ -633,8 +633,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                         if (this.mTour.getParams().isDisplayByPages()) {
                             int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
                             int max = mPagePosIndex * mTour.getParams().getPageSize();
-                            if (max > mTour.getCoachsCount()) {
-                                max = mTour.getCoachsCount();
+                            if (max > mCoachs.size()) {
+                                max = mCoachs.size();
                             }
                             modelPos
                                     = new MjtAnnexRankIndiv(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, 
@@ -735,8 +735,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                         if (this.mTour.getParams().isDisplayByPages()) {
                             int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
                             int max = mPageNegIndex * mTour.getParams().getPageSize();
-                            if (max > mTour.getCoachsCount()) {
-                                max = mTour.getCoachsCount();
+                            if (max > mCoachs.size()) {
+                                max = mCoachs.size();
                             }
                             modelNeg
                                     = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, 
@@ -773,8 +773,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                         if (this.mTour.getParams().isDisplayByPages()) {
                             int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
                             int max = mPageNegIndex * mTour.getParams().getPageSize();
-                            if (max > mTour.getCoachsCount()) {
-                                max = mTour.getCoachsCount();
+                            if (max > mCoachs.size()) {
+                                max = mCoachs.size();
                             }
                             modelNeg
                                     = new MjtAnnexRankIndiv(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, 

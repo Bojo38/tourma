@@ -75,6 +75,9 @@ public final class JPNGroup extends javax.swing.JPanel {
         jtbGroup = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jbtGeneral = new javax.swing.JButton();
+        jbtBack = new javax.swing.JButton();
+        jlbPage = new javax.swing.JLabel();
+        jbtNext = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -102,6 +105,26 @@ public final class JPNGroup extends javax.swing.JPanel {
             }
         });
         jPanel1.add(jbtGeneral);
+
+        jbtBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtBackActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtBack);
+
+        jlbPage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPage.setText("jLabel1");
+        jPanel1.add(jlbPage);
+
+        jbtNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtNextActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jbtNext);
 
         add(jPanel1, java.awt.BorderLayout.SOUTH);
     }// </editor-fold>//GEN-END:initComponents
@@ -139,6 +162,8 @@ public final class JPNGroup extends javax.swing.JPanel {
             }
         }
 
+         jlbPage.setText(Integer.toString(mPageIndex) + " / " + Integer.toString(mPageCount));
+         
         mPageCount = list.size() / this.mTournament.getParams().getPageSize();
         if (mPageCount * this.mTournament.getParams().getPageSize() < list.size()) {
             mPageCount = mPageCount + 1;
@@ -149,8 +174,8 @@ public final class JPNGroup extends javax.swing.JPanel {
         if (this.mTournament.getParams().isDisplayByPages()) {
             int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
             int max = mPageIndex * mTournament.getParams().getPageSize();
-            if (max > mTournament.getCoachsCount()) {
-                max = mTournament.getCoachsCount();
+            if (max > list.size()) {
+                max = list.size();
             }
             tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
                     list, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false, min, max);
@@ -165,7 +190,6 @@ public final class JPNGroup extends javax.swing.JPanel {
 
         jtbGroup.setRowHeight(25);
         //TableFormat.setColumnSize(jtbGroup);
-
     }
 
     private static final String CS_Group = "GENERAL PAR GROUPE";
@@ -178,10 +202,30 @@ public final class JPNGroup extends javax.swing.JPanel {
         jdg.setVisible(true);
 
 }//GEN-LAST:event_jbtGeneralActionPerformed
+
+    private void jbtBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBackActionPerformed
+        mPageIndex = mPageIndex - 1;
+        if (mPageIndex <= 1) {
+            mPageIndex = 1;
+        }
+        update();
+    }//GEN-LAST:event_jbtBackActionPerformed
+
+    private void jbtNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextActionPerformed
+        mPageIndex = mPageIndex + 1;
+        if (mPageIndex >= mPageCount) {
+            mPageIndex = mPageCount;
+        }
+         update();
+    }//GEN-LAST:event_jbtNextActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbtBack;
     private javax.swing.JButton jbtGeneral;
+    private javax.swing.JButton jbtNext;
+    private javax.swing.JLabel jlbPage;
     private javax.swing.JTable jtbGroup;
     // End of variables declaration//GEN-END:variables
 
