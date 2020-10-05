@@ -60,9 +60,29 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
             final int ranking_type4,
             final int ranking_type5,
             final boolean round_only) {
+        this(round, criteria,
+                subtype, clans,
+                full,
+                ranking_type1,
+                ranking_type2,
+                ranking_type3,
+                ranking_type4,
+                ranking_type5,
+                round_only, 0, clans.size());
+    }
+
+    public MjtAnnexRankClan(final int round,
+            final Criteria criteria,
+            final int subtype, final ArrayList<Clan> clans,
+            final boolean full,
+            final int ranking_type1,
+            final int ranking_type2,
+            final int ranking_type3,
+            final int ranking_type4,
+            final int ranking_type5,
+            final boolean round_only, int min, int max) {
         super(round, criteria, subtype, clans, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
         sortDatas();
-
     }
 
     public MjtAnnexRankClan(final int round,
@@ -75,7 +95,30 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
             final int ranking_type4,
             final int ranking_type5,
             final boolean round_only) {
-        super(round, formula, subtype, clans, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+        this(round,
+                formula,
+                subtype, clans,
+                full,
+                ranking_type1,
+                ranking_type2,
+                ranking_type3,
+                ranking_type4,
+                ranking_type5,
+                round_only, 0, clans.size());
+
+    }
+
+    public MjtAnnexRankClan(final int round,
+            final Formula formula,
+            final int subtype, final ArrayList<Clan> clans,
+            final boolean full,
+            final int ranking_type1,
+            final int ranking_type2,
+            final int ranking_type3,
+            final int ranking_type4,
+            final int ranking_type5,
+            final boolean round_only, int min, int max) {
+        super(round, formula, subtype, clans, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only, min, max);
         sortDatas();
 
     }
@@ -175,12 +218,9 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                             //for (int l = 0; (l <= mRound) && (!bFound); l++) {
                             final Round r = Tournament.getTournament().getRound(l);
                             if (r.containsMatch(tm)) {
-                                if (mCriteria!=null)
-                                {
+                                if (mCriteria != null) {
                                     aValue.add(tm.getValue(mCriteria, mSubtype, t));
-                                }
-                                else
-                                {
+                                } else {
                                     aValue.add(tm.getValue(mFormula, t));
                                 }
                                 aValue1.add(tm.getValue(1, t));
@@ -333,13 +373,10 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                             //for (int l = 0; (l <= mRound) && (!bFound); l++) {
                             final Round r = Tournament.getTournament().getRound(l);
                             if (r.containsMatch(m)) {
-                                if (mCriteria!=null)
-                                {
+                                if (mCriteria != null) {
                                     aValue.add(m.getValue(mCriteria, mSubtype, c));
-                                }
-                                else
-                                {
-                                     aValue.add(m.getValue(mFormula, c));
+                                } else {
+                                    aValue.add(m.getValue(mFormula, c));
                                 }
 
                                 aValue1.add(m.getValue(1, c));
@@ -451,15 +488,12 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                 result = Translate.translate(Translate.CS_Clan);
                 break;
             case 2:
-                if (mCriteria!=null)
-                {
+                if (mCriteria != null) {
                     result = mCriteria.getName();
-                }
-                else
-                {
+                } else {
                     result = mFormula.getName();
                 }
-                
+
                 break;
             default:
 
@@ -470,12 +504,12 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
     @Override
     public Object getValueAt(final int row, final int col) {
 
-        final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
+        final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row+mMin);
         String result = StringConstants.CS_NULL;
         try {
             switch (col) {
                 case 0:
-                    result = Integer.toString(row + 1);
+                    result = Integer.toString(row +mMin+ 1);
                     break;
                 case 1:
                     result = ((IWithNameAndPicture) obj.getObject()).getName();
@@ -493,11 +527,11 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
 
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row+mMin, column);
 
         if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
-                Clan t = (Clan) mObjects.get(row);
+                Clan t = (Clan) mObjects.get(row+mMin);
                 if (t.getPicture() != null) {
                     ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
                     obj.setIcon(icon);

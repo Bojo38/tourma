@@ -361,6 +361,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jcxUseColor = new javax.swing.JCheckBoxMenuItem();
         jcxUseImage = new javax.swing.JCheckBoxMenuItem();
         jcxDisplayRosters = new javax.swing.JCheckBoxMenuItem();
+        jcxDisplayByPages = new javax.swing.JCheckBoxMenuItem();
         jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
         jSeparator21 = new javax.swing.JPopupMenu.Separator();
@@ -604,14 +605,22 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnTools.add(jcxUseImage);
 
-        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("tourma/languages/language_en"); // NOI18N
-        jcxDisplayRosters.setText(bundle1.getString("DisplayRostersInFullScreen")); // NOI18N
+        jcxDisplayRosters.setText(bundle.getString("DisplayRostersInFullScreen")); // NOI18N
         jcxDisplayRosters.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcxDisplayRostersActionPerformed(evt);
             }
         });
         jmnTools.add(jcxDisplayRosters);
+
+        jcxDisplayByPages.setSelected(true);
+        jcxDisplayByPages.setText(bundle.getString("DisplayByPages")); // NOI18N
+        jcxDisplayByPages.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxDisplayByPagesActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxDisplayByPages);
 
         jMenuBar1.add(jmnTools);
 
@@ -3078,6 +3087,13 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         NAF.setIgnoreCaps(jcxIgnoreCaps.isSelected());
     }//GEN-LAST:event_jcxIgnoreCapsActionPerformed
 
+    private void jcxDisplayByPagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxDisplayByPagesActionPerformed
+         Tournament.getTournament().getParams().setDisplayByPages(jcxDisplayByPages.isSelected());
+        if (jpnContent instanceof JPNRound) {
+            ((JPNRound) jpnContent).update();
+        }
+    }//GEN-LAST:event_jcxDisplayByPagesActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3542,6 +3558,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JCheckBoxMenuItem jckmiHideNonNaf;
     private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
+    private javax.swing.JCheckBoxMenuItem jcxDisplayByPages;
     private javax.swing.JCheckBoxMenuItem jcxDisplayRosters;
     private javax.swing.JCheckBoxMenuItem jcxIgnoreCaps;
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;

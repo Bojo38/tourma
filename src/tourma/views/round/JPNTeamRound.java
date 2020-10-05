@@ -10,8 +10,15 @@
  */
 package tourma.views.round;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import tourma.MainFrame;
@@ -28,6 +35,7 @@ import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankTeam;
 import tourma.tableModel.MjtMatchTeams;
+import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
 import tourma.utils.display.TableFormat;
 import tourma.views.report.JdgGlobal;
@@ -44,6 +52,15 @@ public final class JPNTeamRound extends javax.swing.JPanel {
     private final Tournament mTournament;
     private JTable mJtbTeamMatch = null;
 
+    private int mPageCount = 0;
+    private int mPageIndex = 0;
+
+    private int mPageMatchCount = 0;
+    private int mPageMatchIndex = 0;
+
+    JButton jbtBackTeam = new JButton(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png")));
+    JButton jbtNextTeam = new JButton(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png")));
+    JLabel jlbPageTeam = new JLabel();
     /**
      *
      */
@@ -62,14 +79,66 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         mRound = r;
         mTournament = t;
 
+        mPageCount = t.getTeamsCount() / t.getParams().getPageSize();
+        if (mPageCount * t.getParams().getPageSize() < t.getTeamsCount()) {
+            mPageCount = mPageCount + 1;
+        }
+        mPageIndex = 1;
+
+        mPageMatchCount = r.getMatchsCount() / t.getParams().getPageSize();
+        if (mPageMatchCount * t.getParams().getPageSize() < r.getMatchsCount()) {
+            mPageMatchCount = mPageMatchCount + 1;
+        }
+        mPageMatchIndex = 1;
+
         if (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
             final JScrollPane jsp = new JScrollPane();
             mJtbTeamMatch = new JTable();
             jsp.setViewportView(mJtbTeamMatch);
-            jtpTeams.add(Translate.translate(CS_Matchs), jsp);
-            jbtShowMatchTeam.setVisible(true);
+
+            JPanel jpnMatchs = new JPanel(new BorderLayout());
+            jpnMatchs.add(jsp, BorderLayout.CENTER);
+
+            JPanel jpnButtons = new JPanel(new FlowLayout());
+            JButton jbtMatchs = new JButton(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png")));
+            jbtMatchs.addActionListener((ActionEvent e) -> {
+                for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                    if (mRound == mTournament.getRound(i)) {
+                        final JdgRound jdg = new JdgRound(MainFrame.getMainFrame(), true, mRound, i + 1, mTournament, true, true);
+                        jdg.setVisible(true);
+                        break;
+                    }
+                }
+            });
+
+            jbtBackTeam.addActionListener((ActionEvent e) -> {
+                mPageMatchIndex = mPageMatchIndex - 1;
+                if (mPageMatchIndex <= 1) {
+                    mPageMatchIndex = 1;
+                }
+                updateMatchs();
+            });
+
+            jbtNextTeam.addActionListener((ActionEvent e) -> {
+                mPageMatchIndex = mPageMatchIndex + 1;
+                if (mPageMatchIndex >= mPageMatchCount) {
+                    mPageMatchIndex = mPageMatchCount;
+                }
+                updateMatchs();
+            });
+
+            jpnButtons.add(jbtMatchs);
+            jpnButtons.add(jbtBackTeam);
+            jpnButtons.add(jlbPageTeam);
+            jpnButtons.add(jbtNextTeam);
+
+            jpnMatchs.add(jpnButtons, BorderLayout.SOUTH);
+
+            jpnMatchs.add(jsp, BorderLayout.CENTER);
+            jtpTeams.add(Translate.translate(CS_Matchs), jpnMatchs);
+            jpnMatchs.setVisible(true);
         } else {
-            jbtShowMatchTeam.setVisible(false);
+            //jpnMatchs.setVisible(false);
         }
 
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
@@ -86,7 +155,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                     criteria, Tournament.getTournament(), coachs, teams, mRound, false, true);
             jtpAnnexRank.add(criteria.getName(), jpn);
         }
-        
+
         for (int i = 0; i < mTournament.getParams().getFormulaCount(); i++) {
             final Formula formula = mTournament.getParams().getFormula(i);
             ArrayList<Team> teams = new ArrayList<>();
@@ -126,12 +195,15 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         jSplitPane1 = new javax.swing.JSplitPane();
         jpnTeam = new javax.swing.JPanel();
         jtpTeams = new javax.swing.JTabbedPane();
+        jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jtbRankingTeam = new javax.swing.JTable();
-        jPanel8 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jbtGeneralTeam = new javax.swing.JButton();
         jbtGlobal = new javax.swing.JButton();
-        jbtShowMatchTeam = new javax.swing.JButton();
+        jbtBack = new javax.swing.JButton();
+        jlbPage = new javax.swing.JLabel();
+        jbtNext = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jtpAnnexRank = new javax.swing.JTabbedPane();
 
@@ -140,6 +212,8 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         jSplitPane1.setDividerLocation(600);
 
         jpnTeam.setLayout(new java.awt.BorderLayout());
+
+        jPanel8.setLayout(new java.awt.BorderLayout());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
         jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GeneralRankingKey"))); // NOI18N
@@ -159,10 +233,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         jtbRankingTeam.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane3.setViewportView(jtbRankingTeam);
 
-        jtpTeams.addTab(bundle.getString("CLASSEMENT"), jScrollPane3); // NOI18N
-
-        jpnTeam.add(jtpTeams, java.awt.BorderLayout.CENTER);
-        jtpTeams.getAccessibleContext().setAccessibleName(bundle.getString("Ranking")); // NOI18N
+        jPanel8.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
         jbtGeneralTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtGeneralTeam.setText(bundle.getString("GeneralRankingKey")); // NOI18N
@@ -171,7 +242,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                 jbtGeneralTeamActionPerformed(evt);
             }
         });
-        jPanel8.add(jbtGeneralTeam);
+        jPanel2.add(jbtGeneralTeam);
 
         jbtGlobal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
         jbtGlobal.setText(bundle.getString("GlobalRankingKey")); // NOI18N
@@ -180,18 +251,34 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                 jbtGlobalActionPerformed(evt);
             }
         });
-        jPanel8.add(jbtGlobal);
+        jPanel2.add(jbtGlobal);
 
-        jbtShowMatchTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
-        jbtShowMatchTeam.setText(bundle.getString("TeamMatchViewKey")); // NOI18N
-        jbtShowMatchTeam.addActionListener(new java.awt.event.ActionListener() {
+        jbtBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtShowMatchTeamActionPerformed(evt);
+                jbtBackActionPerformed(evt);
             }
         });
-        jPanel8.add(jbtShowMatchTeam);
+        jPanel2.add(jbtBack);
 
-        jpnTeam.add(jPanel8, java.awt.BorderLayout.SOUTH);
+        jlbPage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPage.setText("jLabel1");
+        jPanel2.add(jlbPage);
+
+        jbtNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtNextActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jbtNext);
+
+        jPanel8.add(jPanel2, java.awt.BorderLayout.SOUTH);
+
+        jtpTeams.addTab(bundle.getString("Ranking"), jPanel8); // NOI18N
+
+        jpnTeam.add(jtpTeams, java.awt.BorderLayout.CENTER);
+        jtpTeams.getAccessibleContext().setAccessibleName(bundle.getString("Ranking")); // NOI18N
 
         jSplitPane1.setLeftComponent(jpnTeam);
 
@@ -225,18 +312,6 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         }
 
 }//GEN-LAST:event_jbtGeneralTeamActionPerformed
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jbtShowMatchTeamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtShowMatchTeamActionPerformed
-
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            if (mRound == mTournament.getRound(i)) {
-                final JdgRound jdg = new JdgRound(MainFrame.getMainFrame(), true, mRound, i + 1, mTournament, true, true);
-                jdg.setVisible(true);
-                break;
-            }
-        }
-
-}//GEN-LAST:event_jbtShowMatchTeamActionPerformed
 
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtGlobalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGlobalActionPerformed
@@ -268,14 +343,34 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_jbtGlobalActionPerformed
+
+    private void jbtBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBackActionPerformed
+        mPageIndex = mPageIndex - 1;
+        if (mPageIndex <= 1) {
+            mPageIndex = 1;
+        }
+        updateRank();
+    }//GEN-LAST:event_jbtBackActionPerformed
+
+    private void jbtNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextActionPerformed
+        mPageIndex = mPageIndex + 1;
+        if (mPageIndex >= mPageCount) {
+            mPageIndex = mPageCount;
+        }
+        updateRank();
+    }//GEN-LAST:event_jbtNextActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JButton jbtBack;
     private javax.swing.JButton jbtGeneralTeam;
     private javax.swing.JButton jbtGlobal;
-    private javax.swing.JButton jbtShowMatchTeam;
+    private javax.swing.JButton jbtNext;
+    private javax.swing.JLabel jlbPage;
     private javax.swing.JPanel jpnTeam;
     private javax.swing.JTable jtbRankingTeam;
     private javax.swing.JTabbedPane jtpAnnexRank;
@@ -287,6 +382,25 @@ public final class JPNTeamRound extends javax.swing.JPanel {
      */
     public void update() {
 
+        for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
+            final JPNAnnexRanking jpn = (JPNAnnexRanking) jtpAnnexRank.getComponent(i);
+            jpn.setRoundOnly(mRoundOnly);
+            jpn.update();
+        }
+
+        updateRank();
+        updateMatchs();
+
+    }
+
+    private void updateRank() {
+
+        jbtBack.setEnabled(mTournament.getParams().isDisplayByPages());
+        jbtNext.setEnabled(mTournament.getParams().isDisplayByPages());
+        jlbPage.setEnabled(mTournament.getParams().isDisplayByPages());
+
+        jlbPage.setText(Integer.toString(mPageIndex) + " / " + Integer.toString(mPageCount));
+
         final ArrayList<Round> v = new ArrayList<>();
 
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
@@ -295,26 +409,54 @@ public final class JPNTeamRound extends javax.swing.JPanel {
             }
         }
         v.add(mRound);
-
-        for (int i = 0; i < jtpAnnexRank.getComponentCount(); i++) {
-            final JPNAnnexRanking jpn = (JPNAnnexRanking) jtpAnnexRank.getComponent(i);
-            jpn.setRoundOnly(mRoundOnly);
-            jpn.update();
-        }
-
         MjtRankingTeam mRankingTeam;
         ArrayList<Team> teams = new ArrayList<>();
         for (int i = 0; i < mTournament.getTeamsCount(); i++) {
             teams.add(mTournament.getTeam(i));
         }
-        mRankingTeam = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, teams, mRoundOnly);
+
+        if (this.mTournament.getParams().isDisplayByPages()) {
+            int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
+            int max = mPageIndex * mTournament.getParams().getPageSize();
+            if (max > mTournament.getTeamsCount()) {
+                max = mTournament.getTeamsCount();
+            }
+            mRankingTeam = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, teams, mRoundOnly, min, max);
+        } else {
+            mRankingTeam = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, teams, mRoundOnly);
+        }
+
         jtbRankingTeam.setModel(mRankingTeam);
         jtbRankingTeam.setDefaultRenderer(String.class, mRankingTeam);
         jtbRankingTeam.setDefaultRenderer(Integer.class, mRankingTeam);
 
         TableFormat.setColumnSize(jtbRankingTeam);
+        jtbRankingTeam.setRowHeight(30);
+    }
+
+    private void updateMatchs() {
+
+        jbtBackTeam.setEnabled(mTournament.getParams().isDisplayByPages());
+        jbtBackTeam.setEnabled(mTournament.getParams().isDisplayByPages());
+        jlbPageTeam.setEnabled(mTournament.getParams().isDisplayByPages());
+
+        jlbPageTeam.setText(Integer.toString(mPageMatchIndex) + " / " + Integer.toString(mPageMatchCount));
 
         if (mJtbTeamMatch != null) {
+
+            final ArrayList<Round> v = new ArrayList<>();
+
+            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                if (mTournament.getRound(i).getHour().before(mRound.getHour())) {
+                    v.add(mTournament.getRound(i));
+                }
+            }
+            v.add(mRound);
+
+            ArrayList<Team> teams = new ArrayList<>();
+            for (int i = 0; i < mTournament.getTeamsCount(); i++) {
+                teams.add(mTournament.getTeam(i));
+            }
             for (int i = 0; i < mRound.getMatchsCount(); i++) {
                 final Match m = mRound.getMatch(i);
                 final Team team1 = (Team) m.getCompetitor1();
@@ -326,15 +468,27 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                     teams.add(team2);
                 }
             }
-            final MjtMatchTeams model = new MjtMatchTeams(teams, mRound);
+
+            MjtMatchTeams model;
+
+            if (this.mTournament.getParams().isDisplayByPages()) {
+                int min = (mPageMatchIndex - 1) * mTournament.getParams().getPageSize();
+                int max = mPageMatchIndex * mTournament.getParams().getPageSize();
+                if (max > mTournament.getTeamsCount()) {
+                    max = mTournament.getTeamsCount();
+                }
+                model = new MjtMatchTeams(teams, mRound, min, max);
+            } else {
+                model = new MjtMatchTeams(teams, mRound);
+            }
+
             mJtbTeamMatch.setModel(model);
             mJtbTeamMatch.setDefaultRenderer(String.class, model);
             mJtbTeamMatch.setDefaultRenderer(Integer.class, model);
             TableFormat.setColumnSize(mJtbTeamMatch);
             mJtbTeamMatch.setRowHeight(30);
-        }
-        jtbRankingTeam.setRowHeight(30);
 
+        }
     }
 
 }

@@ -66,16 +66,20 @@ public abstract class MjtAnnexRank extends MjtRanking {
      * @param round_only
      */
     @SuppressWarnings("OverridableMethodCallInConstructor")
-    public MjtAnnexRank(final int round, final Criteria criteria, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5,final boolean round_only) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects,round_only);
+    public MjtAnnexRank(final int round, final Criteria criteria, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5,final boolean round_only,int min, int max) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects,round_only,min,max);
         mCriteria = criteria;
         mSubtype = subtype;
         //_ranking_type = ranking_type;
         mFullRanking = full;
     }
 
-    public MjtAnnexRank(final int round, final Formula formula, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5,final boolean round_only) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects,round_only);
+    public MjtAnnexRank(final int round, final Criteria criteria, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5,final boolean round_only) {
+        this(round, criteria,subtype,objects,full, ranking_type1,ranking_type2, ranking_type3, ranking_type4, ranking_type5,round_only,0,objects.size());
+    }
+    
+    public MjtAnnexRank(final int round, final Formula formula, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5,final boolean round_only,int min, int max) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, objects,round_only, min,max);
         mFormula = formula;
         mCriteria=null;
         mSubtype = subtype;
@@ -83,6 +87,10 @@ public abstract class MjtAnnexRank extends MjtRanking {
         mFullRanking = full;
     }
     
+     public MjtAnnexRank(final int round, final Formula formula, final int subtype, final ArrayList objects, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5,final boolean round_only) {
+         this(round, formula, subtype, objects, full, ranking_type1,ranking_type2,ranking_type3, ranking_type4,ranking_type5,round_only,0,objects.size());
+     }
+   
     /**
      * this function sort the data relative to current object.
      */
@@ -94,9 +102,9 @@ public abstract class MjtAnnexRank extends MjtRanking {
 
     @Override
     public int getRowCount() {
-        int result = Math.min(3, mDatas.size());
+        int result = Math.min(3, mMax-mMin);
         if (mFullRanking) {
-            result = mDatas.size();
+            result =mMax-mMin;
         }
         return result;
     }

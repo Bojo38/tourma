@@ -48,20 +48,39 @@ public final class MjtRankingClan extends MjtRanking {
             final int ranking_type3,
             final int ranking_type4,
             final int ranking_type5,
-            final ArrayList<Clan> clans, final boolean round_only) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, clans, round_only);
+            final ArrayList<Clan> clans, final boolean round_only,int min, int max) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, clans, round_only,min,max);
 
         sortDatas();
     }
 
+     public MjtRankingClan(final int round,
+            final int ranking_type1,
+            final int ranking_type2,
+            final int ranking_type3,
+            final int ranking_type4,
+            final int ranking_type5,
+            final ArrayList<Clan> clans, final boolean round_only){
+          this(round,
+            ranking_type1,
+            ranking_type2,
+            ranking_type3,
+            ranking_type4,
+            ranking_type5,
+            clans, round_only,0,clans.size());
+     }
+             
+      public MjtRankingClan(final int round, final ArrayList<Clan> clans, final boolean round_only) throws RemoteException {
+          this(round,  clans,  round_only,0,clans.size());
+      }
     /**
      *
      * @param round
      * @param clans
      * @param round_only
      */
-    public MjtRankingClan(final int round, final ArrayList<Clan> clans, final boolean round_only) throws RemoteException {
-        super(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), clans, round_only);
+    public MjtRankingClan(final int round, final ArrayList<Clan> clans, final boolean round_only,int min,int max) throws RemoteException {
+        super(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), clans, round_only,min,max);
         sortDatas();
     }
 
@@ -437,11 +456,11 @@ public final class MjtRankingClan extends MjtRanking {
     @Override
     public Object getValueAt(final int row, final int col) {
         Object object = StringConstants.CS_NULL;
-        final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
+        final ObjectRanking obj = (ObjectRanking) mDatas.get(row+mMin);
         try {
             switch (col) {
                 case 0:
-                    object = row + 1;
+                    object = row +mMin+ 1;
                     break;
                 case 1:
                     object = ((IWithNameAndPicture) obj.getObject()).getName();
@@ -472,10 +491,10 @@ public final class MjtRankingClan extends MjtRanking {
 
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row+mMin, column);
         if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
-                Clan t = (Clan) mObjects.get(row);
+                Clan t = (Clan) mObjects.get(row+mMin);
                 if (t.getPicture() != null) {
                     ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
                     obj.setIcon(icon);

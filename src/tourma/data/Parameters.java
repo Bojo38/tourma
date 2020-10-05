@@ -550,6 +550,7 @@ public class Parameters implements IXMLExport, Serializable {
      * Use the color to displlay Match/rank
      */
     private boolean useColor = true;
+    private boolean displayByPages=true;
 
     /**
      *
@@ -759,6 +760,8 @@ public class Parameters implements IXMLExport, Serializable {
 
         params.setAttribute(StringConstants.CS_PORTUGAL, Boolean.toString(this.isPortugal()));
         params.setAttribute(StringConstants.CS_COLOR, Boolean.toString(this.isUseColor()));
+        params.setAttribute(StringConstants.CS_BYPAGES, Boolean.toString(this.isDisplayByPages()));
+        params.setAttribute(StringConstants.CS_PAGE_SIZE, Integer.toString(this.getPageSize()));
         params.setAttribute(StringConstants.CS_USE_IMAGE, Boolean.toString(this.isUseImage()));
 
         params.setAttribute(StringConstants.CS_USE_LARGE_VICTORY, Boolean.toString(this.isUseLargeVictory()));
@@ -932,6 +935,8 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setUseTeamHugeVictory(params.getAttribute(StringConstants.CS_USE_TEAM_HUGE_VICTORY).getBooleanValue());
                 this.setUseTeamLittleLoss(params.getAttribute(StringConstants.CS_USE_TEAM_LITTLE_LOST).getBooleanValue());
                 this.setUseTeamHugeLoss(params.getAttribute(StringConstants.CS_USE_TEAM_HUGE_LOST).getBooleanValue());
+                this.setDisplayByPages(params.getAttribute(StringConstants.CS_BYPAGES).getBooleanValue());
+                this.setPageSize(params.getAttribute(StringConstants.CS_PAGE_SIZE).getIntValue());
 
             } catch (NullPointerException ne3) {
                 //JOptionPane.showMessageDialog(null, ne3.getLocalizedMessage());
@@ -2180,4 +2185,26 @@ public class Parameters implements IXMLExport, Serializable {
         mForeColor = c;
     }
 
+    
+    public void setDisplayByPages(boolean d)
+    {
+        displayByPages=d;
+    }
+    
+    public boolean isDisplayByPages()
+    {
+        return displayByPages;
+    }
+    
+    private int pageSize=100;
+    
+    public int getPageSize()
+    {
+        return pageSize;
+    }
+    
+    public void setPageSize(int i)
+    {
+        pageSize=i;
+    }
 }

@@ -36,6 +36,8 @@ public final class MjtRankingIndiv extends MjtRanking {
     private final boolean mForPool;
     private final boolean mForCup;
 
+
+    
     public MjtRankingIndiv(final int round,
             final int ranking_type1,
             final int ranking_type2,
@@ -43,7 +45,24 @@ public final class MjtRankingIndiv extends MjtRanking {
             final int ranking_type4,
             final int ranking_type5,
             final ArrayList coachs, final boolean tournament, final boolean round_only, final boolean forPool,boolean forCup) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs, round_only);
+        
+        this(round,
+            ranking_type1,
+            ranking_type2,
+            ranking_type3,
+            ranking_type4,
+            ranking_type5,
+            coachs, tournament, round_only, forPool, forCup,0,coachs.size());
+    }
+    
+    public MjtRankingIndiv(final int round,
+            final int ranking_type1,
+            final int ranking_type2,
+            final int ranking_type3,
+            final int ranking_type4,
+            final int ranking_type5,
+            final ArrayList coachs, final boolean tournament, final boolean round_only, final boolean forPool,boolean forCup,int min, int max) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, coachs, round_only,min,max);
         mTeamTournament = tournament;
         mForPool = forPool;
         mForCup = forCup;
@@ -51,6 +70,10 @@ public final class MjtRankingIndiv extends MjtRanking {
     }
 
     public MjtRankingIndiv(final int round, final ArrayList coachs, boolean teamTournament, final boolean round_only) {
+        this(round,coachs,teamTournament,round_only,0,coachs.size());
+    }
+    
+    public MjtRankingIndiv(final int round, final ArrayList coachs, boolean teamTournament, final boolean round_only,int min, int max) {
 
         this(round,
                 Tournament.getTournament().getParams().getRankingIndiv1(),
@@ -58,7 +81,7 @@ public final class MjtRankingIndiv extends MjtRanking {
                 Tournament.getTournament().getParams().getRankingIndiv3(),
                 Tournament.getTournament().getParams().getRankingIndiv4(),
                 Tournament.getTournament().getParams().getRankingIndiv5(),
-                coachs, teamTournament, round_only, false, false);
+                coachs, teamTournament, round_only, false, false,min,max);
     }
 
     /**
@@ -447,8 +470,8 @@ public final class MjtRankingIndiv extends MjtRanking {
     public Object getValueAt(final int row, final int col) {
         Object object = "";
         try {
-            if (mDatas.size() > row) {
-                final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
+            if (mDatas.size() > row+mMin) {
+                final ObjectRanking obj = (ObjectRanking) mDatas.get(row+mMin);
                 int cl = col;
                 if (mTeamTournament) {
                     if (col > 1) {
@@ -461,7 +484,7 @@ public final class MjtRankingIndiv extends MjtRanking {
 
                 switch (cl) {
                     case 0:
-                        object = row + 1;
+                        object = row +mMin+ 1;
                         break;
                     case 1:
                         if (mTeamTournament) {
@@ -529,10 +552,10 @@ public final class MjtRankingIndiv extends MjtRanking {
 
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row+mMin, column);
         if (Tournament.getTournament().getParams().isUseImage()) {
             if ((column == 1) && mTeamTournament) {
-                Coach c = (Coach) mObjects.get(row);
+                Coach c = (Coach) mObjects.get(row+mMin);
                 if (c.getTeamMates().getPicture() != null) {
                     ImageIcon icon = ImageTreatment.resize(c.getTeamMates().getPicture(), 30, 30);
                     obj.setIcon(icon);

@@ -30,6 +30,9 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
     private final ArrayList<Team> mTeams;
     private final Round mRound;
+    
+    private int mMin;
+    private int mMax;
 
     /**
      *
@@ -37,8 +40,14 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
      * @param round
      */
     public MjtMatchTeams(final ArrayList<Team> teams, final Round round) {
+        this(teams,round,0,teams.size()/2);
+    }
+    
+    public MjtMatchTeams(final ArrayList<Team> teams, final Round round,int min,int max) {
         mTeams = teams;
         mRound = round;
+        mMin=min;
+        mMax=max;
     }
 
     @Override
@@ -48,7 +57,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
     @Override
     public int getRowCount() {
-        return mRound.getMatchsCount();
+        return mMax-mMin;
     }
 
     @Override
@@ -82,8 +91,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
     public Object getValueAt(final int row, final int col) {
         Object obj = StringConstants.CS_NULL;
         if (mTeams.size() > 0) {
-
-            final TeamMatch m = (TeamMatch) mRound.getMatch(row);
+            final TeamMatch m = (TeamMatch) mRound.getMatch(row+mMin);
             Team team1 = (Team) m.getCompetitor1();
             Team team2 = (Team) m.getCompetitor2();
 
@@ -93,7 +101,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
             switch (col) {
                 case 0:
-                    obj = row + 1;
+                    obj = row +mMin+ 1;
                     break;
                 case 1:
                     obj = team1.getName();
@@ -201,7 +209,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
 
         if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
-                TeamMatch tm = (TeamMatch) mRound.getMatch(row);
+                TeamMatch tm = (TeamMatch) mRound.getMatch(row+mMin);
                 if (tm.getCompetitor1().getPicture() != null) {
                     JLabel obj = new JLabel();
                     ImageIcon icon = ImageTreatment.resize(tm.getCompetitor1().getPicture(), 30, 30);
@@ -213,7 +221,7 @@ public class MjtMatchTeams extends AbstractTableModel implements TableCellRender
                 }
             }
             if (column == 5) {
-                TeamMatch tm = (TeamMatch) mRound.getMatch(row);
+                TeamMatch tm = (TeamMatch) mRound.getMatch(row+mMin);
                 if (tm.getCompetitor2().getPicture() != null) {
                     JLabel obj = new JLabel();
                     ImageIcon icon = ImageTreatment.resize(tm.getCompetitor2().getPicture(), 30, 30);

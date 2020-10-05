@@ -74,6 +74,12 @@ public final class JPNRound extends javax.swing.JPanel {
     private final static String CS_ChooseARosterFor = "CHOISISSEZ UN ROSTER POUR ";
     private final static String CS_Roster = "Roster";
 
+    private int mPageCount = 0;
+    private int mPageIndex = 0;
+
+    private int mPageIndivCount = 0;
+    private int mPageIndivIndex = 0;
+
     /**
      * Creates new form JPNRound
      *
@@ -86,6 +92,18 @@ public final class JPNRound extends javax.swing.JPanel {
         mRound = r;
         mTournament = t;
         mRoundNumber = roundNumber;
+
+        mPageCount = r.getCoachMatchs().size() / t.getParams().getPageSize();
+        if (mPageCount * t.getParams().getPageSize() < r.getCoachMatchs().size()) {
+            mPageCount = mPageCount + 1;
+        }
+        mPageIndex = 1;
+
+        mPageIndivCount = t.getCoachsCount() / t.getParams().getPageSize();
+        if (mPageIndivCount * t.getParams().getPageSize() < t.getCoachsCount()) {
+            mPageIndivCount = mPageIndivCount + 1;
+        }
+        mPageIndivIndex = 1;
 
         if (mTournament.getPoolCount() > 0) {
             jcxPoolOption.setSelected(true);
@@ -166,7 +184,7 @@ public final class JPNRound extends javax.swing.JPanel {
             final JPNAnnexRanking jpn = new JPNAnnexRanking(formula.getName(), formula, t, coaches, teams, mRound, false, false);
             jtpAnnexRankings.add(formula.getName(), jpn);
         }
-        
+
         mNafOnly = MainFrame.getMainFrame().isNafOnly();
         mRoundOnly = MainFrame.getMainFrame().isRoundOnly();
         update();
@@ -205,50 +223,12 @@ public final class JPNRound extends javax.swing.JPanel {
             }
 
 //            jbtDeleteRound.setEnabled(!locked);
-            final MjtMatches model = new MjtMatches(mRound.getCoachMatchs(), locked, mTournament.getParams().isTeamTournament(), true, mNafOnly);
-            jtbMatches.setModel(model);
-            jtbMatches.setDefaultRenderer(String.class, model);
-            jtbMatches.setDefaultRenderer(Integer.class, model);
-            jtbMatches.setRowHeight(30);
-
-            jtbRankingIndiv.setRowHeight(30);
-
-            TableFormat.setColumnSize(jtbMatches);
+            updateMatches(locked);
 
             if (mRoundNumber < mTournament.getRoundsCount()) {
-                boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());
 
-                if (forPool) {
-                    jcxPoolOption.setEnabled(true);
-                    forPool = jcxPoolOption.isSelected();
-                } else {
-                    jcxPoolOption.setSelected(false);
-                    jcxPoolOption.setEnabled(false);
-                }
+                updateIndiv();
 
-                boolean forCup = mRound.isCup();
-                if (forCup) {
-                    jcxCupOption.setEnabled(true);
-                    forCup = jcxCupOption.isSelected();
-                } else {
-                    jcxCupOption.setSelected(false);
-                    jcxCupOption.setEnabled(false);
-                }
-
-                final ArrayList<Coach> coaches = new ArrayList<>();
-                for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
-                    coaches.add(Tournament.getTournament().getCoach(cpt));
-                }
-                final MjtRankingIndiv mRanking = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool, forCup);
-                jtbRankingIndiv.setModel(mRanking);
-                jtbRankingIndiv.setDefaultRenderer(String.class, mRanking);
-                jtbRankingIndiv.setDefaultRenderer(Integer.class, mRanking);
-
-                for (int i = 0; i < jtpAnnexRankings.getComponentCount(); i++) {
-                    ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).setRoundOnly(mRoundOnly);
-                    ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).update();
-                }
-                TableFormat.setColumnSize(jtbRankingIndiv);
             }
 
             jmiChangeRosterForThisRound.setEnabled(Tournament.getTournament().getParams().isMultiRoster());
@@ -279,6 +259,91 @@ public final class JPNRound extends javax.swing.JPanel {
         repaint();
     }
 
+    private void updateIndiv() {
+
+        boolean forPool = (mTournament.getPoolCount() > 0) && (!mRound.isCup());
+
+        if (forPool) {
+            jcxPoolOption.setEnabled(true);
+            forPool = jcxPoolOption.isSelected();
+        } else {
+            jcxPoolOption.setSelected(false);
+            jcxPoolOption.setEnabled(false);
+        }
+
+        boolean forCup = mRound.isCup();
+        if (forCup) {
+            jcxCupOption.setEnabled(true);
+            forCup = jcxCupOption.isSelected();
+        } else {
+            jcxCupOption.setSelected(false);
+            jcxCupOption.setEnabled(false);
+        }
+
+        jbtBackIndiv.setEnabled(mTournament.getParams().isDisplayByPages());
+        jbtNextIndiv.setEnabled(mTournament.getParams().isDisplayByPages());
+        jlbPageIndiv.setEnabled(mTournament.getParams().isDisplayByPages());
+
+        jlbPageIndiv.setText(Integer.toString(mPageIndivIndex) + " / " + Integer.toString(mPageIndivCount));
+
+        final ArrayList<Coach> coaches = new ArrayList<>();
+        for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
+            coaches.add(Tournament.getTournament().getCoach(cpt));
+        }
+
+        MjtRankingIndiv mRanking;
+        if (this.mTournament.getParams().isDisplayByPages()) {
+            int min = (mPageIndivIndex - 1) * mTournament.getParams().getPageSize();
+            int max = mPageIndivIndex * mTournament.getParams().getPageSize();
+            if (max > mTournament.getCoachsCount()) {
+                max =  mTournament.getCoachsCount();
+            }
+            mRanking = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool, forCup, min, max);
+        } else {
+            mRanking = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool, forCup);
+        }
+
+        jtbRankingIndiv.setModel(mRanking);
+        jtbRankingIndiv.setDefaultRenderer(String.class, mRanking);
+        jtbRankingIndiv.setDefaultRenderer(Integer.class, mRanking);
+
+        for (int i = 0; i < jtpAnnexRankings.getComponentCount(); i++) {
+            ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).setRoundOnly(mRoundOnly);
+            ((JPNAnnexRanking) jtpAnnexRankings.getComponent(i)).update();
+        }
+        TableFormat.setColumnSize(jtbRankingIndiv);
+    }
+
+    private void updateMatches(boolean locked) {
+        jbtBack.setEnabled(mTournament.getParams().isDisplayByPages());
+        jbtNext.setEnabled(mTournament.getParams().isDisplayByPages());
+        jlbPage.setEnabled(mTournament.getParams().isDisplayByPages());
+
+        jlbPage.setText(Integer.toString(mPageIndex) + " / " + Integer.toString(mPageCount));
+
+        MjtMatches model = null;
+
+        if (this.mTournament.getParams().isDisplayByPages()) {
+            int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
+            int max = mPageIndex * mTournament.getParams().getPageSize();
+            if (max > mRound.getCoachMatchs().size()) {
+                max = mRound.getCoachMatchs().size();
+            }
+            model = new MjtMatches(mRound.getCoachMatchs(), locked, mTournament.getParams().isTeamTournament(), true, mNafOnly, min, max);
+        } else {
+            model = new MjtMatches(mRound.getCoachMatchs(), locked, mTournament.getParams().isTeamTournament(), true, mNafOnly);
+        }
+
+        jtbMatches.setModel(model);
+        jtbMatches.setDefaultRenderer(String.class, model);
+        jtbMatches.setDefaultRenderer(Integer.class, model);
+        jtbMatches.setRowHeight(30);
+
+        jtbRankingIndiv.setRowHeight(30);
+
+        TableFormat.setColumnSize(jtbMatches);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -299,6 +364,9 @@ public final class JPNRound extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         jbtShowMatches = new javax.swing.JButton();
         jbtShowResults = new javax.swing.JButton();
+        jbtBack = new javax.swing.JButton();
+        jlbPage = new javax.swing.JLabel();
+        jbtNext = new javax.swing.JButton();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -306,6 +374,9 @@ public final class JPNRound extends javax.swing.JPanel {
         jPanel7 = new javax.swing.JPanel();
         jbtGeneralIndiv = new javax.swing.JButton();
         jbtGlobal = new javax.swing.JButton();
+        jbtBackIndiv = new javax.swing.JButton();
+        jlbPageIndiv = new javax.swing.JLabel();
+        jbtNextIndiv = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jcxPoolOption = new javax.swing.JCheckBox();
         jcxCupOption = new javax.swing.JCheckBox();
@@ -393,6 +464,26 @@ public final class JPNRound extends javax.swing.JPanel {
         });
         jPanel3.add(jbtShowResults);
 
+        jbtBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtBackActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtBack);
+
+        jlbPage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPage.setText("jLabel1");
+        jPanel3.add(jlbPage);
+
+        jbtNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtNextActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jbtNext);
+
         jPanel1.add(jPanel3, java.awt.BorderLayout.SOUTH);
 
         jtpGlobal.addTab(bundle.getString("MatchsKey"), new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png")), jPanel1); // NOI18N
@@ -436,6 +527,26 @@ public final class JPNRound extends javax.swing.JPanel {
             }
         });
         jPanel7.add(jbtGlobal);
+
+        jbtBackIndiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBackIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtBackIndivActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jbtBackIndiv);
+
+        jlbPageIndiv.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlbPageIndiv.setText("jLabel1");
+        jPanel7.add(jlbPageIndiv);
+
+        jbtNextIndiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNextIndiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtNextIndivActionPerformed(evt);
+            }
+        });
+        jPanel7.add(jbtNextIndiv);
 
         jPanel6.add(jPanel7, java.awt.BorderLayout.SOUTH);
 
@@ -900,6 +1011,38 @@ public final class JPNRound extends javax.swing.JPanel {
         update();
     }//GEN-LAST:event_jcxCupOptionActionPerformed
 
+    private void jbtNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextActionPerformed
+        mPageIndex = mPageIndex + 1;
+        if (mPageIndex >= mPageCount) {
+            mPageIndex = mPageCount;
+        }
+        updateMatches(false);
+    }//GEN-LAST:event_jbtNextActionPerformed
+
+    private void jbtBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBackActionPerformed
+        mPageIndex = mPageIndex - 1;
+        if (mPageIndex <= 1) {
+            mPageIndex = 1;
+        }
+        updateMatches(false);
+    }//GEN-LAST:event_jbtBackActionPerformed
+
+    private void jbtBackIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBackIndivActionPerformed
+        mPageIndivIndex = mPageIndivIndex - 1;
+        if (mPageIndivIndex <= 1) {
+            mPageIndivIndex = 1;
+        }
+        updateIndiv();
+    }//GEN-LAST:event_jbtBackIndivActionPerformed
+
+    private void jbtNextIndivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtNextIndivActionPerformed
+        mPageIndivIndex = mPageIndivIndex + 1;
+        if (mPageIndivIndex >= mPageIndivCount) {
+            mPageIndivIndex = mPageIndivCount;
+        }
+        updateIndiv();
+    }//GEN-LAST:event_jbtNextIndivActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -910,12 +1053,18 @@ public final class JPNRound extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JButton jbtBack;
+    private javax.swing.JButton jbtBackIndiv;
     private javax.swing.JButton jbtGeneralIndiv;
     private javax.swing.JButton jbtGlobal;
+    private javax.swing.JButton jbtNext;
+    private javax.swing.JButton jbtNextIndiv;
     private javax.swing.JButton jbtShowMatches;
     private javax.swing.JButton jbtShowResults;
     private javax.swing.JCheckBox jcxCupOption;
     private javax.swing.JCheckBox jcxPoolOption;
+    private javax.swing.JLabel jlbPage;
+    private javax.swing.JLabel jlbPageIndiv;
     private javax.swing.JMenuItem jmiChangePairing;
     private javax.swing.JMenuItem jmiChangeRosterForThisRound;
     private javax.swing.JMenuItem jmiEditCoach;

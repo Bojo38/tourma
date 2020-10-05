@@ -277,6 +277,9 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
     @SuppressWarnings("ProtectedField")
     protected boolean mRoundOnly = false;
 
+    protected int mMin;
+    protected int mMax;
+
     /**
      *
      * @param round
@@ -288,7 +291,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      * @param objects
      * @param roundOnly
      */
-    public MjtRanking(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList objects, final boolean roundOnly) {
+    public MjtRanking(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList objects, final boolean roundOnly, int min, int max) {
         mRound = round;
         mRankingType1 = ranking_type1;
         mRankingType2 = ranking_type2;
@@ -297,6 +300,8 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
         mRankingType5 = ranking_type5;
         mObjects = objects;
         mRoundOnly = roundOnly;
+        mMin=min;
+        mMax=max;
         //sortDatas();
     }
 
@@ -392,7 +397,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      */
     @Override
     public int getSortedValue(int index, int valIndex) {
-        ObjectRanking obj = (ObjectRanking) mDatas.get(index);
+        ObjectRanking obj = (ObjectRanking) mDatas.get(index+mMin);
 
         switch (valIndex) {
 
@@ -419,7 +424,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
      */
     @Override
     public ObjectRanking getSortedObject(int index) {
-        ObjectRanking obj = (ObjectRanking) mDatas.get(index);
+        ObjectRanking obj = (ObjectRanking) mDatas.get(index+mMin);
         return obj;
     }
 
@@ -439,7 +444,7 @@ abstract public class MjtRanking extends AbstractTableModel implements TableCell
 
     @Override
     public int getRowCount() {
-        return mDatas.size();
+        return mMax-mMin;
     }
 
     @Override

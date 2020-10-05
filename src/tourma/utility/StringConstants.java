@@ -194,6 +194,8 @@ public interface StringConstants {
     public static final String CS_INDIVBALANCED = "IndivBalanced";
     public static final String CS_TEAMBALANCED = "TeamBalanced";
     public static final String CS_COLOR = "Color";
+    public static final String CS_BYPAGES="By_Pages";
+    public static final String CS_PAGE_SIZE="Page_size";
     public static final String CS_USE_IMAGE = "UseImage";
     public static final String CS_USE_LARGE_VICTORY = "UseLargeVictory";
     public static final String CS_USE_LITTLE_LOST = "UseLittleLost";

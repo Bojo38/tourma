@@ -49,12 +49,22 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
      * @param round_only
      */
     public MjtAnnexRankTeam(final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only) {
-        super(round, criteria, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+        this(round, criteria, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only, 0, teams.size());
+
+    }
+
+    public MjtAnnexRankTeam(final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only, int min, int max) {
+        super(round, criteria, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only, min, max);
         sortDatas();
     }
 
     public MjtAnnexRankTeam(final int round, final Formula formula, final int subtype, final ArrayList<Team> teams, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only) {
-        super(round, formula, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+        this(round, formula, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only, 0, teams.size());
+
+    }
+
+    public MjtAnnexRankTeam(final int round, final Formula formula, final int subtype, final ArrayList<Team> teams, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only, int min, int max) {
+        super(round, formula, subtype, teams, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only, min, max);
         sortDatas();
     }
 
@@ -68,9 +78,27 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
      * @param full
      * @param round_only
      */
-    public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only) {
+    public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only, int min, int max) {
 
-        super(round, criteria, subtype, teams, full, Tournament.getTournament().getParams().getRankingTeam1(), Tournament.getTournament().getParams().gemRankingTeam2(), Tournament.getTournament().getParams().getRankingTeam3(), Tournament.getTournament().getParams().getRankingTeam4(), Tournament.getTournament().getParams().getRankingTeam5(), round_only);
+        super(round, criteria, subtype, teams, full, Tournament.getTournament().getParams().getRankingTeam1(), Tournament.getTournament().getParams().gemRankingTeam2(), Tournament.getTournament().getParams().getRankingTeam3(), Tournament.getTournament().getParams().getRankingTeam4(), Tournament.getTournament().getParams().getRankingTeam5(), round_only, min, max);
+        Parameters params = Tournament.getTournament().getParams();
+        if (!teamVictory) {
+            this.mRankingType1 = params.getRankingIndiv1();
+            this.mRankingType2 = params.getRankingIndiv2();
+            this.mRankingType3 = params.getRankingIndiv3();
+            this.mRankingType4 = params.getRankingIndiv4();
+            this.mRankingType5 = params.getRankingIndiv5();
+        }
+        sortDatas();
+    }
+
+    public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Criteria criteria, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only) {
+        this(teamVictory, round, criteria, subtype, teams, full, round_only, 0, teams.size());
+    }
+
+    public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Formula formula, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only, int min, int max) {
+
+        super(round, formula, subtype, teams, full, Tournament.getTournament().getParams().getRankingTeam1(), Tournament.getTournament().getParams().gemRankingTeam2(), Tournament.getTournament().getParams().getRankingTeam3(), Tournament.getTournament().getParams().getRankingTeam4(), Tournament.getTournament().getParams().getRankingTeam5(), round_only, min, max);
         Parameters params = Tournament.getTournament().getParams();
         if (!teamVictory) {
             this.mRankingType1 = params.getRankingIndiv1();
@@ -85,17 +113,7 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
 
     public MjtAnnexRankTeam(final boolean teamVictory, final int round, final Formula formula, final int subtype, final ArrayList<Team> teams, final boolean full, final boolean round_only) {
 
-        super(round, formula, subtype, teams, full, Tournament.getTournament().getParams().getRankingTeam1(), Tournament.getTournament().getParams().gemRankingTeam2(), Tournament.getTournament().getParams().getRankingTeam3(), Tournament.getTournament().getParams().getRankingTeam4(), Tournament.getTournament().getParams().getRankingTeam5(), round_only);
-        Parameters params = Tournament.getTournament().getParams();
-        if (!teamVictory) {
-            this.mRankingType1 = params.getRankingIndiv1();
-            this.mRankingType2 = params.getRankingIndiv2();
-            this.mRankingType3 = params.getRankingIndiv3();
-            this.mRankingType4 = params.getRankingIndiv4();
-            this.mRankingType5 = params.getRankingIndiv5();
-        }
-        sortDatas();
-
+        this(teamVictory, round, formula, subtype, teams, full, round_only, 0, teams.size());
     }
 
     @Override
@@ -503,11 +521,11 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
 
         Object val = StringConstants.CS_NULL;
         try {
-            final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
+            final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row+mMin);
 
             switch (col) {
                 case 0:
-                    val = row + 1;
+                    val = row +mMin+ 1;
                     break;
                 case 1:
                     val = ((IWithNameAndPicture) obj.getObject()).getName();
@@ -526,10 +544,10 @@ public final class MjtAnnexRankTeam extends MjtAnnexRank {
     @Override
     public Component getTableCellRendererComponent(final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column
     ) {
-        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row+mMin, column);
         if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
-                Team t = (Team) mObjects.get(row);
+                Team t = (Team) mObjects.get(row+mMin);
                 if (t.getPicture() != null) {
                     ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
                     obj.setIcon(icon);

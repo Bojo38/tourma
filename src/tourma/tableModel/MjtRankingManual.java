@@ -20,14 +20,30 @@ public final class MjtRankingManual extends MjtRanking {
 
     private static final Logger LOG = Logger.getLogger(MjtRankingManual.class.getName());
 
+     public MjtRankingManual(final int round,
+            final int ranking_type1,
+            final int ranking_type2,
+            final int ranking_type3,
+            final int ranking_type4,
+            final int ranking_type5,
+            final ArrayList competitors, boolean round_only){
+         this(round,
+            ranking_type1,
+            ranking_type2,
+            ranking_type3,
+            ranking_type4,
+            ranking_type5,
+           competitors,  round_only,0,competitors.size());
+     }
+    
     public MjtRankingManual(final int round,
             final int ranking_type1,
             final int ranking_type2,
             final int ranking_type3,
             final int ranking_type4,
             final int ranking_type5,
-            final ArrayList competitors, boolean round_only) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, competitors, round_only);
+            final ArrayList competitors, boolean round_only,int min, int max) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, competitors, round_only,min,max);
         sortDatas();
     }
 

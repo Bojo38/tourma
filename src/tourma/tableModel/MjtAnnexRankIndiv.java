@@ -43,19 +43,29 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
      * @param teamTournament
      * @param round_only
      */
-    public MjtAnnexRankIndiv(final int round, final Criteria criteria, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
-        super(round, criteria, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
+    public MjtAnnexRankIndiv(final int round, final Criteria criteria, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only,int min,int max) {
+        super(round, criteria, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only,min,max);
         mTeamTournament = teamTournament;
         sortDatas();
+    }
+
+    public MjtAnnexRankIndiv(final int round, final Formula formula, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only,int min,int max) {
+        super(round, formula, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only,min,max);
+        mTeamTournament = teamTournament;
+        sortDatas();
+
+    }
+
+    
+     public MjtAnnexRankIndiv(final int round, final Criteria criteria, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
+        this(round,criteria,subtype, coachs, full,ranking_type1,ranking_type2, ranking_type3,ranking_type4, ranking_type5,  teamTournament,  round_only,0,coachs.size());
     }
 
     public MjtAnnexRankIndiv(final int round, final Formula formula, final int subtype, final ArrayList<Coach> coachs, final boolean full, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
-        super(round, formula, subtype, coachs, full, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
-        mTeamTournament = teamTournament;
-        sortDatas();
-
+       this(round, formula, subtype, coachs, full, ranking_type1,ranking_type2,ranking_type3,ranking_type4, ranking_type5, teamTournament, round_only,0,coachs.size());
     }
-
+    
+    
     @Override
     @SuppressWarnings("unchecked")
     protected void sortDatas() {
@@ -365,10 +375,10 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
 
         Object val = StringConstants.CS_NULL;
 
-        final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row);
+        final ObjectAnnexRanking obj = (ObjectAnnexRanking) mDatas.get(row+mMin);
         switch (col) {
             case 0:
-                val = row + 1;
+                val = row+mMin + 1;
                 break;
             case 1:
                 val = ((Coach) obj.getObject()).getTeam();

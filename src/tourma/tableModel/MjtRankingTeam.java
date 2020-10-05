@@ -163,12 +163,21 @@ public final class MjtRankingTeam extends MjtRanking {
 
     private final boolean mTeamVictory;
 
+    
     private MjtRankingTeam(final boolean teamVictory, final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList teams, final boolean round_only) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams, round_only);
+        this(teamVictory,round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams, round_only,0, teams.size());
+    }
+    
+        
+    private MjtRankingTeam(final boolean teamVictory, final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList teams, final boolean round_only, int min, int max) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams, round_only,min,max);
         mTeamVictory = teamVictory;
         sortDatas();
     }
 
+    public MjtRankingTeam(final boolean teamVictory, final int round, final ArrayList teams, final boolean round_only) {
+        this(teamVictory,round,teams,round_only,0,teams.size());
+    }
     /**
      *
      * @param teamVictory
@@ -176,10 +185,10 @@ public final class MjtRankingTeam extends MjtRanking {
      * @param teams
      * @param round_only
      */
-    public MjtRankingTeam(final boolean teamVictory, final int round, final ArrayList teams, final boolean round_only) {
+    public MjtRankingTeam(final boolean teamVictory, final int round, final ArrayList teams, final boolean round_only,int min,int max) {
 
         super(round, Tournament.getTournament().getParams().getRankingTeam1(), Tournament.getTournament().getParams().gemRankingTeam2(), Tournament.getTournament().getParams().getRankingTeam3(), Tournament.getTournament().getParams().getRankingTeam4(), Tournament.getTournament().getParams().getRankingTeam5(),
-                teams, round_only);
+                teams, round_only,min,max);
         if (!teamVictory) {
             this.mRankingType1 = Tournament.getTournament().getParams().getRankingIndiv1();
             this.mRankingType2 = Tournament.getTournament().getParams().getRankingIndiv2();
@@ -629,11 +638,11 @@ public final class MjtRankingTeam extends MjtRanking {
         Parameters params = Tournament.getTournament().getParams();
         Object object = StringConstants.CS_NULL;
         try {
-            if (mDatas.size() > row) {
-                final ObjectRanking obj = (ObjectRanking) mDatas.get(row);
+            if (mDatas.size() > row+mMin) {
+                final ObjectRanking obj = (ObjectRanking) mDatas.get(row+mMin);
                 switch (col) {
                     case 0:
-                        object = row + 1;
+                        object = row +mMin+ 1;
                         break;
                     case 1:
                         object = ((IWithNameAndPicture) obj.getObject()).getName();
@@ -706,11 +715,11 @@ public final class MjtRankingTeam extends MjtRanking {
             final int column
     ) {
 
-        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        JLabel obj = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row+mMin, column);
 
         if (Tournament.getTournament().getParams().isUseImage()) {
             if (column == 1) {
-                Team t = (Team) mObjects.get(row);
+                Team t = (Team) mObjects.get(row+mMin);
                 if (t.getPicture() != null) {
                     ImageIcon icon = ImageTreatment.resize(t.getPicture(), 30, 30);
                     obj.setIcon(icon);
