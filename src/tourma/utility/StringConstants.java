@@ -18,8 +18,8 @@ public interface StringConstants {
     public static final String CS_WEB_COLOR2 = "WebColor";
     public static final String CS_WEB_FORECOLOR = "WebForeColor";
     public static final String CS_WEB_BORDERCOLOR = "WebBorderColor";
-    
-    public static final String CS_CROSSMATCHPOOL="CrossPoolMatch";
+
+    public static final String CS_CROSSMATCHPOOL = "CrossPoolMatch";
     /**
      *
      */
@@ -121,8 +121,17 @@ public interface StringConstants {
     public static final String CS_CONCEEDED = "Conceeded";
     public static final String CS_VALUE = "Value";
     public static final String CS_SUBSTITUTION = "Substitution";
-    public static final String CS_CRITERIA = "Criteria";
-    public static final String CS_CRITERIA_ACCRONYM = "Accronyme";
+    public static final String CS_CRITERION = "Criteria";
+    public static final String CS_SUBTYPE="Subtype";
+    public static final String CS_INDIV_ANNEX_RANKING= "IndivAnnexRanking";
+    public static final String CS_TEAM_ANNEX_RANKING= "TeamAnnexRanking";
+    public static final String CS_CLAN_ANNEX_RANKING= "ClanAnnexRanking";
+    
+    public static final String CS_INDIV_RANKING= "IndivRanking";
+    public static final String CS_TEAM_RANKING= "TeamRanking";
+    public static final String CS_CLAN_RANKING= "ClanRanking";
+    
+    public static final String CS_CRITERION_ACCRONYM = "Accronyme";
     public static final String CS_FORMULA = "Formula";
     public static final String CS_POINTS_FOR = "PointsFor";
     public static final String CS_POINTS_AGAINST = "PointsAgainst";
@@ -194,8 +203,8 @@ public interface StringConstants {
     public static final String CS_INDIVBALANCED = "IndivBalanced";
     public static final String CS_TEAMBALANCED = "TeamBalanced";
     public static final String CS_COLOR = "Color";
-    public static final String CS_BYPAGES="By_Pages";
-    public static final String CS_PAGE_SIZE="Page_size";
+    public static final String CS_BYPAGES = "By_Pages";
+    public static final String CS_PAGE_SIZE = "Page_size";
     public static final String CS_USE_IMAGE = "UseImage";
     public static final String CS_USE_LARGE_VICTORY = "UseLargeVictory";
     public static final String CS_USE_LITTLE_LOST = "UseLittleLost";
@@ -217,6 +226,17 @@ public interface StringConstants {
     public static final String CS_EXCEPT_BEST_AND_WORST_INDIV = "ExceptBestAndWorstIndiv";
     public static final String CS_EXCEPT_BEST_AND_WORST_TEAM = "ExceptBestAndWorstTeam";
     public static final String CS_RANKING = "Ranking";
+    public static final String CS_RANKINGS = "Rankings";
+
+    public static final String CS_CLAN_RANKING_SET = "ClanRankingSet";
+    public static final String CS_TEAM_RANKING_SET = "TeamRankingSet";
+    public static final String CS_INDIV_RANKING_SET = "IndivRankingSet";
+
+    public static final String CS_GROUP_RANKING = "GroupRanking";
+    public static final String CS_CATEGORY_INDIV_RANKING = "CategoryIndivRanking";
+    public static final String CS_CATEGORY_TEAM_RANKING = "CategoryTeamRanking";
+    public static final String CS_POOL_INDIV_RANKING = "PoolIndivRanking";
+    public static final String CS_POOL_TEAM_RANKING = "PoolTeamRanking";
     public static final String CS_TYPE = "Type";
     public static final String CS_ORDER = "Order";
     public static final String CS_POS = "Pos";
@@ -236,15 +256,15 @@ public interface StringConstants {
     public static final String CS_WEB_PORT = "Web_port";
 
     public static final String CS_CUP_TYPE = "Type";
-    public static final String CS_CUP_INITIAL_DRAW="Initial_Draw";
+    public static final String CS_CUP_INITIAL_DRAW = "Initial_Draw";
     public static final String CS_CUP_ROUNDS_COUNT = "Rounds_Count";
     public static final String CS_CUP_SWISS_FOR_LOOSERS = "Swiss_for_loosers";
     public static final String CS_CUP_SHUFFLE = "Shuffle";
-    
-    public static final String CS_CUP_TABLES="Tables";
-    public static final String CS_CUP_TABLE="Table";
-    public static final String CS_CUP_ROUNDS="Rounds";
-    public static final String CS_CUP_ROUND="Round";
-    public static final String CS_CUP_MATCHS="Matchs";
-    public static final String CS_CUP_MATCH="Match";
+
+    public static final String CS_CUP_TABLES = "Tables";
+    public static final String CS_CUP_TABLE = "Table";
+    public static final String CS_CUP_ROUNDS = "Rounds";
+    public static final String CS_CUP_ROUND = "Round";
+    public static final String CS_CUP_MATCHS = "Matchs";
+    public static final String CS_CUP_MATCH = "Match";
 }

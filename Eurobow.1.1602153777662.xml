@@ -1,0 +1,809 @@
+<Tournament Version="3" RoundRobin="false">
+  <Description />
+  <Roster Name="Amazones" />
+  <Roster Name="Bas-fonds" />
+  <Roster Name="Chaos" />
+  <Roster Name="Elfes" />
+  <Roster Name="Elfe Sylvain" />
+  <Roster Name="Elfe Noir" />
+  <Roster Name="Gobelins" />
+  <Roster Name="Halflings" />
+  <Roster Name="Haut-Elfes" />
+  <Roster Name="Homme Lézard" />
+  <Roster Name="Humains" />
+  <Roster Name="Khemri" />
+  <Roster Name="Démons de Khorne" />
+  <Roster Name="Morts-Vivants" />
+  <Roster Name="Nains" />
+  <Roster Name="Nain du Chaos" />
+  <Roster Name="Necromantiques" />
+  <Roster Name="Nordiques" />
+  <Roster Name="Pouris de Nurgle" />
+  <Roster Name="Ogres" />
+  <Roster Name="Orques" />
+  <Roster Name="Chaos Pact" />
+  <Roster Name="Skavens" />
+  <Roster Name="Slanns" />
+  <Roster Name="Vampires" />
+  <Parameters Organizer="Copenhaguen" Name="Eurobow" Date="26/10/2012 16:08:39" Place="Eurobow" Victory="2" Large_Victory="2" Draw="1" Lost="0" Refused="0" Conceeded="0" Team_Large_Victory="1000" Team_Little_Lost="100" Team_Huge_Victory="1100" Little_Lost="0" Victory_Team="1000" Draw_Team="400" Team_Lost="0" Huge_Lost_Team="100" Large_Victory_Gap="3" Little_Lost_Gap="1" Team_Large_Victory_Gap="2.0" Team_Huge_Victory_Gap="4.0" Team_Little_Lost_Gap="1.0" Team_Huge_Lost_Gap="2.0" Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Rank1_Team="1" Rank2_Team="2" Rank3_Team="3" Rank4_Team="4" Rank5_Team="5" ByTeam="true" TeamMates="8" TeamPairing="1" TeamIndivPairing="0" TeamVictoryPoints="1" TeamDrawPoints="0" TeamVictoryOnly="false" GroupEnable="false" Substitutes="false" ActvateClans="false" AvoidFirstMatch="true" AvoidMatch="false" ClanTeammatesNumber="3" MultiRoster="false" IndivBalanced="false" TeamBalanced="false" Portugal="false" Color="true" By_Pages="true" Page_size="100" UseImage="false" UseLargeVictory="false" UseLittleLost="false" UseTeamLargeVictory="false" UseTeamHugeVictory="false" UseTeamLittleLost="false" UseTeamHugeLost="false" TableBonus="false" TableBonusPerRound="false" TableBonusCoef="1.0" UseBestResultIndiv="false" UseBestResultTeam="false" BestResultIndiv="5" BestReasultTeam="5" ApplyToAnnexTeam="false" ApplyToAnnexIndiv="false" ExceptBestAndWorstIndiv="false" ExceptBestAndWorstTeam="false" WebEdit="false" Web_port="80" WebColor1="-6710887" WebColor="-4473925" WebForeColor="-1" WebBorderColor="-13421773" CrossPoolMatch="false">
+    <Criteria Criteria="Touchdowns" Accronyme="Touchdowns" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" CriticalValueThreshold="10" DiffDefensiveBonus="0" OffensiveBonus="0" DiffOffensiveBonus="0" DiffDefensiveBinusThreshold="0" OffensiveBonusThreshold="0" DiffOffensiveBonusThreshold="0" ForTeamDiffDefensiveBonus="0" ForTeamOffensiveBonus="0" ForTeamDiffOffensiveBonus="0" TeamDiffDefensiveBonus="0" TeamOffensiveBonus="0" TeamDiffOffensiveBonus="0" TeamDiffDefensiveBinusThreshold="0" TeamOffensiveBonusThreshold="0" TeamDiffOffensiveBonusThreshold="0" />
+    <Criteria Criteria="Sorties" Accronyme="Sorties" PointsFor="0" PointsAgainst="0" PointsTeamFor="0" PointsTeamAgainst="0" CriticalValueThreshold="10" DiffDefensiveBonus="0" OffensiveBonus="0" DiffOffensiveBonus="0" DiffDefensiveBinusThreshold="0" OffensiveBonusThreshold="0" DiffOffensiveBonusThreshold="0" ForTeamDiffDefensiveBonus="0" ForTeamOffensiveBonus="0" ForTeamDiffOffensiveBonus="0" TeamDiffDefensiveBonus="0" TeamOffensiveBonus="0" TeamDiffOffensiveBonus="0" TeamDiffDefensiveBinusThreshold="0" TeamOffensiveBonusThreshold="0" TeamDiffOffensiveBonusThreshold="0" />
+  </Parameters>
+  <Clan Name="Aucun" />
+  <Category Name="Rosbeefs" />
+  <Category Name="Latins" />
+  <Category Name="Nordiques" />
+  <Category Name="Germains" />
+  <Category Name="Francs" />
+  <Coach Name="titouch" Team="titouch" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="knox" Team="knox" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="elyoukey" Team="elyoukey" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Bloody" Team="Bloody" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="daz" Team="Daz" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Jeff" Team="Jeff" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Darktroll" Team="Darktroll" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="FXIII" Team="FXIII" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Rayd" Team="Rayd" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Woelfchen" Team="Woelfchen" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Belentor" Team="Belentor" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Sukram" Team="Sukram" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Lokis_World" Team="Lokis_World" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Don_Pedro" Team="Don_Pedro" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Tùrin" Team="Tùrin" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Wuckal" Team="Wuckal" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Niebling" Team="Niebling" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Fisherking" Team="Fisherking" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="AntonLunau" Team="AntonLunau" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Tank" Team="Tank" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Topper" Team="Topper" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="MissSweden" Team="MissSweden" Roster="Vampires" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Trippleskull" Team="Trippleskull" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Kfoged" Team="Kfoged" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Beppe" Team="Beppe" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Yena" Team="Yena" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Roller" Team="Roller" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Spartako" Team="Spartako" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Phoenix11" Team="Phoenix11" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Liam" Team="Liam" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Farina" Team="Farina" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Darth_Dreddolo" Team="Darth_Dreddolo" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Don_Vito" Team="Don_Vito" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Purplegoo" Team="Purplegoo" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Jimjimany" Team="Jimjimany" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Joemanji" Team="Joemanji" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Podfrey" Team="Podfrey" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Geggster" Team="Geggster" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Hangus" Team="Hangus" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Lycos" Team="Lycos" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Dani112233" Team="Dani112233" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Korgluk" Team="Korgluk" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Murley" Team="Murley" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Kewan" Team="Kewan" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Joanet" Team="Joanet" Roster="Elfes" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Barry" Team="Barry" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Chou" Team="Chou" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Dark Duke" Team="Dark Duke" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Masterfit" Team="Masterfit" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Carloz" Team="Carloz" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Driesfield" Team="Driesfield" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Magictobe" Team="Magictobe" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="JJ" Team="JJ" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Xod" Team="Xod" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Sjapie" Team="Sjapie" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Da_Great_MC" Team="Da_Great_MC" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Planlos" Team="Planlos" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="lauth81" Team="lauth81" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Flix" Team="Flix" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Sputnik" Team="Sputnik" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Oventa" Team="Oventa" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Mootaz" Team="Mootaz" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Utak" Team="Utak" Roster="Elfes" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Kithor" Team="Kithor" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+  </Coach>
+  <Coach Name="Otis" Team="Otis" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+    <Category Name="Francs" />
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Le_Troll" Team="Le_Troll" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+    <Category Name="Francs" />
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Storm" Team="Storm" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+    <Category Name="Francs" />
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Goss" Team="Goss" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+    <Category Name="Francs" />
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Halex" Team="Halex" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+    <Category Name="Francs" />
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Phifoe" Team="Phifoe" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+    <Category Name="Francs" />
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="BDG" Team="BDG" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+    <Category Name="Francs" />
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Desmondus" Team="Desmondus" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Germains" />
+    <Category Name="Francs" />
+    <Category Name="Latins" />
+  </Coach>
+  <Coach Name="Jeguan" Team="Jeguan" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Hanu" Team="Hanu" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Pera" Team="Pera" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Knaegten" Team="Knaegten" Roster="Humains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Duckwing" Team="Duckwing" Roster="Khemri" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="BeerBeer" Team="BeerBeer" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="J-Ho" Team="J-Ho" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Kalrat" Team="Kalrat" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Indigo" Team="Indigo" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Jelmer" Team="Jelmer" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="mepmuff" Team="mepmuff" Roster="Elfes" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="MrNuffle" Team="MrNuffle" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="SirSiebstar" Team="SirSiebstar" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Kwèk" Team="Kwèk" Roster="Halflings" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="DukeJan" Team="DukeJan" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="Tos_T" Team="Tos_T" Roster="Vampires" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Francs" />
+  </Coach>
+  <Coach Name="JammyDodger" Team="JammyDodger" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="BigFred" Team="BigFred" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="dragons" Team="dragons" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="melisqus" Team="melisqus" Roster="Necromantiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="zerak" Team="zerak" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="lard" Team="lard" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Stashman" Team="Stashman" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="Ozt" Team="Ozt" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Nordiques" />
+  </Coach>
+  <Coach Name="David Millar" Team="David Millar" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Lord Garlack" Team="Lord Garlack" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Thadrin" Team="Thadrin" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Zulu501" Team="Zulu501" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Garrick" Team="Garrick" Roster="Elfe Noir" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Doomy" Team="Doomy" Roster="Morts-Vivants" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Tribble" Team="Tribble" Roster="Gobelins" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Bantha" Team="Bantha" Roster="Homme Lézard" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Blocknroll" Team="Blocknroll" Roster="Amazones" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Sillysod" Team="Sillysod" Roster="Humains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Hawca" Team="Hawca" Roster="Elfe Sylvain" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Hobnail" Team="Hobnail" Roster="Nain du Chaos" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Antipixi" Team="Antipixi" Roster="Orques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Dapiranha" Team="Dapiranha" Roster="Nordiques" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Northenknight" Team="Northenknight" Roster="Skavens" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Coach Name="Nonumber" Team="Nonumber" Roster="Nains" NAF="0" Rank="110" Clan="Aucun" RankAvg="150.0" Active="true" Handicap="0">
+    <Category Name="Rosbeefs" />
+  </Coach>
+  <Team Name="France">
+    <Coach Name="titouch" />
+    <Coach Name="knox" />
+    <Coach Name="elyoukey" />
+    <Coach Name="Bloody" />
+    <Coach Name="daz" />
+    <Coach Name="Jeff" />
+    <Coach Name="Darktroll" />
+    <Coach Name="FXIII" />
+    <Category Name="Latins" />
+    <Category Name="Francs" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Austria">
+    <Coach Name="Rayd" />
+    <Coach Name="Woelfchen" />
+    <Coach Name="Belentor" />
+    <Coach Name="Sukram" />
+    <Coach Name="Lokis_World" />
+    <Coach Name="Don_Pedro" />
+    <Coach Name="Tùrin" />
+    <Coach Name="Wuckal" />
+    <Category Name="Germains" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Denmark">
+    <Coach Name="Niebling" />
+    <Coach Name="Fisherking" />
+    <Coach Name="AntonLunau" />
+    <Coach Name="Tank" />
+    <Coach Name="Topper" />
+    <Coach Name="MissSweden" />
+    <Coach Name="Trippleskull" />
+    <Coach Name="Kfoged" />
+    <Category Name="Nordiques" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Italy">
+    <Coach Name="Beppe" />
+    <Coach Name="Yena" />
+    <Coach Name="Roller" />
+    <Coach Name="Spartako" />
+    <Coach Name="Phoenix11" />
+    <Coach Name="Liam" />
+    <Coach Name="Farina" />
+    <Coach Name="Darth_Dreddolo" />
+    <Category Name="Latins" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="England">
+    <Coach Name="Don_Vito" />
+    <Coach Name="Purplegoo" />
+    <Coach Name="Jimjimany" />
+    <Coach Name="Joemanji" />
+    <Coach Name="Podfrey" />
+    <Coach Name="Geggster" />
+    <Coach Name="Hangus" />
+    <Coach Name="Lycos" />
+    <Category Name="Rosbeefs" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Spain">
+    <Coach Name="Dani112233" />
+    <Coach Name="Korgluk" />
+    <Coach Name="Murley" />
+    <Coach Name="Kewan" />
+    <Coach Name="Joanet" />
+    <Coach Name="Barry" />
+    <Coach Name="Chou" />
+    <Coach Name="Dark Duke" />
+    <Category Name="Latins" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Belgium">
+    <Coach Name="Masterfit" />
+    <Coach Name="Carloz" />
+    <Coach Name="Driesfield" />
+    <Coach Name="Magictobe" />
+    <Coach Name="JJ" />
+    <Coach Name="Xod" />
+    <Coach Name="Sjapie" />
+    <Coach Name="Da_Great_MC" />
+    <Category Name="Francs" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Germany">
+    <Coach Name="Planlos" />
+    <Coach Name="lauth81" />
+    <Coach Name="Flix" />
+    <Coach Name="Sputnik" />
+    <Coach Name="Oventa" />
+    <Coach Name="Mootaz" />
+    <Coach Name="Utak" />
+    <Coach Name="Kithor" />
+    <Category Name="Germains" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Switzerland">
+    <Coach Name="Otis" />
+    <Coach Name="Le_Troll" />
+    <Coach Name="Storm" />
+    <Coach Name="Goss" />
+    <Coach Name="Halex" />
+    <Coach Name="Phifoe" />
+    <Coach Name="BDG" />
+    <Coach Name="Desmondus" />
+    <Category Name="Germains" />
+    <Category Name="Francs" />
+    <Category Name="Latins" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Finland">
+    <Coach Name="Jeguan" />
+    <Coach Name="Hanu" />
+    <Coach Name="Pera" />
+    <Coach Name="Knaegten" />
+    <Coach Name="Duckwing" />
+    <Coach Name="BeerBeer" />
+    <Coach Name="J-Ho" />
+    <Coach Name="Kalrat" />
+    <Category Name="Nordiques" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Netherlands">
+    <Coach Name="Indigo" />
+    <Coach Name="Jelmer" />
+    <Coach Name="mepmuff" />
+    <Coach Name="MrNuffle" />
+    <Coach Name="SirSiebstar" />
+    <Coach Name="Kwèk" />
+    <Coach Name="DukeJan" />
+    <Coach Name="Tos_T" />
+    <Category Name="Francs" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Sweden">
+    <Coach Name="JammyDodger" />
+    <Coach Name="BigFred" />
+    <Coach Name="dragons" />
+    <Coach Name="melisqus" />
+    <Coach Name="zerak" />
+    <Coach Name="lard" />
+    <Coach Name="Stashman" />
+    <Coach Name="Ozt" />
+    <Category Name="Nordiques" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Scotland">
+    <Coach Name="David Millar" />
+    <Coach Name="Lord Garlack" />
+    <Coach Name="Thadrin" />
+    <Coach Name="Zulu501" />
+    <Coach Name="Garrick" />
+    <Coach Name="Doomy" />
+    <Coach Name="Tribble" />
+    <Coach Name="Bantha" />
+    <Category Name="Rosbeefs" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Team Name="Wales">
+    <Coach Name="Blocknroll" />
+    <Coach Name="Sillysod" />
+    <Coach Name="Hawca" />
+    <Coach Name="Hobnail" />
+    <Coach Name="Antipixi" />
+    <Coach Name="Dapiranha" />
+    <Coach Name="Northenknight" />
+    <Coach Name="Nonumber" />
+    <Category Name="Rosbeefs" />
+    <Picture>iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAIAAABt+uBvAAAAMklEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBcDbGAAAcZ8U08AAAAASUVORK5CYII=</Picture>
+  </Team>
+  <Round Date="08/10/2020 12:42:57" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Team1="Denmark" Team2="Scotland">
+      <Match Coach1="Niebling" Coach2="Garrick" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Fisherking" Coach2="Zulu501" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="AntonLunau" Coach2="Tribble" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Tank" Coach2="Doomy" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Topper" Coach2="David Millar" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="MissSweden" Coach2="Bantha" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Trippleskull" Coach2="Thadrin" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Kfoged" Coach2="Lord Garlack" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+    </Match>
+    <Match Team1="Netherlands" Team2="Sweden">
+      <Match Coach1="Indigo" Coach2="Stashman" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Jelmer" Coach2="JammyDodger" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="mepmuff" Coach2="zerak" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="MrNuffle" Coach2="melisqus" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="SirSiebstar" Coach2="Ozt" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Kwèk" Coach2="BigFred" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="DukeJan" Coach2="lard" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Tos_T" Coach2="dragons" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+    </Match>
+    <Match Team1="Italy" Team2="England">
+      <Match Coach1="Beppe" Coach2="Geggster" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Yena" Coach2="Hangus" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Roller" Coach2="Jimjimany" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Spartako" Coach2="Purplegoo" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Phoenix11" Coach2="Don_Vito" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Liam" Coach2="Joemanji" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Farina" Coach2="Lycos" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Darth_Dreddolo" Coach2="Podfrey" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+    </Match>
+    <Match Team1="Belgium" Team2="Austria">
+      <Match Coach1="Masterfit" Coach2="Belentor" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Carloz" Coach2="Tùrin" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Driesfield" Coach2="Don_Pedro" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Magictobe" Coach2="Wuckal" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="JJ" Coach2="Rayd" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Xod" Coach2="Lokis_World" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Sjapie" Coach2="Woelfchen" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Da_Great_MC" Coach2="Sukram" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+    </Match>
+    <Match Team1="Spain" Team2="Finland">
+      <Match Coach1="Dani112233" Coach2="Pera" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Korgluk" Coach2="Knaegten" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Murley" Coach2="J-Ho" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Kewan" Coach2="Duckwing" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Joanet" Coach2="Jeguan" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Barry" Coach2="BeerBeer" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Chou" Coach2="Kalrat" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Dark Duke" Coach2="Hanu" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+    </Match>
+    <Match Team1="Switzerland" Team2="Wales">
+      <Match Coach1="Otis" Coach2="Nonumber" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Le_Troll" Coach2="Sillysod" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Storm" Coach2="Hawca" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Goss" Coach2="Antipixi" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Halex" Coach2="Northenknight" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Phifoe" Coach2="Hobnail" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="BDG" Coach2="Dapiranha" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Desmondus" Coach2="Blocknroll" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+    </Match>
+    <Match Team1="Germany" Team2="France">
+      <Match Coach1="Planlos" Coach2="Bloody" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="lauth81" Coach2="daz" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Flix" Coach2="titouch" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Sputnik" Coach2="knox" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Oventa" Coach2="Jeff" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Mootaz" Coach2="Darktroll" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Utak" Coach2="FXIII" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+      <Match Coach1="Kithor" Coach2="elyoukey" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Sorties" Value1="0" Value2="0" />
+      </Match>
+    </Match>
+  </Round>
+</Tournament>

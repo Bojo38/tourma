@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -18,6 +19,13 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.Element;
+import tourma.data.ranking.AnnexIndivRanking;
+import tourma.data.ranking.IndivRanking;
+import tourma.data.ranking.TeamRanking;
+import tourma.data.ranking.ClanRanking;
+import tourma.data.ranking.AnnexClanRanking;
+import tourma.data.ranking.AnnexTeamRanking;
+
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
 
@@ -73,13 +81,17 @@ public class Round implements IXMLExport, Serializable {
     private double mMinBonus = 1.0;
     private double mMaxBonus = 1.0;
 
-    boolean mRankingUpdated=false;
+    boolean mRankingUpdated = false;
 
     public boolean isRankingUpdated() {
         return mRankingUpdated;
     }
-    
-    
+
+    /**
+     * Rankings
+     */
+    Rankings mRankings=new Rankings();
+
     /**
      * Default constructor
      */
@@ -312,29 +324,23 @@ public class Round implements IXMLExport, Serializable {
      * @return
      */
     public ArrayList<CoachMatch> getCoachMatchs() {
-        
+
         if (mMatchs.size() > 0) {
-                if (mMatchs.get(0) instanceof CoachMatch) {
-                    if (tmpCoachMatches!=null)
-                    {
-                        if (mMatchs.size()!=tmpCoachMatches.size())
-                        {
-                           tmpCoachMatches=null; 
-                        }
+            if (mMatchs.get(0) instanceof CoachMatch) {
+                if (tmpCoachMatches != null) {
+                    if (mMatchs.size() != tmpCoachMatches.size()) {
+                        tmpCoachMatches = null;
                     }
                 }
-                else
-                {
-                 if (tmpCoachMatches!=null)
-                    {
-                        if (mMatchs.size()*Tournament.getTournament().getParams().getTeamMatesNumber()!=tmpCoachMatches.size())
-                        {
-                           tmpCoachMatches=null; 
-                        }
+            } else {
+                if (tmpCoachMatches != null) {
+                    if (mMatchs.size() * Tournament.getTournament().getParams().getTeamMatesNumber() != tmpCoachMatches.size()) {
+                        tmpCoachMatches = null;
                     }
                 }
+            }
         }
-        
+
         if (tmpCoachMatches == null) {
 
             tmpCoachMatches = new ArrayList<>();

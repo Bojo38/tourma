@@ -7,6 +7,7 @@ package tourma.data.ranking;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import org.jdom.Element;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
@@ -23,6 +24,12 @@ import tourma.data.Tournament;
  */
 public class ClanRanking extends Ranking {
 
+    public ClanRanking(Element e)
+    {
+        super(e);
+        setXMLElement(e);
+    }
+    
     public ClanRanking(final int round,
             Parameters params,
             final ArrayList<Clan> clans, final boolean round_only) {
@@ -358,5 +365,15 @@ public class ClanRanking extends Ranking {
             mDatas.add(new ObjectRanking(clans.get(i), cvalue1, cvalue2, cvalue3, cvalue4, cvalue5));
         }
 
+    }
+
+    @Override
+    public Element getXMLElement() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setXMLElement(Element e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

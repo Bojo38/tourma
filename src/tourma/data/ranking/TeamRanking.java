@@ -7,6 +7,7 @@ package tourma.data.ranking;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import org.jdom.Element;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criterion;
@@ -19,7 +20,6 @@ import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
 import tourma.data.Value;
-import tourma.tableModel.MjtRankingTeam;
 
 /**
  *
@@ -27,13 +27,18 @@ import tourma.tableModel.MjtRankingTeam;
  */
 public class TeamRanking extends Ranking {
 
+    public TeamRanking(Element e)
+    {
+        super(e);
+        setXMLElement(e);
+    }
     
     public TeamRanking(final boolean teamVictory, final int round, Parameters params, final ArrayList teams, final boolean round_only) {
         super(round, params.getRankingTeam1(), params.getRankingTeam2(), params.getRankingTeam3(), params.getRankingTeam4(), params.getRankingTeam5(), teams, round_only);
         mTeamVictory = teamVictory;
         sortDatas();
     }
-    
+
     public TeamRanking(final boolean teamVictory, final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList teams, final boolean round_only) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams, round_only);
         mTeamVictory = teamVictory;
@@ -532,4 +537,15 @@ public class TeamRanking extends Ranking {
             }
         }
     }
+
+    @Override
+    public Element getXMLElement() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setXMLElement(Element e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

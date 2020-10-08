@@ -6,6 +6,7 @@
 package tourma.data.ranking;
 
 import java.util.ArrayList;
+import org.jdom.Element;
 import tourma.data.Criterion;
 import tourma.data.Formula;
 
@@ -15,6 +16,12 @@ import tourma.data.Formula;
  */
 abstract public class AnnexRanking extends Ranking {
 
+    public AnnexRanking(Element e)
+    {
+        super(e);
+        setXMLElement(e);
+    }
+    
     public AnnexRanking(
             final int round,
             final Criterion criteria,

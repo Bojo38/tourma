@@ -7,6 +7,7 @@ package tourma.data.ranking;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import org.jdom.Element;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criterion;
@@ -24,6 +25,12 @@ import tourma.data.Tournament;
  * @author WFMJ7631
  */
 public class AnnexTeamRanking extends AnnexRanking {
+    
+    public AnnexTeamRanking(Element e)
+    {
+        super(e);
+        setXMLElement(e);
+    }
     
     public AnnexTeamRanking(final int round, final Criterion criteria, final int subtype, final ArrayList<Team> teams, Parameters param, final boolean round_only) {
         super(round, criteria, subtype, teams, param.getRankingTeam1(), param.getRankingTeam2(), param.getRankingTeam3(), param.getRankingTeam4(), param.getRankingTeam5(), round_only);
@@ -406,5 +413,13 @@ public class AnnexTeamRanking extends AnnexRanking {
         }
 
     }
+  @Override
+    public Element getXMLElement() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    @Override
+    public void setXMLElement(Element e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

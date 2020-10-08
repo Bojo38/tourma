@@ -210,10 +210,10 @@ public class Criterion implements IXMLExport, Serializable {
      */
     @Override
     public Element getXMLElement() {
-        final Element crit = new Element(StringConstants.CS_CRITERIA);
-        String key = StringConstants.CS_CRITERIA;
+        final Element crit = new Element(StringConstants.CS_CRITERION);
+        String key = StringConstants.CS_CRITERION;
         crit.setAttribute(key, this.getName());
-        key = StringConstants.CS_CRITERIA_ACCRONYM;
+        key = StringConstants.CS_CRITERION_ACCRONYM;
         crit.setAttribute(key, this.getAccronym());
         crit.setAttribute(StringConstants.CS_POINTS_FOR, Integer.toString(this.getPointsFor()));
         crit.setAttribute(StringConstants.CS_POINTS_AGAINST, Integer.toString(this.getPointsAgainst()));
@@ -252,7 +252,7 @@ public class Criterion implements IXMLExport, Serializable {
     @Override
     public void setXMLElement(final Element criteria) {
         try {
-            this.setName(criteria.getAttributeValue(StringConstants.CS_CRITERIA));
+            this.setName(criteria.getAttributeValue(StringConstants.CS_CRITERION));
             if (getName() == null) {
                 this.setName(criteria.getAttributeValue(StringConstants.CS_NAME));
             }
@@ -267,7 +267,7 @@ public class Criterion implements IXMLExport, Serializable {
                 this.setCriticalThreshold(10);
             }
              try {
-                this.setAccronym(criteria.getAttributeValue(StringConstants.CS_CRITERIA_ACCRONYM));
+                this.setAccronym(criteria.getAttributeValue(StringConstants.CS_CRITERION_ACCRONYM));
             } catch (NullPointerException npe) {
                 this.setCriticalThreshold(10);
             }

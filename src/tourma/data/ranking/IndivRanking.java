@@ -7,6 +7,7 @@ package tourma.data.ranking;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import org.jdom.Element;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Criterion;
@@ -23,6 +24,12 @@ import tourma.data.Value;
  */
 public class IndivRanking extends Ranking {
 
+    public IndivRanking(Element e)
+    {
+        super(e);
+        setXMLElement(e);
+    }
+    
     public IndivRanking(final int round,
             Parameters params,
             final ArrayList objects,
@@ -401,5 +408,15 @@ public class IndivRanking extends Ranking {
                 }
             }
         }
+    }
+    
+      @Override
+    public Element getXMLElement() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setXMLElement(Element e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -7,18 +7,14 @@ package tourma.data.ranking;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import tourma.data.Criterion;
+import org.jdom.Element;
 import tourma.data.Criterion;
 import tourma.data.Formula;
-import tourma.data.Formula;
-import tourma.data.ObjectRanking;
+import tourma.data.IXMLExport;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
-import tourma.data.Parameters;
-import tourma.data.Tournament;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
-import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
 import tourma.utils.display.IRanked;
 
@@ -26,20 +22,22 @@ import tourma.utils.display.IRanked;
  *
  * @author WFMJ7631
  */
-abstract public class Ranking implements IRanked {
+abstract public class Ranking implements IRanked, IXMLExport {
 
-    String mDetail="";
-    
-    public String getDetail()
-    {
+    public Ranking(Element e) {
+        setXMLElement(e);
+    }
+
+    String mDetail = "";
+
+    public String getDetail() {
         return mDetail;
     }
-    
-    public void setDetail(String d)
-    {
-        mDetail=d;
+
+    public void setDetail(String d) {
+        mDetail = d;
     }
-    
+
     public Ranking(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList objects, final boolean roundOnly) {
         mRound = round;
         mRankingType1 = ranking_type1;
@@ -421,4 +419,13 @@ abstract public class Ranking implements IRanked {
         return mDatas.size();
     }
 
+    @Override
+    public Element getXMLElement() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void setXMLElement(Element e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

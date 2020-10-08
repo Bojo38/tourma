@@ -968,7 +968,7 @@ public class Parameters implements IXMLExport, Serializable {
                 //JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());
             }
 
-            final List<Element> criterias = params.getChildren(StringConstants.CS_CRITERIA);
+            final List<Element> criterias = params.getChildren(StringConstants.CS_CRITERION);
             final Iterator<Element> cr = criterias.iterator();
 
             this.clearCiterias();
