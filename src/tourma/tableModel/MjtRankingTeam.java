@@ -39,11 +39,11 @@ public final class MjtRankingTeam extends MjtRanking {
 
     private static final Logger LOG = Logger.getLogger(MjtRankingTeam.class.getName());
 
-    private MjtRankingTeam(TeamRanking ranking, int min, int max) {
+    public  MjtRankingTeam(TeamRanking ranking, int min, int max) {
         super(ranking, min, max);
     }
 
-    private MjtRankingTeam(TeamRanking ranking) {
+    public MjtRankingTeam(TeamRanking ranking) {
         this(ranking, 0, ranking.getCount());
     }
 
@@ -58,7 +58,7 @@ public final class MjtRankingTeam extends MjtRanking {
                     result--;
                     if (params.getRankingTeam3() == 0) {
                         result--;
-                        if (params.gemRankingTeam2() == 0) {
+                        if (params.getRankingTeam2() == 0) {
                             result--;
                             if (params.getRankingTeam1() == 0) {
                                 result--;

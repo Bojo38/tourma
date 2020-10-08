@@ -196,7 +196,7 @@ public class ParametersNGTest {
     @Test
     public void testGetCriteriaCount() {
         System.out.println("getCriteriaCount");
-        Criteria c = new Criteria("T");
+        Criterion c = new Criterion("T");
         Parameters instance = new Parameters();
         int nb = instance.getCriteriaCount();
         instance.addCriteria(c);
@@ -209,7 +209,7 @@ public class ParametersNGTest {
     @Test
     public void testGetCriteria() {
         System.out.println("getCriteria");
-        Criteria c = new Criteria("T");
+        Criterion c = new Criterion("T");
         Parameters instance = new Parameters();
         int nb = instance.getCriteriaCount();
         instance.addCriteria(c);
@@ -222,7 +222,7 @@ public class ParametersNGTest {
     @Test
     public void testClearCiterias() {
         System.out.println("clearCiterias");
-        Criteria c = new Criteria("T");
+        Criterion c = new Criterion("T");
         Parameters instance = new Parameters();
         int nb = instance.getCriteriaCount();
         instance.addCriteria(c);
@@ -237,7 +237,7 @@ public class ParametersNGTest {
     @Test
     public void testAddCriteria() {
         System.out.println("addCriteria");
-        Criteria c = new Criteria("T");
+        Criterion c = new Criterion("T");
         Parameters instance = new Parameters();
         int nb = instance.getCriteriaCount();
         instance.addCriteria(c);
@@ -250,7 +250,7 @@ public class ParametersNGTest {
     @Test
     public void testRemoveCriteria() {
         System.out.println("removeCriteria");
-        Criteria c = new Criteria("T");
+        Criterion c = new Criterion("T");
         Parameters instance = new Parameters();
         int nb = instance.getCriteriaCount();
         instance.addCriteria(c);
@@ -1711,7 +1711,7 @@ public class ParametersNGTest {
     @Test
     public void testGetIndexOfCriteria() {
         System.out.println("getIndexOfCriteria");
-        Criteria c = new Criteria("T");
+        Criterion c = new Criterion("T");
         Parameters instance = new Parameters();
         int expResult = instance.getCriteriaCount();
         instance.addCriteria(c);
@@ -1886,8 +1886,8 @@ public class ParametersNGTest {
         System.out.println("getCriteria");
         String name = "";
         Parameters instance = new Parameters();
-        Criteria expResult = null;
-        Criteria result = instance.getCriteria(name);
+        Criterion expResult = null;
+        Criterion result = instance.getCriteria(name);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -1941,8 +1941,8 @@ public class ParametersNGTest {
         System.out.println("getCriteria");
         int i = 0;
         Parameters instance = new Parameters();
-        Criteria expResult = null;
-        Criteria result = instance.getCriteria(i);
+        Criterion expResult = null;
+        Criterion result = instance.getCriteria(i);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

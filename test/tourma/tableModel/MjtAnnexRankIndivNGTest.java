@@ -16,7 +16,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tourma.data.Coach;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -30,7 +30,7 @@ public class MjtAnnexRankIndivNGTest {
 
     static ArrayList<Coach> coachs = new ArrayList<>();
     static MjtAnnexRankIndiv instance;
-    static Criteria crit;
+    static Criterion crit;
 
     public MjtAnnexRankIndivNGTest() {
     }

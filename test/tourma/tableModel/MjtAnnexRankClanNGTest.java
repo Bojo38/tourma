@@ -18,7 +18,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tourma.data.Clan;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
@@ -31,7 +31,7 @@ public class MjtAnnexRankClanNGTest {
     
     static ArrayList<Clan> clans=new ArrayList<>();
     static MjtAnnexRankClan instance;
-    static Criteria crit;
+    static Criterion crit;
     
     
     public MjtAnnexRankClanNGTest() {

@@ -35,6 +35,8 @@ import tourma.data.Group;
 import tourma.data.Pool;
 import tourma.data.RankingForExport;
 import tourma.data.Tournament;
+import tourma.data.ranking.IndivRanking;
+import tourma.data.ranking.Ranking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
@@ -228,11 +230,11 @@ public final class JFullScreenIndivRank extends JFullScreen {
                     coaches.add(Tournament.getTournament().getCoach(cpt));
                 }
 
-                MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
-                        coaches, Tournament.getTournament().getParams().isTeamTournament(),
-                        false,
+                IndivRanking ranking = new IndivRanking(
+                        round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
+                        coaches, Tournament.getTournament().getParams().isTeamTournament(),false,
                         Tournament.getTournament().getPoolCount() > 0,
-                Tournament.getTournament().getRound(round).isCup());
+                        Tournament.getTournament().getRound(round).isCup());
                 ranking.setDetail(RankingForExport.CS_General);
                 rankeds.add(ranking);
 
@@ -249,10 +251,10 @@ public final class JFullScreenIndivRank extends JFullScreen {
                         }
                     }
 
-                    MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
+                    IndivRanking ranking = new IndivRanking(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                             coaches, Tournament.getTournament().getParams().isTeamTournament(),
                             false,
-                            false,false);
+                            false, false);
                     ranking.setDetail(g.getName());
                     rankeds.add(ranking);
                 }
@@ -269,10 +271,10 @@ public final class JFullScreenIndivRank extends JFullScreen {
                             coaches.add(coach);
                         }
                     }
-                    MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
+                    IndivRanking ranking = new IndivRanking(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                             coaches, Tournament.getTournament().getParams().isTeamTournament(),
                             false,
-                            false,false);
+                            false, false);
                     ranking.setDetail(cat.getName());
                     rankeds.add(ranking);
                 }
@@ -282,10 +284,10 @@ public final class JFullScreenIndivRank extends JFullScreen {
                 for (int i = 0; i < Tournament.getTournament().getPoolCount(); i++) {
                     Pool p = Tournament.getTournament().getPool(i);
 
-                    MjtRankingIndiv ranking = new MjtRankingIndiv(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
+                    IndivRanking ranking = new IndivRanking(round, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(),
                             p.getCompetitors(), Tournament.getTournament().getParams().isTeamTournament(),
                             false,
-                            false,false);
+                            false, false);
                     ranking.setDetail(Integer.toString(i + 1));
                     rankeds.add(ranking);
                 }
@@ -303,7 +305,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
             Integer options[] = new Integer[gs.length];
             for (int i = 0; i < gs.length; i++) {
                 options[i] = i;
-                
+
             }
             Object val = JOptionPane.showOptionDialog(null, "Please Select a screen index", "Screen Selection", JOptionPane.OK_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (val instanceof Integer) {
@@ -312,10 +314,10 @@ public final class JFullScreenIndivRank extends JFullScreen {
         }
         if (screen > -1 && screen < gs.length) {
             gs[screen].setFullScreenWindow(this);
-            mSelectedGD=gs[screen];
+            mSelectedGD = gs[screen];
         } else if (gs.length > 0) {
             gs[0].setFullScreenWindow(this);
-            mSelectedGD=gs[0];
+            mSelectedGD = gs[0];
         } else {
             throw new RuntimeException("No Screens Found");
         }
@@ -438,7 +440,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
 
                 for (int j = 0; j < Tournament.getTournament().getParams().getIndivRankingNumber(); j++) {
                     int rankingType = Tournament.getTournament().getParams().getIndivRankingType(j);
-                    String name = MjtRanking.getRankingString(rankingType);
+                    String name = Ranking.getRankingString(rankingType);
                     if (rankingType == 0) {
                         break;
                     } else {

@@ -28,13 +28,18 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import tourma.data.Clan;
 import tourma.data.Criterion;
+import tourma.data.Formula;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.ObjectRanking;
+import tourma.data.Parameters;
 import tourma.data.Pool;
 import tourma.data.RankingForExport;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.data.ranking.AnnexClanRanking;
+import tourma.data.ranking.AnnexRanking;
+import tourma.data.ranking.AnnexTeamRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankClan;
@@ -202,18 +207,27 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                         Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
 
-                        MjtAnnexRankTeam annexRank0 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                                round, crit, 0, teams, full, false);
-                        MjtAnnexRankTeam annexRank1 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                        AnnexTeamRanking annexRank0 = new AnnexTeamRanking(
+                                round, crit, 0, teams, Tournament.getTournament().getParams(), false);
+                        AnnexTeamRanking annexRank1 = new AnnexTeamRanking(
                                 round, crit, 1,
-                                teams, full, false);
-                        MjtAnnexRankTeam annexRank2 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                teams, Tournament.getTournament().getParams(), false);
+                        AnnexTeamRanking annexRank2 = new AnnexTeamRanking(
                                 round, crit, 2,
-                                teams, full, false);
+                                teams, Tournament.getTournament().getParams(), false);
 
                         rs.add(annexRank0);
                         rs.add(annexRank1);
                         rs.add(annexRank2);
+                    }
+
+                    for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+                        Formula form = Tournament.getTournament().getParams().getFormula(i);
+
+                        AnnexTeamRanking annexRank0 = new AnnexTeamRanking(
+                                round, form, 0, teams, Tournament.getTournament().getParams(), false);
+                        rs.add(annexRank0);
+
                     }
                 } else {
                     for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
@@ -227,14 +241,14 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                             Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
 
-                            MjtAnnexRankTeam annexRank0 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                                    round, crit, 0, teams, full, false);
-                            MjtAnnexRankTeam annexRank1 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                            AnnexTeamRanking annexRank0 = new AnnexTeamRanking(
+                                    round, crit, 0, teams, Tournament.getTournament().getParams(), false);
+                            AnnexTeamRanking annexRank1 = new AnnexTeamRanking(
                                     round, crit, 1,
-                                    teams, full, false);
-                            MjtAnnexRankTeam annexRank2 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                    teams, Tournament.getTournament().getParams(), false);
+                            AnnexTeamRanking annexRank2 = new AnnexTeamRanking(
                                     round, crit, 2,
-                                    teams, full, false);
+                                    teams, Tournament.getTournament().getParams(), false);
 
                             annexRank0.setDetail(Integer.toString(cpt + 1));
                             annexRank1.setDetail(Integer.toString(cpt + 1));
@@ -258,12 +272,13 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                     Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
 
-                    MjtAnnexRankClan annexRank0 = new MjtAnnexRankClan(round, crit, 0,
-                            full, clans, false);
-                    MjtAnnexRankClan annexRank1 = new MjtAnnexRankClan(round, crit, 1,
-                            full, clans, false);
-                    MjtAnnexRankClan annexRank2 = new MjtAnnexRankClan(round, crit, 2,
-                            full, clans, false);
+                    Parameters params = Tournament.getTournament().getParams();
+                    AnnexClanRanking annexRank0 = new AnnexClanRanking(round, crit, 0,
+                            clans, params, false);
+                    AnnexClanRanking annexRank1 = new AnnexClanRanking(round, crit, 1,
+                            clans, params, false);
+                    AnnexClanRanking annexRank2 = new AnnexClanRanking(round, crit, 2,
+                            clans, params, false);
 
                     rs.add(annexRank0);
                     rs.add(annexRank1);
@@ -314,11 +329,18 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             IRanked ranked2 = rankeds.get(3 * i + 2);
             try {
                 Criterion crit;
-                if (ranked0 instanceof MjtAnnexRank) {
-                    crit = ((MjtAnnexRank) ranked0).getCriteria();
+                Formula form;
+                if (ranked0 instanceof AnnexRanking) {
+                    crit = ((AnnexRanking) ranked0).getCriterion();
+                    if (crit == null) {
+                        form = ((AnnexRanking) ranked0).getFormula();
+                    }
                 } else {
                     if (ranked0 instanceof RankingForExport) {
-                        crit = ((RankingForExport) ranked0).getCriteria();
+                        crit = ((RankingForExport) ranked0).getCriterion();
+                        if (crit == null) {
+                            form = ((RankingForExport) ranked0).getFormula();
+                        }
                     } else {
                         crit = new Criterion("???");
                     }

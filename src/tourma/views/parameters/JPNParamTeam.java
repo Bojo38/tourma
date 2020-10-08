@@ -885,7 +885,7 @@ public final class JPNParamTeam extends javax.swing.JPanel {
         jcbRank5Team.removeActionListener(jcbRank5Team.getActionListeners()[0]);
 
         jcbRank1Team.setSelectedIndex(mTournament.getParams().getRankingTeam1());
-        jcbRank2Team.setSelectedIndex(mTournament.getParams().gemRankingTeam2());
+        jcbRank2Team.setSelectedIndex(mTournament.getParams().getRankingTeam2());
         jcbRank3Team.setSelectedIndex(mTournament.getParams().getRankingTeam3());
         jcbRank4Team.setSelectedIndex(mTournament.getParams().getRankingTeam4());
         jcbRank5Team.setSelectedIndex(mTournament.getParams().getRankingTeam5());

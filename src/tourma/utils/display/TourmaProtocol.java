@@ -13,6 +13,7 @@ import tourma.data.Category;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Criterion;
+import tourma.data.Formula;
 import tourma.data.Group;
 import tourma.data.Parameters;
 import tourma.data.Pool;
@@ -30,6 +31,12 @@ import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
 import tourma.utility.StringConstants;
 import tourma.data.IXMLExport;
+import tourma.data.ranking.AnnexClanRanking;
+import tourma.data.ranking.AnnexIndivRanking;
+import tourma.data.ranking.AnnexTeamRanking;
+import tourma.data.ranking.ClanRanking;
+import tourma.data.ranking.IndivRanking;
+import tourma.data.ranking.TeamRanking;
 
 /**
  *
@@ -107,17 +114,309 @@ public class TourmaProtocol {
         Parameters params = null;
         if (object instanceof String) {
             TKey k = getKey((String) object);
-            try {
-                switch (k) {
-                    case INDIVIDUAL_RANK: {
+
+            switch (k) {
+                case INDIVIDUAL_RANK: {
+                    ArrayList<Coach> coachs = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                        coachs.add(Tournament.getTournament().getCoach(i));
+                    }
+                    r = new RankingForExport(RankingForExport.CS_Individual,
+                            RankingForExport.CS_General,
+                            StringConstants.CS_NULL,
+                            new IndivRanking(
+                                    Tournament.getTournament().getRoundsCount() - 1,
+                                    Tournament.getTournament().getParams().getRankingIndiv1(),
+                                    Tournament.getTournament().getParams().getRankingIndiv2(),
+                                    Tournament.getTournament().getParams().getRankingIndiv3(),
+                                    Tournament.getTournament().getParams().getRankingIndiv4(),
+                                    Tournament.getTournament().getParams().getRankingIndiv5(),
+                                    coachs, false, false, Tournament.getTournament().getPoolCount() > 0,
+                                    Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
+                            Tournament.getTournament().getRankingTypes(false)
+                    );
+                }
+                break;
+                case TEAM_RANK: {
+                    ArrayList<Team> teams = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+                        teams.add(Tournament.getTournament().getTeam(i));
+                    }
+                    r = new RankingForExport(RankingForExport.CS_Team,
+                            RankingForExport.CS_General,
+                            StringConstants.CS_NULL,
+                            new TeamRanking(
+                                    Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                    Tournament.getTournament().getRoundsCount() - 1,
+                                    Tournament.getTournament().getParams(),
+                                    teams, false),
+                            Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
+                    );
+                }
+                break;
+                case MATCHS:
+                    params = Tournament.getTournament().getParams();
+                    round = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
+                    break;
+                case CLAN_RANK: {
+                    ArrayList<Clan> clans = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+                        clans.add(Tournament.getTournament().getClan(i));
+                    }
+                    r = new RankingForExport(RankingForExport.CS_Clan,
+                            RankingForExport.CS_General,
+                            StringConstants.CS_NULL,
+                            new ClanRanking(
+                                    Tournament.getTournament().getRoundsCount() - 1,
+                                    Tournament.getTournament().getParams(),
+                                    clans, false),
+                            Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
+                    );
+                }
+                break;
+                case INDIVIDUAL_ANNEX: {
+                    ArrayList<Coach> coachs = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                        coachs.add(Tournament.getTournament().getCoach(i));
+                    }
+                    array = new ArrayList();
+                    for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                        r = new RankingForExport(RankingForExport.CS_Individual_Annex,
+                                crit.getName(),
+                                RankingForExport.CS_Positive,
+                                new AnnexIndivRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        coachs,
+                                        Tournament.getTournament().getParams().getRankingIndiv1(),
+                                        Tournament.getTournament().getParams().getRankingIndiv2(),
+                                        Tournament.getTournament().getParams().getRankingIndiv3(),
+                                        Tournament.getTournament().getParams().getRankingIndiv4(),
+                                        Tournament.getTournament().getParams().getRankingIndiv5(),
+                                        Tournament.getTournament().getParams().isTeamTournament(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriterion(crit);
+                        array.add(r);
+
+                        r = new RankingForExport(RankingForExport.CS_Individual_Annex,
+                                crit.getName(),
+                                RankingForExport.CS_Negative,
+                                new AnnexIndivRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                        coachs,
+                                        Tournament.getTournament().getParams().getRankingIndiv1(),
+                                        Tournament.getTournament().getParams().getRankingIndiv2(),
+                                        Tournament.getTournament().getParams().getRankingIndiv3(),
+                                        Tournament.getTournament().getParams().getRankingIndiv4(),
+                                        Tournament.getTournament().getParams().getRankingIndiv5(),
+                                        Tournament.getTournament().getParams().isTeamTournament(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriterion(crit);
+                        array.add(r);
+
+                        r = new RankingForExport(RankingForExport.CS_Individual_Annex,
+                                crit.getName(),
+                                Translate.CS_Difference,
+                                new AnnexIndivRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
+                                        coachs,
+                                        Tournament.getTournament().getParams().getRankingIndiv1(),
+                                        Tournament.getTournament().getParams().getRankingIndiv2(),
+                                        Tournament.getTournament().getParams().getRankingIndiv3(),
+                                        Tournament.getTournament().getParams().getRankingIndiv4(),
+                                        Tournament.getTournament().getParams().getRankingIndiv5(),
+                                        Tournament.getTournament().getParams().isTeamTournament(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriterion(crit);
+                        array.add(r);
+                    }
+
+                    for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+                        Formula form = Tournament.getTournament().getParams().getFormula(i);
+                        r = new RankingForExport(RankingForExport.CS_Individual_Annex,
+                                form.getName(),
+                                RankingForExport.CS_Positive,
+                                new AnnexIndivRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, form, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        coachs,
+                                        Tournament.getTournament().getParams().getRankingIndiv1(),
+                                        Tournament.getTournament().getParams().getRankingIndiv2(),
+                                        Tournament.getTournament().getParams().getRankingIndiv3(),
+                                        Tournament.getTournament().getParams().getRankingIndiv4(),
+                                        Tournament.getTournament().getParams().getRankingIndiv5(),
+                                        Tournament.getTournament().getParams().isTeamTournament(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setFormula(form);
+                        array.add(r);
+
+                    }
+                }
+                break;
+                case TEAM_ANNEX: {
+                    ArrayList<Team> teams = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
+                        teams.add(Tournament.getTournament().getTeam(i));
+                    }
+                    array = new ArrayList();
+                    for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                        r = new RankingForExport(RankingForExport.CS_Team_Annex,
+                                crit.getName(),
+                                RankingForExport.CS_Positive,
+                                new AnnexTeamRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        teams,
+                                        Tournament.getTournament().getParams().getRankingTeam1(),
+                                        Tournament.getTournament().getParams().getRankingTeam2(),
+                                        Tournament.getTournament().getParams().getRankingTeam3(),
+                                        Tournament.getTournament().getParams().getRankingTeam4(),
+                                        Tournament.getTournament().getParams().getRankingTeam5(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriterion(crit);
+                        array.add(r);
+
+                        r = new RankingForExport(RankingForExport.CS_Team_Annex,
+                                crit.getName(),
+                                RankingForExport.CS_Negative,
+                                new AnnexTeamRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                        teams,
+                                        Tournament.getTournament().getParams().getRankingTeam1(),
+                                        Tournament.getTournament().getParams().getRankingTeam2(),
+                                        Tournament.getTournament().getParams().getRankingTeam3(),
+                                        Tournament.getTournament().getParams().getRankingTeam4(),
+                                        Tournament.getTournament().getParams().getRankingTeam5(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriterion(crit);
+                        array.add(r);
+
+                        r = new RankingForExport(RankingForExport.CS_Team_Annex,
+                                crit.getName(),
+                                Translate.CS_Difference,
+                                new AnnexTeamRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
+                                        teams,
+                                        Tournament.getTournament().getParams().getRankingTeam1(),
+                                        Tournament.getTournament().getParams().getRankingTeam2(),
+                                        Tournament.getTournament().getParams().getRankingTeam3(),
+                                        Tournament.getTournament().getParams().getRankingTeam4(),
+                                        Tournament.getTournament().getParams().getRankingTeam5(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriterion(crit);
+                        array.add(r);
+                    }
+
+                    for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+                        Formula form = Tournament.getTournament().getParams().getFormula(i);
+                        r = new RankingForExport(RankingForExport.CS_Team_Annex,
+                                form.getName(),
+                                RankingForExport.CS_Positive,
+                                new AnnexTeamRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, form, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        teams,
+                                        Tournament.getTournament().getParams().getRankingTeam1(),
+                                        Tournament.getTournament().getParams().getRankingTeam2(),
+                                        Tournament.getTournament().getParams().getRankingTeam3(),
+                                        Tournament.getTournament().getParams().getRankingTeam4(),
+                                        Tournament.getTournament().getParams().getRankingTeam5(),
+                                        false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setFormula(form);
+                        array.add(r);
+
+                    }
+                }
+                break;
+                case CLAN_ANNEX: {
+                    ArrayList<Clan> clans = new ArrayList<>();
+                    for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
+                        clans.add(Tournament.getTournament().getClan(i));
+                    }
+                    array = new ArrayList();
+                    for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                        r = new RankingForExport(RankingForExport.CS_Clan_Annex,
+                                crit.getName(),
+                                RankingForExport.CS_Positive,
+                                new AnnexClanRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        clans, Tournament.getTournament().getParams(), false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriterion(crit);
+                        array.add(r);
+
+                        r = new RankingForExport(RankingForExport.CS_Team_Annex,
+                                crit.getName(),
+                                RankingForExport.CS_Negative,
+                                new AnnexClanRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                        clans, Tournament.getTournament().getParams(), false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriterion(crit);
+                        array.add(r);
+
+                        r = new RankingForExport(RankingForExport.CS_Team_Annex,
+                                crit.getName(),
+                                Translate.CS_Difference,
+                                new AnnexClanRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
+                                        clans, Tournament.getTournament().getParams(), false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setCriterion(crit);
+                        array.add(r);
+                    }
+                    
+                    for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+                        Formula form = Tournament.getTournament().getParams().getFormula(i);
+                        r = new RankingForExport(RankingForExport.CS_Clan_Annex,
+                                form.getName(),
+                                RankingForExport.CS_Positive,
+                                new AnnexClanRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1, form, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        clans, Tournament.getTournament().getParams(), false),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        r.setFormula(form);
+                        array.add(r);
+
+  
+                    }
+                }
+                break;
+                case GROUP_RANK: {
+                    array = new ArrayList<>();
+                    for (int cpt = 0; cpt < Tournament.getTournament().getGroupsCount(); cpt++) {
+                        Group g = Tournament.getTournament().getGroup(cpt);
+
                         ArrayList<Coach> coachs = new ArrayList<>();
                         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                            coachs.add(Tournament.getTournament().getCoach(i));
+                            Coach coach = Tournament.getTournament().getCoach(i);
+                            if (g.containsRoster(coach.getRoster())) {
+                                coachs.add(coach);
+                            }
                         }
                         r = new RankingForExport(RankingForExport.CS_Individual,
-                                RankingForExport.CS_General,
+                                g.getName(),
                                 StringConstants.CS_NULL,
-                                new MjtRankingIndiv(
+                                new IndivRanking(
                                         Tournament.getTournament().getRoundsCount() - 1,
                                         Tournament.getTournament().getParams().getRankingIndiv1(),
                                         Tournament.getTournament().getParams().getRankingIndiv2(),
@@ -125,60 +424,64 @@ public class TourmaProtocol {
                                         Tournament.getTournament().getParams().getRankingIndiv4(),
                                         Tournament.getTournament().getParams().getRankingIndiv5(),
                                         coachs, false, false, Tournament.getTournament().getPoolCount() > 0,
-                                Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
+                                        Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
                                 Tournament.getTournament().getRankingTypes(false)
                         );
+                        array.add(r);
                     }
-                    break;
-                    case TEAM_RANK: {
-                        ArrayList<Team> teams = new ArrayList<>();
-                        for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
-                            teams.add(Tournament.getTournament().getTeam(i));
-                        }
-                        r = new RankingForExport(RankingForExport.CS_Team,
-                                RankingForExport.CS_General,
-                                StringConstants.CS_NULL,
-                                new MjtRankingTeam(
-                                        Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                                        Tournament.getTournament().getRoundsCount() - 1,
-                                        teams, false),
-                                Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
-                        );
-                    }
-                    break;
-                    case MATCHS:
-                        params = Tournament.getTournament().getParams();
-                        round = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
-                        break;
-                    case CLAN_RANK: {
-                        ArrayList<Clan> clans = new ArrayList<>();
-                        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
-                            clans.add(Tournament.getTournament().getClan(i));
-                        }
-                        r = new RankingForExport(RankingForExport.CS_Clan,
-                                RankingForExport.CS_General,
-                                StringConstants.CS_NULL,
-                                new MjtRankingClan(
-                                        Tournament.getTournament().getRoundsCount() - 1,
-                                        clans, false),
-                                Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
-                        );
-                    }
-                    break;
-                    case INDIVIDUAL_ANNEX: {
+                }
+                break;
+                case CATEGORY_RANK: {
+                    array = new ArrayList<>();
+                    for (int cpt = 0; cpt < Tournament.getTournament().getCategoriesCount(); cpt++) {
+                        Category cat = Tournament.getTournament().getCategory(cpt);
+
                         ArrayList<Coach> coachs = new ArrayList<>();
                         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                            coachs.add(Tournament.getTournament().getCoach(i));
+                            Coach coach = Tournament.getTournament().getCoach(i);
+                            if (coach.containsCategory(cat)) {
+                                coachs.add(coach);
+                            }
                         }
-                        array = new ArrayList();
+                        r = new RankingForExport(RankingForExport.CS_Individual,
+                                cat.getName(),
+                                StringConstants.CS_NULL,
+                                new IndivRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1,
+                                        Tournament.getTournament().getParams().getRankingIndiv1(),
+                                        Tournament.getTournament().getParams().getRankingIndiv2(),
+                                        Tournament.getTournament().getParams().getRankingIndiv3(),
+                                        Tournament.getTournament().getParams().getRankingIndiv4(),
+                                        Tournament.getTournament().getParams().getRankingIndiv5(),
+                                        coachs, false, false, Tournament.getTournament().getPoolCount() > 0,
+                                        Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        array.add(r);
+                    }
+                }
+                break;
+                case GROUP_ANNEX: {
+                    array = new ArrayList<>();
+                    for (int cpt = 0; cpt < Tournament.getTournament().getGroupsCount(); cpt++) {
+                        Group g = Tournament.getTournament().getGroup(cpt);
+
+                        ArrayList<Coach> coachs = new ArrayList<>();
+                        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                            Coach coach = Tournament.getTournament().getCoach(i);
+                            if (g.containsRoster(coach.getRoster())) {
+                                coachs.add(coach);
+                            }
+                        }
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                             Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
-                            r = new RankingForExport(RankingForExport.CS_Individual_Annex,
-                                    crit.getName(),
+                            r = new RankingForExport(
+                                    RankingForExport.CS_Individual_Annex,
+                                    crit.getName() + "-" + g.getName(),
                                     RankingForExport.CS_Positive,
-                                    new MjtAnnexRankIndiv(
+                                    new AnnexIndivRanking(
                                             Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                            coachs, true,
+                                            coachs,
                                             Tournament.getTournament().getParams().getRankingIndiv1(),
                                             Tournament.getTournament().getParams().getRankingIndiv2(),
                                             Tournament.getTournament().getParams().getRankingIndiv3(),
@@ -188,437 +491,246 @@ public class TourmaProtocol {
                                             false),
                                     Tournament.getTournament().getRankingTypes(false)
                             );
-                            r.setCriteria(crit);
+                            r.setCriterion(crit);
                             array.add(r);
-
-                            r = new RankingForExport(RankingForExport.CS_Individual_Annex,
-                                    crit.getName(),
-                                    RankingForExport.CS_Negative,
-                                    new MjtAnnexRankIndiv(
-                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                            coachs, true,
-                                            Tournament.getTournament().getParams().getRankingIndiv1(),
-                                            Tournament.getTournament().getParams().getRankingIndiv2(),
-                                            Tournament.getTournament().getParams().getRankingIndiv3(),
-                                            Tournament.getTournament().getParams().getRankingIndiv4(),
-                                            Tournament.getTournament().getParams().getRankingIndiv5(),
-                                            Tournament.getTournament().getParams().isTeamTournament(),
-                                            false),
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            r.setCriteria(crit);
-                            array.add(r);
-
-                            r = new RankingForExport(RankingForExport.CS_Individual_Annex,
-                                    crit.getName(),
-                                    Translate.CS_Difference,
-                                    new MjtAnnexRankIndiv(
-                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
-                                            coachs, true,
-                                            Tournament.getTournament().getParams().getRankingIndiv1(),
-                                            Tournament.getTournament().getParams().getRankingIndiv2(),
-                                            Tournament.getTournament().getParams().getRankingIndiv3(),
-                                            Tournament.getTournament().getParams().getRankingIndiv4(),
-                                            Tournament.getTournament().getParams().getRankingIndiv5(),
-                                            Tournament.getTournament().getParams().isTeamTournament(),
-                                            false),
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            r.setCriteria(crit);
-                            array.add(r);
-                        }
-                    }
-                    break;
-                    case TEAM_ANNEX: {
-                        ArrayList<Team> teams = new ArrayList<>();
-                        for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
-                            teams.add(Tournament.getTournament().getTeam(i));
-                        }
-                        array = new ArrayList();
-                        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
-                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
-                                    crit.getName(),
-                                    RankingForExport.CS_Positive,
-                                    new MjtAnnexRankTeam(
-                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                            teams, true,
-                                            Tournament.getTournament().getParams().getRankingTeam1(),
-                                            Tournament.getTournament().getParams().getRankingTeam2(),
-                                            Tournament.getTournament().getParams().getRankingTeam3(),
-                                            Tournament.getTournament().getParams().getRankingTeam4(),
-                                            Tournament.getTournament().getParams().getRankingTeam5(),
-                                            false),
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            r.setCriteria(crit);
-                            array.add(r);
-
-                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
-                                    crit.getName(),
-                                    RankingForExport.CS_Negative,
-                                    new MjtAnnexRankTeam(
-                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                            teams, true,
-                                            Tournament.getTournament().getParams().getRankingTeam1(),
-                                            Tournament.getTournament().getParams().getRankingTeam2(),
-                                            Tournament.getTournament().getParams().getRankingTeam3(),
-                                            Tournament.getTournament().getParams().getRankingTeam4(),
-                                            Tournament.getTournament().getParams().getRankingTeam5(),
-                                            false),
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            r.setCriteria(crit);
-                            array.add(r);
-
-                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
-                                    crit.getName(),
-                                    Translate.CS_Difference,
-                                    new MjtAnnexRankTeam(
-                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
-                                            teams, true,
-                                            Tournament.getTournament().getParams().getRankingTeam1(),
-                                            Tournament.getTournament().getParams().getRankingTeam2(),
-                                            Tournament.getTournament().getParams().getRankingTeam3(),
-                                            Tournament.getTournament().getParams().getRankingTeam4(),
-                                            Tournament.getTournament().getParams().getRankingTeam5(),
-                                            false),
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            r.setCriteria(crit);
-                            array.add(r);
-                        }
-                    }
-                    break;
-                    case CLAN_ANNEX: {
-                        ArrayList<Clan> clans = new ArrayList<>();
-                        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
-                            clans.add(Tournament.getTournament().getClan(i));
-                        }
-                        array = new ArrayList();
-                        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
-                            r = new RankingForExport(RankingForExport.CS_Clan_Annex,
-                                    crit.getName(),
-                                    RankingForExport.CS_Positive,
-                                    new MjtAnnexRankClan(
-                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                            true, clans, false),
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            r.setCriteria(crit);
-                            array.add(r);
-
-                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
-                                    crit.getName(),
-                                    RankingForExport.CS_Negative,
-                                    new MjtAnnexRankClan(
-                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                            true, clans, false),
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            r.setCriteria(crit);
-                            array.add(r);
-
-                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
-                                    crit.getName(),
-                                    Translate.CS_Difference,
-                                    new MjtAnnexRankClan(
-                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
-                                            true, clans, false),
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            r.setCriteria(crit);
-                            array.add(r);
-                        }
-                    }
-                    break;
-                    case GROUP_RANK: {
-                        array = new ArrayList<>();
-                        for (int cpt = 0; cpt < Tournament.getTournament().getGroupsCount(); cpt++) {
-                            Group g = Tournament.getTournament().getGroup(cpt);
-
-                            ArrayList<Coach> coachs = new ArrayList<>();
-                            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                                Coach coach = Tournament.getTournament().getCoach(i);
-                                if (g.containsRoster(coach.getRoster())) {
-                                    coachs.add(coach);
-                                }
-                            }
-                            r = new RankingForExport(RankingForExport.CS_Individual,
-                                    g.getName(),
-                                    StringConstants.CS_NULL,
-                                    new MjtRankingIndiv(
-                                            Tournament.getTournament().getRoundsCount() - 1,
-                                            Tournament.getTournament().getParams().getRankingIndiv1(),
-                                            Tournament.getTournament().getParams().getRankingIndiv2(),
-                                            Tournament.getTournament().getParams().getRankingIndiv3(),
-                                            Tournament.getTournament().getParams().getRankingIndiv4(),
-                                            Tournament.getTournament().getParams().getRankingIndiv5(),
-                                            coachs, false, false, Tournament.getTournament().getPoolCount() > 0,
-                                    Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            array.add(r);
-                        }
-                    }
-                    break;
-                    case CATEGORY_RANK: {
-                        array = new ArrayList<>();
-                        for (int cpt = 0; cpt < Tournament.getTournament().getCategoriesCount(); cpt++) {
-                            Category cat = Tournament.getTournament().getCategory(cpt);
-
-                            ArrayList<Coach> coachs = new ArrayList<>();
-                            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                                Coach coach = Tournament.getTournament().getCoach(i);
-                                if (coach.containsCategory(cat)) {
-                                    coachs.add(coach);
-                                }
-                            }
-                            r = new RankingForExport(RankingForExport.CS_Individual,
-                                    cat.getName(),
-                                    StringConstants.CS_NULL,
-                                    new MjtRankingIndiv(
-                                            Tournament.getTournament().getRoundsCount() - 1,
-                                            Tournament.getTournament().getParams().getRankingIndiv1(),
-                                            Tournament.getTournament().getParams().getRankingIndiv2(),
-                                            Tournament.getTournament().getParams().getRankingIndiv3(),
-                                            Tournament.getTournament().getParams().getRankingIndiv4(),
-                                            Tournament.getTournament().getParams().getRankingIndiv5(),
-                                            coachs, false, false, Tournament.getTournament().getPoolCount() > 0,
-                                    Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
-                                    
-                                    Tournament.getTournament().getRankingTypes(false)
-                            );
-                            array.add(r);
-                        }
-                    }
-                    break;
-                    case GROUP_ANNEX: {
-                        array = new ArrayList<>();
-                        for (int cpt = 0; cpt < Tournament.getTournament().getGroupsCount(); cpt++) {
-                            Group g = Tournament.getTournament().getGroup(cpt);
-
-                            ArrayList<Coach> coachs = new ArrayList<>();
-                            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                                Coach coach = Tournament.getTournament().getCoach(i);
-                                if (g.containsRoster(coach.getRoster())) {
-                                    coachs.add(coach);
-                                }
-                            }
-                            for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                                Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
-                                r = new RankingForExport(
-                                        RankingForExport.CS_Individual_Annex,
-                                        crit.getName() + "-" + g.getName(),
-                                        RankingForExport.CS_Positive,
-                                        new MjtAnnexRankIndiv(
-                                                Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                                coachs, true,
-                                                Tournament.getTournament().getParams().getRankingIndiv1(),
-                                                Tournament.getTournament().getParams().getRankingIndiv2(),
-                                                Tournament.getTournament().getParams().getRankingIndiv3(),
-                                                Tournament.getTournament().getParams().getRankingIndiv4(),
-                                                Tournament.getTournament().getParams().getRankingIndiv5(),
-                                                Tournament.getTournament().getParams().isTeamTournament(),
-                                                false),
-                                        Tournament.getTournament().getRankingTypes(false)
-                                );
-                                r.setCriteria(crit);
-                                array.add(r);
-
-                                r = new RankingForExport(
-                                        RankingForExport.CS_Individual_Annex,
-                                        crit.getName() + "-" + g.getName(),
-                                        RankingForExport.CS_Negative,
-                                        new MjtAnnexRankIndiv(
-                                                Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                                coachs, true,
-                                                Tournament.getTournament().getParams().getRankingIndiv1(),
-                                                Tournament.getTournament().getParams().getRankingIndiv2(),
-                                                Tournament.getTournament().getParams().getRankingIndiv3(),
-                                                Tournament.getTournament().getParams().getRankingIndiv4(),
-                                                Tournament.getTournament().getParams().getRankingIndiv5(),
-                                                Tournament.getTournament().getParams().isTeamTournament(),
-                                                false),
-                                        Tournament.getTournament().getRankingTypes(false)
-                                );
-                                r.setCriteria(crit);
-                                array.add(r);
-
-                                r = new RankingForExport(
-                                        RankingForExport.CS_Individual_Annex,
-                                        crit.getName() + "-" + g.getName(),
-                                        Translate.CS_Difference,
-                                        new MjtAnnexRankIndiv(
-                                                Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
-                                                coachs, true,
-                                                Tournament.getTournament().getParams().getRankingIndiv1(),
-                                                Tournament.getTournament().getParams().getRankingIndiv2(),
-                                                Tournament.getTournament().getParams().getRankingIndiv3(),
-                                                Tournament.getTournament().getParams().getRankingIndiv4(),
-                                                Tournament.getTournament().getParams().getRankingIndiv5(),
-                                                Tournament.getTournament().getParams().isTeamTournament(),
-                                                false),
-                                        Tournament.getTournament().getRankingTypes(false)
-                                );
-                                r.setCriteria(crit);
-                                array.add(r);
-                            }
-                        }
-                    }
-                    break;
-                    case CATEGORY_ANNEX: {
-                        array = new ArrayList<>();
-                        for (int cpt = 0; cpt < Tournament.getTournament().getCategoriesCount(); cpt++) {
-                            Category cat = Tournament.getTournament().getCategory(cpt);
-
-                            ArrayList<Coach> coachs = new ArrayList<>();
-                            for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                                Coach coach = Tournament.getTournament().getCoach(i);
-                                if (coach.containsCategory(cat)) {
-                                    coachs.add(coach);
-                                }
-                            }
-                            for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                                Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
-                                r = new RankingForExport(
-                                        RankingForExport.CS_Individual_Annex,
-                                        crit.getName() + "-" + cat.getName(),
-                                        RankingForExport.CS_Positive,
-                                        new MjtAnnexRankIndiv(
-                                                Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                                coachs, true,
-                                                Tournament.getTournament().getParams().getRankingIndiv1(),
-                                                Tournament.getTournament().getParams().getRankingIndiv2(),
-                                                Tournament.getTournament().getParams().getRankingIndiv3(),
-                                                Tournament.getTournament().getParams().getRankingIndiv4(),
-                                                Tournament.getTournament().getParams().getRankingIndiv5(),
-                                                Tournament.getTournament().getParams().isTeamTournament(),
-                                                false),
-                                        Tournament.getTournament().getRankingTypes(false)
-                                );
-                                r.setCriteria(crit);
-                                array.add(r);
-
-                                r = new RankingForExport(
-                                        RankingForExport.CS_Individual_Annex,
-                                        crit.getName() + "-" + cat.getName(),
-                                        RankingForExport.CS_Negative,
-                                        new MjtAnnexRankIndiv(
-                                                Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                                coachs, true,
-                                                Tournament.getTournament().getParams().getRankingIndiv1(),
-                                                Tournament.getTournament().getParams().getRankingIndiv2(),
-                                                Tournament.getTournament().getParams().getRankingIndiv3(),
-                                                Tournament.getTournament().getParams().getRankingIndiv4(),
-                                                Tournament.getTournament().getParams().getRankingIndiv5(),
-                                                Tournament.getTournament().getParams().isTeamTournament(),
-                                                false),
-                                        Tournament.getTournament().getRankingTypes(false)
-                                );
-                                r.setCriteria(crit);
-                                array.add(r);
-
-                                r = new RankingForExport(
-                                        RankingForExport.CS_Individual_Annex,
-                                        crit.getName() + "-" + cat.getName(),
-                                        Translate.CS_Difference,
-                                        new MjtAnnexRankIndiv(
-                                                Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
-                                                coachs, true,
-                                                Tournament.getTournament().getParams().getRankingIndiv1(),
-                                                Tournament.getTournament().getParams().getRankingIndiv2(),
-                                                Tournament.getTournament().getParams().getRankingIndiv3(),
-                                                Tournament.getTournament().getParams().getRankingIndiv4(),
-                                                Tournament.getTournament().getParams().getRankingIndiv5(),
-                                                Tournament.getTournament().getParams().isTeamTournament(),
-                                                false),
-                                        Tournament.getTournament().getRankingTypes(false)
-                                );
-                                r.setCriteria(crit);
-                                array.add(r);
-                            }
-                        }
-                    }
-                    break;
-                    case POOL_INDIV_RANK: {
-                        array = new ArrayList<>();
-                        for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
-                            Pool p = Tournament.getTournament().getPool(cpt);
 
                             r = new RankingForExport(
-                                    RankingForExport.CS_Individual,
-                                    Integer.toString(cpt + 1),
-                                    StringConstants.CS_NULL,
-                                    new MjtRankingIndiv(
-                                            Tournament.getTournament().getRoundsCount() - 1,
+                                    RankingForExport.CS_Individual_Annex,
+                                    crit.getName() + "-" + g.getName(),
+                                    RankingForExport.CS_Negative,
+                                    new AnnexIndivRanking(
+                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                            coachs,
                                             Tournament.getTournament().getParams().getRankingIndiv1(),
                                             Tournament.getTournament().getParams().getRankingIndiv2(),
                                             Tournament.getTournament().getParams().getRankingIndiv3(),
                                             Tournament.getTournament().getParams().getRankingIndiv4(),
                                             Tournament.getTournament().getParams().getRankingIndiv5(),
-                                            p.getCompetitors(), false, false, Tournament.getTournament().getPoolCount() > 0,
-                                    Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
+                                            Tournament.getTournament().getParams().isTeamTournament(),
+                                            false),
                                     Tournament.getTournament().getRankingTypes(false)
                             );
+                            r.setCriterion(crit);
                             array.add(r);
-                        }
-                    }
-                    break;
-                    case POOL_TEAM_RANK: {
-                        array = new ArrayList<>();
-                        for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
-                            Pool p = Tournament.getTournament().getPool(cpt);
 
                             r = new RankingForExport(
-                                    Translate.CS_Team,
-                                    Integer.toString(cpt + 1),
-                                    StringConstants.CS_NULL,
-                                    new MjtRankingTeam(
-                                            Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                                            Tournament.getTournament().getRoundsCount() - 1,
-                                            p.getCompetitors(), false),
-                                    Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
+                                    RankingForExport.CS_Individual_Annex,
+                                    crit.getName() + "-" + g.getName(),
+                                    Translate.CS_Difference,
+                                    new AnnexIndivRanking(
+                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
+                                            coachs,
+                                            Tournament.getTournament().getParams().getRankingIndiv1(),
+                                            Tournament.getTournament().getParams().getRankingIndiv2(),
+                                            Tournament.getTournament().getParams().getRankingIndiv3(),
+                                            Tournament.getTournament().getParams().getRankingIndiv4(),
+                                            Tournament.getTournament().getParams().getRankingIndiv5(),
+                                            Tournament.getTournament().getParams().isTeamTournament(),
+                                            false),
+                                    Tournament.getTournament().getRankingTypes(false)
                             );
+                            r.setCriterion(crit);
                             array.add(r);
                         }
-                    }
-                    break;
-                }
+                        for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+                            Formula form = Tournament.getTournament().getParams().getFormula(i);
+                            r = new RankingForExport(
+                                    RankingForExport.CS_Individual_Annex,
+                                    form.getName() + "-" + g.getName(),
+                                    RankingForExport.CS_Positive,
+                                    new AnnexIndivRanking(
+                                            Tournament.getTournament().getRoundsCount() - 1, form, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                            coachs,
+                                            Tournament.getTournament().getParams().getRankingIndiv1(),
+                                            Tournament.getTournament().getParams().getRankingIndiv2(),
+                                            Tournament.getTournament().getParams().getRankingIndiv3(),
+                                            Tournament.getTournament().getParams().getRankingIndiv4(),
+                                            Tournament.getTournament().getParams().getRankingIndiv5(),
+                                            Tournament.getTournament().getParams().isTeamTournament(),
+                                            false),
+                                    Tournament.getTournament().getRankingTypes(false)
+                            );
+                            r.setFormula(form);
+                            array.add(r);
 
-                if (array != null) {
-                    Element main = new Element(RankingForExport.CS_array);
-                    for (int i = 0; i < array.size(); i++) {
-                        Element element = ((IXMLExport) array.get(i)).getXMLElement();
-                        main.addContent(element);
+                            
+                        }
                     }
-                    XMLOutputter outp = new XMLOutputter();
-                    return outp.outputString(main);
                 }
+                break;
+                case CATEGORY_ANNEX: {
+                    array = new ArrayList<>();
+                    for (int cpt = 0; cpt < Tournament.getTournament().getCategoriesCount(); cpt++) {
+                        Category cat = Tournament.getTournament().getCategory(cpt);
 
-                if (r != null) {
-                    Element element = r.getXMLElement();
-                    XMLOutputter outp = new XMLOutputter();
-                    return outp.outputString(element);
-                }
-                if ((round != null) && (params != null)) {
-                    XMLOutputter outp = new XMLOutputter();
-                    Element matchs = new Element(TourmaProtocol.TKey.MATCHS.toString());
-                    for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
-                        final Element ros = new Element(
-                                StringConstants.CS_ROSTER);
-                        ros.setAttribute(StringConstants.CS_NAME, RosterType.getRostersName(i));
-                        matchs.addContent(ros);
+                        ArrayList<Coach> coachs = new ArrayList<>();
+                        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
+                            Coach coach = Tournament.getTournament().getCoach(i);
+                            if (coach.containsCategory(cat)) {
+                                coachs.add(coach);
+                            }
+                        }
+                        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                            r = new RankingForExport(
+                                    RankingForExport.CS_Individual_Annex,
+                                    crit.getName() + "-" + cat.getName(),
+                                    RankingForExport.CS_Positive,
+                                    new AnnexIndivRanking(
+                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                            coachs,
+                                            Tournament.getTournament().getParams().getRankingIndiv1(),
+                                            Tournament.getTournament().getParams().getRankingIndiv2(),
+                                            Tournament.getTournament().getParams().getRankingIndiv3(),
+                                            Tournament.getTournament().getParams().getRankingIndiv4(),
+                                            Tournament.getTournament().getParams().getRankingIndiv5(),
+                                            Tournament.getTournament().getParams().isTeamTournament(),
+                                            false),
+                                    Tournament.getTournament().getRankingTypes(false)
+                            );
+                            r.setCriterion(crit);
+                            array.add(r);
+
+                            r = new RankingForExport(
+                                    RankingForExport.CS_Individual_Annex,
+                                    crit.getName() + "-" + cat.getName(),
+                                    RankingForExport.CS_Negative,
+                                    new AnnexIndivRanking(
+                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                            coachs,
+                                            Tournament.getTournament().getParams().getRankingIndiv1(),
+                                            Tournament.getTournament().getParams().getRankingIndiv2(),
+                                            Tournament.getTournament().getParams().getRankingIndiv3(),
+                                            Tournament.getTournament().getParams().getRankingIndiv4(),
+                                            Tournament.getTournament().getParams().getRankingIndiv5(),
+                                            Tournament.getTournament().getParams().isTeamTournament(),
+                                            false),
+                                    Tournament.getTournament().getRankingTypes(false)
+                            );
+                            r.setCriterion(crit);
+                            array.add(r);
+
+                            r = new RankingForExport(
+                                    RankingForExport.CS_Individual_Annex,
+                                    crit.getName() + "-" + cat.getName(),
+                                    Translate.CS_Difference,
+                                    new AnnexIndivRanking(
+                                            Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_DIFFERENCE,
+                                            coachs,
+                                            Tournament.getTournament().getParams().getRankingIndiv1(),
+                                            Tournament.getTournament().getParams().getRankingIndiv2(),
+                                            Tournament.getTournament().getParams().getRankingIndiv3(),
+                                            Tournament.getTournament().getParams().getRankingIndiv4(),
+                                            Tournament.getTournament().getParams().getRankingIndiv5(),
+                                            Tournament.getTournament().getParams().isTeamTournament(),
+                                            false),
+                                    Tournament.getTournament().getRankingTypes(false)
+                            );
+                            r.setCriterion(crit);
+                            array.add(r);
+                        }
+                        
+                        for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+                            Formula form = Tournament.getTournament().getParams().getFormula(i);
+                            r = new RankingForExport(
+                                    RankingForExport.CS_Individual_Annex,
+                                    form.getName() + "-" + cat.getName(),
+                                    RankingForExport.CS_Positive,
+                                    new AnnexIndivRanking(
+                                            Tournament.getTournament().getRoundsCount() - 1, form, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                            coachs,
+                                            Tournament.getTournament().getParams().getRankingIndiv1(),
+                                            Tournament.getTournament().getParams().getRankingIndiv2(),
+                                            Tournament.getTournament().getParams().getRankingIndiv3(),
+                                            Tournament.getTournament().getParams().getRankingIndiv4(),
+                                            Tournament.getTournament().getParams().getRankingIndiv5(),
+                                            Tournament.getTournament().getParams().isTeamTournament(),
+                                            false),
+                                    Tournament.getTournament().getRankingTypes(false)
+                            );
+                            r.setFormula(form);
+                            array.add(r);
+
+                        }
                     }
-                    matchs.addContent(params.getXMLElement());
-                    matchs.addContent(round.getXMLElementForDisplay());
-                    String buffer = outp.outputString(matchs);
-                    return buffer;
                 }
-            } catch (RemoteException re) {
-                re.printStackTrace();
+                break;
+                case POOL_INDIV_RANK: {
+                    array = new ArrayList<>();
+                    for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
+                        Pool p = Tournament.getTournament().getPool(cpt);
+
+                        r = new RankingForExport(
+                                RankingForExport.CS_Individual,
+                                Integer.toString(cpt + 1),
+                                StringConstants.CS_NULL,
+                                new IndivRanking(
+                                        Tournament.getTournament().getRoundsCount() - 1,
+                                        Tournament.getTournament().getParams().getRankingIndiv1(),
+                                        Tournament.getTournament().getParams().getRankingIndiv2(),
+                                        Tournament.getTournament().getParams().getRankingIndiv3(),
+                                        Tournament.getTournament().getParams().getRankingIndiv4(),
+                                        Tournament.getTournament().getParams().getRankingIndiv5(),
+                                        p.getCompetitors(), false, false, Tournament.getTournament().getPoolCount() > 0,
+                                        Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).isCup()),
+                                Tournament.getTournament().getRankingTypes(false)
+                        );
+                        array.add(r);
+                    }
+                }
+                break;
+                case POOL_TEAM_RANK: {
+                    array = new ArrayList<>();
+                    for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
+                        Pool p = Tournament.getTournament().getPool(cpt);
+
+                        r = new RankingForExport(
+                                Translate.CS_Team,
+                                Integer.toString(cpt + 1),
+                                StringConstants.CS_NULL,
+                                new TeamRanking(
+                                        Tournament.getTournament().getParams().isTeamVictoryOnly(),
+                                        Tournament.getTournament().getRoundsCount() - 1,
+                                        Tournament.getTournament().getParams(),
+                                        p.getCompetitors(), false),
+                                Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
+                        );
+                        array.add(r);
+                    }
+                }
+                break;
             }
+
+            if (array != null) {
+                Element main = new Element(RankingForExport.CS_array);
+                for (int i = 0; i < array.size(); i++) {
+                    Element element = ((IXMLExport) array.get(i)).getXMLElement();
+                    main.addContent(element);
+                }
+                XMLOutputter outp = new XMLOutputter();
+                return outp.outputString(main);
+            }
+
+            if (r != null) {
+                Element element = r.getXMLElement();
+                XMLOutputter outp = new XMLOutputter();
+                return outp.outputString(element);
+            }
+            if ((round != null) && (params != null)) {
+                XMLOutputter outp = new XMLOutputter();
+                Element matchs = new Element(TourmaProtocol.TKey.MATCHS.toString());
+                for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
+                    final Element ros = new Element(
+                            StringConstants.CS_ROSTER);
+                    ros.setAttribute(StringConstants.CS_NAME, RosterType.getRostersName(i));
+                    matchs.addContent(ros);
+                }
+                matchs.addContent(params.getXMLElement());
+                matchs.addContent(round.getXMLElementForDisplay());
+                String buffer = outp.outputString(matchs);
+                return buffer;
+            }
+
         } else {
             return StringConstants.CS_NULL;
         }

@@ -33,6 +33,8 @@ import tourma.data.Pool;
 import tourma.data.RankingForExport;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.data.ranking.Ranking;
+import tourma.data.ranking.TeamRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingTeam;
@@ -175,7 +177,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
         jpn.setLayout(gbl);
 
         try {
-            //            Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+            //            Criteria td = Tournament.getTournament().getParams().getCriterion(0);
             font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
         } catch (IOException ex) {
             Logger.getLogger(JFullScreenTeamRank.class.getName()).log(Level.SEVERE, null, ex);
@@ -236,7 +238,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
 
                 for (int j = 0; j < Tournament.getTournament().getParams().getTeamRankingNumber(); j++) {
                     int rankingType = Tournament.getTournament().getParams().getTeamRankingType(j);
-                    String name = MjtRanking.getRankingString(rankingType);
+                    String name = Ranking.getRankingString(rankingType);
                     if (rankingType == 0) {
                         break;
                     } else {
@@ -372,18 +374,18 @@ public final class JFullScreenTeamRank extends JFullScreen {
                     teams.add(Tournament.getTournament().getTeam(cpt));
                 }
 
-                MjtRankingTeam ranking = new MjtRankingTeam(
+                TeamRanking ranking = new TeamRanking(
                         Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                        round,
+                        round, Tournament.getTournament().getParams(),
                         teams,
                         false);
                 rankeds.add(ranking);
             } else {
                 for (int i = 0; i < Tournament.getTournament().getPoolCount(); i++) {
                     Pool p = Tournament.getTournament().getPool(i);
-                    MjtRankingTeam ranking = new MjtRankingTeam(
+                    TeamRanking ranking = new TeamRanking(
                             Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                            round,
+                            round, Tournament.getTournament().getParams(),
                             p.getCompetitors(),
                             false);
                     ranking.setDetail(Integer.toString(i + 1));

@@ -14,7 +14,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tourma.data.Category;
 import tourma.data.Coach;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Group;
 import tourma.data.Pool;
 import tourma.data.Round;
@@ -126,7 +126,7 @@ public class WebRoundNGTest {
     public void testCreateIndividualCriteria() {
         System.out.println("createIndividualCriteria");
         Round r = null;
-        Criteria crit = null;
+        Criterion crit = null;
         String expResult = "";
         String result = WebRound.createIndividualCriteria(r, crit);
         assertEquals(result, expResult);
@@ -185,7 +185,7 @@ public class WebRoundNGTest {
     public void testCreateTeamCriteria() {
         System.out.println("createTeamCriteria");
         Round r = null;
-        Criteria crit = null;
+        Criterion crit = null;
         String expResult = "";
         String result = WebRound.createTeamCriteria(r, crit);
         assertEquals(result, expResult);
@@ -214,7 +214,7 @@ public class WebRoundNGTest {
     public void testCreateClanCriteria() {
         System.out.println("createClanCriteria");
         Round r = null;
-        Criteria crit = null;
+        Criterion crit = null;
         String expResult = "";
         String result = WebRound.createClanCriteria(r, crit);
         assertEquals(result, expResult);

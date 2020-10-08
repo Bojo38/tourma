@@ -55,6 +55,8 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.data.ranking.IndivRanking;
+import tourma.data.ranking.TeamRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRankingIndiv;
 import tourma.tableModel.MjtRankingTeam;
@@ -96,7 +98,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
         initComponents();
 
         addRosterPie();
-        
+
         if (mTournament.getGroupsCount() > 1) {
             addGroupPie();
         }
@@ -829,15 +831,15 @@ public final class JPNStatistics extends javax.swing.JPanel {
         }
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             //Round r = mTournament.getRound(i);
-            MjtRankingIndiv ranking = new MjtRankingIndiv(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+            IndivRanking ranking = new IndivRanking(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
                     coach, mTournament.getParams().isTeamTournament(),
                     false,
-                    false,false);
+                    false, false);
 
             ArrayList<String> coach_names = new ArrayList<>();
             int count = ranking.getRowCount();
             for (int j = 0; j < count; j++) {
-                coach_names.add((String) ranking.getValueAt(j, column_name));
+                coach_names.add(ranking.getSortedObject(j).getObject().toString());
             }
             HashMap<String, Integer> hm = new HashMap<>();
             for (Coach c : coach) {
@@ -892,16 +894,16 @@ public final class JPNStatistics extends javax.swing.JPanel {
                 for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
                     teams.add(Tournament.getTournament().getTeam(cpt));
                 }
-                MjtRankingTeam ranking = new MjtRankingTeam(
+                TeamRanking ranking = new TeamRanking(
                         mTournament.getParams().isTeamVictoryOnly(),
-                        i,
+                        i, mTournament.getParams(),
                         teams,
                         false);
 
                 ArrayList<String> team_names = new ArrayList<>();
                 int count = ranking.getRowCount();
                 for (int j = 0; j < count; j++) {
-                    team_names.add((String) ranking.getValueAt(j, column_name));
+                    team_names.add((String) ranking.getSortedObject(j).getObject().toString());
                 }
                 HashMap<String, Integer> hm = new HashMap<>();
                 for (Team c : team) {

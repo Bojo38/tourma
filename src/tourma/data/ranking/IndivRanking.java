@@ -24,6 +24,28 @@ import tourma.data.Value;
 public class IndivRanking extends Ranking {
 
     public IndivRanking(final int round,
+            Parameters params,
+            final ArrayList objects,
+            final boolean teamTour,
+            final boolean roundOnly,
+            final boolean forPool,
+            final boolean forCup) {
+
+        super(round,
+                params.getRankingIndiv1(),
+                params.getRankingIndiv2(),
+                params.getRankingIndiv3(),
+                params.getRankingIndiv4(),
+                params.getRankingIndiv5(),
+                objects,
+                roundOnly);
+        mTeamTournament = teamTour;
+        mForCup = forCup;
+        mForPool = forPool;
+
+    }
+
+    public IndivRanking(final int round,
             final int ranking_type1,
             final int ranking_type2,
             final int ranking_type3,
@@ -34,7 +56,7 @@ public class IndivRanking extends Ranking {
             final boolean roundOnly,
             final boolean forPool,
             final boolean forCup) {
-        
+
         super(round,
                 ranking_type1,
                 ranking_type2,
@@ -340,8 +362,6 @@ public class IndivRanking extends Ranking {
             }
         }
     }
-
-
 
     protected void updateHeadByHeadValue(int round_index, int valueIndex, ObjectRanking or1, ObjectRanking or2) {
         Coach c = (Coach) or1.getObject();

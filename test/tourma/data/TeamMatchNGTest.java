@@ -55,7 +55,7 @@ public class TeamMatchNGTest {
         if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
             fail("No match in round");
         }
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
 
         for (int i = 0; i < instance.getMatchCount(); i++) {
@@ -90,7 +90,7 @@ public class TeamMatchNGTest {
         if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
             fail("No match in round");
         }
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
 
         for (int i = 0; i < instance.getMatchCount(); i++) {
@@ -170,7 +170,7 @@ public class TeamMatchNGTest {
         if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
             fail("No match in round");
         }
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
 
         for (int i = 0; i < instance.getMatchCount(); i++) {
@@ -202,7 +202,7 @@ public class TeamMatchNGTest {
         if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
             fail("No match in round");
         }
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
 
         for (int i = 0; i < instance.getMatchCount(); i++) {
@@ -235,7 +235,7 @@ public class TeamMatchNGTest {
         if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
             fail("No match in round");
         }
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
 
         for (int i = 0; i < instance.getMatchCount(); i++) {
@@ -267,7 +267,7 @@ public class TeamMatchNGTest {
         if (Tournament.getTournament().getRound(0).getMatchsCount() == 0) {
             fail("No match in round");
         }
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
         assertEquals(instance.getMatchCount(), Tournament.getTournament().getParams().getTeamMatesNumber());
     }
@@ -513,7 +513,7 @@ public class TeamMatchNGTest {
         System.out.println("getCriteriaBonusPoints");
         Coach c = null;
         CoachMatch m = null;
-        Criteria crit = null;
+        Criterion crit = null;
         int expResult = 0;
         int result = TeamMatch.getCriteriaBonusPoints(c, m, crit);
         assertEquals(result, expResult);
@@ -679,7 +679,7 @@ public class TeamMatchNGTest {
         System.out.println("getValue");
         Team t = null;
         TeamMatch tm = null;
-        Criteria crit = null;
+        Criterion crit = null;
         int subtype = 0;
         TeamMatch instance = null;
         int expResult = 0;
@@ -695,7 +695,7 @@ public class TeamMatchNGTest {
     @Test
     public void testGetValue_3args_2() {
         System.out.println("getValue");
-        Criteria crit = null;
+        Criterion crit = null;
         int subtype = 0;
         Competitor c = null;
         TeamMatch instance = null;

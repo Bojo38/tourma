@@ -43,8 +43,8 @@ public class ValueNGTest {
     @Test
     public void testGetCriteria() {
         System.out.println("getCriteria");
-        Criteria crit=new Criteria("Test");
-        Criteria crit2=new Criteria("Test2");
+        Criterion crit=new Criterion("Test");
+        Criterion crit2=new Criterion("Test2");
         Value instance = new Value(crit);
         instance.setCriteria(crit2);
         assertEquals(crit2,instance.getCriteria());
@@ -56,8 +56,8 @@ public class ValueNGTest {
     @Test
     public void testSetCriteria() {
         System.out.println("setCriteria");
-               Criteria crit=new Criteria("Test");
-        Criteria crit2=new Criteria("Test2");
+               Criterion crit=new Criterion("Test");
+        Criterion crit2=new Criterion("Test2");
         Value instance = new Value(crit);
         instance.setCriteria(crit2);
         assertEquals(crit2,instance.getCriteria());
@@ -70,7 +70,7 @@ public class ValueNGTest {
     public void testGetValue1() {
         System.out.println("getValue1");
         int mValue1 = 19;
-        Criteria crit=new Criteria("Test");
+        Criterion crit=new Criterion("Test");
         Value instance = new Value(crit);
         instance.setValue1(mValue1);
         assertEquals(19,instance.getValue1());
@@ -83,7 +83,7 @@ public class ValueNGTest {
     public void testSetValue1() {
         System.out.println("setValue1");
         int mValue1 = 19;
-        Criteria crit=new Criteria("Test");
+        Criterion crit=new Criterion("Test");
         Value instance = new Value(crit);
         instance.setValue1(mValue1);
         assertEquals(19,instance.getValue1());
@@ -96,7 +96,7 @@ public class ValueNGTest {
     public void testGetValue2() {
         System.out.println("getValue2");
         int mValue2 = 19;
-        Criteria crit=new Criteria("Test");
+        Criterion crit=new Criterion("Test");
         Value instance = new Value(crit);
         instance.setValue2(mValue2);
         assertEquals(19,instance.getValue2());
@@ -109,7 +109,7 @@ public class ValueNGTest {
     public void testSetValue2() {
         System.out.println("setValue2");
         int mValue2 = 19;
-        Criteria crit=new Criteria("Test");
+        Criterion crit=new Criterion("Test");
         Value instance = new Value(crit);
         instance.setValue2(mValue2);
         assertEquals(19,instance.getValue2());

@@ -20,6 +20,8 @@ import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.data.ranking.AnnexClanRanking;
+import tourma.data.ranking.ClanRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankClan;
@@ -194,12 +196,11 @@ public final class JPNClan extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
                 MjtRankingClan model;
-                if ((mTournament.getParams().isTeamTournament()) && ((mTournament.getParams().isTeamVictoryOnly()))) {
-                    model = new MjtRankingClan(i, mTournament.getParams().getRankingTeam1(), mTournament.getParams().gemRankingTeam2(), mTournament.getParams().getRankingTeam3(), mTournament.getParams().getRankingTeam4(), mTournament.getParams().getRankingTeam5(),
-                            mTournament.getDisplayClans(), mRoundOnly);
-                } else {
-                    model = new MjtRankingClan(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mTournament.getDisplayClans(), mRoundOnly);
-                }
+
+                ClanRanking ranking = new ClanRanking(i, mTournament.getParams(), mTournament.getDisplayClans(), mRoundOnly);
+
+                model = new MjtRankingClan(ranking);
+
                 final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
                         Translate.translate(CS_GeneralByClan),
                         i + 1, mTournament, model, 0);
@@ -214,18 +215,24 @@ public final class JPNClan extends javax.swing.JPanel {
 
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
-                final MjtRankingClan model = new MjtRankingClan(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mTournament.getDisplayClans(), mRoundOnly);
+                ClanRanking ranking = new ClanRanking(i, mTournament.getParams(), mTournament.getDisplayClans(), mRoundOnly);
+                final MjtRankingClan model = new MjtRankingClan(ranking);
                 final HashMap<Criterion, MjtAnnexRank> annexForRankings = new HashMap<>();
                 final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
+
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
                     final Criterion crit = mTournament.getParams().getCriteria(j);
-                    MjtAnnexRank annex = new MjtAnnexRankClan(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                            mTournament.getDisplayClans(), true, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
+                    AnnexClanRanking aranking = new AnnexClanRanking(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                            mTournament.getDisplayClans(), mTournament.getParams(), mRoundOnly);
+                    MjtAnnexRank annex = new MjtAnnexRankClan(aranking);
                     annexForRankings.put(crit, annex);
-                    annex = new MjtAnnexRankClan(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                            mTournament.getDisplayClans(), true, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
+
+                    aranking = new AnnexClanRanking(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                            mTournament.getDisplayClans(), mTournament.getParams(), mRoundOnly);
+                    annex = new MjtAnnexRankClan(aranking);
                     annexAgainstRankings.put(crit, annex);
                 }
+
                 final JdgGlobal jdg = new JdgGlobal(MainFrame.getMainFrame(), true, i + 1, mTournament, model, annexForRankings, annexAgainstRankings, false, false);
                 jdg.setVisible(true);
                 break;
@@ -303,35 +310,17 @@ public final class JPNClan extends javax.swing.JPanel {
 
         jlbPage.setText(Integer.toString(mPageIndex) + " / " + Integer.toString(mPageCount));
 
-        if ((mTournament.getParams().isTeamTournament()) && ((mTournament.getParams().isTeamVictoryOnly()))) {
+        ClanRanking ranking = new ClanRanking(v.size() - 1, mTournament.getParams(), mTournament.getDisplayClans(), mRoundOnly);
 
-            if (this.mTournament.getParams().isDisplayByPages()) {
-                int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
-                int max = mPageIndex * mTournament.getParams().getPageSize();
-                if (max > mTournament.getDisplayClans().size()) {
-                    max = mTournament.getDisplayClans().size();
-                }
-                mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingTeam1(), mTournament.getParams().gemRankingTeam2(), mTournament.getParams().getRankingTeam3(), mTournament.getParams().getRankingTeam4(), mTournament.getParams().getRankingTeam5(),
-                        mTournament.getDisplayClans(), mRoundOnly, min, max);
-            } else {
-                mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingTeam1(), mTournament.getParams().gemRankingTeam2(), mTournament.getParams().getRankingTeam3(), mTournament.getParams().getRankingTeam4(), mTournament.getParams().getRankingTeam5(),
-                        mTournament.getDisplayClans(), mRoundOnly);
+        if (this.mTournament.getParams().isDisplayByPages()) {
+            int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
+            int max = mPageIndex * mTournament.getParams().getPageSize();
+            if (max > mTournament.getDisplayClans().size()) {
+                max = mTournament.getDisplayClans().size();
             }
-
+            mRankingClan = new MjtRankingClan(ranking, min, max);
         } else {
-
-            if (this.mTournament.getParams().isDisplayByPages()) {
-                int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
-                int max = mPageIndex * mTournament.getParams().getPageSize();
-                if (max > mTournament.getDisplayClans().size()) {
-                    max = mTournament.getDisplayClans().size();
-                }
-                mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                        mTournament.getDisplayClans(), mRoundOnly, min, max);
-            } else {
-                mRankingClan = new MjtRankingClan(v.size() - 1, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                        mTournament.getDisplayClans(), mRoundOnly);
-            }
+            mRankingClan = new MjtRankingClan(ranking);
         }
 
         jtbRankingClan.setModel(mRankingClan);

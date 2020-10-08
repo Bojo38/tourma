@@ -28,6 +28,18 @@ import tourma.utils.display.IRanked;
  */
 abstract public class Ranking implements IRanked {
 
+    String mDetail="";
+    
+    public String getDetail()
+    {
+        return mDetail;
+    }
+    
+    public void setDetail(String d)
+    {
+        mDetail=d;
+    }
+    
     public Ranking(final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList objects, final boolean roundOnly) {
         mRound = round;
         mRankingType1 = ranking_type1;

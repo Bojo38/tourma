@@ -20,6 +20,9 @@ import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.data.ranking.AnnexClanRanking;
+import tourma.data.ranking.AnnexIndivRanking;
+import tourma.data.ranking.AnnexTeamRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankClan;
@@ -361,30 +364,41 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             if (mRound == mTour.getRound(i)) {
                 MjtAnnexRank model;
                 if (mClan) {
+                    AnnexClanRanking ranking;
                     if (mCriteria != null) {
-                        model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                        ranking = new AnnexClanRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                     } else {
-                        model = new MjtAnnexRankClan(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                        ranking = new AnnexClanRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
 
                     }
+                    model = new MjtAnnexRankClan(ranking);
+
                 } else {
                     if (mTeam) {
+                        AnnexTeamRanking ranking;
                         if (mCriteria != null) {
-                            model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                            ranking = new AnnexTeamRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                    mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                         } else {
-                            model = new MjtAnnexRankTeam(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                            ranking = new AnnexTeamRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                    mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
 
                         }
+                        model = new MjtAnnexRankTeam(ranking, true);
+
                     } else {
+                        AnnexIndivRanking ranking;
+
                         if (mCriteria != null) {
-                            model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+                            ranking = new AnnexIndivRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                         } else {
-                            model = new MjtAnnexRankIndiv(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+                            ranking = new AnnexIndivRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                         }
+
+                        model = new MjtAnnexRankIndiv(ranking, true);
+
                     }
                 }
                 final StringBuffer a = new StringBuffer(mCriteria.getName());
@@ -411,31 +425,41 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             if (mRound == mTour.getRound(i)) {
                 MjtAnnexRank model;
                 if (mClan) {
+                    AnnexClanRanking ranking;
                     if (mCriteria != null) {
-                        model = new MjtAnnexRankClan(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                        ranking = new AnnexClanRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                     } else {
-                        model = new MjtAnnexRankClan(i, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                        ranking = new AnnexClanRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
 
                     }
+                    model = new MjtAnnexRankClan(ranking);
+
                 } else {
                     if (mTeam) {
+                        AnnexTeamRanking ranking;
                         if (mCriteria != null) {
-                            model = new MjtAnnexRankTeam(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                    mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                            ranking = new AnnexTeamRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                    mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                         } else {
-                            model = new MjtAnnexRankTeam(i, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                    mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                            ranking = new AnnexTeamRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                    mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+
                         }
+                        model = new MjtAnnexRankTeam(ranking, true);
+
                     } else {
+                        AnnexIndivRanking ranking;
+
                         if (mCriteria != null) {
-                            model = new MjtAnnexRankIndiv(i, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                    mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+                            ranking = new AnnexIndivRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                         } else {
-                            model = new MjtAnnexRankIndiv(i, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                    mCoachs, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+                            ranking = new AnnexIndivRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                         }
+
+                        model = new MjtAnnexRankIndiv(ranking, true);
+
                     }
                 }
 
@@ -518,7 +542,6 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             updatePositive();
             updateNegative();
 
-            
         }
 
     }
@@ -538,117 +561,72 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             jlbPagePos.setText(Integer.toString(mPagePosIndex) + " / " + Integer.toString(mPagePosCount));
             MjtAnnexRank modelPos;
             if (mClan) {
+                AnnexClanRanking ranking;
                 if (mCriteria != null) {
-                    if (this.mTour.getParams().isDisplayByPages()) {
-                        int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
-                        int max = mPagePosIndex * mTour.getParams().getPageSize();
-                        if (max > mTour.getDisplayClans().size()) {
-                            max = mTour.getDisplayClans().size();
-                        }
-                        modelPos = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), 
-                                mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly, min, max);
-                    } else {
-                        modelPos = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), 
-                                mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                    ranking = new AnnexClanRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                            mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                } else {
+                    ranking = new AnnexClanRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                            mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+
+                }
+                if (this.mTour.getParams().isDisplayByPages()) {
+                    int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
+                    int max = mPagePosIndex * mTour.getParams().getPageSize();
+                    if (max > mTour.getDisplayClans().size()) {
+                        max = mTour.getDisplayClans().size();
                     }
+                    modelPos = new MjtAnnexRankClan(ranking, true, min, max);
 
                 } else {
-                    if (this.mTour.getParams().isDisplayByPages()) {
-                        int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
-                        int max = mPagePosIndex * mTour.getParams().getPageSize();
-                        if (max > mTour.getDisplayClans().size()) {
-                            max = mTour.getDisplayClans().size();
-                        }
-                        modelPos
-                                = new MjtAnnexRankClan(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                        mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), 
-                                        mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly, min, max);
-                    } else {
-                        modelPos
-                                = new MjtAnnexRankClan(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                        mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(),
-                                        mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                    }
+                    modelPos = new MjtAnnexRankClan(ranking);
                 }
             } else {
-                if (mCriteria != null) {
-                    if (mTeam) {
-                        if (this.mTour.getParams().isDisplayByPages()) {
-                            int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
-                            int max = mPagePosIndex * mTour.getParams().getPageSize();
-                            if (max > mTeams.size()) {
-                                max = mTeams.size();
-                            }
-                            modelPos
-                                    = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly, min, max);
-                        } else {
-                            modelPos
-                                    = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(),
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                        }
+                if (mTeam) {
+                    AnnexTeamRanking ranking;
+                    if (mCriteria != null) {
+                        ranking = new AnnexTeamRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                     } else {
-                        if (this.mTour.getParams().isDisplayByPages()) {
-                            int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
-                            int max = mPagePosIndex * mTour.getParams().getPageSize();
-                            if (max > mCoachs.size()) {
-                                max = mCoachs.size();
-                            }
-                            modelPos
-                                    = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, 
-                                            mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly, min, max);
-                        } else {
-                            modelPos
-                                    = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, 
-                                            mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(),
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
-                        }
+                        ranking = new AnnexTeamRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
 
+                    }
+
+                    if (this.mTour.getParams().isDisplayByPages()) {
+                        int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
+                        int max = mPagePosIndex * mTour.getParams().getPageSize();
+                        if (max > mTeams.size()) {
+                            max = mTeams.size();
+                        }
+                        modelPos
+                                = new MjtAnnexRankTeam(ranking, true, min, max);
+                    } else {
+                        modelPos
+                                = new MjtAnnexRankTeam(ranking, true);
                     }
                 } else {
-                    if (mTeam) {
-                        if (this.mTour.getParams().isDisplayByPages()) {
-                            int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
-                            int max = mPagePosIndex * mTour.getParams().getPageSize();
-                            if (max > mTeams.size()) {
-                                max = mTeams.size();
-                            }
-                            modelPos
-                                    = new MjtAnnexRankTeam(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly, min, max);
-                        } else {
-                            modelPos
-                                    = new MjtAnnexRankTeam(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                        }
+                    AnnexIndivRanking ranking;
 
+                    if (mCriteria != null) {
+                        ranking = new AnnexIndivRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                     } else {
-                        if (this.mTour.getParams().isDisplayByPages()) {
-                            int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
-                            int max = mPagePosIndex * mTour.getParams().getPageSize();
-                            if (max > mCoachs.size()) {
-                                max = mCoachs.size();
-                            }
-                            modelPos
-                                    = new MjtAnnexRankIndiv(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, 
-                                            mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly, min, max);
-                        } else {
-                            modelPos
-                                    = new MjtAnnexRankIndiv(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, this.mCoachs, true, 
-                                            mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
-                        }
-
+                        ranking = new AnnexIndivRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                     }
+
+                    if (this.mTour.getParams().isDisplayByPages()) {
+                        int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
+                        int max = mPagePosIndex * mTour.getParams().getPageSize();
+                        if (max > mCoachs.size()) {
+                            max = mCoachs.size();
+                        }
+                        modelPos = new MjtAnnexRankIndiv(ranking,true, min, max);
+                    } else {
+                        modelPos = new MjtAnnexRankIndiv(ranking,true);
+                    }
+
                 }
+
             }
             jtbPositive.setModel(modelPos);
 
@@ -656,13 +634,12 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             jtbPositive.setDefaultRenderer(Integer.class, modelPos);
 
             //TableFormat.setColumnSize(jtbPositive);
-
             jtbPositive.setRowHeight(25);
 
             jtbPositive.setAutoCreateRowSorter(true);
         }
     }
-    
+
     private void updateNegative() {
         if (mRound != null) {
 
@@ -675,128 +652,86 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             v.add(mRound);
 
             jlbPageNeg.setText(Integer.toString(mPageNegIndex) + " / " + Integer.toString(mPageNegCount));
-             
+
             MjtAnnexRank modelNeg;
             if (mClan) {
+                AnnexClanRanking ranking;
                 if (mCriteria != null) {
-                    if (this.mTour.getParams().isDisplayByPages()) {
-                        int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
-                        int max = mPageNegIndex * mTour.getParams().getPageSize();
-                        if (max > mTour.getDisplayClans().size()) {
-                            max = mTour.getDisplayClans().size();
-                        }
-                        modelNeg = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), 
-                                mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly, min, max);
-                    } else {
-                        modelNeg = new MjtAnnexRankClan(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), 
-                                mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                    ranking = new AnnexClanRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                            mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                } else {
+                    ranking = new AnnexClanRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                            mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+
+                }
+                if (this.mTour.getParams().isDisplayByPages()) {
+                    int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
+                    int max = mPagePosIndex * mTour.getParams().getPageSize();
+                    if (max > mTour.getDisplayClans().size()) {
+                        max = mTour.getDisplayClans().size();
                     }
+                    modelNeg = new MjtAnnexRankClan(ranking, true, min, max);
 
                 } else {
-                    if (this.mTour.getParams().isDisplayByPages()) {
-                        int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
-                        int max = mPageNegIndex * mTour.getParams().getPageSize();
-                        if (max > mTour.getDisplayClans().size()) {
-                            max = mTour.getDisplayClans().size();
-                        }
-                        modelNeg
-                                = new MjtAnnexRankClan(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                        mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), 
-                                        mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly, min, max);
-                    } else {
-                        modelNeg
-                                = new MjtAnnexRankClan(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                        mTour.getDisplayClans(), true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(),
-                                        mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                    }
+                    modelNeg = new MjtAnnexRankClan(ranking);
                 }
             } else {
-                if (mCriteria != null) {
-                    if (mTeam) {
-                        if (this.mTour.getParams().isDisplayByPages()) {
-                            int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
-                            int max = mPageNegIndex * mTour.getParams().getPageSize();
-                            if (max > mTeams.size()) {
-                                max = mTeams.size();
-                            }
-                            modelNeg
-                                    = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly, min, max);
-                        } else {
-                            modelNeg
-                                    = new MjtAnnexRankTeam(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(),
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                        }
+                if (mTeam) {
+                    AnnexTeamRanking ranking;
+                    if (mCriteria != null) {
+                        ranking = new AnnexTeamRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
                     } else {
-                        if (this.mTour.getParams().isDisplayByPages()) {
-                            int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
-                            int max = mPageNegIndex * mTour.getParams().getPageSize();
-                            if (max > mCoachs.size()) {
-                                max = mCoachs.size();
-                            }
-                            modelNeg
-                                    = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, 
-                                            mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly, min, max);
-                        } else {
-                            modelNeg
-                                    = new MjtAnnexRankIndiv(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, 
-                                            mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(),
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
-                        }
+                        ranking = new AnnexTeamRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
 
+                    }
+
+                    if (this.mTour.getParams().isDisplayByPages()) {
+                        int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
+                        int max = mPagePosIndex * mTour.getParams().getPageSize();
+                        if (max > mTeams.size()) {
+                            max = mTeams.size();
+                        }
+                        modelNeg
+                                = new MjtAnnexRankTeam(ranking, true, min, max);
+                    } else {
+                        modelNeg
+                                = new MjtAnnexRankTeam(ranking, true);
                     }
                 } else {
-                    if (mTeam) {
-                        if (this.mTour.getParams().isDisplayByPages()) {
-                            int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
-                            int max = mPageNegIndex * mTour.getParams().getPageSize();
-                            if (max > mTeams.size()) {
-                                max = mTeams.size();
-                            }
-                            modelNeg
-                                    = new MjtAnnexRankTeam(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly, min, max);
-                        } else {
-                            modelNeg
-                                    = new MjtAnnexRankTeam(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                            mTeams, true, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                        }
+                    AnnexIndivRanking ranking;
 
+                    if (mCriteria != null) {
+                        ranking = new AnnexIndivRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                     } else {
-                        if (this.mTour.getParams().isDisplayByPages()) {
-                            int min = (mPageNegIndex - 1) * mTour.getParams().getPageSize();
-                            int max = mPageNegIndex * mTour.getParams().getPageSize();
-                            if (max > mCoachs.size()) {
-                                max = mCoachs.size();
-                            }
-                            modelNeg
-                                    = new MjtAnnexRankIndiv(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, 
-                                            mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly, min, max);
-                        } else {
-                            modelNeg
-                                    = new MjtAnnexRankIndiv(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE, this.mCoachs, true, 
-                                            mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), 
-                                            mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
-                        }
-
+                        ranking = new AnnexIndivRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                     }
+
+                    if (this.mTour.getParams().isDisplayByPages()) {
+                        int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
+                        int max = mPagePosIndex * mTour.getParams().getPageSize();
+                        if (max > mCoachs.size()) {
+                            max = mCoachs.size();
+                        }
+                        modelNeg = new MjtAnnexRankIndiv(ranking,true, min, max);
+                    } else {
+                        modelNeg = new MjtAnnexRankIndiv(ranking,true);
+                    }
+
                 }
+
             }
             jtbNegative.setModel(modelNeg);
 
-            jtbNegative.setDefaultRenderer(String.class, modelNeg);
-            jtbNegative.setDefaultRenderer(Integer.class, modelNeg);
+            jtbNegative
+                    .setDefaultRenderer(String.class,
+                            modelNeg);
+            jtbNegative
+                    .setDefaultRenderer(Integer.class,
+                            modelNeg);
 
             //TableFormat.setColumnSize(jtbNegative);
-
             jtbNegative.setRowHeight(25);
 
             jtbNegative.setAutoCreateRowSorter(true);

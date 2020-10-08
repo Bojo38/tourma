@@ -21,6 +21,7 @@ import tourma.data.RankingForExport;
 import tourma.data.RosterType;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.data.ranking.Ranking;
 import tourma.languages.Translate;
 import static tourma.languages.Translate.CS_Team;
 import tourma.tableModel.MjtRanking;
@@ -132,7 +133,7 @@ public class WebRules {
                     break;
             }
 
-            String s = MjtRanking.getRankingString(r);
+            String s = Ranking.getRankingString(r);
             rules.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(s) + "</td></tr>");
         }
 
@@ -240,7 +241,7 @@ public class WebRules {
                         break;
                 }
 
-                String s = MjtRanking.getRankingString(r);
+                String s = Ranking.getRankingString(r);
                 rules.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(s) + "</td></tr>");
             }
 

@@ -256,7 +256,7 @@ public class MatchNGTest {
         }
 
         @Override
-        public int getValue(Criteria crit, int subtype, Competitor c) {
+        public int getValue(Criterion crit, int subtype, Competitor c) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
 
@@ -445,7 +445,7 @@ public class MatchNGTest {
     @Test
     public void testGetValue_3args() {
         System.out.println("getValue");
-        Criteria crit = null;
+        Criterion crit = null;
         int subtype = 0;
         Competitor c = null;
         Match instance = null;

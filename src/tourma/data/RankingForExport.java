@@ -39,15 +39,14 @@ public final class RankingForExport implements IXMLExport, IRanked, Serializable
     public static final String CS_General = "General";
     public static final String CS_Clan = "Clan";
     public static final String CS_Group = "Group";
-    public static final String CS_Positive="Positive";
-    public static final String CS_Negative="Negative";
-    public static final String CS_Team="Team";
-    public static final String CS_array="array";
-    public static final String CS_Matchs="Matchs";
+    public static final String CS_Positive = "Positive";
+    public static final String CS_Negative = "Negative";
+    public static final String CS_Team = "Team";
+    public static final String CS_array = "array";
+    public static final String CS_Matchs = "Matchs";
 
-    
-        protected static AtomicInteger sGenUID=new AtomicInteger(0);
-    protected int UID=sGenUID.incrementAndGet();
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
 
     public int getUID() {
         return UID;
@@ -82,6 +81,7 @@ public final class RankingForExport implements IXMLExport, IRanked, Serializable
     private ArrayList<ObjectRanking> mObjectsRanked;
 
     private Criterion mCriteria = null;
+    private Formula mFormula = null;
 
     /**
      *
@@ -91,7 +91,7 @@ public final class RankingForExport implements IXMLExport, IRanked, Serializable
      * @param rank
      * @param rankings
      */
-    public RankingForExport(final String name, final String type, final String valueType, final Ranking rank, ArrayList<Integer> rankings)  {
+    public RankingForExport(final String name, final String type, final String valueType, final Ranking rank, ArrayList<Integer> rankings) {
         mRank = rank;
         mName = name;
         mType = type;
@@ -103,15 +103,26 @@ public final class RankingForExport implements IXMLExport, IRanked, Serializable
         this.setXMLElement(e);
     }
 
-    public Criterion getCriteria() {
+    public Criterion getCriterion() {
         if (mCriteria == null) {
             mCriteria = new Criterion("???");
         }
         return mCriteria;
     }
 
-    public void setCriteria(Criterion c) {
+    public void setCriterion(Criterion c) {
         mCriteria = c;
+    }
+
+    public Formula getFormula() {
+        if (mFormula == null) {
+            mFormula = new Formula("???");
+        }
+        return mFormula;
+    }
+
+    public void setFormula(Formula c) {
+        mFormula = c;
     }
 
     /**
@@ -153,7 +164,6 @@ public final class RankingForExport implements IXMLExport, IRanked, Serializable
         }
         return rank;
     }
-
 
     /**
      *
@@ -500,4 +510,13 @@ public final class RankingForExport implements IXMLExport, IRanked, Serializable
             return 0;
         }
     }
+
+    public String getDetail() {
+        return mRank.getDetail();
+    }
+
+    public void setDetail(String d) {
+        mRank.setDetail(d);
+    }
+
 }

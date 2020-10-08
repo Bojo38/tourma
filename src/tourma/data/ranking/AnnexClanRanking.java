@@ -13,6 +13,7 @@ import tourma.data.CoachMatch;
 import tourma.data.Criterion;
 import tourma.data.Formula;
 import tourma.data.ObjectAnnexRanking;
+import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
@@ -23,6 +24,24 @@ import tourma.data.Tournament;
  * @author WFMJ7631
  */
 public class AnnexClanRanking extends AnnexRanking {
+
+    public AnnexClanRanking(final int round,
+            final Criterion criteria,
+            final int subtype, final ArrayList<Clan> clans,
+            Parameters params,
+            final boolean round_only) {
+        super(round, criteria, subtype, clans, params.getRankingClan1(), params.getRankingClan2(), params.getRankingClan3(), params.getRankingClan4(), params.getRankingClan5(), round_only);
+        sortDatas();
+    }
+    
+    public AnnexClanRanking(final int round,
+            final Formula formula,
+            final int subtype, final ArrayList<Clan> clans,
+            Parameters params,
+            final boolean round_only) {
+        super(round, formula, subtype, clans, params.getRankingClan1(), params.getRankingClan2(), params.getRankingClan3(), params.getRankingClan4(), params.getRankingClan5(), round_only);
+        sortDatas();
+    }
 
     public AnnexClanRanking(final int round,
             final Criterion criteria,
@@ -49,7 +68,6 @@ public class AnnexClanRanking extends AnnexRanking {
         super(round, formula, subtype, clans, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
         sortDatas();
     }
-    
 
     @Override
     @SuppressWarnings("unchecked")
@@ -375,5 +393,5 @@ public class AnnexClanRanking extends AnnexRanking {
             mDatas.add(new ObjectAnnexRanking(clan, cvalue, cvalue1, cvalue2, cvalue3, cvalue4, cvalue5));
         }
     }
-    
+
 }

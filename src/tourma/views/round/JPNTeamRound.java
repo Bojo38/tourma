@@ -31,6 +31,8 @@ import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.data.ranking.AnnexTeamRanking;
+import tourma.data.ranking.TeamRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
 import tourma.tableModel.MjtAnnexRankTeam;
@@ -301,8 +303,9 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                 for (int cpt = 0; cpt < mTournament.getTeamsCount(); cpt++) {
                     teams.add(mTournament.getTeam(cpt));
                 }
-                final MjtRankingTeam model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), i,
-                        teams, mRoundOnly);
+
+                TeamRanking ranking = new TeamRanking(mTournament.getParams().isTeamVictoryOnly(), i, mTournament.getParams(), teams, mRoundOnly);
+                final MjtRankingTeam model = new MjtRankingTeam(ranking);
                 final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
                         Translate.translate(CS_generalByTeam),
                         i + 1, mTournament, model, 0);
@@ -323,17 +326,22 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                     teams.add(mTournament.getTeam(cpt));
                 }
 
-                final MjtRankingTeam model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), i, teams, mRoundOnly);
+                TeamRanking ranking = new TeamRanking(mTournament.getParams().isTeamVictoryOnly(), i, mTournament.getParams(), teams, mRoundOnly);
+                final MjtRankingTeam model = new MjtRankingTeam(ranking);
                 final HashMap<Criterion, MjtAnnexRank> annexForRankings = new HashMap<>();
                 final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
 
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
                     final Criterion crit = mTournament.getParams().getCriteria(j);
-                    MjtAnnexRank annex = new MjtAnnexRankTeam(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                            teams, true, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
+
+                    AnnexTeamRanking aranking = new AnnexTeamRanking(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                            teams, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
+                    MjtAnnexRank annex = new MjtAnnexRankTeam(aranking, true);
                     annexForRankings.put(crit, annex);
-                    annex = new MjtAnnexRankTeam(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                            teams, true, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
+
+                    aranking = new AnnexTeamRanking(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                            teams, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
+                    annex = new MjtAnnexRankTeam(aranking, true);
                     annexAgainstRankings.put(crit, annex);
                 }
                 final JdgGlobal jdg = new JdgGlobal(MainFrame.getMainFrame(), true, i + 1, mTournament, model, annexForRankings, annexAgainstRankings, false, false);
@@ -415,15 +423,16 @@ public final class JPNTeamRound extends javax.swing.JPanel {
             teams.add(mTournament.getTeam(i));
         }
 
+        TeamRanking ranking=new TeamRanking(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mTournament.getParams(),teams, mRoundOnly);
         if (this.mTournament.getParams().isDisplayByPages()) {
             int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
             int max = mPageIndex * mTournament.getParams().getPageSize();
             if (max > mTournament.getTeamsCount()) {
                 max = mTournament.getTeamsCount();
             }
-            mRankingTeam = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, teams, mRoundOnly, min, max);
+            mRankingTeam = new MjtRankingTeam(ranking, min, max);
         } else {
-            mRankingTeam = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, teams, mRoundOnly);
+            mRankingTeam = new MjtRankingTeam(ranking);
         }
 
         jtbRankingTeam.setModel(mRankingTeam);

@@ -17,7 +17,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 
@@ -27,7 +27,7 @@ import tourma.languages.Translate;
  */
 public class MjtCriteriasNGTest {
 
-    static ArrayList<Criteria> crits = new ArrayList<>();
+    static ArrayList<Criterion> crits = new ArrayList<>();
     static MjtCriterias instance;
 
     public MjtCriteriasNGTest() {
@@ -118,7 +118,7 @@ public class MjtCriteriasNGTest {
         System.out.println("getValueAt");
        Object expResult = "";
         for (int i = 0; i < crits.size(); i++) {
-            Criteria c = crits.get(i);
+            Criterion c = crits.get(i);
             for (int col = 0; col < 5; col++) {
 
                 switch (col) {
@@ -154,7 +154,7 @@ public class MjtCriteriasNGTest {
         Object expResult=null;
          Object newResult=null;
        for (int i = 0; i < crits.size(); i++) {
-            Criteria c = crits.get(i);
+            Criterion c = crits.get(i);
             for (int col = 0; col < 5; col++) {
 
                 switch (col) {

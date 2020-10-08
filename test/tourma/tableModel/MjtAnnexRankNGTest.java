@@ -16,7 +16,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 
 /**
  *
@@ -178,9 +178,9 @@ public class MjtAnnexRankNGTest {
     public void testGetCriteria() {
         System.out.println("getCriteria");
         MjtAnnexRank instance = new MjtAnnexRankImpl();
-        Criteria expResult = new Criteria("Test");
+        Criterion expResult = new Criterion("Test");
         instance.setCriteria(expResult);
-        Criteria result = instance.getCriteria();
+        Criterion result = instance.getCriteria();
         assertEquals(result, expResult);
     }
 
@@ -190,7 +190,7 @@ public class MjtAnnexRankNGTest {
     @Test
     public void testSetCriteria() {
         System.out.println("setCriteria");
-        Criteria c = null;
+        Criterion c = null;
         MjtAnnexRank instance = null;
         instance.setCriteria(c);
         // TODO review the generated test code and remove the default call to fail.

@@ -27,6 +27,13 @@ import tourma.tableModel.MjtRankingTeam;
  */
 public class TeamRanking extends Ranking {
 
+    
+    public TeamRanking(final boolean teamVictory, final int round, Parameters params, final ArrayList teams, final boolean round_only) {
+        super(round, params.getRankingTeam1(), params.getRankingTeam2(), params.getRankingTeam3(), params.getRankingTeam4(), params.getRankingTeam5(), teams, round_only);
+        mTeamVictory = teamVictory;
+        sortDatas();
+    }
+    
     public TeamRanking(final boolean teamVictory, final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList teams, final boolean round_only) {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams, round_only);
         mTeamVictory = teamVictory;

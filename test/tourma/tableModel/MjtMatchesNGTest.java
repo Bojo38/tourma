@@ -19,7 +19,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
@@ -106,7 +106,7 @@ public class MjtMatchesNGTest {
                     expResult = Translate.translate(Translate.CS_Coach) + " 2";
                     break;
                 default:
-                    final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
+                    final Criterion crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
                     if ((col - 3) % 2 > 0) {
                         expResult = crit.getName() + " 2";
                     } else {
@@ -129,7 +129,7 @@ public class MjtMatchesNGTest {
             CoachMatch cm = matchs.get(row);
             for (int col = 0; col < instance.getColumnCount(); col++) {
                 Object expResult = null;
-                Criteria crit = null;
+                Criterion crit = null;
                 switch (col) {
                     case 0:
                         expResult = row + 1;
@@ -174,7 +174,7 @@ public class MjtMatchesNGTest {
             for (int col = 0; col < instance.getColumnCount(); col++) {
                 int expResult = 0;
                 int save = 0;
-                Criteria crit = null;
+                Criterion crit = null;
                 switch (col) {
                     case 0:
                     case 1:

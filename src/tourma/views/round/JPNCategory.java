@@ -6,6 +6,8 @@ import tourma.data.Category;
 import tourma.data.Coach;
 import tourma.data.Team;
 import tourma.data.Tournament;
+import tourma.data.ranking.IndivRanking;
+import tourma.data.ranking.TeamRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
@@ -260,8 +262,9 @@ public final class JPNCategory extends javax.swing.JPanel {
         }
 
         jlbPageIndiv.setText(Integer.toString(mPageIndivIndex) + " / " + Integer.toString(mPageIndivCount));
-        final MjtRankingIndiv tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+        IndivRanking ranking=new IndivRanking(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
                 al, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
+        final MjtRankingIndiv tableModel = new MjtRankingIndiv(ranking);
         jtbCategory.setModel(tableModel);
         jtbCategory.setDefaultRenderer(String.class, tableModel);
         jtbCategory.setDefaultRenderer(Integer.class, tableModel);
@@ -280,11 +283,12 @@ public final class JPNCategory extends javax.swing.JPanel {
             }
         }
 
-        final MjtRankingTeam tableModel = new MjtRankingTeam(
-                mTournament.getParams().isTeamTournament(),
-                mRoundNumber,
+        TeamRanking ranking=new TeamRanking(mTournament.getParams().isTeamTournament(),
+                mRoundNumber,mTournament.getParams(),
                 al,
                 mRoundOnly);
+        
+        final MjtRankingTeam tableModel = new MjtRankingTeam(ranking);
         jtbTeam.setModel(tableModel);
         jtbTeam.setDefaultRenderer(String.class, tableModel);
         jtbTeam.setDefaultRenderer(Integer.class, tableModel);

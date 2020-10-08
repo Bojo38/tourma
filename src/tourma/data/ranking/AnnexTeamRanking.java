@@ -24,7 +24,17 @@ import tourma.data.Tournament;
  * @author WFMJ7631
  */
 public class AnnexTeamRanking extends AnnexRanking {
-
+    
+    public AnnexTeamRanking(final int round, final Criterion criteria, final int subtype, final ArrayList<Team> teams, Parameters param, final boolean round_only) {
+        super(round, criteria, subtype, teams, param.getRankingTeam1(), param.getRankingTeam2(), param.getRankingTeam3(), param.getRankingTeam4(), param.getRankingTeam5(), round_only);
+        sortDatas();
+    }
+    
+    public AnnexTeamRanking(final int round, final Formula formula, final int subtype, final ArrayList<Team> teams, Parameters param, final boolean round_only) {
+        super(round, formula, subtype, teams, param.getRankingTeam1(), param.getRankingTeam2(), param.getRankingTeam3(), param.getRankingTeam4(), param.getRankingTeam5(), round_only);
+        sortDatas();
+    }
+    
     public AnnexTeamRanking(final int round, final Criterion criteria, final int subtype, final ArrayList<Team> teams, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only) {
         super(round, criteria, subtype, teams, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
         sortDatas();

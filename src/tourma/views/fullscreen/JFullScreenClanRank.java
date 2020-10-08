@@ -28,6 +28,8 @@ import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.RankingForExport;
 import tourma.data.Tournament;
+import tourma.data.ranking.ClanRanking;
+import tourma.data.ranking.Ranking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingClan;
@@ -60,7 +62,6 @@ public final class JFullScreenClanRank extends JFullScreen {
 
             Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
 
-            
             int width = mSelectedGD.getDisplayMode().getWidth();
             int height = mSelectedGD.getDisplayMode().getHeight();
 
@@ -148,21 +149,22 @@ public final class JFullScreenClanRank extends JFullScreen {
     public JFullScreenClanRank(int r) throws IOException {
         super();
         initComponents();
+        round = r;
+        ArrayList<Clan> teams = new ArrayList<>();
+        for (int cpt = 0; cpt < Tournament.getTournament().getClansCount(); cpt++) {
+            teams.add(Tournament.getTournament().getClan(cpt));
+        }
         try {
-            round = r;
-            ArrayList<Clan> teams = new ArrayList<>();
-            for (int cpt = 0; cpt < Tournament.getTournament().getClansCount(); cpt++) {
-                teams.add(Tournament.getTournament().getClan(cpt));
-            }
-
-            MjtRankingClan ranking = new MjtRankingClan(
+            ClanRanking ranking = new ClanRanking(
                     round,
+                    Tournament.getTournament().getParams(),
                     teams,
                     false);
             buildPanel(ranking);
-        } catch (FontFormatException ex) {
-            Logger.getLogger(JFullScreenTeamRank.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FontFormatException ffe) {
+            ffe.printStackTrace();
         }
+
         this.getGraphicsConfiguration().getDevice().setFullScreenWindow(this);
         repaint();
     }
@@ -179,7 +181,7 @@ public final class JFullScreenClanRank extends JFullScreen {
         jpn.setLayout(gbl);
 
         try {
-            //Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+            //Criteria td = Tournament.getTournament().getParams().getCriterion(0);
             font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
         } catch (IOException ex) {
             Logger.getLogger(JFullScreenClanRank.class.getName()).log(Level.SEVERE, null, ex);
@@ -244,7 +246,7 @@ public final class JFullScreenClanRank extends JFullScreen {
 
             for (int j = 0; j < rankings.size(); j++) {
                 int rankingType = (Integer) rankings.get(j);
-                String name = MjtRanking.getRankingString(rankingType);
+                String name = Ranking.getRankingString(rankingType);
                 if (rankingType == 0) {
                     break;
                 } else {

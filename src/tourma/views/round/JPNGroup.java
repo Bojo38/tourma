@@ -5,6 +5,7 @@ import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Group;
 import tourma.data.Tournament;
+import tourma.data.ranking.IndivRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
 import tourma.tableModel.MjtRankingIndiv;
@@ -170,6 +171,8 @@ public final class JPNGroup extends javax.swing.JPanel {
         }
         mPageIndex = 1;
 
+        IndivRanking ranking=new IndivRanking(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+                    list, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
         MjtRankingIndiv tableModel;
         if (this.mTournament.getParams().isDisplayByPages()) {
             int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
@@ -177,11 +180,9 @@ public final class JPNGroup extends javax.swing.JPanel {
             if (max > list.size()) {
                 max = list.size();
             }
-            tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                    list, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false, min, max);
+            tableModel = new MjtRankingIndiv(ranking, min, max);
         } else {
-            tableModel = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                    list, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
+            tableModel = new MjtRankingIndiv(ranking);
         }
 
         jtbGroup.setModel(tableModel);

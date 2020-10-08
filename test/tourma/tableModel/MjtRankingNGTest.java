@@ -25,7 +25,7 @@ import tourma.data.CoachMatch;
 import static tourma.data.CoachMatch.C_STARTING_RANK;
 import static tourma.data.CoachMatch.getCoachTablePoints;
 import static tourma.data.CoachMatch.getOppPointsByCoach;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
 import tourma.data.Round;
@@ -116,8 +116,8 @@ public class MjtRankingNGTest {
         System.out.println("getCriteriaByValue");
         for (int i = Parameters.C_MAX_RANKING; i < Parameters.C_MAX_RANKING + Tournament.getTournament().getParams().getCriteriaCount() * 3; i++) {
             int valueType = i;
-            Criteria expResult = null;
-            Criteria result = MjtRanking.getCriteriaByValue(valueType);
+            Criterion expResult = null;
+            Criterion result = MjtRanking.getCriteriaByValue(valueType);
             if (valueType == Parameters.C_MAX_RANKING) {
                 expResult = null;
             } else {
@@ -138,7 +138,7 @@ public class MjtRankingNGTest {
         for (int i = 0; i < Parameters.C_MAX_RANKING + Tournament.getTournament().getParams().getCriteriaCount() * 3; i++) {
             int rankingType = i;
             String expResult = "";
-            final Criteria c = MjtRanking.getCriteriaByValue(rankingType);
+            final Criterion c = MjtRanking.getCriteriaByValue(rankingType);
             if (c == null) {
                 switch (rankingType) {
                     case Parameters.C_RANKING_POINTS:

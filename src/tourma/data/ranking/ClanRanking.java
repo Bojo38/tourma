@@ -11,6 +11,7 @@ import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.ObjectRanking;
+import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
@@ -21,6 +22,15 @@ import tourma.data.Tournament;
  * @author WFMJ7631
  */
 public class ClanRanking extends Ranking {
+
+    public ClanRanking(final int round,
+            Parameters params,
+            final ArrayList<Clan> clans, final boolean round_only) {
+
+        super(round, params.getRankingClan1(), params.getRankingClan2(), params.getRankingClan3(), params.getRankingClan4(), params.getRankingClan5(), clans, round_only);
+
+        sortDatas();
+    }
 
     public ClanRanking(final int round,
             final int ranking_type1,
@@ -35,7 +45,7 @@ public class ClanRanking extends Ranking {
         sortDatas();
     }
 
-     /**
+    /**
      *
      */
     @Override

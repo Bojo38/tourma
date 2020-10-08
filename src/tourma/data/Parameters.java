@@ -50,10 +50,10 @@ public class Parameters implements IXMLExport, Serializable {
         }
         return null;
     }
-    
-     public Formula getFormula(String name) {
+
+    public Formula getFormula(String name) {
         for (Formula formula : mFormulas) {
-            if (formula.getName().equals(name) ) {
+            if (formula.getName().equals(name)) {
                 return formula;
             }
         }
@@ -102,8 +102,8 @@ public class Parameters implements IXMLExport, Serializable {
                 mCriterias.add(c);
             }
         }
-        
-          bFound = false;
+
+        bFound = false;
         for (int i = 0; i < params.getFormulaCount(); i++) {
             bFound = false;
             Formula form = params.getFormula(i);
@@ -268,7 +268,6 @@ public class Parameters implements IXMLExport, Serializable {
      *
      */
     private static final Logger LOG = Logger.getLogger(Parameters.class.getName());
-
 
     public boolean isCrossPoolMatch() {
         return mCrossPoolMatch;
@@ -550,7 +549,7 @@ public class Parameters implements IXMLExport, Serializable {
      * Use the color to displlay Match/rank
      */
     private boolean useColor = true;
-    private boolean displayByPages=true;
+    private boolean displayByPages = true;
 
     /**
      *
@@ -574,7 +573,7 @@ public class Parameters implements IXMLExport, Serializable {
         mTournamentName = StringConstants.CS_NULL;
         mTournamentOrga = StringConstants.CS_NULL;
         mCriterias = new ArrayList<>();
-         mFormulas = new ArrayList<>();
+        mFormulas = new ArrayList<>();
 
         Criterion c = new Criterion(Translate.translate(CS_Touchdowns));
         c.setPointsFor(2);
@@ -665,7 +664,7 @@ public class Parameters implements IXMLExport, Serializable {
             final Element crit = getCriteria(i).getXMLElement();
             params.addContent(crit);
         }
-        
+
         for (int i = 0; i < this.getFormulaCount(); i++) {
             final Element form = getFormula(i).getXMLElement();
             params.addContent(form);
@@ -709,7 +708,7 @@ public class Parameters implements IXMLExport, Serializable {
         params.setAttribute(StringConstants.CS_RANK + 5, Integer.toString(this.getRankingIndiv5()));
 
         params.setAttribute(StringConstants.CS_RANK + 1 + "_" + StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam1()));
-        params.setAttribute(StringConstants.CS_RANK + 2 + "_" + StringConstants.CS_TEAM, Integer.toString(this.gemRankingTeam2()));
+        params.setAttribute(StringConstants.CS_RANK + 2 + "_" + StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam2()));
         params.setAttribute(StringConstants.CS_RANK + 3 + "_" + StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam3()));
         params.setAttribute(StringConstants.CS_RANK + 4 + "_" + StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam4()));
         params.setAttribute(StringConstants.CS_RANK + 5 + "_" + StringConstants.CS_TEAM, Integer.toString(this.getRankingTeam5()));
@@ -794,7 +793,7 @@ public class Parameters implements IXMLExport, Serializable {
         params.setAttribute(StringConstants.CS_WEB_COLOR2, Integer.toString(mColor2.getRGB()));
         params.setAttribute(StringConstants.CS_WEB_FORECOLOR, Integer.toString(mForeColor.getRGB()));
         params.setAttribute(StringConstants.CS_WEB_BORDERCOLOR, Integer.toString(mBorderColor.getRGB()));
-        
+
         params.setAttribute(StringConstants.CS_CROSSMATCHPOOL, Boolean.toString(mCrossPoolMatch));
 
         return params;
@@ -917,7 +916,7 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setRankingTeam4(params.getAttribute(StringConstants.CS_RANK + 4 + "_" + StringConstants.CS_TEAM).getIntValue());
                 this.setRankingTeam5(params.getAttribute(StringConstants.CS_RANK + 5 + "_" + StringConstants.CS_TEAM).getIntValue());
             } catch (NullPointerException ne2) {
-            //    JOptionPane.showMessageDialog(null, ne2.getLocalizedMessage());
+                //    JOptionPane.showMessageDialog(null, ne2.getLocalizedMessage());
             }
 
             try {
@@ -994,7 +993,7 @@ public class Parameters implements IXMLExport, Serializable {
             }
 
         } catch (DataConversionException dce) {
-           // JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
+            // JOptionPane.showMessageDialog(null, dce.getLocalizedMessage());
         }
 
         try {
@@ -1017,9 +1016,7 @@ public class Parameters implements IXMLExport, Serializable {
 
         } catch (NullPointerException npe6) {
             this.setCrossPoolMatch(false);
-        }
-        catch (DataConversionException dce2)
-        {
+        } catch (DataConversionException dce2) {
             this.setCrossPoolMatch(false);
         }
     }
@@ -1041,7 +1038,7 @@ public class Parameters implements IXMLExport, Serializable {
                 rank = getRankingTeam1();
                 break;
             case 1:
-                rank = gemRankingTeam2();
+                rank = getRankingTeam2();
                 break;
             case 2:
                 rank = getRankingTeam3();
@@ -1125,7 +1122,7 @@ public class Parameters implements IXMLExport, Serializable {
         int nb = 0;
         if (getRankingTeam1() != C_RANKING_NONE) {
             nb++;
-            if (gemRankingTeam2() != C_RANKING_NONE) {
+            if (getRankingTeam2() != C_RANKING_NONE) {
                 nb++;
                 if (getRankingTeam3() != C_RANKING_NONE) {
                     nb++;
@@ -1182,7 +1179,7 @@ public class Parameters implements IXMLExport, Serializable {
     public void removeCriteria(int c) {
         mCriterias.remove(c);
     }
-    
+
     /**
      * @return the mCriterias
      */
@@ -1515,6 +1512,42 @@ public class Parameters implements IXMLExport, Serializable {
         this.mDate.setTime(mDate.getTime());
     }
 
+    public int getRankingClan1() {
+        if (isTeamTournament()) {
+            return getRankingTeam1();
+        } else {
+            return getRankingIndiv1();
+        }
+    }
+
+    public int getRankingClan2() {
+        if (isTeamTournament()) {
+            return getRankingTeam2();
+        } else {
+            return getRankingIndiv2();
+        }
+    }
+    public int getRankingClan3() {
+        if (isTeamTournament()) {
+            return getRankingTeam3();
+        } else {
+            return getRankingIndiv3();
+        }
+    }
+    public int getRankingClan4() {
+        if (isTeamTournament()) {
+            return getRankingTeam4();
+        } else {
+            return getRankingIndiv4();
+        }
+    }
+    public int getRankingClan5() {
+        if (isTeamTournament()) {
+            return getRankingTeam5();
+        } else {
+            return getRankingIndiv5();
+        }
+    }
     /**
      * @return the mRankingIndiv1
      */
@@ -1775,11 +1808,19 @@ public class Parameters implements IXMLExport, Serializable {
      * @return the mRankingTeam1
      */
     public int getRankingTeam1() {
-        return mRankingTeam1;
+        if (mTeamVictoryOnly) {
+            return mRankingTeam1;
+        } else {
+            return mRankingIndiv1;
+        }
     }
 
     public int getRankingTeam2() {
-        return mRankingTeam2;
+        if (mTeamVictoryOnly) {
+            return mRankingTeam2;
+        } else {
+            return mRankingIndiv2;
+        }
     }
 
     /**
@@ -1787,13 +1828,6 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingTeam1(int mRankingTeam1) {
         this.mRankingTeam1 = mRankingTeam1;
-    }
-
-    /**
-     * @return the mRankingTeam2
-     */
-    public int gemRankingTeam2() {
-        return mRankingTeam2;
     }
 
     /**
@@ -1807,7 +1841,11 @@ public class Parameters implements IXMLExport, Serializable {
      * @return the mRankingTeam3
      */
     public int getRankingTeam3() {
-        return mRankingTeam3;
+        if (mTeamVictoryOnly) {
+            return mRankingTeam3;
+        } else {
+            return mRankingIndiv3;
+        }
     }
 
     /**
@@ -1821,7 +1859,11 @@ public class Parameters implements IXMLExport, Serializable {
      * @return the mRankingTeam4
      */
     public int getRankingTeam4() {
-        return mRankingTeam4;
+        if (mTeamVictoryOnly) {
+            return mRankingTeam4;
+        } else {
+            return mRankingIndiv4;
+        }
     }
 
     /**
@@ -1835,7 +1877,11 @@ public class Parameters implements IXMLExport, Serializable {
      * @return the mRankingTeam5
      */
     public int getRankingTeam5() {
-        return mRankingTeam5;
+        if (mTeamVictoryOnly) {
+            return mRankingTeam5;
+        } else {
+            return mRankingIndiv5;
+        }
     }
 
     /**
@@ -2112,8 +2158,8 @@ public class Parameters implements IXMLExport, Serializable {
             for (Criterion c : mCriterias) {
                 result &= params.mCriterias.contains(c);
             }
-            
-             result &= params.mFormulas.size() == this.mFormulas.size();
+
+            result &= params.mFormulas.size() == this.mFormulas.size();
             for (Formula f : mFormulas) {
                 result &= params.mFormulas.contains(f);
             }
@@ -2185,26 +2231,21 @@ public class Parameters implements IXMLExport, Serializable {
         mForeColor = c;
     }
 
-    
-    public void setDisplayByPages(boolean d)
-    {
-        displayByPages=d;
+    public void setDisplayByPages(boolean d) {
+        displayByPages = d;
     }
-    
-    public boolean isDisplayByPages()
-    {
+
+    public boolean isDisplayByPages() {
         return displayByPages;
     }
-    
-    private int pageSize=100;
-    
-    public int getPageSize()
-    {
+
+    private int pageSize = 100;
+
+    public int getPageSize() {
         return pageSize;
     }
-    
-    public void setPageSize(int i)
-    {
-        pageSize=i;
+
+    public void setPageSize(int i) {
+        pageSize = i;
     }
 }

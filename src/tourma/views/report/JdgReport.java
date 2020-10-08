@@ -67,6 +67,10 @@ import javax.print.*;
 import javax.print.attribute.*;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import tourma.data.ranking.ClanRanking;
+import tourma.data.ranking.IndivRanking;
+import tourma.data.ranking.Ranking;
+import tourma.data.ranking.TeamRanking;
 
 /**
  *
@@ -80,7 +84,7 @@ public final class JdgReport extends javax.swing.JDialog {
     private Tournament mTour;
 //    private boolean mResult;
     private File mFilename = null;
-    private MjtRanking mRanking;
+    private Ranking mRanking;
 
     private static final String CS_IncludeMembersReports = "Include the reports of the members";
 
@@ -691,7 +695,7 @@ public final class JdgReport extends javax.swing.JDialog {
         if (c != null) {
             coach = (Coach) c;
             coaches.add(coach);
-            mRanking = new MjtRankingIndiv(mRoundNumber, coaches, true, false);
+            mRanking = new IndivRanking(mRoundNumber, Tournament.getTournament().getParams(), coaches, false, false, false, false);
         } else {
             return null;
         }
@@ -741,15 +745,16 @@ public final class JdgReport extends javax.swing.JDialog {
             root.put("nb_criteriasx2", 2 * nb_criterias);
 
             int ranking = 0;
-            MjtRankingIndiv mjt = new MjtRankingIndiv(
-                    mRoundNumber, Tournament.getTournament().getCoachs(), Tournament.getTournament().getParams().isTeamTournament(), false);
+            IndivRanking mjt = new IndivRanking(
+                    mRoundNumber, Tournament.getTournament().getParams(),
+                    Tournament.getTournament().getCoachs(), Tournament.getTournament().getParams().isTeamTournament(), false, false, false);
 
             int colindex = 1;
             if (Tournament.getTournament().getParams().isTeamTournament()) {
                 colindex++;
             }
             for (int i = 0; i < mjt.getRowCount(); i++) {
-                if (mjt.getValueAt(i, colindex).equals(coach.getName())) {
+                if (((Coach) mjt.getSortedObject(i).getObject()).getName().equals(coach.getName())) {
                     ranking = i + 1;
                 }
             }
@@ -915,7 +920,7 @@ public final class JdgReport extends javax.swing.JDialog {
             }
             hCoach2.put("values", values2);
 
-            MjtRanking rank = new MjtRankingIndiv(round_index - 1, coaches, true, true);
+            IndivRanking rank = new IndivRanking(round_index - 1, Tournament.getTournament().getParams(), coaches, Tournament.getTournament().getParams().isTeamTournament(), false, false, false);
             for (int j = 0; j < rank.getRowCount(); j++) {
                 ObjectRanking or = rank.getSortedObject(j);
                 if (or.getObject() == coach) {
@@ -977,7 +982,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
                 hhCoach.put("values", values);
 
-                rank = new MjtRankingIndiv(round_index - 1, coaches, true, true);
+                // +- Ranking rank = new IndivRanking(round_index - 1, coaches, true, true);
                 for (int k = 0; k < rank.getRowCount(); k++) {
                     ObjectRanking or = rank.getSortedObject(k);
                     if (or.getObject() == coach) {
@@ -1124,7 +1129,7 @@ public final class JdgReport extends javax.swing.JDialog {
             teams.add(Tournament.getTournament().getTeam(i));
         }
 
-        MjtRankingTeam ranking = new MjtRankingTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(), mRoundNumber, teams, false);
+        TeamRanking ranking = new TeamRanking(Tournament.getTournament().getParams().isTeamVictoryOnly(), mRoundNumber, Tournament.getTournament().getParams(), teams, false);
         int rank = 0;
         for (int i = 0; i < ranking.getRowCount(); i++) {
             Object obj = ranking.getSortedObject(i).getObject();
@@ -1480,25 +1485,19 @@ public final class JdgReport extends javax.swing.JDialog {
             clans.add(Tournament.getTournament().getClan(i));
         }
 
-        try {
-            MjtRankingClan ranking = new MjtRankingClan(mRoundNumber, clans, false);
-            int rank = 0;
-            for (int i = 0; i < ranking.getRowCount(); i++) {
-                Object obj = ranking.getSortedObject(i).getObject();
-                if (obj instanceof Clan) {
-                    if (obj == clan) {
-                        rank = i + 1;
-                        break;
-                    }
+        ClanRanking ranking = new ClanRanking(mRoundNumber, Tournament.getTournament().getParams(), clans, false);
+        int rank = 0;
+        for (int i = 0; i < ranking.getRowCount(); i++) {
+            Object obj = ranking.getSortedObject(i).getObject();
+            if (obj instanceof Clan) {
+                if (obj == clan) {
+                    rank = i + 1;
+                    break;
                 }
             }
-
-            return createCoachGroupReport(clan, "coach_group_report.html", coaches, rank, Tournament.getTournament().getClansCount());
-
-        } catch (RemoteException re) {
-            System.out.println(re.getLocalizedMessage());
-            return null;
         }
+
+        return createCoachGroupReport(clan, "coach_group_report.html", coaches, rank, Tournament.getTournament().getClansCount());
 
     }
 
@@ -1506,7 +1505,7 @@ public final class JdgReport extends javax.swing.JDialog {
         File address = null;
         Writer out = null;
 
-        mRanking = new MjtRankingIndiv(mRoundNumber, coaches, true, false);
+        mRanking = new IndivRanking(mRoundNumber, Tournament.getTournament().getParams(),coaches,  Tournament.getTournament().getParams().isTeamTournament(), false,false,false);
         Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         try {
             final Configuration cfg = new Configuration();
@@ -1715,7 +1714,8 @@ public final class JdgReport extends javax.swing.JDialog {
                 }
                 hCoach.put("values", values);
 
-                MjtRanking rank = new MjtRankingIndiv(round_index - 1, coaches, true, true);
+                Ranking rank = new IndivRanking(round_index - 1,Tournament.getTournament().getParams(),
+                        coaches, Tournament.getTournament().getParams().isTeamTournament(),false,false,false);
                 for (int j = 0; j < rank.getRowCount(); j++) {
                     ObjectRanking or = rank.getSortedObject(j);
                     if (or.getObject() == coach) {
@@ -1776,7 +1776,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
                     hhCoach.put("values", values);
 
-                    rank = new MjtRankingIndiv(j, coaches, true, true);
+                    // Indiv Ranking rank = new MjtRankingIndiv(j, coaches, true, true);
                     for (int k = 0; k < rank.getRowCount(); k++) {
                         ObjectRanking or = rank.getSortedObject(k);
                         if (or.getObject() == coach) {

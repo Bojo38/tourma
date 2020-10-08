@@ -62,7 +62,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
         CoachMatch instance = acm.get(0);
         Round r = instance.getRound();
         Element result = instance.getXMLElement();
@@ -85,7 +85,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
         CoachMatch instance = acm.get(0);
         Round r = instance.getRound();
         Element result = instance.getXMLElement();
@@ -108,7 +108,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
         CoachMatch instance = acm.get(0);
         tourma.data.Value val = instance.getValue(crit);
 
@@ -144,7 +144,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
         CoachMatch instance = acm.get(0);
         tourma.data.Value val = instance.getValue(crit);
 
@@ -180,7 +180,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
         CoachMatch instance = acm.get(0);
         tourma.data.Value val = instance.getValue(crit);
 
@@ -565,7 +565,7 @@ public class CoachMatchNGTest {
         }
         CoachMatch instance = acm.get(0);
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             assertNotNull(instance.getValue(crit));
         }
     }
@@ -603,7 +603,7 @@ public class CoachMatchNGTest {
         }
         CoachMatch instance = acm.get(0);
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             Value v = instance.getValue(crit);
             Value v2 = new Value(crit);
             v2.setValue1(10);
@@ -628,7 +628,7 @@ public class CoachMatchNGTest {
         }
         CoachMatch instance = acm.get(0);
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             Value v = instance.getValue(crit);
             assertNotNull(instance.getValue(crit));
             instance.removeValue(crit);
@@ -651,7 +651,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
         CoachMatch instance = acm.get(0);
         Round r = instance.getRound();
         Element result = instance.getXMLElementForDisplay();
@@ -674,7 +674,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
         CoachMatch instance = acm.get(0);
         Round r = instance.getRound();
         Element result = instance.getXMLElementForDisplay();
@@ -743,7 +743,7 @@ public class CoachMatchNGTest {
         compare.setRoster2(instance.getRoster2());
 
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             Value v = instance.getValue(crit);
             Value value = new Value(crit);
             value.setValue1(v.getValue1());
@@ -923,7 +923,7 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetValue_Criteria() {
         System.out.println("getValue");
-        Criteria crit = t.getParams().getCriteria(0);
+        Criterion crit = t.getParams().getCriteria(0);
         
                 Coach c = t.getCoach(0);
         CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
@@ -966,8 +966,8 @@ Coach c = t.getCoach(0);
     public void testGetCriteriaByValue() {
         System.out.println("getCriteriaByValue");
         int valueType = 0;
-        Criteria expResult = null;
-        Criteria result = CoachMatch.getCriteriaByValue(valueType);
+        Criterion expResult = null;
+        Criterion result = CoachMatch.getCriteriaByValue(valueType);
         assertEquals(result, expResult);
     }
 
@@ -993,7 +993,7 @@ Coach c = t.getCoach(0);
         System.out.println("getValue");
                 Coach c = t.getCoach(0);
         CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
-        Criteria crit=t.getParams().getCriteria(0);
+        Criterion crit=t.getParams().getCriteria(0);
         int valueType = 0;
         int expResult = 0;
         int result = m.getValue(c, valueType);
@@ -1089,7 +1089,7 @@ Coach c = t.getCoach(0);
         System.out.println("getCriteriaBonusPoints");
         Coach c = t.getCoach(0);
         CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
-        Criteria crit = t.getParams().getCriteria(0);
+        Criterion crit = t.getParams().getCriteria(0);
         int expResult = 0;
         int result = CoachMatch.getCriteriaBonusPoints(c, m, crit);
         assertEquals(result, expResult);
@@ -1129,7 +1129,7 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetValue_3args() {
         System.out.println("getValue");
-        Criteria crit = t.getParams().getCriteria(0);
+        Criterion crit = t.getParams().getCriteria(0);
         int subtype = 0;
                 Coach c = t.getCoach(0);
         CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);

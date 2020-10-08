@@ -46,7 +46,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of getXMLElement method, of class Ranking.
+     * Test of getXMLElement method, of class RankingForExport.
      */
     @Test
     public void testGetXMLElement() {
@@ -58,10 +58,10 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
 
         Element e = instance.getXMLElement();
-        Ranking instance2 = new Ranking(e);
+        RankingForExport instance2 = new RankingForExport(e);
         for (int i = 0; i < rank.getRowCount(); i++) {
             assertEquals(instance2.getSortedValue(i,0), values.get(i).intValue());
         }
@@ -75,7 +75,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of setXMLElement method, of class Ranking.
+     * Test of setXMLElement method, of class RankingForExport.
      */
     @Test
     public void testSetXMLElement() {
@@ -87,10 +87,10 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
 
         Element e = instance.getXMLElement();
-        Ranking instance2 = new Ranking(e);
+        RankingForExport instance2 = new RankingForExport(e);
         for (int i = 0; i < rank.getRowCount(); i++) {
             assertEquals(instance2.getSortedValue(i,0), values.get(i).intValue());
         }
@@ -103,7 +103,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of getRank method, of class Ranking.
+     * Test of getRank method, of class RankingForExport.
      */
     @Test
     public void testGetRank() {
@@ -115,13 +115,13 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         instance.setRank(rank);
         assertEquals(rank, instance.getRank());
     }
 
     /**
-     * Test of setRank method, of class Ranking.
+     * Test of setRank method, of class RankingForExport.
      */
     @Test
     public void testSetRank() {
@@ -133,7 +133,7 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         instance.setRank(rank);
         for (int i = 0; i < rank.getRowCount(); i++) {
             assertEquals(values.get(i).intValue(), instance.getSortedValue(i, 0));
@@ -143,7 +143,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of getName method, of class Ranking.
+     * Test of getName method, of class RankingForExport.
      */
     @Test
     public void testGetName() {
@@ -155,7 +155,7 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         String expResult = "Name";
         instance.setName(expResult);
         String result = instance.getName();
@@ -163,7 +163,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of setName method, of class Ranking.
+     * Test of setName method, of class RankingForExport.
      */
     @Test
     public void testSetName() {
@@ -175,7 +175,7 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         String expResult = "Name";
         instance.setName(expResult);
         String result = instance.getName();
@@ -183,7 +183,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of getType method, of class Ranking.
+     * Test of getType method, of class RankingForExport.
      */
     @Test
     public void testGetType() {
@@ -195,7 +195,7 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         String expResult = "Type";
         instance.setType(expResult);
         String result = instance.getType();
@@ -203,7 +203,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of setType method, of class Ranking.
+     * Test of setType method, of class RankingForExport.
      */
     @Test
     public void testSetType() {
@@ -215,7 +215,7 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         String expResult = "Type";
         instance.setType(expResult);
         String result = instance.getType();
@@ -223,7 +223,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of getValueType method, of class Ranking.
+     * Test of getValueType method, of class RankingForExport.
      */
     @Test
     public void testGetValueType() {
@@ -235,7 +235,7 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         String expResult = "ValueType";
         instance.setValueType(expResult);
         String result = instance.getValueType();
@@ -243,7 +243,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of setValueType method, of class Ranking.
+     * Test of setValueType method, of class RankingForExport.
      */
     @Test
     public void testSetValueType() {
@@ -255,7 +255,7 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         String expResult = "ValueType";
         instance.setValueType(expResult);
         String result = instance.getValueType();
@@ -263,7 +263,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of getCriteria method, of class Ranking.
+     * Test of getCriterion method, of class RankingForExport.
      */
     @Test
     public void testGetCriteria() {
@@ -275,14 +275,14 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
-        Criteria expResult = new Criteria("Test");
-        instance.setCriteria(expResult);
-        assertEquals(expResult, instance.getCriteria());
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
+        Criterion expResult = new Criterion("Test");
+        instance.setCriterion(expResult);
+        assertEquals(expResult, instance.getCriterion());
     }
 
     /**
-     * Test of setCriteria method, of class Ranking.
+     * Test of setCriterion method, of class RankingForExport.
      */
     @Test
     public void testSetCriteria() {
@@ -294,14 +294,14 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
-        Criteria expResult = new Criteria("Test");
-        instance.setCriteria(expResult);
-        assertEquals(expResult, instance.getCriteria());
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
+        Criterion expResult = new Criterion("Test");
+        instance.setCriterion(expResult);
+        assertEquals(expResult, instance.getCriterion());
     }
 
     /**
-     * Test of getRankingNumber method, of class Ranking.
+     * Test of getRankingNumber method, of class RankingForExport.
      */
     @Test
     public void testGetRankingNumber() {
@@ -313,12 +313,12 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         assertEquals(instance.getRankingNumber(), values.size());
     }
 
     /**
-     * Test of getDetail method, of class Ranking.
+     * Test of getDetail method, of class RankingForExport.
      */
     @Test
     public void testGetDetail() {
@@ -330,7 +330,7 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         String expResult = "Detail";
         instance.setDetail(expResult);
         String result = instance.getDetail();
@@ -338,7 +338,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of setDetail method, of class Ranking.
+     * Test of setDetail method, of class RankingForExport.
      */
     @Test
     public void testSetDetail() {
@@ -350,7 +350,7 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         String expResult = "Detail";
         instance.setDetail(expResult);
         String result = instance.getDetail();
@@ -358,7 +358,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of getRowCount method, of class Ranking.
+     * Test of getRowCount method, of class RankingForExport.
      */
     @Test
     public void testGetRowCount() {
@@ -370,17 +370,17 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         // if build from ranking, the result is O
         assertEquals(instance.getRowCount(), 0);
         // if build from XML, the result is values.size()
         Element e = instance.getXMLElement();
-        Ranking instance2 = new Ranking(e);
+        RankingForExport instance2 = new RankingForExport(e);
         assertEquals(instance2.getRowCount(), values.size());
     }
 
     /**
-     * Test of getSortedObject method, of class Ranking.
+     * Test of getSortedObject method, of class RankingForExport.
      */
     @Test
     public void testGetSortedObject() {
@@ -392,13 +392,13 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         for (int i = 0; i < rank.getRowCount(); i++) {
             assertEquals(instance.getSortedObject(i), null);
         }
 
         Element e = instance.getXMLElement();
-        Ranking instance2 = new Ranking(e);
+        RankingForExport instance2 = new RankingForExport(e);
         for (int i = 0; i < rank.getRowCount(); i++) {
             assertEquals(instance2.getSortedObject(i), rank.getSortedObject(i));
         }
@@ -406,7 +406,7 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of getSortedValue method, of class Ranking.
+     * Test of getSortedValue method, of class RankingForExport.
      */
     @Test
     public void testGetSortedValue() {
@@ -418,25 +418,25 @@ public class RankingNGTest {
         for (int i = 0; i < rank.getRowCount(); i++) {
             values.add(rank.getSortedValue(i, 0));
         }
-        Ranking instance = new Ranking("Test", "INDIV", "notion", rank, values);
+        RankingForExport instance = new RankingForExport("Test", "INDIV", "notion", rank, values);
         for (int i = 0; i < rank.getRowCount(); i++) {
             assertEquals(instance.getSortedValue(i,0), 0);
         }
 
         Element e = instance.getXMLElement();
-        Ranking instance2 = new Ranking(e);
+        RankingForExport instance2 = new RankingForExport(e);
         for (int i = 0; i < rank.getRowCount(); i++) {
             assertEquals(instance2.getSortedValue(i,0), values.get(i).intValue());
         }
     }
 
     /**
-     * Test of getUID method, of class Ranking.
+     * Test of getUID method, of class RankingForExport.
      */
     @Test
     public void testGetUID() {
         System.out.println("getUID");
-        Ranking instance = null;
+        RankingForExport instance = null;
         int expResult = 0;
         int result = instance.getUID();
         assertEquals(result, expResult);
@@ -445,13 +445,13 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of setUID method, of class Ranking.
+     * Test of setUID method, of class RankingForExport.
      */
     @Test
     public void testSetUID() {
         System.out.println("setUID");
         int UID = 0;
-        Ranking instance = null;
+        RankingForExport instance = null;
         instance.setUID(UID);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
