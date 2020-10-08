@@ -166,12 +166,12 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
     @Override
     public Element getXMLElement() {
         final Element ic = new Element(StringConstants.CS_POSITION);
-        //ic.setAttribute(new Attribute("pos", Integer.toString(index)));
+        
 
         if (getObject() instanceof Coach) {
             final Coach c = (Coach) getObject();
             ic.setAttribute(new Attribute(StringConstants.CS_COACH, c.getName()));
-            ic.setAttribute(new Attribute(StringConstants.CS_TEAM, c.getTeam()));
+            /*ic.setAttribute(new Attribute(StringConstants.CS_TEAM, c.getTeam()));
             if (c.getTeamMates() != null) {
                 ic.setAttribute(new Attribute(StringConstants.CS_TEAMMATES, c.getTeamMates().getName()));
             } else {
@@ -211,13 +211,13 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
                     } catch (IOException e) {
                     }
                 }
-            }
+            }*/
         }
 
         if (getObject() instanceof Team) {
             final Team t = (Team) getObject();
-            ic.setAttribute(new Attribute(StringConstants.CS_NAME, t.getName()));
-            for (int k = 0; k < t.getCoachsCount(); k++) {
+            ic.setAttribute(new Attribute(StringConstants.CS_TEAM, t.getName()));
+            /*for (int k = 0; k < t.getCoachsCount(); k++) {
                 final Element c = new Element(StringConstants.CS_MEMBER);
                 c.setAttribute(StringConstants.CS_NAME, t.getCoach(k).getName());
                 ic.addContent(c);
@@ -245,13 +245,13 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
                     } catch (IOException e) {
                     }
                 }
-            }
+            }*/
         }
 
         if (getObject() instanceof Clan) {
             final Clan t = (Clan) getObject();
             ic.setAttribute(new Attribute(StringConstants.CS_CLAN, t.getName()));
-            if (Tournament.getTournament().getParams().isTeamTournament()) {
+            /*if (Tournament.getTournament().getParams().isTeamTournament()) {
                 for (int k = 0; k < Tournament.getTournament().getTeamsCount(); k++) {
                     if (Tournament.getTournament().getTeam(k).getClan() == t) {
                         final Element m = new Element(StringConstants.CS_MEMBER);
@@ -290,7 +290,7 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
                     } catch (IOException e) {
                     }
                 }
-            }
+            }*/
         }
         ic.setAttribute(new Attribute(StringConstants.CS_RANK + 1, Integer.toString(getValue1())));
         ic.setAttribute(new Attribute(StringConstants.CS_RANK + 2, Integer.toString(getValue2())));

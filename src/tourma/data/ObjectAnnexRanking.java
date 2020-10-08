@@ -89,11 +89,11 @@ public class ObjectAnnexRanking extends ObjectRanking {
 
         ic.setAttribute(new Attribute(StringConstants.CS_VALUE, Integer.toString(getValue())));
 
-        ic.removeAttribute(StringConstants.CS_RANK + 1);
+       /* ic.removeAttribute(StringConstants.CS_RANK + 1);
         ic.removeAttribute(StringConstants.CS_RANK + 2);
         ic.removeAttribute(StringConstants.CS_RANK + 3);
         ic.removeAttribute(StringConstants.CS_RANK + 4);
-        ic.removeAttribute(StringConstants.CS_RANK + 5);
+        ic.removeAttribute(StringConstants.CS_RANK + 5);*/
         return ic;
     }
 

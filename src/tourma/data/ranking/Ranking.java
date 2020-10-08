@@ -7,12 +7,19 @@ package tourma.data.ranking;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.jdom.Attribute;
+import org.jdom.DataConversionException;
 import org.jdom.Element;
+import tourma.data.Clan;
+import tourma.data.Coach;
 import tourma.data.Criterion;
 import tourma.data.Formula;
 import tourma.data.IXMLExport;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
+import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.utility.StringConstants;
@@ -413,7 +420,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
      * IRanked datas
      */
     @SuppressWarnings("ProtectedField")
-    protected ArrayList mDatas = new ArrayList();
+    protected ArrayList<ObjectRanking> mDatas = new ArrayList();
 
     public int getCount() {
         return mDatas.size();
@@ -421,11 +428,123 @@ abstract public class Ranking implements IRanked, IXMLExport {
 
     @Override
     public Element getXMLElement() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Element e = new Element(StringConstants.CS_RANKING);
+
+        e.setAttribute(StringConstants.CS_RANK + 1, Integer.toString(getRankingType1()));
+        e.setAttribute(StringConstants.CS_RANK + 2, Integer.toString(getRankingType1()));
+        e.setAttribute(StringConstants.CS_RANK + 3, Integer.toString(getRankingType1()));
+        e.setAttribute(StringConstants.CS_RANK + 4, Integer.toString(getRankingType1()));
+        e.setAttribute(StringConstants.CS_RANK + 5, Integer.toString(getRankingType1()));
+
+        e.setAttribute(StringConstants.CS_ROUND, Integer.toString(getRound()));
+        e.setAttribute(StringConstants.CS_ROUNDONLY, Boolean.toString(mRoundOnly));
+        e.setAttribute(StringConstants.CS_DETAILS, getDetail());
+
+        /**
+         * Objects
+         */
+        if (mObjects != null) {
+            for (Object obj : mObjects) {
+                if (obj instanceof Team) {
+                    Element e_team = new Element(StringConstants.CS_TEAM);
+                    Team t = (Team) obj;
+                    e_team.setAttribute(StringConstants.CS_NAME, t.getName());
+                    e.addContent(e_team);
+                }
+
+                if (obj instanceof Coach) {
+                    Element e_coach = new Element(StringConstants.CS_COACH);
+                    Coach c = (Coach) obj;
+                    e_coach.setAttribute(StringConstants.CS_NAME, c.getName());
+                    e.addContent(e_coach);
+                }
+
+                if (obj instanceof Clan) {
+                    Element e_clan = new Element(StringConstants.CS_CLAN);
+                    Clan c = (Clan) obj;
+                    e_clan.setAttribute(StringConstants.CS_NAME, c.getName());
+                    e.addContent(e_clan);
+                }
+            }
+        }
+
+        /**
+         * Objects
+         */
+        if (mDatas != null) {
+            for (int i = 0; i < mDatas.size(); i++) {
+                ObjectRanking obj = mDatas.get(i);
+                Element or = obj.getXMLElement();
+                or.setAttribute(StringConstants.CS_RANK, Integer.toString(i + 1));
+                e.addContent(or);
+            }
+        }
+
+        return e;
     }
 
     @Override
     public void setXMLElement(Element e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        try {
+            mRankingType1 = e.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
+            mRankingType2 = e.getAttribute(StringConstants.CS_RANK + 2).getIntValue();
+            mRankingType3 = e.getAttribute(StringConstants.CS_RANK + 3).getIntValue();
+            mRankingType4 = e.getAttribute(StringConstants.CS_RANK + 4).getIntValue();
+            mRankingType5 = e.getAttribute(StringConstants.CS_RANK + 5).getIntValue();
+
+            mRound = e.getAttribute(StringConstants.CS_ROUND).getIntValue();
+
+            mRoundOnly = e.getAttribute(StringConstants.CS_ROUNDONLY).getBooleanValue();
+
+            mDetail = e.getAttribute(StringConstants.CS_DETAILS).getValue();
+
+            /**
+             * mDatas
+             */
+            final List<Element> positions = e.getChildren(StringConstants.CS_POSITION);
+            final Iterator<Element> k = positions.iterator();
+            mDatas.clear();
+            mObjects.clear();
+            while (k.hasNext()) {
+                Element pos = k.next();
+                Comparable<Object> obj = null;
+
+                Attribute att = pos.getAttribute(StringConstants.CS_COACH);
+                if (att != null) {
+                    String name = att.getValue();
+                    Coach c = Tournament.getTournament().getCoach(name);
+                    obj = c;
+                }
+                att = pos.getAttribute(StringConstants.CS_TEAM);
+                if (att != null) {
+                    String name = att.getValue();
+                    Team t = Tournament.getTournament().getTeam(name);
+                    obj = t;
+                }
+                att = pos.getAttribute(StringConstants.CS_CLAN);
+                if (att != null) {
+                    String name = att.getValue();
+                    Clan c = Tournament.getTournament().getClan(name);
+                    obj = c;
+                }
+
+                if (obj != null) {
+                    
+                    int val1=e.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
+                    int val2=e.getAttribute(StringConstants.CS_RANK + 2).getIntValue();
+                    int val3=e.getAttribute(StringConstants.CS_RANK + 3).getIntValue();
+                    int val4=e.getAttribute(StringConstants.CS_RANK + 4).getIntValue();
+                    int val5=e.getAttribute(StringConstants.CS_RANK + 5).getIntValue();
+                    
+                    ObjectRanking or = new ObjectRanking(obj,val1,val2,val3,val4,val5);
+                    mDatas.add(or);
+                    mObjects.add(obj);
+                }
+            }
+
+        } catch (DataConversionException dce) {
+            dce.printStackTrace();;
+        }
     }
 }

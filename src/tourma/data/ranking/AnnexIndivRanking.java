@@ -17,6 +17,7 @@ import tourma.data.Parameters;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -311,11 +312,15 @@ public class AnnexIndivRanking extends AnnexRanking {
     
       @Override
     public Element getXMLElement() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       Element e=super.getXMLElement();
+       e.setName(StringConstants.CS_ANNEX_INDIV_RANKING);
+       
+       return e;
+       
     }
 
     @Override
     public void setXMLElement(Element e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setXMLElement(e);
     }
 }

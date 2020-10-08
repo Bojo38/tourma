@@ -51,6 +51,8 @@ public interface StringConstants {
      *
      */
     public static final String CS_ROUND = "Round";
+    public static final String CS_ROUNDONLY="RoundOnly";
+    public static final String CS_DETAILS="Details";
 
     /**
      *
@@ -130,6 +132,7 @@ public interface StringConstants {
     public static final String CS_INDIV_RANKING= "IndivRanking";
     public static final String CS_TEAM_RANKING= "TeamRanking";
     public static final String CS_CLAN_RANKING= "ClanRanking";
+    public static final String CS_MANUAL_RANKING= "ManualRanking";
     
     public static final String CS_CRITERION_ACCRONYM = "Accronyme";
     public static final String CS_FORMULA = "Formula";
@@ -226,6 +229,10 @@ public interface StringConstants {
     public static final String CS_EXCEPT_BEST_AND_WORST_INDIV = "ExceptBestAndWorstIndiv";
     public static final String CS_EXCEPT_BEST_AND_WORST_TEAM = "ExceptBestAndWorstTeam";
     public static final String CS_RANKING = "Ranking";
+    public static final String CS_ANNEX_RANKING = "AnnexRanking";
+    public static final String CS_ANNEX_TEAM_RANKING = "AnnexTeamRanking";
+    public static final String CS_ANNEX_INDIV_RANKING = "AnnexIndivRanking";
+    public static final String CS_ANNEX_CLAN_RANKING = "AnnexClanRanking";
     public static final String CS_RANKINGS = "Rankings";
 
     public static final String CS_CLAN_RANKING_SET = "ClanRankingSet";

@@ -453,6 +453,8 @@ public class Round implements IXMLExport, Serializable {
             round.addContent(match);
         }
 
+        round.addContent(mRankings.getXMLElement());
+        
         return round;
     }
 
@@ -544,6 +546,8 @@ public class Round implements IXMLExport, Serializable {
                 }
             }
         }
+        
+        mRankings.setXMLElement(round.getChild(StringConstants.CS_RANKINGS));
     }
 
     /**

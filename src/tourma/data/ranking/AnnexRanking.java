@@ -6,9 +6,20 @@
 package tourma.data.ranking;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import org.jdom.Attribute;
+import org.jdom.DataConversionException;
 import org.jdom.Element;
+import tourma.data.Clan;
+import tourma.data.Coach;
 import tourma.data.Criterion;
 import tourma.data.Formula;
+import tourma.data.ObjectAnnexRanking;
+import tourma.data.ObjectRanking;
+import tourma.data.Team;
+import tourma.data.Tournament;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -16,12 +27,11 @@ import tourma.data.Formula;
  */
 abstract public class AnnexRanking extends Ranking {
 
-    public AnnexRanking(Element e)
-    {
+    public AnnexRanking(Element e) {
         super(e);
         setXMLElement(e);
     }
-    
+
     public AnnexRanking(
             final int round,
             final Criterion criteria,
@@ -112,5 +122,103 @@ abstract public class AnnexRanking extends Ranking {
 
     public int getSubtype() {
         return mSubtype;
+    }
+
+    @Override
+    public Element getXMLElement() {
+
+        Element e = super.getXMLElement();
+        e.setName(StringConstants.CS_ANNEX_RANKING);
+
+        if (mCriterion != null) {
+            e.setAttribute(StringConstants.CS_CRITERION, mCriterion.getName());
+        }
+
+        if (mFormula != null) {
+            e.setAttribute(StringConstants.CS_FORMULA, mFormula.getName());
+        }
+
+        e.setAttribute(StringConstants.CS_SUBTYPE, Integer.toString(mSubtype));
+        e.setAttribute(StringConstants.CS_TYPE, mType);
+
+        /*e.removeChildren(StringConstants.CS_POSITION);
+
+         if (mDatas != null) {
+            for (int i = 0; i < mDatas.size(); i++) {
+                ObjectRanking obj = mDatas.get(i);
+                if (obj instanceof ObjectAnnexRanking) {
+                    Element or = ((ObjectAnnexRanking) obj).getXMLElement();
+                    or.setAttribute(StringConstants.CS_RANK, Integer.toString(i + 1));
+                    e.addContent(or);
+                }
+            }
+        }*/
+
+        return e;
+    }
+
+    @Override
+    public void setXMLElement(Element e) {
+
+        try {
+            mRankingType1 = e.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
+            mRankingType2 = e.getAttribute(StringConstants.CS_RANK + 2).getIntValue();
+            mRankingType3 = e.getAttribute(StringConstants.CS_RANK + 3).getIntValue();
+            mRankingType4 = e.getAttribute(StringConstants.CS_RANK + 4).getIntValue();
+            mRankingType5 = e.getAttribute(StringConstants.CS_RANK + 5).getIntValue();
+
+            mRound = e.getAttribute(StringConstants.CS_ROUND).getIntValue();
+
+            mRoundOnly = e.getAttribute(StringConstants.CS_ROUNDONLY).getBooleanValue();
+
+            mDetail = e.getAttribute(StringConstants.CS_DETAILS).getValue();
+
+            /**
+             * mDatas
+             */
+            final List<Element> positions = e.getChildren(StringConstants.CS_POSITION);
+            final Iterator<Element> k = positions.iterator();
+            mDatas.clear();
+            mObjects.clear();
+            while (k.hasNext()) {
+                Element pos = k.next();
+                Comparable<Object> obj = null;
+
+                Attribute att = pos.getAttribute(StringConstants.CS_COACH);
+                if (att != null) {
+                    String name = att.getValue();
+                    Coach c = Tournament.getTournament().getCoach(name);
+                    obj = c;
+                }
+                att = pos.getAttribute(StringConstants.CS_TEAM);
+                if (att != null) {
+                    String name = att.getValue();
+                    Team t = Tournament.getTournament().getTeam(name);
+                    obj = t;
+                }
+                att = pos.getAttribute(StringConstants.CS_CLAN);
+                if (att != null) {
+                    String name = att.getValue();
+                    Clan c = Tournament.getTournament().getClan(name);
+                    obj = c;
+                }
+
+                if (obj != null) {
+
+                    int val1 = e.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
+                    int val2 = e.getAttribute(StringConstants.CS_RANK + 2).getIntValue();
+                    int val3 = e.getAttribute(StringConstants.CS_RANK + 3).getIntValue();
+                    int val4 = e.getAttribute(StringConstants.CS_RANK + 4).getIntValue();
+                    int val5 = e.getAttribute(StringConstants.CS_RANK + 5).getIntValue();
+
+                    ObjectRanking or = new ObjectRanking(obj, val1, val2, val3, val4, val5);
+                    mDatas.add(or);
+                    mObjects.add(obj);
+                }
+            }
+
+        } catch (DataConversionException dce) {
+            dce.printStackTrace();;
+        }
     }
 }

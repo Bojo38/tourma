@@ -5,8 +5,10 @@
  */
 package tourma.data.ranking;
 
+import com.sun.javafx.binding.StringConstant;
 import java.util.ArrayList;
 import java.util.Collections;
+import org.jdom.DataConversionException;
 import org.jdom.Element;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
@@ -17,6 +19,7 @@ import tourma.data.Pool;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.Value;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -24,12 +27,11 @@ import tourma.data.Value;
  */
 public class IndivRanking extends Ranking {
 
-    public IndivRanking(Element e)
-    {
+    public IndivRanking(Element e) {
         super(e);
         setXMLElement(e);
     }
-    
+
     public IndivRanking(final int round,
             Parameters params,
             final ArrayList objects,
@@ -409,14 +411,30 @@ public class IndivRanking extends Ranking {
             }
         }
     }
-    
-      @Override
+
+    @Override
     public Element getXMLElement() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Element e = super.getXMLElement();
+        e.setName(StringConstants.CS_INDIV_RANKING);
+
+        e.setAttribute(StringConstants.CS_BYTEAM,Boolean.toString(mTeamTournament));
+        e.setAttribute(StringConstants.CS_POOL,Boolean.toString(mForPool));
+        e.setAttribute(StringConstants.CS_CUP,Boolean.toString(mForCup));
+        return e;
     }
 
     @Override
     public void setXMLElement(Element e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setXMLElement(e);
+        
+        try{
+        mTeamTournament=e.getAttribute(StringConstants.CS_BYTEAM).getBooleanValue();
+        mForPool=e.getAttribute(StringConstants.CS_POOL).getBooleanValue();
+        mForCup=e.getAttribute(StringConstants.CS_CUP).getBooleanValue();
+        }
+        catch(DataConversionException dce)
+        {
+            dce.printStackTrace();
+        }
     }
 }

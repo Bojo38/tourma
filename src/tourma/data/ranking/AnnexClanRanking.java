@@ -19,6 +19,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -26,12 +27,11 @@ import tourma.data.Tournament;
  */
 public class AnnexClanRanking extends AnnexRanking {
 
-    public AnnexClanRanking(Element e)
-    {
+    public AnnexClanRanking(Element e) {
         super(e);
         setXMLElement(e);
     }
-    
+
     public AnnexClanRanking(final int round,
             final Criterion criteria,
             final int subtype, final ArrayList<Clan> clans,
@@ -40,7 +40,7 @@ public class AnnexClanRanking extends AnnexRanking {
         super(round, criteria, subtype, clans, params.getRankingClan1(), params.getRankingClan2(), params.getRankingClan3(), params.getRankingClan4(), params.getRankingClan5(), round_only);
         sortDatas();
     }
-    
+
     public AnnexClanRanking(final int round,
             final Formula formula,
             final int subtype, final ArrayList<Clan> clans,
@@ -403,12 +403,16 @@ public class AnnexClanRanking extends AnnexRanking {
 
     @Override
     public Element getXMLElement() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Element e = super.getXMLElement();
+        e.setName(StringConstants.CS_ANNEX_CLAN_RANKING);
+
+        return e;
+
     }
 
     @Override
     public void setXMLElement(Element e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setXMLElement(e);
     }
 
 }

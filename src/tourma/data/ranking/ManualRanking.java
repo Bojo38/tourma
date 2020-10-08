@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.jdom.Element;
 import tourma.data.Competitor;
 import tourma.data.ObjectRanking;
+import tourma.utility.StringConstants;
 
 /**
  *
@@ -73,11 +74,15 @@ public class ManualRanking extends Ranking {
     
       @Override
     public Element getXMLElement() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       Element e = super.getXMLElement();
+        e.setName(StringConstants.CS_MANUAL_RANKING);
+      
+
+        return e;
     }
 
     @Override
     public void setXMLElement(Element e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.setXMLElement(e);
     }
 }
