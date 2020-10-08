@@ -42,8 +42,8 @@ public class Parameters implements IXMLExport, Serializable {
         this.UID = UID;
     }
 
-    public Criteria getCriteria(String name) {
-        for (Criteria criteria : mCriterias) {
+    public Criterion getCriteria(String name) {
+        for (Criterion criteria : mCriterias) {
             if (criteria.getName().equals(name) || criteria.getAccronym().equals(name)) {
                 return criteria;
             }
@@ -89,15 +89,15 @@ public class Parameters implements IXMLExport, Serializable {
         boolean bFound = false;
         for (int i = 0; i < params.getCriteriaCount(); i++) {
             bFound = false;
-            Criteria crit = params.getCriteria(i);
-            for (Criteria c : mCriterias) {
+            Criterion crit = params.getCriteria(i);
+            for (Criterion c : mCriterias) {
                 if ((crit.getUID() == c.UID) || (crit.getName().equals(c.getName()))) {
                     bFound = true;
                     c.pull(crit);
                 }
             }
             if (!bFound) {
-                Criteria c = new Criteria(crit.getName());
+                Criterion c = new Criterion(crit.getName());
                 c.pull(crit);
                 mCriterias.add(c);
             }
@@ -364,7 +364,7 @@ public class Parameters implements IXMLExport, Serializable {
     /**
      * Ranking criterias
      */
-    private final ArrayList<Criteria> mCriterias;
+    private final ArrayList<Criterion> mCriterias;
     /**
      * Ranking Formulas
      */
@@ -576,10 +576,10 @@ public class Parameters implements IXMLExport, Serializable {
         mCriterias = new ArrayList<>();
          mFormulas = new ArrayList<>();
 
-        Criteria c = new Criteria(Translate.translate(CS_Touchdowns));
+        Criterion c = new Criterion(Translate.translate(CS_Touchdowns));
         c.setPointsFor(2);
         mCriterias.add(c);
-        c = new Criteria(Translate.translate(CS_Injuries));
+        c = new Criterion(Translate.translate(CS_Injuries));
         c.setPointsFor(1);
         mCriterias.add(c);
     }
@@ -976,7 +976,7 @@ public class Parameters implements IXMLExport, Serializable {
 
             while (cr.hasNext()) {
                 final Element criteria = cr.next();
-                final Criteria crit = new Criteria(criteria.getAttributeValue(StringConstants.CS_NAME));
+                final Criterion crit = new Criterion(criteria.getAttributeValue(StringConstants.CS_NAME));
                 crit.setXMLElement(criteria);
                 this.addCriteria(crit);
             }
@@ -1152,11 +1152,11 @@ public class Parameters implements IXMLExport, Serializable {
      * @param i
      * @return the mCriterias
      */
-    public Criteria getCriteria(int i) {
+    public Criterion getCriteria(int i) {
         return mCriterias.get(i);
     }
 
-    public int getIndexOfCriteria(Criteria c) {
+    public int getIndexOfCriteria(Criterion c) {
         return mCriterias.indexOf(c);
     }
 
@@ -1171,7 +1171,7 @@ public class Parameters implements IXMLExport, Serializable {
      *
      * @param c
      */
-    public void addCriteria(Criteria c) {
+    public void addCriteria(Criterion c) {
         mCriterias.add(c);
     }
 
@@ -2109,7 +2109,7 @@ public class Parameters implements IXMLExport, Serializable {
             result &= Math.abs(params.mTableBonusCoef - this.mTableBonusCoef) < 0.001;
 
             result &= params.mCriterias.size() == this.mCriterias.size();
-            for (Criteria c : mCriterias) {
+            for (Criterion c : mCriterias) {
                 result &= params.mCriterias.contains(c);
             }
             

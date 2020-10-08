@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import tourma.data.CoachMatch;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Formula;
 import tourma.data.Match;
 import tourma.data.Parameters;

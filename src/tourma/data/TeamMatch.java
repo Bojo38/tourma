@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import tourma.data.ranking.Ranking;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -86,7 +87,7 @@ public class TeamMatch extends Match implements Serializable {
             int nbVictory = 0;
             int nbLost = 0;
 
-            Criteria td = tour.getParams().getCriteria(0);
+            Criterion td = tour.getParams().getCriteria(0);
             for (CoachMatch m : mMatchs) {
                 if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
                     nbVictory++;
@@ -272,7 +273,7 @@ public class TeamMatch extends Match implements Serializable {
             int nbVictory = 0;
             int nbLost = 0;
 
-            Criteria td = tour.getParams().getCriteria(0);
+            Criterion td = tour.getParams().getCriteria(0);
             for (CoachMatch m : mMatchs) {
                 if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
                     nbVictory++;
@@ -424,7 +425,7 @@ public class TeamMatch extends Match implements Serializable {
             int nbVictory = 0;
             int nbLost = 0;
 
-            Criteria td = tour.getParams().getCriteria(0);
+            Criterion td = tour.getParams().getCriteria(0);
             for (CoachMatch m : mMatchs) {
                 if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
                     nbVictory++;
@@ -481,7 +482,7 @@ public class TeamMatch extends Match implements Serializable {
             int nbVictory = 0;
             int nbLost = 0;
 
-            Criteria td = tour.getParams().getCriteria(0);
+            Criterion td = tour.getParams().getCriteria(0);
             for (CoachMatch m : mMatchs) {
                 if (m.getValue(td).getValue1() > m.getValue(td).getValue2()) {
                     nbVictory++;
@@ -530,7 +531,7 @@ public class TeamMatch extends Match implements Serializable {
             int nbVictory = 0;
             int nbLost = 0;
 
-            Criteria td = tour.getParams().getCriteria(0);
+            Criterion td = tour.getParams().getCriteria(0);
             for (CoachMatch m : mMatchs) {
                 if ((m.getValue(td).getValue1() == m.getValue(td).getValue2()) && (m.getValue(td).getValue2() != -1)) {
                     nbDraw++;
@@ -628,7 +629,7 @@ public class TeamMatch extends Match implements Serializable {
 
     }
 
-    protected static int getCriteriaBonusPoints(Coach c, CoachMatch m, Criteria crit) {
+    protected static int getCriteriaBonusPoints(Coach c, CoachMatch m, Criterion crit) {
         int value = 0;
         Value v = m.getValue(crit);
         if (m.getCompetitor1() == c) {
@@ -664,7 +665,7 @@ public class TeamMatch extends Match implements Serializable {
         int value = 0;
         // loop on Criterias for individual addition
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             for (int j = 0; j < tm.getMatchCount(); j++) {
                 CoachMatch m = tm.getMatch(j);
                 if (((Coach) m.getCompetitor1()).getTeamMates() == t) {
@@ -678,7 +679,7 @@ public class TeamMatch extends Match implements Serializable {
 
         // loop on Criterias for building Sum
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             int value1 = 0;
             int value2 = 0;
             for (int j = 0; j < tm.getMatchCount(); j++) {
@@ -741,7 +742,7 @@ public class TeamMatch extends Match implements Serializable {
                 if (tm != null) {
                     if (tm.containsMatch(m)) {
                         matchFound = true;
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+                        final Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
                         final Value val = m.getValue(crit);
                         if (m.getCompetitor1() == c) {
                             if (val.getValue1() > val.getValue2()) {
@@ -767,7 +768,7 @@ public class TeamMatch extends Match implements Serializable {
                         if (withBonus) {
                             int bonus = 0;
                             for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
-                                final Criteria criteria = Tournament.getTournament().getParams().getCriteria(k);
+                                final Criterion criteria = Tournament.getTournament().getParams().getCriteria(k);
                                 if (m.getCompetitor1() == c) {
                                     bonus += Math.max(m.getValue(criteria).getValue1(), 0) * criteria.getPointsTeamFor();
                                     bonus += Math.max(m.getValue(criteria).getValue2(), 0) * criteria.getPointsTeamAgainst();
@@ -945,7 +946,7 @@ public class TeamMatch extends Match implements Serializable {
 
         // Add/Remove Bonuses
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             for (int j = 0; j < tm.getMatchCount(); j++) {
                 CoachMatch m = tm.getMatch(j);
                 Value val = m.getValue(crit);
@@ -991,7 +992,7 @@ public class TeamMatch extends Match implements Serializable {
                     final CoachMatch m = (CoachMatch) c.getMatch(i);
                     if (includeCurrent && tm.containsMatch(m)) {
                         matchFound++;
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria(0);
+                        final Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
                         final Value val = m.getValue(crit);
                         if (m.getCompetitor1() == c) {
                             if (val.getValue1() > val.getValue2()) {
@@ -1241,7 +1242,7 @@ public class TeamMatch extends Match implements Serializable {
                     if (rankingType > Parameters.C_MAX_RANKING) {
                         if (rankingType<Parameters.C_MAX_RANKING+Tournament.getTournament().getParams().getCriteriaCount()*3)
                         {
-                            value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                            value += getValue(Ranking.getCriteriaByValue(rankingType), Ranking.getSubtypeByValue(rankingType), t);
                         }
                         else
                         {
@@ -1381,7 +1382,7 @@ public class TeamMatch extends Match implements Serializable {
                 default:
                     if (rankingType > Parameters.C_MAX_RANKING) {
                         if (rankingType < Parameters.C_MAX_RANKING + 3 * Tournament.getTournament().getParams().getCriteriaCount()) {
-                            value += getValue(MjtRanking.getCriteriaByValue(rankingType), MjtRanking.getSubtypeByValue(rankingType), t);
+                            value += getValue(Ranking.getCriteriaByValue(rankingType), Ranking.getSubtypeByValue(rankingType), t);
                         } else {
                             int f = rankingType - 3 * Tournament.getTournament().getParams().getCriteriaCount() - Parameters.C_MAX_RANKING - 1;
                             Formula formula = Tournament.getTournament().getParams().getFormula(f);
@@ -1394,7 +1395,7 @@ public class TeamMatch extends Match implements Serializable {
     }
 
     int getValue(final Team t, TeamMatch tm,
-            final Criteria crit, final int subtype
+            final Criterion crit, final int subtype
     ) {
         int value = 0;
         for (int i = 0; i < tm.getMatchCount(); i++) {
@@ -1419,7 +1420,7 @@ public class TeamMatch extends Match implements Serializable {
 
     }
 
-    public int getValue(Criteria crit, int subtype, Competitor c) {
+    public int getValue(Criterion crit, int subtype, Competitor c) {
         int value = 0;
         if (c == mCompetitor1) {
             for (int i = 0; i < this.getMatchCount(); i++) {

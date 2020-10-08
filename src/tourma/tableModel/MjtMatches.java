@@ -17,7 +17,7 @@ import javax.swing.table.TableCellRenderer;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Formula;
 import tourma.data.Match;
 import tourma.data.Round;
@@ -126,7 +126,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 default:
                     if (col < Tournament.getTournament().getParams().getCriteriaCount() * 2 + 5) {
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
+                        final Criterion crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
                         final int ind = (col - 5) % 2;
                         if (ind == 0) {
                             result = crit.getName() + " 1";
@@ -162,7 +162,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 default:
                     if (col < Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3) {
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
+                        final Criterion crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
                         final int ind = (col - 3) % 2;
                         if (ind == 0) {
                             result = crit.getName() + " 1";
@@ -262,7 +262,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     break;
                 default:
                     if (col < Tournament.getTournament().getParams().getCriteriaCount() * 2 + 5) {
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
+                        final Criterion crit = Tournament.getTournament().getParams().getCriteria((col - 5) / 2);
                         val = m.getValue(crit);
                         if ((col - 5) % 2 == 0) {
                             obj = val.getValue1();
@@ -344,7 +344,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 break;
                 default:
                     if (col < Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3) {
-                        final Criteria crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
+                        final Criterion crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
                         val = m.getValue(crit);
                         if ((col - 3) % 2 == 0) {
                             obj = val.getValue1();
@@ -683,7 +683,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         int ValIndex = (column - 5) % 2;
 
                         if (CritIndex < Tournament.getTournament().getParams().getCriteriaCount()) {
-                            Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
+                            Criterion crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
                             Value v = m.getValue(crit);
                             if (ValIndex == 0) {
                                 if (v.getValue1() > crit.getCriticalThreshold()) {
@@ -820,7 +820,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         }
                         int CritIndex = (column - 3) / 2;
                         int ValIndex = (column - 3) % 2;
-                        Criteria crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
+                        Criterion crit = Tournament.getTournament().getParams().getCriteria(CritIndex);
                         Value v = m.getValue(crit);
                         if (ValIndex == 0) {
                             if (v.getValue1() > crit.getCriticalThreshold()) {

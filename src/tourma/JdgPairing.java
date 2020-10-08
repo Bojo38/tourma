@@ -23,6 +23,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
 import tourma.data.Tournament;
+import tourma.data.ranking.IndivRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtMatches;
 import tourma.tableModel.MjtRankingIndiv;
@@ -282,20 +283,40 @@ public final class JdgPairing extends javax.swing.JDialog {
         {
             list2.add(mCoachs.get(item));
         }
-        MjtRankingIndiv indivR1=new MjtRankingIndiv(Tournament.getTournament().getRoundIndex(mRound), list1, true, false);
-        MjtRankingIndiv indivR2=new MjtRankingIndiv(Tournament.getTournament().getRoundIndex(mRound), list2, true, false);
+        
+        int roundIndex=Tournament.getTournament().getRoundIndex(mRound);
+        IndivRanking idv1=new IndivRanking(roundIndex,
+                Tournament.getTournament().getParams().getRankingIndiv1(),
+                Tournament.getTournament().getParams().getRankingIndiv2(),
+                Tournament.getTournament().getParams().getRankingIndiv3(),
+                Tournament.getTournament().getParams().getRankingIndiv4(),
+                Tournament.getTournament().getParams().getRankingIndiv5(),
+                list1,
+                Tournament.getTournament().getParams().isTeamTournament(),
+                false,false,false);
+        IndivRanking idv2=new IndivRanking(roundIndex,
+                Tournament.getTournament().getParams().getRankingIndiv1(),
+                Tournament.getTournament().getParams().getRankingIndiv2(),
+                Tournament.getTournament().getParams().getRankingIndiv3(),
+                Tournament.getTournament().getParams().getRankingIndiv4(),
+                Tournament.getTournament().getParams().getRankingIndiv5(),
+                list2,
+                Tournament.getTournament().getParams().isTeamTournament(),
+                false,false,false);
+        MjtRankingIndiv indivR1=new MjtRankingIndiv(idv1);
+        MjtRankingIndiv indivR2=new MjtRankingIndiv(idv2);
 
         list1=new ArrayList<>();
         list2=new ArrayList<>();
         
         for (int i=0; i<indivR1.getRowCount(); i++)
         {
-            list1.add((Coach)indivR1.getSortedObject(i).getObject());
+            list1.add((Coach)idv1.getSortedObject(i).getObject());
         }
         
         for (int i=0; i<indivR2.getRowCount(); i++)
         {
-            list2.add((Coach)indivR2.getSortedObject(i).getObject());
+            list2.add((Coach)idv2.getSortedObject(i).getObject());
         }
         
         while ((list1.size() > 0) && (list2.size() > 0)) {

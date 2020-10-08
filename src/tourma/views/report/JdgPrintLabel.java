@@ -43,7 +43,7 @@ import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.TeamMatch;
@@ -177,7 +177,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                 ArrayList crits = new ArrayList();
                 for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
                     final Map crit = new HashMap();
-                    Criteria criteria = Tournament.getTournament().getParams().getCriteria(j);
+                    Criterion criteria = Tournament.getTournament().getParams().getCriteria(j);
                     if (j == 0) {
                         match.put("firstcriterianame", criteria.getName());
                     } else {
@@ -293,7 +293,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                         ArrayList crits = new ArrayList();
                         for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
                             final Map crit = new HashMap();
-                            Criteria criteria = Tournament.getTournament().getParams().getCriteria(k);
+                            Criterion criteria = Tournament.getTournament().getParams().getCriteria(k);
                             if (k == 0) {
                                 match.put("firstcriterianame", criteria.getName());
                             } else {

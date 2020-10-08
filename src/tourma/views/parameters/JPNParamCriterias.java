@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import tourma.data.CoachMatch;
 
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.ETeamPairing;
 import tourma.data.Round;
 import tourma.data.Tournament;
@@ -186,7 +186,7 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddCriteriaActionPerformed
         final int nb = Tournament.getTournament().getParams().getCriteriaCount();
-        final Criteria c = new Criteria(
+        final Criterion c = new Criterion(
                 Translate.translate(CS_Criteria)
                 + " " + Integer.toString(nb));
         Tournament.getTournament().getParams().addCriteria(c);
@@ -202,7 +202,7 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
         if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < mTournament.getParams().getCriteriaCount())) {
-            final Criteria crit = mTournament.getParams().getCriteria(jtbCriteria.getSelectedRow());
+            final Criterion crit = mTournament.getParams().getCriteria(jtbCriteria.getSelectedRow());
             for (int i = 0; i < mTournament.getRoundsCount(); i++) {
                 final Round r = mTournament.getRound(i);
                 for (int j = 0; j < r.getCoachMatchs().size(); j++) {

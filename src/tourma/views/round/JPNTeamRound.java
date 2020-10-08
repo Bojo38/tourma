@@ -23,7 +23,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import tourma.MainFrame;
 import tourma.data.Coach;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.ETeamPairing;
 import tourma.data.Formula;
 import tourma.data.Match;
@@ -142,7 +142,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            final Criteria criteria = mTournament.getParams().getCriteria(i);
+            final Criterion criteria = mTournament.getParams().getCriteria(i);
             ArrayList<Team> teams = new ArrayList<>();
             for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
                 teams.add(Tournament.getTournament().getTeam(cpt));
@@ -324,11 +324,11 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                 }
 
                 final MjtRankingTeam model = new MjtRankingTeam(mTournament.getParams().isTeamVictoryOnly(), i, teams, mRoundOnly);
-                final HashMap<Criteria, MjtAnnexRank> annexForRankings = new HashMap<>();
-                final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
+                final HashMap<Criterion, MjtAnnexRank> annexForRankings = new HashMap<>();
+                final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
 
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
-                    final Criteria crit = mTournament.getParams().getCriteria(j);
+                    final Criterion crit = mTournament.getParams().getCriteria(j);
                     MjtAnnexRank annex = new MjtAnnexRankTeam(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                             teams, true, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
                     annexForRankings.put(crit, annex);

@@ -18,7 +18,7 @@ import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Match;
 import tourma.data.Round;
 import tourma.data.TeamMatch;

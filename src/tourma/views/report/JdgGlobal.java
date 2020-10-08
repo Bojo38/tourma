@@ -39,7 +39,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.MainFrame;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -61,8 +61,8 @@ public final class JdgGlobal extends javax.swing.JDialog {
 //    private boolean mResult;
     private File mFilename = null;
     private MjtRanking mRanking;
-    private HashMap<Criteria, MjtAnnexRank> mAnnexAgainstRankings;
-    private HashMap<Criteria, MjtAnnexRank> mAnnexForRankings;
+    private HashMap<Criterion, MjtAnnexRank> mAnnexAgainstRankings;
+    private HashMap<Criterion, MjtAnnexRank> mAnnexForRankings;
     private boolean mClan;
     private boolean mTeam;
 
@@ -84,7 +84,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
      * @param annexAgainstRankings
      * @param clan
      */
-    public JdgGlobal(final java.awt.Frame parent, final boolean modal, final int roundNumber, final Tournament tour, final MjtRanking model, final HashMap<Criteria, MjtAnnexRank> annexForRankings, final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings, final boolean clan, final boolean team) {
+    public JdgGlobal(final java.awt.Frame parent, final boolean modal, final int roundNumber, final Tournament tour, final MjtRanking model, final HashMap<Criterion, MjtAnnexRank> annexForRankings, final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings, final boolean clan, final boolean team) {
         super(parent, modal);
         initComponents();
         //_round = round;
@@ -399,7 +399,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
             final ArrayList criterias = new ArrayList();
             for (int i = 0; i < mTour.getParams().getCriteriaCount(); i++) {
                 final HashMap criteria = new HashMap();
-                final Criteria c = mTour.getParams().getCriteria(i);
+                final Criterion c = mTour.getParams().getCriteria(i);
                 criteria.put(ReportKeys.CS_Name, StringEscapeUtils.escapeHtml3(c.getName()));
 
                 final MjtAnnexRank annexFor = mAnnexForRankings.get(c);

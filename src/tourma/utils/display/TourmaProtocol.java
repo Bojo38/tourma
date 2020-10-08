@@ -12,11 +12,11 @@ import org.jdom.output.XMLOutputter;
 import tourma.data.Category;
 import tourma.data.Clan;
 import tourma.data.Coach;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Group;
 import tourma.data.Parameters;
 import tourma.data.Pool;
-import tourma.data.Ranking;
+import tourma.data.RankingForExport;
 import tourma.data.RosterType;
 import tourma.data.Round;
 import tourma.data.Team;
@@ -102,7 +102,7 @@ public class TourmaProtocol {
             return "";
         }
         ArrayList array = null;
-        Ranking r = null;
+        RankingForExport r = null;
         Round round = null;
         Parameters params = null;
         if (object instanceof String) {
@@ -114,8 +114,8 @@ public class TourmaProtocol {
                         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
                             coachs.add(Tournament.getTournament().getCoach(i));
                         }
-                        r = new Ranking(Ranking.CS_Individual,
-                                Ranking.CS_General,
+                        r = new RankingForExport(RankingForExport.CS_Individual,
+                                RankingForExport.CS_General,
                                 StringConstants.CS_NULL,
                                 new MjtRankingIndiv(
                                         Tournament.getTournament().getRoundsCount() - 1,
@@ -135,8 +135,8 @@ public class TourmaProtocol {
                         for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
                             teams.add(Tournament.getTournament().getTeam(i));
                         }
-                        r = new Ranking(Ranking.CS_Team,
-                                Ranking.CS_General,
+                        r = new RankingForExport(RankingForExport.CS_Team,
+                                RankingForExport.CS_General,
                                 StringConstants.CS_NULL,
                                 new MjtRankingTeam(
                                         Tournament.getTournament().getParams().isTeamVictoryOnly(),
@@ -155,8 +155,8 @@ public class TourmaProtocol {
                         for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
                             clans.add(Tournament.getTournament().getClan(i));
                         }
-                        r = new Ranking(Ranking.CS_Clan,
-                                Ranking.CS_General,
+                        r = new RankingForExport(RankingForExport.CS_Clan,
+                                RankingForExport.CS_General,
                                 StringConstants.CS_NULL,
                                 new MjtRankingClan(
                                         Tournament.getTournament().getRoundsCount() - 1,
@@ -172,10 +172,10 @@ public class TourmaProtocol {
                         }
                         array = new ArrayList();
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
-                            r = new Ranking(Ranking.CS_Individual_Annex,
+                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                            r = new RankingForExport(RankingForExport.CS_Individual_Annex,
                                     crit.getName(),
-                                    Ranking.CS_Positive,
+                                    RankingForExport.CS_Positive,
                                     new MjtAnnexRankIndiv(
                                             Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                             coachs, true,
@@ -191,9 +191,9 @@ public class TourmaProtocol {
                             r.setCriteria(crit);
                             array.add(r);
 
-                            r = new Ranking(Ranking.CS_Individual_Annex,
+                            r = new RankingForExport(RankingForExport.CS_Individual_Annex,
                                     crit.getName(),
-                                    Ranking.CS_Negative,
+                                    RankingForExport.CS_Negative,
                                     new MjtAnnexRankIndiv(
                                             Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                             coachs, true,
@@ -209,7 +209,7 @@ public class TourmaProtocol {
                             r.setCriteria(crit);
                             array.add(r);
 
-                            r = new Ranking(Ranking.CS_Individual_Annex,
+                            r = new RankingForExport(RankingForExport.CS_Individual_Annex,
                                     crit.getName(),
                                     Translate.CS_Difference,
                                     new MjtAnnexRankIndiv(
@@ -236,10 +236,10 @@ public class TourmaProtocol {
                         }
                         array = new ArrayList();
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
-                            r = new Ranking(Ranking.CS_Team_Annex,
+                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
                                     crit.getName(),
-                                    Ranking.CS_Positive,
+                                    RankingForExport.CS_Positive,
                                     new MjtAnnexRankTeam(
                                             Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                             teams, true,
@@ -254,9 +254,9 @@ public class TourmaProtocol {
                             r.setCriteria(crit);
                             array.add(r);
 
-                            r = new Ranking(Ranking.CS_Team_Annex,
+                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
                                     crit.getName(),
-                                    Ranking.CS_Negative,
+                                    RankingForExport.CS_Negative,
                                     new MjtAnnexRankTeam(
                                             Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                             teams, true,
@@ -271,7 +271,7 @@ public class TourmaProtocol {
                             r.setCriteria(crit);
                             array.add(r);
 
-                            r = new Ranking(Ranking.CS_Team_Annex,
+                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
                                     crit.getName(),
                                     Translate.CS_Difference,
                                     new MjtAnnexRankTeam(
@@ -297,10 +297,10 @@ public class TourmaProtocol {
                         }
                         array = new ArrayList();
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
-                            r = new Ranking(Ranking.CS_Clan_Annex,
+                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                            r = new RankingForExport(RankingForExport.CS_Clan_Annex,
                                     crit.getName(),
-                                    Ranking.CS_Positive,
+                                    RankingForExport.CS_Positive,
                                     new MjtAnnexRankClan(
                                             Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                             true, clans, false),
@@ -309,9 +309,9 @@ public class TourmaProtocol {
                             r.setCriteria(crit);
                             array.add(r);
 
-                            r = new Ranking(Ranking.CS_Team_Annex,
+                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
                                     crit.getName(),
-                                    Ranking.CS_Negative,
+                                    RankingForExport.CS_Negative,
                                     new MjtAnnexRankClan(
                                             Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                             true, clans, false),
@@ -320,7 +320,7 @@ public class TourmaProtocol {
                             r.setCriteria(crit);
                             array.add(r);
 
-                            r = new Ranking(Ranking.CS_Team_Annex,
+                            r = new RankingForExport(RankingForExport.CS_Team_Annex,
                                     crit.getName(),
                                     Translate.CS_Difference,
                                     new MjtAnnexRankClan(
@@ -345,7 +345,7 @@ public class TourmaProtocol {
                                     coachs.add(coach);
                                 }
                             }
-                            r = new Ranking(Ranking.CS_Individual,
+                            r = new RankingForExport(RankingForExport.CS_Individual,
                                     g.getName(),
                                     StringConstants.CS_NULL,
                                     new MjtRankingIndiv(
@@ -375,7 +375,7 @@ public class TourmaProtocol {
                                     coachs.add(coach);
                                 }
                             }
-                            r = new Ranking(Ranking.CS_Individual,
+                            r = new RankingForExport(RankingForExport.CS_Individual,
                                     cat.getName(),
                                     StringConstants.CS_NULL,
                                     new MjtRankingIndiv(
@@ -407,11 +407,11 @@ public class TourmaProtocol {
                                 }
                             }
                             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                                Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
-                                r = new Ranking(
-                                        Ranking.CS_Individual_Annex,
+                                Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                                r = new RankingForExport(
+                                        RankingForExport.CS_Individual_Annex,
                                         crit.getName() + "-" + g.getName(),
-                                        Ranking.CS_Positive,
+                                        RankingForExport.CS_Positive,
                                         new MjtAnnexRankIndiv(
                                                 Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                                 coachs, true,
@@ -427,10 +427,10 @@ public class TourmaProtocol {
                                 r.setCriteria(crit);
                                 array.add(r);
 
-                                r = new Ranking(
-                                        Ranking.CS_Individual_Annex,
+                                r = new RankingForExport(
+                                        RankingForExport.CS_Individual_Annex,
                                         crit.getName() + "-" + g.getName(),
-                                        Ranking.CS_Negative,
+                                        RankingForExport.CS_Negative,
                                         new MjtAnnexRankIndiv(
                                                 Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                                 coachs, true,
@@ -446,8 +446,8 @@ public class TourmaProtocol {
                                 r.setCriteria(crit);
                                 array.add(r);
 
-                                r = new Ranking(
-                                        Ranking.CS_Individual_Annex,
+                                r = new RankingForExport(
+                                        RankingForExport.CS_Individual_Annex,
                                         crit.getName() + "-" + g.getName(),
                                         Translate.CS_Difference,
                                         new MjtAnnexRankIndiv(
@@ -481,11 +481,11 @@ public class TourmaProtocol {
                                 }
                             }
                             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                                Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
-                                r = new Ranking(
-                                        Ranking.CS_Individual_Annex,
+                                Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                                r = new RankingForExport(
+                                        RankingForExport.CS_Individual_Annex,
                                         crit.getName() + "-" + cat.getName(),
-                                        Ranking.CS_Positive,
+                                        RankingForExport.CS_Positive,
                                         new MjtAnnexRankIndiv(
                                                 Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                                 coachs, true,
@@ -501,10 +501,10 @@ public class TourmaProtocol {
                                 r.setCriteria(crit);
                                 array.add(r);
 
-                                r = new Ranking(
-                                        Ranking.CS_Individual_Annex,
+                                r = new RankingForExport(
+                                        RankingForExport.CS_Individual_Annex,
                                         crit.getName() + "-" + cat.getName(),
-                                        Ranking.CS_Negative,
+                                        RankingForExport.CS_Negative,
                                         new MjtAnnexRankIndiv(
                                                 Tournament.getTournament().getRoundsCount() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
                                                 coachs, true,
@@ -520,8 +520,8 @@ public class TourmaProtocol {
                                 r.setCriteria(crit);
                                 array.add(r);
 
-                                r = new Ranking(
-                                        Ranking.CS_Individual_Annex,
+                                r = new RankingForExport(
+                                        RankingForExport.CS_Individual_Annex,
                                         crit.getName() + "-" + cat.getName(),
                                         Translate.CS_Difference,
                                         new MjtAnnexRankIndiv(
@@ -547,8 +547,8 @@ public class TourmaProtocol {
                         for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
                             Pool p = Tournament.getTournament().getPool(cpt);
 
-                            r = new Ranking(
-                                    Ranking.CS_Individual,
+                            r = new RankingForExport(
+                                    RankingForExport.CS_Individual,
                                     Integer.toString(cpt + 1),
                                     StringConstants.CS_NULL,
                                     new MjtRankingIndiv(
@@ -571,7 +571,7 @@ public class TourmaProtocol {
                         for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
                             Pool p = Tournament.getTournament().getPool(cpt);
 
-                            r = new Ranking(
+                            r = new RankingForExport(
                                     Translate.CS_Team,
                                     Integer.toString(cpt + 1),
                                     StringConstants.CS_NULL,
@@ -588,7 +588,7 @@ public class TourmaProtocol {
                 }
 
                 if (array != null) {
-                    Element main = new Element(Ranking.CS_array);
+                    Element main = new Element(RankingForExport.CS_array);
                     for (int i = 0; i < array.size(); i++) {
                         Element element = ((IXMLExport) array.get(i)).getXMLElement();
                         main.addContent(element);

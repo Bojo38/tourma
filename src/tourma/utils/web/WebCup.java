@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import org.apache.commons.lang3.StringEscapeUtils;
 import tourma.languages.Translate;
 import tourma.data.CoachMatch;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.ETeamPairing;
 import tourma.data.Match;
 import tourma.data.Round;
@@ -131,7 +131,7 @@ public class WebCup {
 
     static protected String getHTMLLine(Match m, int index) {
         StringBuilder sb = new StringBuilder("");
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         sb.append("<tr>");
         sb.append("<td class=\"tab_titre\">" + (index + 1) + "</td>");
 
@@ -156,7 +156,7 @@ public class WebCup {
         sb.append("<tr>");
         sb.append("<td class=\"tab_titre\" >#</td>");
 
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         if (Tournament.getTournament().getParams().isTeamTournament() && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
             sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(tourma.languages.Translate.CS_Team)) + " 1</td>");
             sb.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(CS_Victory) + " 1</td>");

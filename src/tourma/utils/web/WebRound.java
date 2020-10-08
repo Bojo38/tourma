@@ -15,14 +15,14 @@ import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.ETeamPairing;
 import tourma.data.Group;
 import tourma.data.Match;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.Parameters;
 import tourma.data.Pool;
-import tourma.data.Ranking;
+import tourma.data.RankingForExport;
 import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.TeamMatch;
@@ -60,30 +60,30 @@ public class WebRound {
         Round r = Tournament.getTournament().getRound(nb - 1);
 
         menu.append("<ul>");
-        menu.append("<li><a href='"+pre+"round" + (nb) + "_matchs"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Matchs)) + "</span></a></li>");
-        menu.append("<li><a href='"+pre+"round" + (nb) + "_indiv"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Individual)) + "</span></a></li>");
+        menu.append("<li><a href='"+pre+"round" + (nb) + "_matchs"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Matchs)) + "</span></a></li>");
+        menu.append("<li><a href='"+pre+"round" + (nb) + "_indiv"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Individual)) + "</span></a></li>");
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria c = Tournament.getTournament().getParams().getCriteria(i);
-            menu.append("<li><a href='"+pre+"round" + (nb) + "_indiv_crit"+i+ext + "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Individual) + " " + c.getName()) + "</span></a></li>");
+            Criterion c = Tournament.getTournament().getParams().getCriteria(i);
+            menu.append("<li><a href='"+pre+"round" + (nb) + "_indiv_crit"+i+ext + "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Individual) + " " + c.getName()) + "</span></a></li>");
         }
 
         if (Tournament.getTournament().getParams().isTeamTournament()) {
             if (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
-                menu.append("<li><a href='"+pre+"round" + (nb) + "_team_matchs"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team) + " " + Translate.translate(Ranking.CS_Matchs)) + "</span></a></li>");
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_team_matchs"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team) + " " + Translate.translate(RankingForExport.CS_Matchs)) + "</span></a></li>");
             }
 
-            menu.append("<li><a href='"+pre+"round" + (nb) + "_teams"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Team)) + "</span></a></li>");
+            menu.append("<li><a href='"+pre+"round" + (nb) + "_teams"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Team)) + "</span></a></li>");
             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                Criteria c = Tournament.getTournament().getParams().getCriteria(i);
-                menu.append("<li><a href='"+pre+"round" + (nb) + "_team_crit" + i +ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Team) + " " + c.getName()) + "</span></a></li>");
+                Criterion c = Tournament.getTournament().getParams().getCriteria(i);
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_team_crit" + i +ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Team) + " " + c.getName()) + "</span></a></li>");
             }
         }
 
         if (Tournament.getTournament().getClansCount() > 1) {
-            menu.append("<li><a href='"+pre+"round" + (nb) + "_clans"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</span></a></li>");
+            menu.append("<li><a href='"+pre+"round" + (nb) + "_clans"+ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Clan)) + "</span></a></li>");
             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                Criteria c = Tournament.getTournament().getParams().getCriteria(i);
-                menu.append("<li><a href='"+pre+"round" + (nb) + "_clan_crit"+i+ext+ "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan) + " " + c.getName()) + "</span></a></li>");
+                Criterion c = Tournament.getTournament().getParams().getCriteria(i);
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_clan_crit"+i+ext+ "'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Clan) + " " + c.getName()) + "</span></a></li>");
             }
         }
 
@@ -99,7 +99,7 @@ public class WebRound {
             for (int i = 0; i < Tournament.getTournament().getGroupsCount(); i++) {
 
                 Group c = Tournament.getTournament().getGroup(i);
-                menu.append("<li><a href='"+pre+"round" + (nb) + "_group" + i +ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Group) + " " + c.getName()) + "</span></a></li>");
+                menu.append("<li><a href='"+pre+"round" + (nb) + "_group" + i +ext+"'><span>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Group) + " " + c.getName()) + "</span></a></li>");
             }
         }
 
@@ -129,7 +129,7 @@ public class WebRound {
         if (command.startsWith("indiv_crit")) {
             String tmp = command.replace("indiv_crit", "");
             int nb_crit = Integer.parseInt(tmp);
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(nb_crit);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(nb_crit);
             round.append(createIndividualCriteria(r, crit));
         }
         if (command.equals("team_matchs")) {
@@ -141,7 +141,7 @@ public class WebRound {
         if (command.startsWith("team_crit")) {
             String tmp = command.replace("team_crit", "");
             int nb_crit = Integer.parseInt(tmp);
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(nb_crit);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(nb_crit);
             String tmp_str=createTeamCriteria(r, crit);
             round.append(tmp_str);
         }
@@ -152,7 +152,7 @@ public class WebRound {
         if (command.startsWith("clan_crit")) {
             String tmp = command.replace("clan_crit", "");
             int nb_crit = Integer.parseInt(tmp);
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(nb_crit);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(nb_crit);
             round.append(createClanCriteria(r, crit));
         }
 
@@ -192,19 +192,19 @@ public class WebRound {
         round.append("<div class=\"tabs\">\n"
                 + "    <ul class=\"tab-links\">\n"
                 + "        <li class=\"active\"><a href=\"#tab1\">"
-                + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Matchs))
+                + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Matchs))
                 + "</a></li>\n"
                 + "        <li><a href=\"#tab2\">"
-                + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Individual))
+                + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Individual))
                 + "</a></li>\n");
 
         round2.append("        <div id=\"tab1\" class=\"tab active\">\n"
-                + "            <p>" + Translate.translate(Ranking.CS_Matchs) + "</p>\n"
+                + "            <p>" + Translate.translate(RankingForExport.CS_Matchs) + "</p>\n"
                 + createIndividualMatch(r)
                 + "        </div>\n"
                 + " \n"
                 + "        <div id=\"tab2\" class=\"tab\">\n"
-                + "            <p>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Individual)) + "</p>\n"
+                + "            <p>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Individual)) + "</p>\n"
                 + "            <p>" + createIndividualRanking(r) + "</p>\n"
                 + "        </div>\n"
                 + " \n");
@@ -214,7 +214,7 @@ public class WebRound {
         int index = 3;
         LOG.log(Level.INFO, "Loop on criterias Indiv");
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria c = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion c = Tournament.getTournament().getParams().getCriteria(i);
             round.append("<li><a href=\"#tab" + index + "\">"
                     + StringEscapeUtils.escapeHtml4(c.getName())
                     + "</a></li>\n");
@@ -230,10 +230,10 @@ public class WebRound {
             if (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
                 LOG.log(Level.INFO, "Team Matchs");
                 round.append("<li><a href=\"#tab" + index + "\">"
-                        + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team) + " " + Translate.translate(Ranking.CS_Matchs))
+                        + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team) + " " + Translate.translate(RankingForExport.CS_Matchs))
                         + "</a></li>\n");
                 round2.append("        <div id=\"tab" + index + "\" class=\"tab\">\n"
-                        + "            <p>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team) + " " + Translate.translate(Ranking.CS_Matchs)) + "</p>\n"
+                        + "            <p>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team) + " " + Translate.translate(RankingForExport.CS_Matchs)) + "</p>\n"
                         + createTeamMatchs(r)
                         + "        </div>\n"
                         + " \n");
@@ -241,7 +241,7 @@ public class WebRound {
             }
             LOG.log(Level.FINE, "Team Rank");
             round.append("<li><a href=\"#tab" + index + "\">"
-                    + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Team))
+                    + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Team))
                     + "</a></li>\n");
             round2.append("        <div id=\"tab" + index + "\" class=\"tab\">\n"
                     + "            <p>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team)) + "</p>\n"
@@ -251,8 +251,8 @@ public class WebRound {
             index++;
             LOG.log(Level.FINE, "Loop on criterias team");
             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                Criteria c = Tournament.getTournament().getParams().getCriteria(i);
-                LOG.log(Level.FINE, "Criteria " + i + " : " + c.getName());
+                Criterion c = Tournament.getTournament().getParams().getCriteria(i);
+                LOG.log(Level.FINE, "Criterion " + i + " : " + c.getName());
                 round.append("<li><a href=\"#tab" + index + "\">"
                         + StringEscapeUtils.escapeHtml4(c.getName())
                         + "</a></li>\n");
@@ -268,7 +268,7 @@ public class WebRound {
         LOG.log(Level.FINE, "Clans");
         if (Tournament.getTournament().getClansCount() > 1) {
             round.append("<li><a href=\"#tab" + index + "\">"
-                    + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan))
+                    + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Clan))
                     + "</a></li>\n");
             round2.append("        <div id=\"tab" + index + "\" class=\"tab\">\n"
                     + "            <p>" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Clan)) + "</p>\n"
@@ -278,7 +278,7 @@ public class WebRound {
             index++;
             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
 
-                Criteria c = Tournament.getTournament().getParams().getCriteria(i);
+                Criterion c = Tournament.getTournament().getParams().getCriteria(i);
                 round.append("<li><a href=\"#tab" + index + "\">"
                         + StringEscapeUtils.escapeHtml4(c.getName())
                         + "</a></li>\n");
@@ -315,10 +315,10 @@ public class WebRound {
 
                 Group c = Tournament.getTournament().getGroup(i);
                 round.append("<li><a href=\"#tab" + index + "\">"
-                        + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Group) + " " + c.getName())
+                        + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Group) + " " + c.getName())
                         + "</a></li>\n");
                 round2.append("        <div id=\"tab" + index + "\" class=\"tab\">\n"
-                        + "            <p>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Group) + " " + c.getName()) + "</p>\n"
+                        + "            <p>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Group) + " " + c.getName()) + "</p>\n"
                         + createGroupRanking(r, c)
                         + "        </div>\n"
                         + " \n");
@@ -369,12 +369,12 @@ public class WebRound {
         s.append("<td colspan=\"2\" class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Score)) + "</td>\n");
         s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Coach)) + " 2</td>\n");
         for (int i = 1; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria c = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion c = Tournament.getTournament().getParams().getCriteria(i);
             s.append("<td colspan=\"2\" class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(c.getName()) + "</td>\n");
         }
         s.append("</tr>");
 
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         for (int j = 0; j < r.getCoachMatchs().size(); j++) {
             CoachMatch cm = r.getCoachMatchs().get(j);
             Value val = cm.getValue(td);
@@ -451,7 +451,7 @@ public class WebRound {
             s.append("<td class=\"" + style2 + "\" style=\"font-size:14px;" + bg + "\">" + val2 + "</td>\n");
             s.append("<td class=\"" + style2 + "\" style=\"font-size:16px;text-align:left;" + bg + "\">" + StringEscapeUtils.escapeHtml4(c2.getDecoratedName()) + img2 + "</td>\n");
             for (int k = 1; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
-                Criteria crit = Tournament.getTournament().getParams().getCriteria(k);
+                Criterion crit = Tournament.getTournament().getParams().getCriteria(k);
                 Value v = cm.getValue(crit);
                 s.append("<td class=\"" + style1 + "\" style=\"font-size:14px;" + bg + "\">" + v.getValue1() + "</td>\n");
                 s.append("<td class=\"" + style2 + "\" style=\"font-size:14px;" + bg + "\">" + v.getValue2() + "</td>\n");
@@ -586,10 +586,10 @@ public class WebRound {
     }
 
     protected static String createIndividualRanking(Round r) {
-        return createIndividualRanking(r, Tournament.getTournament().getActiveCoaches(), Translate.translate(Ranking.CS_Individual));
+        return createIndividualRanking(r, Tournament.getTournament().getActiveCoaches(), Translate.translate(RankingForExport.CS_Individual));
     }
 
-    protected static String createIndividualCriteria(Round r, Criteria crit) {
+    protected static String createIndividualCriteria(Round r, Criterion crit) {
         StringBuilder s = new StringBuilder();
         for (int subtype = 0; subtype < 3; subtype++) {
             MjtAnnexRankIndiv ranking = new MjtAnnexRankIndiv(Tournament.getTournament().getRoundIndex(r),
@@ -782,7 +782,7 @@ public class WebRound {
         s.append("<td  class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_ACCR_Victory2)) + "</td>\n");
         s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Coach)) + " 2</td>\n");
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria c = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion c = Tournament.getTournament().getParams().getCriteria(i);
             s.append("<td colspan=\"2\" class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(c.getName()) + "</td>\n");
         }
         s.append("</tr>");
@@ -851,7 +851,7 @@ public class WebRound {
                 s.append("<td class=\"" + style2 + "\" style=\"font-size:14px;" + bg + "\">" + val2 + "</td>\n");
                 s.append("<td class=\"" + style2 + "\" style=\"font-size:16px;text-align:left;" + bg + "\">" + StringEscapeUtils.escapeHtml4(t2.getDecoratedName()) + img2 + "</td>\n");
                 for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
-                    Criteria crit = Tournament.getTournament().getParams().getCriteria(k);
+                    Criterion crit = Tournament.getTournament().getParams().getCriteria(k);
                     val1 = 0;
                     val2 = 0;
                     for (int l = 0; l < tm.getMatchCount(); l++) {
@@ -881,7 +881,7 @@ public class WebRound {
             teams.add(Tournament.getTournament().getTeam(i));
         }
 
-        return createTeamRanking(r, teams, Translate.translate(Ranking.CS_Team));
+        return createTeamRanking(r, teams, Translate.translate(RankingForExport.CS_Team));
     }
 
     protected static String createTeamRanking(Round r, ArrayList<Team> teams, String rankName) {
@@ -999,7 +999,7 @@ public class WebRound {
         return s.toString();
     }
 
-    protected static String createTeamCriteria(Round r, Criteria crit) {
+    protected static String createTeamCriteria(Round r, Criterion crit) {
         StringBuilder s = new StringBuilder();
 
         ArrayList<Team> teams = new ArrayList<>();
@@ -1126,7 +1126,7 @@ public class WebRound {
                 nbCol += Tournament.getTournament().getParams().getIndivRankingNumber();
             }
 
-            s.append("<tr><td class=\"tab_titre\" colspan=\"" + nbCol + "\" >" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</td></tr>");
+            s.append("<tr><td class=\"tab_titre\" colspan=\"" + nbCol + "\" >" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Clan)) + "</td></tr>");
 
             s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
 
@@ -1216,7 +1216,7 @@ public class WebRound {
         return s.toString();
     }
 
-    protected static String createClanCriteria(Round r, Criteria crit) {
+    protected static String createClanCriteria(Round r, Criterion crit) {
         StringBuilder s = new StringBuilder();
 
         ArrayList<Clan> clans = new ArrayList<>();
@@ -1257,7 +1257,7 @@ public class WebRound {
                     + "                > <tbody>\n"
                     + "                <tr>");
 
-            s.append("<tr><td class=\"tab_titre\" colspan=\"3\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan) + " " + rank_name) + "</td><tr>");
+            s.append("<tr><td class=\"tab_titre\" colspan=\"3\">" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Clan) + " " + rank_name) + "</td><tr>");
             s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4("#") + "</ td>\n");
 
             s.append("<td class=\"tab_titre\">" + StringEscapeUtils.escapeHtml4(Translate.translate(Translate.CS_Team)) + "</ td>\n");
@@ -1311,7 +1311,7 @@ public class WebRound {
                 coachs.add(c);
             }
         }
-        return createIndividualRanking(r, coachs, Translate.translate(Ranking.CS_Group) + " " + g.getName());
+        return createIndividualRanking(r, coachs, Translate.translate(RankingForExport.CS_Group) + " " + g.getName());
 
     }
 

@@ -12,12 +12,12 @@ import tourma.data.Category;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.Competitor;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Group;
 import tourma.data.GroupPoints;
 import tourma.data.Parameters;
 import tourma.data.Pool;
-import tourma.data.Ranking;
+import tourma.data.RankingForExport;
 import tourma.data.RosterType;
 import tourma.data.Team;
 import tourma.data.Tournament;
@@ -84,7 +84,7 @@ public class WebRules {
         }
         rules.append("</tr>");
         for (int i = 0; i < params.getCriteriaCount(); i++) {
-            Criteria crit = params.getCriteria(i);
+            Criterion crit = params.getCriteria(i);
             rules.append("<tr>");
             rules.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(crit.getName()) + "</td>");
             rules.append("<td class=\"tab_result\">" + crit.getPointsFor() + "</td>");
@@ -296,14 +296,14 @@ public class WebRules {
         if (params.isEnableClans()) {
 
             rules.append("<div id=\"clans\" class=\"section\">");
-            //rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</center>");
+            //rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Clan)) + "</center>");
 
             rules.append("<table style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                     + "        border = \"0\" cellpadding = \"0\" cellspacing = \"0\">");
 
             nb_cols = 2;
             rules.append("<tr><td class=\"tab_titre\" colspan=\"" + nb_cols + "\">");
-            rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(Ranking.CS_Clan)) + "</center>");
+            rules.append("<center>" + StringEscapeUtils.escapeHtml4(Translate.translate(RankingForExport.CS_Clan)) + "</center>");
             rules.append("</td></tr>");
 
             rules.append("<tr><td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(Translate.translate(CS_NumberOfPlayersForClan)) + "</td><td class=\"tab_result\">" + params.getClansMembersNumber() + "</td></tr>");

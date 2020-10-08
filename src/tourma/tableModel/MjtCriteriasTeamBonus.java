@@ -11,7 +11,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Parameters;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -131,7 +131,7 @@ public class MjtCriteriasTeamBonus extends AbstractTableModel implements TableCe
             } else {
 
                 String tmp = value.toString();
-                final Criteria c = mParams.getCriteria(row);
+                final Criterion c = mParams.getCriteria(row);
                 int val;
                 switch (col) {
                     case 0:

@@ -37,6 +37,12 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import tourma.MainFrame;
+import tourma.data.ranking.AnnexClanRanking;
+import tourma.data.ranking.AnnexIndivRanking;
+import tourma.data.ranking.AnnexTeamRanking;
+import tourma.data.ranking.ClanRanking;
+import tourma.data.ranking.IndivRanking;
+import tourma.data.ranking.TeamRanking;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRankClan;
 import tourma.tableModel.MjtAnnexRankIndiv;
@@ -156,10 +162,11 @@ public class Tournament implements IContainCoachs, Serializable {
     public Cup getCup() {
         return mCup;
     }
+
     public void setCup(Cup cup) {
-         mCup=cup;
+        mCup = cup;
     }
-    
+
     private Tournament() {
 
         RosterType.initCollection();
@@ -265,9 +272,9 @@ public class Tournament implements IContainCoachs, Serializable {
     public Category getCategory(int i) {
         return mCategories.get(i);
     }
-    
+
     public Category getCategory(String s) {
-            for (int i = 0; i < mCategories.size(); i++) {
+        for (int i = 0; i < mCategories.size(); i++) {
             if (mCategories.get(i).getName().equals(s)) {
                 return mCategories.get(i);
             }
@@ -435,16 +442,14 @@ public class Tournament implements IContainCoachs, Serializable {
         final ArrayList<Clan> clans = new ArrayList<>();
         if (mParams.isTeamTournament()) {
             for (Team c : mTeams) {
-                if (c.getClan()!=null)
-                {
+                if (c.getClan() != null) {
                     counts.put(c.getClan(), counts.get(c.getClan()) + 1);
                 }
             }
         } else {
             for (Coach c : mCoachs) {
-                if (c.getClan()!=null)
-                {
-                counts.put(c.getClan(), counts.get(c.getClan()) + 1);
+                if (c.getClan() != null) {
+                    counts.put(c.getClan(), counts.get(c.getClan()) + 1);
                 }
             }
         }
@@ -772,9 +777,9 @@ public class Tournament implements IContainCoachs, Serializable {
             final Element team = mTeam.getXMLElement();
             document.addContent(team);
         }
-        
+
         // Save Cup
-        if (mCup!=null) {
+        if (mCup != null) {
             Element cup = mCup.getXMLElement();
             document.addContent(cup);
         }
@@ -787,34 +792,41 @@ public class Tournament implements IContainCoachs, Serializable {
             if (withRanking) {
 
                 // Build list of rankings
-                final ArrayList<Ranking> rankings = new ArrayList<>();
+                final ArrayList<RankingForExport> rankings = new ArrayList<>();
                 final boolean forPool = (mPools.size() > 0) && (!mRounds.get(i).isCup());
                 final boolean forCup = mRounds.get(i).isCup();
                 rankings.add(
-                        new Ranking(
-                                Ranking.CS_Individual,
-                                Ranking.CS_General,
+                        new RankingForExport(
+                                RankingForExport.CS_Individual,
+                                RankingForExport.CS_General,
                                 StringConstants.CS_NULL,
-                                new MjtRankingIndiv(i,
+                                new IndivRanking(i,
                                         this.mParams.getRankingIndiv1(),
                                         this.mParams.getRankingIndiv2(),
                                         this.mParams.getRankingIndiv3(),
                                         this.mParams.getRankingIndiv4(),
                                         this.mParams.getRankingIndiv5(),
-                                        mCoachs, false, false, forPool,forCup),
+                                        mCoachs, false, false, forPool, forCup),
                                 getRankingTypes(false)));
                 if (this.mParams.isTeamTournament()) {
                     rankings.add(
-                            new Ranking(Ranking.CS_Team, Ranking.CS_General,
+                            new RankingForExport(RankingForExport.CS_Team, RankingForExport.CS_General,
                                     StringConstants.CS_NULL,
-                                    new MjtRankingTeam(this.mParams.isTeamVictoryOnly(), i,
+                                    new TeamRanking(
+                                            this.mParams.isTeamVictoryOnly(),
+                                            i,
+                                            mParams.getRankingIndiv1(),
+                                            mParams.getRankingIndiv2(),
+                                            mParams.getRankingIndiv3(),
+                                            mParams.getRankingIndiv4(),
+                                            mParams.getRankingIndiv5(),
                                             mTeams, false), getRankingTypes(true)));
                 }
                 if (mParams.isEnableClans()) {
-                    rankings.add(new Ranking(Ranking.CS_Clan,
-                            Ranking.CS_General,
+                    rankings.add(new RankingForExport(RankingForExport.CS_Clan,
+                            RankingForExport.CS_General,
                             StringConstants.CS_NULL,
-                            new MjtRankingClan(i,
+                            new ClanRanking(i,
                                     this.mParams.getRankingIndiv1(),
                                     this.mParams.getRankingIndiv2(),
                                     this.mParams.getRankingIndiv3(),
@@ -837,29 +849,29 @@ public class Tournament implements IContainCoachs, Serializable {
                             }
                         }
                         rankings.add(
-                                new Ranking(Ranking.CS_Group,
+                                new RankingForExport(RankingForExport.CS_Group,
                                         g.getName(),
                                         StringConstants.CS_NULL,
-                                        new MjtRankingIndiv(i,
+                                        new IndivRanking(i,
                                                 this.mParams.getRankingIndiv1(),
                                                 this.mParams.getRankingIndiv2(),
                                                 this.mParams.getRankingIndiv3(),
                                                 this.mParams.getRankingIndiv4(),
                                                 this.mParams.getRankingIndiv5(),
-                                                list, false, false, false,false),
+                                                list, false, false, false, false),
                                         getRankingTypes(false)));
                     }
                 }
                 // Annex ranking
                 for (int j = 0; j < mParams.getCriteriaCount(); j++) {
-                    final Criteria criteria = mParams.getCriteria(j);
-                    rankings.add(new Ranking(Ranking.CS_Individual,
+                    final Criterion criteria = mParams.getCriteria(j);
+                    rankings.add(new RankingForExport(RankingForExport.CS_Individual,
                             criteria.getName(),
-                            Ranking.CS_Positive,
-                            new MjtAnnexRankIndiv(i,
+                            RankingForExport.CS_Positive,
+                            new AnnexIndivRanking(i,
                                     criteria,
                                     Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mCoachs, true,
+                                    mCoachs,
                                     this.mParams.getRankingIndiv1(),
                                     this.mParams.getRankingIndiv2(),
                                     this.mParams.getRankingIndiv3(),
@@ -867,13 +879,14 @@ public class Tournament implements IContainCoachs, Serializable {
                                     this.mParams.getRankingIndiv5(),
                                     mParams.isTeamTournament(), false),
                             getRankingTypes(false)));
-                    rankings.add(new Ranking(Ranking.CS_Individual,
+
+                    rankings.add(new RankingForExport(RankingForExport.CS_Individual,
                             criteria.getName(),
-                            Ranking.CS_Negative,
-                            new MjtAnnexRankIndiv(i,
+                            RankingForExport.CS_Negative,
+                            new AnnexIndivRanking(i,
                                     criteria,
                                     Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                    mCoachs, true,
+                                    mCoachs,
                                     this.mParams.getRankingIndiv1(),
                                     this.mParams.getRankingIndiv2(),
                                     this.mParams.getRankingIndiv3(),
@@ -884,13 +897,13 @@ public class Tournament implements IContainCoachs, Serializable {
 
                     if (mParams.isTeamTournament()) {
                         rankings.add(
-                                new Ranking(Ranking.CS_Team,
+                                new RankingForExport(RankingForExport.CS_Team,
                                         criteria.getName(),
-                                        Ranking.CS_Positive,
-                                        new MjtAnnexRankTeam(i,
+                                        RankingForExport.CS_Positive,
+                                        new AnnexTeamRanking(i,
                                                 criteria,
                                                 Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                                mTeams, true,
+                                                mTeams,
                                                 this.mParams.getRankingIndiv1(),
                                                 this.mParams.getRankingIndiv2(),
                                                 this.mParams.getRankingIndiv3(),
@@ -899,13 +912,13 @@ public class Tournament implements IContainCoachs, Serializable {
                                                 false),
                                         getRankingTypes(true)));
                         rankings.add(
-                                new Ranking(Ranking.CS_Team,
+                                new RankingForExport(RankingForExport.CS_Team,
                                         criteria.getName(),
-                                        Ranking.CS_Negative,
-                                        new MjtAnnexRankTeam(i,
+                                        RankingForExport.CS_Negative,
+                                        new AnnexTeamRanking(i,
                                                 criteria,
                                                 Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                                mTeams, true,
+                                                mTeams,
                                                 this.mParams.getRankingIndiv1(),
                                                 this.mParams.getRankingIndiv2(),
                                                 this.mParams.getRankingIndiv3(),
@@ -916,14 +929,13 @@ public class Tournament implements IContainCoachs, Serializable {
                     }
 
                     if (mParams.isEnableClans()) {
-                        rankings.add(new Ranking(Ranking.CS_Clan,
+                        rankings.add(new RankingForExport(RankingForExport.CS_Clan,
                                 criteria.getName(),
-                                Ranking.CS_Positive,
-                                new MjtAnnexRankClan(i,
+                                RankingForExport.CS_Positive,
+                                new AnnexClanRanking(i,
                                         criteria,
                                         Parameters.C_RANKING_SUBTYPE_POSITIVE,
                                         mClans,
-                                        true,
                                         this.mParams.getRankingIndiv1(),
                                         this.mParams.getRankingIndiv2(),
                                         this.mParams.getRankingIndiv3(),
@@ -932,14 +944,114 @@ public class Tournament implements IContainCoachs, Serializable {
                                         false),
                                 getRankingTypes(false)));
                         rankings.add(
-                                new Ranking(
-                                        Ranking.CS_Clan,
+                                new RankingForExport(
+                                        RankingForExport.CS_Clan,
                                         criteria.getName(),
-                                        Ranking.CS_Negative,
-                                        new MjtAnnexRankClan(i,
+                                        RankingForExport.CS_Negative,
+                                        new AnnexClanRanking(i,
                                                 criteria,
                                                 Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                                mClans, true,
+                                                mClans,
+                                                this.mParams.getRankingIndiv1(),
+                                                this.mParams.getRankingIndiv2(),
+                                                this.mParams.getRankingIndiv3(),
+                                                this.mParams.getRankingIndiv4(),
+                                                this.mParams.getRankingIndiv5(),
+                                                false),
+                                        getRankingTypes(false)));
+                    }
+                }
+
+                // Annex ranking For Formula
+                for (int j = 0; j < mParams.getFormulaCount(); j++) {
+                    final Formula formula = mParams.getFormula(j);
+                    rankings.add(new RankingForExport(RankingForExport.CS_Individual,
+                            formula.getName(),
+                            RankingForExport.CS_Positive,
+                            new AnnexIndivRanking(i,
+                                    formula,
+                                    Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                    mCoachs,
+                                    this.mParams.getRankingIndiv1(),
+                                    this.mParams.getRankingIndiv2(),
+                                    this.mParams.getRankingIndiv3(),
+                                    this.mParams.getRankingIndiv4(),
+                                    this.mParams.getRankingIndiv5(),
+                                    mParams.isTeamTournament(), false),
+                            getRankingTypes(false)));
+
+                    rankings.add(new RankingForExport(RankingForExport.CS_Individual,
+                            formula.getName(),
+                            RankingForExport.CS_Negative,
+                            new AnnexIndivRanking(i,
+                                    formula,
+                                    Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                    mCoachs,
+                                    this.mParams.getRankingIndiv1(),
+                                    this.mParams.getRankingIndiv2(),
+                                    this.mParams.getRankingIndiv3(),
+                                    this.mParams.getRankingIndiv4(),
+                                    this.mParams.getRankingIndiv5(),
+                                    mParams.isTeamTournament(), false),
+                            getRankingTypes(false)));
+
+                    if (mParams.isTeamTournament()) {
+                        rankings.add(
+                                new RankingForExport(RankingForExport.CS_Team,
+                                        formula.getName(),
+                                        RankingForExport.CS_Positive,
+                                        new AnnexTeamRanking(i,
+                                                formula,
+                                                Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                                mTeams,
+                                                this.mParams.getRankingIndiv1(),
+                                                this.mParams.getRankingIndiv2(),
+                                                this.mParams.getRankingIndiv3(),
+                                                this.mParams.getRankingIndiv4(),
+                                                this.mParams.getRankingIndiv5(),
+                                                false),
+                                        getRankingTypes(true)));
+                        rankings.add(
+                                new RankingForExport(RankingForExport.CS_Team,
+                                        formula.getName(),
+                                        RankingForExport.CS_Negative,
+                                        new AnnexTeamRanking(i,
+                                                formula,
+                                                Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                                mTeams,
+                                                this.mParams.getRankingIndiv1(),
+                                                this.mParams.getRankingIndiv2(),
+                                                this.mParams.getRankingIndiv3(),
+                                                this.mParams.getRankingIndiv4(),
+                                                this.mParams.getRankingIndiv5(),
+                                                false),
+                                        getRankingTypes(true)));
+                    }
+
+                    if (mParams.isEnableClans()) {
+                        rankings.add(new RankingForExport(RankingForExport.CS_Clan,
+                                formula.getName(),
+                                RankingForExport.CS_Positive,
+                                new AnnexClanRanking(i,
+                                        formula,
+                                        Parameters.C_RANKING_SUBTYPE_POSITIVE,
+                                        mClans,
+                                        this.mParams.getRankingIndiv1(),
+                                        this.mParams.getRankingIndiv2(),
+                                        this.mParams.getRankingIndiv3(),
+                                        this.mParams.getRankingIndiv4(),
+                                        this.mParams.getRankingIndiv5(),
+                                        false),
+                                getRankingTypes(false)));
+                        rankings.add(
+                                new RankingForExport(
+                                        RankingForExport.CS_Clan,
+                                        formula.getName(),
+                                        RankingForExport.CS_Negative,
+                                        new AnnexClanRanking(i,
+                                                formula,
+                                                Parameters.C_RANKING_SUBTYPE_NEGATIVE,
+                                                mClans,
                                                 this.mParams.getRankingIndiv1(),
                                                 this.mParams.getRankingIndiv2(),
                                                 this.mParams.getRankingIndiv3(),
@@ -951,7 +1063,7 @@ public class Tournament implements IContainCoachs, Serializable {
                 }
 
                 // Store rankings
-                for (Ranking ranking : rankings) {
+                for (RankingForExport ranking : rankings) {
                     final Element rank = ranking.getXMLElement();
                     round.addContent(rank);
                 }
@@ -1036,11 +1148,24 @@ public class Tournament implements IContainCoachs, Serializable {
         a.append(";\n");
 
         if (this.mParams.isTeamTournament()) {
-            final MjtRankingTeam rt = new MjtRankingTeam(mParams.isTeamVictoryOnly(), round,
-                    mTeams, false);
+            TeamRanking rt = null;
+
+            if (mParams.isTeamVictoryOnly()) {
+                rt = new TeamRanking(
+                        mParams.isTeamVictoryOnly(), round,
+                        mParams.getRankingTeam1(), mParams.getRankingTeam2(),
+                        mParams.getRankingTeam3(), mParams.getRankingTeam4(), mParams.getRankingTeam5(),
+                        mTeams, true);
+            } else {
+                rt = new TeamRanking(
+                        mParams.isTeamVictoryOnly(), round,
+                        mParams.getRankingIndiv1(), mParams.getRankingIndiv2(),
+                        mParams.getRankingIndiv3(), mParams.getRankingIndiv4(), mParams.getRankingIndiv5(),
+                        mTeams, true);
+            }
 
             for (int i = 0; i < rt.getRowCount(); i++) {
-                final String team = (String) rt.getValueAt(i, 1);
+                final String team = (String) ((Team) rt.getSortedObject(i).getObject()).getName();
                 a.append(Integer.toString(i + 1));
                 a.append(";");
                 a.append(team);
@@ -1060,10 +1185,13 @@ public class Tournament implements IContainCoachs, Serializable {
 
         final boolean forPool = (mPools.size() > 0) && (!mRounds.get(round).isCup());
         final boolean forCup = mRounds.get(round).isCup();
-        final MjtRankingIndiv ri = new MjtRankingIndiv(round, mParams.getRankingIndiv1(), mParams.getRankingIndiv2(), mParams.getRankingIndiv3(), mParams.getRankingIndiv4(), mParams.getRankingIndiv5(),
-                mCoachs, false, false, forPool,forCup);
+        final IndivRanking ri = new IndivRanking(
+                round,
+                mParams.getRankingIndiv1(), mParams.getRankingIndiv2(), mParams.getRankingIndiv3(), mParams.getRankingIndiv4(), mParams.getRankingIndiv5(),
+                mCoachs, false, false, forPool, forCup);
+
         for (int i = 0; i < ri.getRowCount(); i++) {
-            final String coach = (String) ri.getValueAt(i, 2);
+            final String coach = (String) ((Coach) ri.getSortedObject(i).getObject()).getName();
             a.append(Integer.toString(i + 1));
             a.append(";");
             a.append(coach);
@@ -1199,11 +1327,11 @@ public class Tournament implements IContainCoachs, Serializable {
     public void exportNAF(final java.io.File file) {
         final SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:MM", Locale.getDefault());
 
-        Criteria critTd = null;
-        Criteria critInj = null;
+        Criterion critTd = null;
+        Criterion critInj = null;
 
         for (int i = 0; i < mParams.getCriteriaCount(); i++) {
-            final Criteria crit = mParams.getCriteria(i);
+            final Criterion crit = mParams.getCriteria(i);
             if (i == 0) {
                 critTd = crit;
             }
@@ -1270,10 +1398,10 @@ public class Tournament implements IContainCoachs, Serializable {
 
                     if (mCoach.getNaf() > 0) {
                         String naf = Integer.toString(mCoach.getNaf());
-                        
+
                         String naf_roster = RosterType.getRosterTranslation(mCoach.getRoster().getName());
                         if (naf_roster.equals(RosterType.translate("UNKNOWN"))) {
-                            Object[] rosters = {"None","Amazons", "Bretonnians", "Chaos", "Chaos Dwarves",
+                            Object[] rosters = {"None", "Amazons", "Bretonnians", "Chaos", "Chaos Dwarves",
                                 "Chaos Pact", "Dark Elves", "Dwarves", "Goblins", "Halflings",
                                 "High Elves", "Humans", "Khemri", "Khorne", "Lizardmen", "Necromantic",
                                 "Norse", "Nurgle's Rotters", "Ogres", "Orc", "Elves", "Slann", "Skaven",
@@ -1286,16 +1414,13 @@ public class Tournament implements IContainCoachs, Serializable {
                             naf_roster = (String) choice;
 
                         }
-                        if (!naf_roster.equals("None"))
-                        {
+                        if (!naf_roster.equals("None")) {
                             writer.println(("<coach>"));
                             writer.println(java.text.MessageFormat.format("<name>{0}</name>", new Object[]{mCoach.getName()}));
                             writer.println(java.text.MessageFormat.format("<number>{0}</number>", new Object[]{naf}));
                             writer.println(java.text.MessageFormat.format("<team>{0}</team>", new Object[]{naf_roster}));
                             writer.println(("</coach>"));
-                        }
-                        else
-                        {
+                        } else {
                             mCoach.setNaf(0);
                         }
                     }
@@ -1497,17 +1622,14 @@ public class Tournament implements IContainCoachs, Serializable {
             mPools.add(po);
         }
 
-        Element cup=racine.getChild(StringConstants.CS_CUP);
-        if (cup!=null)
-        {
-            if (mCup==null)
-            {
-                mCup=new Cup();
+        Element cup = racine.getChild(StringConstants.CS_CUP);
+        if (cup != null) {
+            if (mCup == null) {
+                mCup = new Cup();
             }
             mCup.setXMLElement(cup);
         }
-                
-        
+
         /* Rounds */
         List<Element> rounds = racine.getChildren(StringConstants.CS_ROUND);
         if (rounds.isEmpty()) {
@@ -1543,14 +1665,14 @@ public class Tournament implements IContainCoachs, Serializable {
 
                 }
             } catch (NumberFormatException npe) {
-        //        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Obsolete Version");
+                //        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), "Obsolete Version");
             }
 
         } catch (JDOMException e) {
-    //        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
+            //        JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getLocalizedMessage());
 
         } catch (IOException e) {
-      //      JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
+            //      JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
         }
     }
 
@@ -2037,32 +2159,23 @@ public class Tournament implements IContainCoachs, Serializable {
         }
 
     }
-    
-    public String[] getTeamsNames()
-    {
-        ArrayList<String> names=new ArrayList<>();
-        for(Team t:mTeams)
-        {
+
+    public String[] getTeamsNames() {
+        ArrayList<String> names = new ArrayList<>();
+        for (Team t : mTeams) {
             names.add(t.getName());
         }
-        return (String[])names.toArray();
+        return (String[]) names.toArray();
     }
-    
-    public int getActiveCompetitorsCount()
-    {
-        if (mParams.isTeamTournament())
-        {
-            if (mParams.getTeamPairing()==ETeamPairing.TEAM_PAIRING)
-            {
+
+    public int getActiveCompetitorsCount() {
+        if (mParams.isTeamTournament()) {
+            if (mParams.getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
                 return getTeamsCount();
-            }
-            else
-            {
+            } else {
                 return getActiveCoachNumber();
             }
-        }
-        else
-        {
+        } else {
             return getActiveCoachNumber();
         }
     }

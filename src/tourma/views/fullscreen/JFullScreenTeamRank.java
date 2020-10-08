@@ -30,7 +30,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import tourma.data.Pool;
-import tourma.data.Ranking;
+import tourma.data.RankingForExport;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -92,7 +92,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
                     new InputStreamReader(
                             socket.getInputStream()));
 
-            Ranking r;
+            RankingForExport r;
             while (!loopStop) {
                 String inputLine;
                 inputLine = in.readLine();
@@ -111,14 +111,14 @@ public final class JFullScreenTeamRank extends JFullScreen {
                             ArrayList<IRanked> rs = new ArrayList<>();
                             Element element = doc.getRootElement();
                             if (!forPool) {
-                                r = new Ranking(element);
+                                r = new RankingForExport(element);
                                 rs.add(r);
                             } else {
                                 List<Element> elements = element.getChildren();
                                 Iterator<Element> it = elements.iterator();
                                 while (it.hasNext()) {
                                     Element el = it.next();
-                                    r = new Ranking(el);
+                                    r = new RankingForExport(el);
                                     rs.add(r);
                                 }
                             }

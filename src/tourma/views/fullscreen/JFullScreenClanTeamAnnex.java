@@ -27,12 +27,12 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import tourma.data.Clan;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.ObjectRanking;
 import tourma.data.Pool;
-import tourma.data.Ranking;
+import tourma.data.RankingForExport;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
@@ -93,7 +93,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                     new InputStreamReader(
                             socket.getInputStream()));
 
-            Ranking r;
+            RankingForExport r;
             while (!loopStop) {
                 String inputLine;
                 inputLine = in.readLine();
@@ -116,7 +116,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                                 Iterator<Element> it = elements.iterator();
                                 while (it.hasNext()) {
                                     Element el = it.next();
-                                    r = new Ranking(el);
+                                    r = new RankingForExport(el);
                                     rs.add(r);
                                 }
                                 buildPanel(rs);
@@ -200,7 +200,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                     }
 
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
 
                         MjtAnnexRankTeam annexRank0 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
                                 round, crit, 0, teams, full, false);
@@ -225,7 +225,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                         }
 
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
 
                             MjtAnnexRankTeam annexRank0 = new MjtAnnexRankTeam(Tournament.getTournament().getParams().isTeamVictoryOnly(),
                                     round, crit, 0, teams, full, false);
@@ -256,7 +256,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
 
                 ArrayList<IRanked> rs = new ArrayList<>();
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                    Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
 
                     MjtAnnexRankClan annexRank0 = new MjtAnnexRankClan(round, crit, 0,
                             full, clans, false);
@@ -313,14 +313,14 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
             IRanked ranked1 = rankeds.get(3 * i + 1);
             IRanked ranked2 = rankeds.get(3 * i + 2);
             try {
-                Criteria crit;
+                Criterion crit;
                 if (ranked0 instanceof MjtAnnexRank) {
                     crit = ((MjtAnnexRank) ranked0).getCriteria();
                 } else {
-                    if (ranked0 instanceof Ranking) {
-                        crit = ((Ranking) ranked0).getCriteria();
+                    if (ranked0 instanceof RankingForExport) {
+                        crit = ((RankingForExport) ranked0).getCriteria();
                     } else {
-                        crit = new Criteria("???");
+                        crit = new Criterion("???");
                     }
                 }
                 int column = 0;

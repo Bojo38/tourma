@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import tourma.data.ranking.Ranking;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -28,9 +29,9 @@ import tourma.utils.display.IRanked;
  *
  * @author WFMJ7631
  */
-public final class Ranking implements IXMLExport, IRanked, Serializable {
+public final class RankingForExport implements IXMLExport, IRanked, Serializable {
 
-    private static final Logger LOG = Logger.getLogger(Ranking.class.getName());
+    private static final Logger LOG = Logger.getLogger(RankingForExport.class.getName());
     public static final String CS_Individual_Annex = "INDIVIDUAL_ANNEX";
     public static final String CS_Team_Annex = "TEAM_ANNEX";
     public static final String CS_Clan_Annex = "CLAN_ANNEX";
@@ -59,7 +60,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
     /**
      *
      */
-    private MjtRanking mRank;
+    private Ranking mRank;
 
     /**
      *
@@ -80,7 +81,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
     private ArrayList<String> mCriterias;
     private ArrayList<ObjectRanking> mObjectsRanked;
 
-    private Criteria mCriteria = null;
+    private Criterion mCriteria = null;
 
     /**
      *
@@ -90,7 +91,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
      * @param rank
      * @param rankings
      */
-    public Ranking(final String name, final String type, final String valueType, final MjtRanking rank, ArrayList<Integer> rankings)  {
+    public RankingForExport(final String name, final String type, final String valueType, final Ranking rank, ArrayList<Integer> rankings)  {
         mRank = rank;
         mName = name;
         mType = type;
@@ -98,18 +99,18 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
         mRankings = new ArrayList<>(rankings);
     }
 
-    public Ranking(Element e) {
+    public RankingForExport(Element e) {
         this.setXMLElement(e);
     }
 
-    public Criteria getCriteria() {
+    public Criterion getCriteria() {
         if (mCriteria == null) {
-            mCriteria = new Criteria("???");
+            mCriteria = new Criterion("???");
         }
         return mCriteria;
     }
 
-    public void setCriteria(Criteria c) {
+    public void setCriteria(Criterion c) {
         mCriteria = c;
     }
 
@@ -129,16 +130,16 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
         rank.setAttribute(StringConstants.CS_USE_IMAGE, Boolean.toString(Tournament.getTournament().getParams().isUseImage()));
         for (int i = 0; i < mRankings.size(); i++) {
             int rankType = mRankings.get(i);
-            rank.setAttribute(new Attribute("R" + (i + 1), MjtRanking.getRankingString(rankType)));
+            rank.setAttribute(new Attribute("R" + (i + 1), Ranking.getRankingString(rankType)));
         }
 
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             rank.setAttribute(new Attribute("C" + (i + 1), crit.getName()));
         }
 
         //final ArrayList<ObjectRanking> datas = getRank().getSortedDatas();
-        for (int k = 0; k < getRank().getRowCount(); k++) {
+        for (int k = 0; k < getRank().getCount(); k++) {
 
             Element ic;
             Object obj = getRank().getSortedObject(k);
@@ -172,24 +173,24 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
             if (getName().equals(CS_Individual_Annex)
                     || getName().equals(CS_Team_Annex)
                     || getName().equals(CS_Clan_Annex)) {
-                mCriteria = new Criteria(mType);
+                mCriteria = new Criterion(mType);
                 annex = true;
             }
 
             try {
                 Tournament.getTournament().getParams().setTeamTournament(e.getAttribute(StringConstants.CS_BYTEAM).getBooleanValue());
             } catch (DataConversionException ex) {
-                Logger.getLogger(Ranking.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RankingForExport.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 Tournament.getTournament().getParams().setUseImage(e.getAttribute(StringConstants.CS_USE_IMAGE).getBooleanValue());
             } catch (DataConversionException ex) {
-                Logger.getLogger(Ranking.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RankingForExport.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 round = e.getAttribute(StringConstants.CS_ROUND).getIntValue();
             } catch (DataConversionException ex) {
-                Logger.getLogger(Ranking.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RankingForExport.class.getName()).log(Level.SEVERE, null, ex);
             }
             int i = 1;
             Attribute a = e.getAttribute("C" + i);
@@ -204,7 +205,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
             a = e.getAttribute("R" + i);
             mRankings = new ArrayList<>();
             while (a != null) {
-                this.mRankings.add(MjtRanking.getRankingFromString(a.getValue(), mCriterias));
+                this.mRankings.add(Ranking.getRankingFromString(a.getValue(), mCriterias));
                 i++;
                 a = e.getAttribute("" + i);
             }
@@ -363,7 +364,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
                         mObjectsRanked.add(so);
                     }
                 } catch (DataConversionException ex) {
-                    Logger.getLogger(Ranking.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(RankingForExport.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -384,7 +385,7 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
             Tournament.getTournament()
                     .getParams().clearCiterias();
             for (String crit : mCriterias) {
-                Criteria cr = new Criteria(crit);
+                Criterion cr = new Criterion(crit);
                 Tournament.getTournament().getParams().addCriteria(cr);
             }
         }
@@ -398,14 +399,14 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
     /**
      * @return the mRank
      */
-    public MjtRanking getRank() {
+    public Ranking getRank() {
         return mRank;
     }
 
     /**
      * @param mRank the mRank to set
      */
-    public void setRank(MjtRanking mRank) {
+    public void setRank(Ranking mRank) {
         this.mRank = mRank;
     }
 
@@ -414,16 +415,6 @@ public final class Ranking implements IXMLExport, IRanked, Serializable {
      */
     public String getName() {
         return mName;
-    }
-
-    @Override
-    public String getDetail() {
-        return mType;
-    }
-
-    @Override
-    public void setDetail(String d) {
-        mType = d;
     }
 
     /**

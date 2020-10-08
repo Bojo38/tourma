@@ -7,7 +7,7 @@ package tourma.views.parameters;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import tourma.data.CoachMatch;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 
 import tourma.data.Formula;
 import tourma.data.ETeamPairing;
@@ -149,7 +149,7 @@ public final class JPNParamFormulas extends javax.swing.JPanel {
         description+="\n";
         for (int i=0; i<Tournament.getTournament().getParams().getCriteriaCount(); i++)
         {
-            Criteria crit=Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit=Tournament.getTournament().getParams().getCriteria(i);
             description+=crit.getAccronym()+"1 / "+crit.getAccronym()+"2\n";
         }
         jtxpDescription.setText(description);

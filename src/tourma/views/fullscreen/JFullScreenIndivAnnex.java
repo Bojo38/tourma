@@ -30,11 +30,11 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import tourma.data.Coach;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.ObjectAnnexRanking;
 import tourma.data.ObjectRanking;
 import tourma.data.Pool;
-import tourma.data.Ranking;
+import tourma.data.RankingForExport;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtAnnexRank;
@@ -95,7 +95,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                     new InputStreamReader(
                             socket.getInputStream()));
 
-            Ranking r;
+            RankingForExport r;
             while (!loopStop) {
                 String inputLine;
                 inputLine = in.readLine();
@@ -118,7 +118,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                             Iterator<Element> it = elements.iterator();
                             while (it.hasNext()) {
                                 Element el = it.next();
-                                r = new Ranking(el);
+                                r = new RankingForExport(el);
                                 rs.add(r);
                             }
                             buildPanel(rs, screen);
@@ -224,7 +224,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                 }
 
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                    Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
 
                     MjtAnnexRankIndiv annexRank0 = new MjtAnnexRankIndiv(round, crit, 0,
                             coaches, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
@@ -248,7 +248,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                         coaches.add((Coach) p.getCompetitor(cpt2));
                     }
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
 
                         MjtAnnexRankIndiv annexRank0 = new MjtAnnexRankIndiv(round, crit, 0,
                                 coaches, full, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
@@ -317,14 +317,14 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                 IRanked ranked1 = rankeds.get(3 * i + 1);
                 IRanked ranked2 = rankeds.get(3 * i + 2);
 
-                Criteria crit;
+                Criterion crit;
                 if (ranked0 instanceof MjtAnnexRank) {
                     crit = ((MjtAnnexRank) ranked0).getCriteria();
                 } else {
-                    if (ranked0 instanceof Ranking) {
-                        crit = ((Ranking) ranked0).getCriteria();
+                    if (ranked0 instanceof RankingForExport) {
+                        crit = ((RankingForExport) ranked0).getCriteria();
                     } else {
-                        crit = new Criteria("???");
+                        crit = new Criterion("???");
                     }
                 }
 

@@ -26,7 +26,7 @@ import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import tourma.data.Clan;
 import tourma.data.Coach;
-import tourma.data.Ranking;
+import tourma.data.RankingForExport;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
@@ -79,7 +79,7 @@ public final class JFullScreenClanRank extends JFullScreen {
                     new InputStreamReader(
                             socket.getInputStream()));
 
-            Ranking r;
+            RankingForExport r;
             while (!loopStop) {
                 String inputLine;
                 inputLine = in.readLine();
@@ -96,7 +96,7 @@ public final class JFullScreenClanRank extends JFullScreen {
 
                             Document doc = sb.build(new StringReader(buffer));
                             Element element = doc.getRootElement();
-                            r = new Ranking(element);
+                            r = new RankingForExport(element);
 
                             buildPanel(r);
 

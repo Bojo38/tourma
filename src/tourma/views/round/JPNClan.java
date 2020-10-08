@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import tourma.MainFrame;
 import tourma.data.Coach;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Formula;
 import tourma.data.Parameters;
 import tourma.data.Round;
@@ -75,7 +75,7 @@ public final class JPNClan extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            final Criteria criteria = mTournament.getParams().getCriteria(i);
+            final Criterion criteria = mTournament.getParams().getCriteria(i);
             final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, t, coachs, teams, mRound, true, false);
             jtpAnnexRank.add(criteria.getName(), jpn);
         }
@@ -215,10 +215,10 @@ public final class JPNClan extends javax.swing.JPanel {
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
                 final MjtRankingClan model = new MjtRankingClan(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mTournament.getDisplayClans(), mRoundOnly);
-                final HashMap<Criteria, MjtAnnexRank> annexForRankings = new HashMap<>();
-                final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
+                final HashMap<Criterion, MjtAnnexRank> annexForRankings = new HashMap<>();
+                final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
-                    final Criteria crit = mTournament.getParams().getCriteria(j);
+                    final Criterion crit = mTournament.getParams().getCriteria(j);
                     MjtAnnexRank annex = new MjtAnnexRankClan(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                             mTournament.getDisplayClans(), true, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
                     annexForRankings.put(crit, annex);

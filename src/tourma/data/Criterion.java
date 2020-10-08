@@ -17,7 +17,7 @@ import tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Criteria implements IXMLExport, Serializable {
+public class Criterion implements IXMLExport, Serializable {
 
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
@@ -30,7 +30,7 @@ public class Criteria implements IXMLExport, Serializable {
         this.UID = UID;
     }
 
-    public void pull(Criteria crit) {
+    public void pull(Criterion crit) {
         this.UID = crit.UID;
         this.mCriticalValueThreshold = crit.mCriticalValueThreshold;
         this.mName = crit.mName;
@@ -40,7 +40,7 @@ public class Criteria implements IXMLExport, Serializable {
         this.mPointsTeamFor = crit.mPointsTeamFor;
     }
 
-    protected static final Logger LOG = Logger.getLogger(Criteria.class.getName());
+    protected static final Logger LOG = Logger.getLogger(Criterion.class.getName());
 
     /**
      * Name of the criteria
@@ -166,7 +166,7 @@ public class Criteria implements IXMLExport, Serializable {
      *
      * @param name
      */
-    public Criteria(final String name) {
+    public Criterion(final String name) {
         mName = name;
         mPointsFor = 0;
         mPointsAgainst = 0;
@@ -185,8 +185,8 @@ public class Criteria implements IXMLExport, Serializable {
 
         boolean result;
         result = false;
-        if (obj instanceof Criteria) {
-            Criteria crit = (Criteria) obj;
+        if (obj instanceof Criterion) {
+            Criterion crit = (Criterion) obj;
             result = this.getName().equals(crit.getName());
             result &= this.getPointsAgainst() == crit.getPointsAgainst();
             result &= this.getPointsFor() == crit.getPointsFor();

@@ -31,7 +31,7 @@ import tourma.data.Category;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.Cup;
 import tourma.data.ETeamPairing;
 import tourma.data.Match;
@@ -154,7 +154,7 @@ public final class Generation {
     private static void applyPortugal(final Round round) {
         Parameters params = Tournament.getTournament().getParams();
         if (params.isPortugal()) {
-            Criteria td = params.getCriteria(0);
+            Criterion td = params.getCriteria(0);
             ArrayList<CoachMatch> acm = round.getCoachMatchs();
             for (int i = 0; i < acm.size(); i++) {
                 CoachMatch cm = acm.get(i);

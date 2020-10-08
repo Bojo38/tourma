@@ -15,7 +15,7 @@ import java.util.HashMap;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Competitor;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.ETeamPairing;
 import tourma.data.IContainCoachs;
 import tourma.data.Parameters;
@@ -74,7 +74,7 @@ public final class JPNPool extends javax.swing.JPanel {
         mPageIndex = 1;
 
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            final Criteria criteria = mTournament.getParams().getCriteria(i);
+            final Criterion criteria = mTournament.getParams().getCriteria(i);
             if (!mTournament.getParams().isTeamTournament()) {
                 final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, p.getCompetitors(), new ArrayList<Team>());
                 jtpAnnexRank.add(criteria.getName(), jpn);
@@ -258,10 +258,10 @@ public final class JPNPool extends javax.swing.JPanel {
                     }
                 }
 
-                final HashMap<Criteria, MjtAnnexRank> annexForRankings = new HashMap<>();
-                final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
+                final HashMap<Criterion, MjtAnnexRank> annexForRankings = new HashMap<>();
+                final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
-                    final Criteria crit = mTournament.getParams().getCriteria(j);
+                    final Criterion crit = mTournament.getParams().getCriteria(j);
                     MjtAnnexRank annexPos;
                     MjtAnnexRank annexNeg;
                     if ((mTournament.getParams().isTeamTournament())

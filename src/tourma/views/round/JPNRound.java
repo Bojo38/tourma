@@ -25,7 +25,7 @@ import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.ETeamPairing;
 import tourma.data.Formula;
 import tourma.data.Group;
@@ -166,7 +166,7 @@ public final class JPNRound extends javax.swing.JPanel {
             teams.add(t.getTeam(cpt));
         }
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            final Criteria criteria = mTournament.getParams().getCriteria(i);
+            final Criterion criteria = mTournament.getParams().getCriteria(i);
             final ArrayList<Coach> coaches = new ArrayList<>();
             for (int cpt = 0; cpt < t.getCoachsCount(); cpt++) {
                 coaches.add(t.getCoach(cpt));
@@ -647,10 +647,10 @@ public final class JPNRound extends javax.swing.JPanel {
                 }
                 boolean forCup = mRound.isCup();
                 final MjtRankingIndiv model = new MjtRankingIndiv(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), coaches, mTournament.getParams().isTeamTournament(), mRoundOnly, forPool, forCup);
-                final HashMap<Criteria, MjtAnnexRank> annexForRankings = new HashMap<>();
-                final HashMap<Criteria, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
+                final HashMap<Criterion, MjtAnnexRank> annexForRankings = new HashMap<>();
+                final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
-                    final Criteria crit = mTournament.getParams().getCriteria(j);
+                    final Criterion crit = mTournament.getParams().getCriteria(j);
                     MjtAnnexRank annex = new MjtAnnexRankIndiv(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
                             coaches, true, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), false, mRoundOnly);
                     annexForRankings.put(crit, annex);

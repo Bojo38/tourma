@@ -54,7 +54,7 @@ public class Value implements Serializable {
     /**
      * Name of the criteria
      */
-    private Criteria mCriteria;
+    private Criterion mCriteria;
 
     /**
      * Name of the criteria
@@ -82,7 +82,7 @@ public class Value implements Serializable {
      *
      * @param criteria
      */
-    public Value(final Criteria criteria) {
+    public Value(final Criterion criteria) {
         mCriteria = criteria;
         _valueType=e_ValueType.E_CRITERIA;
     }
@@ -95,7 +95,7 @@ public class Value implements Serializable {
     /**
      * @return the mCriteria
      */
-    public Criteria getCriteria() {
+    public Criterion getCriteria() {
         if (_valueType==e_ValueType.E_CRITERIA)
         {
             return mCriteria;
@@ -118,7 +118,7 @@ public class Value implements Serializable {
     /**
      * @param mCriteria the mCriteria to set
      */
-    public void setCriteria(Criteria mCriteria) {
+    public void setCriteria(Criterion mCriteria) {
         this.mCriteria = mCriteria;
         updated = true;
     }

@@ -7,7 +7,6 @@ package tourma.data;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-//import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -74,6 +73,13 @@ public class Round implements IXMLExport, Serializable {
     private double mMinBonus = 1.0;
     private double mMaxBonus = 1.0;
 
+    boolean mRankingUpdated=false;
+
+    public boolean isRankingUpdated() {
+        return mRankingUpdated;
+    }
+    
+    
     /**
      * Default constructor
      */

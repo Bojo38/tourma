@@ -274,7 +274,7 @@ public abstract class Match implements IXMLExport, Serializable {
         return value;
     }
 
-    public abstract int getValue(Criteria crit, int subtype, Competitor c);
+    public abstract int getValue(Criterion crit, int subtype, Competitor c);
 
     public abstract Element getXMLElementForDisplay();
 

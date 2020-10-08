@@ -105,7 +105,7 @@ public class Formula implements IXMLExport, Serializable {
 
         Stack<Object> npi_crit = new Stack();
 
-        // Replace String by Criteria ?
+        // Replace String by Criterion ?
         for (Object obj : npi) {
             if (obj instanceof Integer) {
                 npi_crit.add(obj);
@@ -126,17 +126,17 @@ public class Formula implements IXMLExport, Serializable {
                     if (!isop) {
                         char last = object.charAt(object.length() - 1);
                         if ((last == '1') || (last == '2')) {
-                            Criteria c = null;
+                            Criterion c = null;
                             String variable = object.substring(0, object.length() - 1);
                             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                                Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                                Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
                                 if (crit.getAccronym().equals(variable)) {
                                     c = crit;
                                     break;
                                 }
                             }
                             if (c != null) {
-                                Pair<Integer, Criteria> pair;
+                                Pair<Integer, Criterion> pair;
                                 String sub = object.substring(object.length() - 1, object.length());
                                 int ext = Integer.parseInt(sub);
                                 pair = new Pair<>(ext, c);
@@ -160,7 +160,7 @@ public class Formula implements IXMLExport, Serializable {
         return valid;
     }
 
-    public int evaluate(HashMap<Criteria, Value> values, int side) {
+    public int evaluate(HashMap<Criterion, Value> values, int side) {
 
         int value = 0;
 
@@ -170,7 +170,7 @@ public class Formula implements IXMLExport, Serializable {
         for (Object obj : _npi) {
             if (obj instanceof Pair) {
                 Integer fside = (Integer) ((Pair) obj).getFirst();
-                Criteria crit = (Criteria) ((Pair) obj).getSecond();
+                Criterion crit = (Criterion) ((Pair) obj).getSecond();
 
                 Value val = values.get(crit);
 

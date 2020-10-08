@@ -38,7 +38,7 @@ import org.jdom.input.SAXBuilder;
 import tourma.data.Coach;
 import tourma.data.CoachMatch;
 import tourma.data.Competitor;
-import tourma.data.Criteria;
+import tourma.data.Criterion;
 import tourma.data.EIndivPairing;
 import tourma.data.Match;
 import tourma.data.Round;
@@ -212,7 +212,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             int width = gd.getDisplayMode().getWidth();
             int height = gd.getDisplayMode().getHeight();
 
-            Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+            Criterion td = Tournament.getTournament().getParams().getCriteria(0);
 
             float size = (float) height / fontRatio;
             Font f0 = font.deriveFont(Font.ITALIC, size);
@@ -314,7 +314,7 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                     Font f2 = font.deriveFont(Font.ITALIC, (float) height / 75);
                     for (int j = 1; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                        Criteria crit = Tournament.getTournament().getParams().getCriteria(j);
+                        Criterion crit = Tournament.getTournament().getParams().getCriteria(j);
                         value1 = cm.getValue(crit).getValue1();
                         value2 = cm.getValue(crit).getValue2();
                         JLabel tmp = new JLabel("" + value1 + " " + crit.getName() + " " + value2);
@@ -432,7 +432,7 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                         Font f2 = font.deriveFont(Font.ITALIC, (float) height / 75);
                         for (int k = 1; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
-                            Criteria crit = Tournament.getTournament().getParams().getCriteria(k);
+                            Criterion crit = Tournament.getTournament().getParams().getCriteria(k);
                             value1 = cm.getValue(crit).getValue1();
                             value2 = cm.getValue(crit).getValue2();
                             JLabel tmp = new JLabel("" + value1 + " " + crit.getName() + " " + value2);
@@ -533,7 +533,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             if (comp.equals(cm.getLooser())) {
                 f = looser;
             } else {
-                Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+                Criterion td = Tournament.getTournament().getParams().getCriteria(0);
                 if ((cm.getValue(td).getValue1() == -1) || (cm.getValue(td).getValue2() == -1)) {
                     f = def;
                 } else {

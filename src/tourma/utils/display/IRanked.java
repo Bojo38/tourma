@@ -16,6 +16,4 @@ public interface IRanked {
     public int getRowCount() throws RemoteException;
     public ObjectRanking getSortedObject(int i)throws RemoteException;
     public int getSortedValue(int i,int valIndex)throws RemoteException;
-    public String getDetail()throws RemoteException;
-    public void setDetail(String s)throws RemoteException;
 }

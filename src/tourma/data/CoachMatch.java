@@ -4,6 +4,7 @@
  */
 package tourma.data;
 
+import tourma.data.ranking.Ranking;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import tourma.utility.StringConstants;
  */
 public class CoachMatch extends Match implements Serializable {
 
+    
     /**
      * UID Seed
      */
@@ -142,10 +144,10 @@ public class CoachMatch extends Match implements Serializable {
                 this.mSubstitute2 = null;
             }
 
-            for (Criteria crit : coachmatch.mValues.keySet()) {
-                Criteria criteria = Tournament.getTournament().getParams().getCriteria(crit.getName());
+            for (Criterion crit : coachmatch.mValues.keySet()) {
+                Criterion criteria = Tournament.getTournament().getParams().getCriteria(crit.getName());
                 if (criteria == null) {
-                    criteria = new Criteria(crit.getName());
+                    criteria = new Criterion(crit.getName());
                     criteria.pull(crit);
                     Tournament.getTournament().getParams().addCriteria(criteria);
                 }
@@ -240,9 +242,9 @@ public class CoachMatch extends Match implements Serializable {
                     this.mSubstitute2 = null;
                 }
 
-                Criteria touchdowns = null;
-                Criteria lTouchdowns = Tournament.getTournament().getParams().getCriteria(0);
-                for (Criteria remote : coachmatch.mValues.keySet()) {
+                Criterion touchdowns = null;
+                Criterion lTouchdowns = Tournament.getTournament().getParams().getCriteria(0);
+                for (Criterion remote : coachmatch.mValues.keySet()) {
                     if ((remote.getName().equals(lTouchdowns.getName())) && (remote.getUID() == lTouchdowns.getUID())) {
                         touchdowns = remote;
                         break;
@@ -251,10 +253,10 @@ public class CoachMatch extends Match implements Serializable {
                 Value val_td = coachmatch.mValues.get(touchdowns);
                 // If match values are correct
                 if ((val_td.getValue1() > -1) && (val_td.getValue2() > -1)) {
-                    for (Criteria crit : coachmatch.mValues.keySet()) {
-                        Criteria criteria = Tournament.getTournament().getParams().getCriteria(crit.getName());
+                    for (Criterion crit : coachmatch.mValues.keySet()) {
+                        Criterion criteria = Tournament.getTournament().getParams().getCriteria(crit.getName());
                         if (criteria == null) {
-                            criteria = new Criteria(crit.getName());
+                            criteria = new Criterion(crit.getName());
                             criteria.pull(crit);
                             Tournament.getTournament().getParams().addCriteria(criteria);
                         }
@@ -324,7 +326,7 @@ public class CoachMatch extends Match implements Serializable {
     /**
      * Hash map of values corresponding of criteria
      */
-    protected final HashMap<Criteria, Value> mValues;
+    protected final HashMap<Criterion, Value> mValues;
     /**
      * Hash map of values corresponding of Formula
      */
@@ -365,7 +367,7 @@ public class CoachMatch extends Match implements Serializable {
      *
      * @return
      */
-    public HashMap<Criteria, Value> getValues() {
+    public HashMap<Criterion, Value> getValues() {
         return mValues;
     }
 
@@ -381,7 +383,7 @@ public class CoachMatch extends Match implements Serializable {
 
         int size = Tournament.getTournament().getParams().getCriteriaCount();
         for (int i = 0; i < size; i++) {
-            final Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            final Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             final Value val = new Value(crit);
 
             if (i == 0) {
@@ -436,7 +438,7 @@ public class CoachMatch extends Match implements Serializable {
                 equality &= (this.getCompetitor2().equals(cm.getCompetitor2()));
             }
 
-            for (Criteria crit : this.mValues.keySet()) {
+            for (Criterion crit : this.mValues.keySet()) {
                 Value v = cm.getValue(crit);
                 if (v == null) {
                     return false;
@@ -563,10 +565,10 @@ public class CoachMatch extends Match implements Serializable {
 
             while (v.hasNext()) {
                 final Element val = v.next();
-                Criteria crit = null;
+                Criterion crit = null;
 
                 for (int cpt = 0; cpt < Tournament.getTournament().getParams().getCriteriaCount(); cpt++) {
-                    final Criteria criteria = Tournament.getTournament().getParams().getCriteria(cpt);
+                    final Criterion criteria = Tournament.getTournament().getParams().getCriteria(cpt);
                     final String tmp = val.getAttribute(StringConstants.CS_NAME).getValue();
                     if (criteria != null) {
                         if (criteria.getName().equals(tmp)) {
@@ -650,7 +652,7 @@ public class CoachMatch extends Match implements Serializable {
                 super.setLooser(getCompetitor2());
             } else {
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                    Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
                     if (getValue(crit).getValue1() > getValue(crit).getValue2()) {
                         super.setWinner(getCompetitor1());
                         super.setLooser(getCompetitor2());
@@ -696,7 +698,7 @@ public class CoachMatch extends Match implements Serializable {
             } else {
 
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                    Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
                     if (getValue(crit).getValue1() < getValue(crit).getValue2()) {
                         super.setWinner(getCompetitor2());
                         super.setLooser(getCompetitor1());
@@ -877,7 +879,7 @@ public class CoachMatch extends Match implements Serializable {
     protected static int getGroupModifier(Coach c, CoachMatch m) {
         int value = 0;
         if (Tournament.getTournament().getGroupsCount() > 1) {
-            final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+            final Criterion td = Tournament.getTournament().getParams().getCriteria(0);
             Group g = Tournament.getTournament().getGroup(c);
             if (g != null) {
                 Value v = m.getValue(td);
@@ -921,7 +923,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param c
      * @return
      */
-    public Value getValue(Criteria c) {
+    public Value getValue(Criterion c) {
 
         Value val = mValues.get(c);
         if (val != null) {
@@ -930,7 +932,7 @@ public class CoachMatch extends Match implements Serializable {
             // Find criteria ny name
             String criteria = c.getName();
 
-            for (Criteria crit : this.mValues.keySet()) {
+            for (Criterion crit : this.mValues.keySet()) {
                 if (crit.getName().equals(criteria)) {
                     return mValues.get(crit);
                 }
@@ -983,7 +985,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param c
      * @param v
      */
-    public void putValue(Criteria c, Value v) {
+    public void putValue(Criterion c, Value v) {
         mValues.put(c, v);
         updated = true;
     }
@@ -1002,7 +1004,7 @@ public class CoachMatch extends Match implements Serializable {
      *
      * @param c
      */
-    public void removeValue(Criteria c) {
+    public void removeValue(Criterion c) {
         mValues.remove(c);
         updated = true;
     }
@@ -1097,8 +1099,8 @@ public class CoachMatch extends Match implements Serializable {
      * @param valueType
      * @return
      */
-    public static Criteria getCriteriaByValue(final int valueType) {
-        Criteria criteria = null;
+    public static Criterion getCriteriaByValue(final int valueType) {
+        Criterion criteria = null;
 
         if (valueType > Parameters.C_MAX_RANKING) {
             final int value = valueType - Parameters.C_MAX_RANKING - 1;
@@ -1116,11 +1118,11 @@ public class CoachMatch extends Match implements Serializable {
         } else {
 
             int v = valueType - Parameters.C_MAX_RANKING - 1;
-            Criteria criteria = null;
+            Criterion criteria = null;
             Parameters params = Tournament.getTournament().getParams();
             if (v / 3 < Tournament.getTournament().getParams().getCriteriaCount()) {
                 criteria = params.getCriteria(v / 3);
-                value = getValue(criteria, MjtRanking.getSubtypeByValue(valueType), c);
+                value = getValue(criteria, Ranking.getSubtypeByValue(valueType), c);
             } else {
                 int f = valueType - 3 * Tournament.getTournament().getParams().getCriteriaCount() - Parameters.C_MAX_RANKING - 1;
                 Formula formula = Tournament.getTournament().getParams().getFormula(f);
@@ -1213,7 +1215,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param sub_type
      * @return
      */
-    /*public static int getValue(final Coach c, final CoachMatch m, final Criteria criteria, final int sub_type) {
+    /*public static int getValue(final Coach c, final CoachMatch m, final Criterion criteria, final int sub_type) {
         int value = 0;
         if (sub_type == Parameters.C_RANKING_SUBTYPE_POSITIVE) {
             if (c == m.getCompetitor1()) {
@@ -1473,7 +1475,7 @@ public class CoachMatch extends Match implements Serializable {
 
                 // Add/Remove Bonuses
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+                    Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
                     val = m.getValue(crit);
 
                     int value1 = val.getValue1();
@@ -1507,7 +1509,7 @@ public class CoachMatch extends Match implements Serializable {
         return value;
     }
 
-    protected static int getCriteriaBonusPoints(Coach c, CoachMatch m, Criteria crit) {
+    protected static int getCriteriaBonusPoints(Coach c, CoachMatch m, Criterion crit) {
         int value = 0;
         Value v = m.getValue(crit);
         if (m.getCompetitor1() == c) {
@@ -1543,7 +1545,7 @@ public class CoachMatch extends Match implements Serializable {
         int value = 0;
         // loop on Criterias
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             value += getCriteriaBonusPoints(c, m, crit);
         }
         return value;
@@ -1564,7 +1566,7 @@ public class CoachMatch extends Match implements Serializable {
                 value += c.getHandicap();
             }
         }
-        final Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        final Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         final Value val = m.getValue(td);
         if (val != null) {
             if (m.getCompetitor1() == c) {
@@ -1601,7 +1603,7 @@ public class CoachMatch extends Match implements Serializable {
                             int bonus = 0;
 
                             for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                                final Criteria cri = Tournament.getTournament().getParams().getCriteria(j);
+                                final Criterion cri = Tournament.getTournament().getParams().getCriteria(j);
                                 final Value va = m.getValue(cri);
 
                                 int value1 = va.getValue1();
@@ -1678,7 +1680,7 @@ public class CoachMatch extends Match implements Serializable {
                             int bonus = 0;
                             for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
 
-                                final Criteria cri = Tournament.getTournament().getParams().getCriteria(j);
+                                final Criterion cri = Tournament.getTournament().getParams().getCriteria(j);
                                 final Value va = m.getValue(cri);
                                 int value1 = va.getValue1();
                                 int value2 = va.getValue2();
@@ -1736,7 +1738,7 @@ public class CoachMatch extends Match implements Serializable {
      * @param c Competitor
      * @return Integer
      */
-    public int getValue(Criteria crit, int subtype, Competitor c) {
+    public int getValue(Criterion crit, int subtype, Competitor c) {
         int value = 0;
         Value v = getValue(crit);
         if (v != null) {
@@ -1800,7 +1802,7 @@ public class CoachMatch extends Match implements Serializable {
     }
 
     public boolean isEntered() {
-        Criteria td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         Value v = getValue(td);
 
         if (this.isConcedeedBy1() || isConcedeedBy2() || isRefusedBy1() || isConcedeedBy2()) {
@@ -1854,7 +1856,7 @@ public class CoachMatch extends Match implements Serializable {
         this.mSubstitute2 = s_tmp;
 
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criteria crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
             Value val = mValues.get(crit);
             value_tmp = val.getValue1();
             val.setValue1(val.getValue2());

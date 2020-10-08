@@ -33,7 +33,7 @@ import tourma.data.Category;
 import tourma.data.Coach;
 import tourma.data.Group;
 import tourma.data.Pool;
-import tourma.data.Ranking;
+import tourma.data.RankingForExport;
 import tourma.data.Tournament;
 import tourma.languages.Translate;
 import tourma.tableModel.MjtRanking;
@@ -118,7 +118,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                     new InputStreamReader(
                             socket.getInputStream()));
 
-            Ranking r;
+            RankingForExport r;
             while (!loopStop) {
                 String inputLine;
                 inputLine = in.readLine();
@@ -136,7 +136,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                             ArrayList<IRanked> rs = new ArrayList<>();
                             Element element = doc.getRootElement();
                             if (this.indivRankType == C_GENERAL) {
-                                r = new Ranking(element);
+                                r = new RankingForExport(element);
                                 rs.add(r);
 
                             } else {
@@ -144,7 +144,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                                 Iterator<Element> it = elements.iterator();
                                 while (it.hasNext()) {
                                     Element el = it.next();
-                                    r = new Ranking(el);
+                                    r = new RankingForExport(el);
                                     rs.add(r);
                                 }
                                 buildPanel(rs);
@@ -233,7 +233,7 @@ public final class JFullScreenIndivRank extends JFullScreen {
                         false,
                         Tournament.getTournament().getPoolCount() > 0,
                 Tournament.getTournament().getRound(round).isCup());
-                ranking.setDetail(Ranking.CS_General);
+                ranking.setDetail(RankingForExport.CS_General);
                 rankeds.add(ranking);
 
             }
