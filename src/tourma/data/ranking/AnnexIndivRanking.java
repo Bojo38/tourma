@@ -25,15 +25,14 @@ import tourma.utility.StringConstants;
  */
 public class AnnexIndivRanking extends AnnexRanking {
 
-    public AnnexIndivRanking(Element e)
-    {
+    public AnnexIndivRanking(Element e) {
         super(e);
         setXMLElement(e);
     }
-    
+
     boolean mTeamTournament = false;
 
-    public AnnexIndivRanking(final int round, final Criterion criteria, final int subtype, final ArrayList<Coach> coachs,  final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
+    public AnnexIndivRanking(final int round, final Criterion criteria, final int subtype, final ArrayList<Coach> coachs, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean teamTournament, final boolean round_only) {
         super(round, criteria, subtype, coachs, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
         mTeamTournament = teamTournament;
         sortDatas();
@@ -44,7 +43,6 @@ public class AnnexIndivRanking extends AnnexRanking {
         mTeamTournament = teamTournament;
         sortDatas();
     }
-
 
     @Override
     @SuppressWarnings("unchecked")
@@ -73,10 +71,14 @@ public class AnnexIndivRanking extends AnnexRanking {
             final ArrayList<Round> rounds = new ArrayList<>();
 
             if (mRoundOnly) {
-                rounds.add(Tournament.getTournament().getRound(mRound));
+                if (mRound < Tournament.getTournament().getRoundsCount()) {
+                    rounds.add(Tournament.getTournament().getRound(mRound));
+                }
             } else {
                 for (int l = 0; (l <= mRound); l++) {
-                    rounds.add(Tournament.getTournament().getRound(l));
+                    if (mRound < Tournament.getTournament().getRoundsCount()) {
+                        rounds.add(Tournament.getTournament().getRound(l));
+                    }
                 }
             }
 
@@ -309,14 +311,14 @@ public class AnnexIndivRanking extends AnnexRanking {
             }
         }
     }
-    
-      @Override
+
+    @Override
     public Element getXMLElement() {
-       Element e=super.getXMLElement();
-       e.setName(StringConstants.CS_ANNEX_INDIV_RANKING);
-       
-       return e;
-       
+        Element e = super.getXMLElement();
+        e.setName(StringConstants.CS_ANNEX_INDIV_RANKING);
+
+        return e;
+
     }
 
     @Override

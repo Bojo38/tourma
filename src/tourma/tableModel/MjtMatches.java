@@ -465,6 +465,8 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
 
         fireTableDataChanged();
         MainFrame.getMainFrame().updateMenus();
+        
+        Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount()-1).setRankingsToUpdate();
 
     }
 

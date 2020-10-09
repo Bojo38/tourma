@@ -87,16 +87,34 @@ public class Round implements IXMLExport, Serializable {
         return mRankingUpdated;
     }
 
+    public Rankings getRankings(boolean ro) {
+        if (mRankingToUpdate) {
+            mRankings.update();
+            mRankingsRoundOnly.update();
+            mRankingToUpdate = false;
+            mRankingUpdated = true;
+        }
+        if (ro) {
+            return mRankingsRoundOnly;
+        } else {
+            return mRankings;
+        }
+    }
     /**
      * Rankings
      */
-    Rankings mRankings=new Rankings();
+    Rankings mRankings = new Rankings(false);
+    Rankings mRankingsRoundOnly = new Rankings(true);
 
     /**
      * Default constructor
      */
-    public Round() {
+    public Round(int rNumber, Tournament tour) {
         mMatchs = new ArrayList<>();
+
+        mRankings.createRankings(rNumber, tour);
+        mRankingsRoundOnly.createRankings(rNumber, tour);
+
     }
 
     @Override
@@ -405,6 +423,11 @@ public class Round implements IXMLExport, Serializable {
      */
     @Override
     public Element getXMLElement() {
+
+        if (mRankingToUpdate) {
+            mRankings.update();
+        }
+
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element round = new Element(StringConstants.CS_ROUND);
         if (mHour == null) {
@@ -426,6 +449,9 @@ public class Round implements IXMLExport, Serializable {
             final Element match = mMatch.getXMLElement();
             round.addContent(match);
         }
+
+        round.addContent(mRankings.getXMLElement());
+        round.addContent(mRankingsRoundOnly.getXMLElement());
 
         return round;
     }
@@ -454,8 +480,18 @@ public class Round implements IXMLExport, Serializable {
         }
 
         round.addContent(mRankings.getXMLElement());
-        
+
         return round;
+    }
+
+    public void update() {
+        mRankings.setRoundOnly(false);
+        mRankings.update();
+        mRankingsRoundOnly.setRoundOnly(false);
+        //mRankingsRoundOnly.update();
+
+        mRankingToUpdate = false;
+        mRankingUpdated = true;
     }
 
     /**
@@ -546,8 +582,16 @@ public class Round implements IXMLExport, Serializable {
                 }
             }
         }
-        
-        mRankings.setXMLElement(round.getChild(StringConstants.CS_RANKINGS));
+
+        try {
+            mRankings.setXMLElement(round.getChild(StringConstants.CS_RANKINGS));
+            mRankings.setRoundOnly(false);
+            mRankingsRoundOnly.setXMLElement(round.getChild(StringConstants.CS_RANKINGS_RO));
+            mRankingsRoundOnly.setRoundOnly(true);
+
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+        }
     }
 
     /**
@@ -579,11 +623,12 @@ public class Round implements IXMLExport, Serializable {
 
         int roundIndex = Integer.parseInt(round.getAttributeValue(StringConstants.CS_INDEX));
         int i = 0;
-        while (Tournament.getTournament().getRoundsCount() > 0) {
-            Tournament.getTournament().removeRound(0);
+        Tournament tour = Tournament.getTournament();
+        while (tour.getRoundsCount() > 0) {
+            tour.removeRound(0);
         }
         while (i < roundIndex) {
-            Tournament.getTournament().addRound(new Round());
+            tour.addRound(new Round(tour.getRoundsCount(), tour));
             i++;
         }
 
@@ -603,7 +648,21 @@ public class Round implements IXMLExport, Serializable {
             m.setXMLElementForDisplay(match);
             this.mMatchs.add(m);
         }
+
+        try {
+            mRankings.setXMLElement(round.getChild(StringConstants.CS_RANKINGS));
+        } catch (NullPointerException ne) {
+            ne.printStackTrace();
+        }
+
         Tournament.getTournament().addRound(this);
+    }
+
+    boolean mRankingToUpdate = false;
+
+    public void setRankingsToUpdate() {
+        mRankingToUpdate = true;
+        mRankingUpdated = false;
     }
 
     /**

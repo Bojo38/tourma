@@ -56,6 +56,10 @@ abstract public class Ranking implements IRanked, IXMLExport {
         mRoundOnly = roundOnly;
     }
 
+    public void setRoundOnly(boolean mRoundOnly) {
+        this.mRoundOnly = mRoundOnly;
+    }
+
     @Override
     public int getRowCount() {
         return getCount();
@@ -431,10 +435,10 @@ abstract public class Ranking implements IRanked, IXMLExport {
         Element e = new Element(StringConstants.CS_RANKING);
 
         e.setAttribute(StringConstants.CS_RANK + 1, Integer.toString(getRankingType1()));
-        e.setAttribute(StringConstants.CS_RANK + 2, Integer.toString(getRankingType1()));
-        e.setAttribute(StringConstants.CS_RANK + 3, Integer.toString(getRankingType1()));
-        e.setAttribute(StringConstants.CS_RANK + 4, Integer.toString(getRankingType1()));
-        e.setAttribute(StringConstants.CS_RANK + 5, Integer.toString(getRankingType1()));
+        e.setAttribute(StringConstants.CS_RANK + 2, Integer.toString(getRankingType2()));
+        e.setAttribute(StringConstants.CS_RANK + 3, Integer.toString(getRankingType3()));
+        e.setAttribute(StringConstants.CS_RANK + 4, Integer.toString(getRankingType4()));
+        e.setAttribute(StringConstants.CS_RANK + 5, Integer.toString(getRankingType5()));
 
         e.setAttribute(StringConstants.CS_ROUND, Integer.toString(getRound()));
         e.setAttribute(StringConstants.CS_ROUNDONLY, Boolean.toString(mRoundOnly));
@@ -443,7 +447,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
         /**
          * Objects
          */
-        if (mObjects != null) {
+        /*if (mObjects != null) {
             for (Object obj : mObjects) {
                 if (obj instanceof Team) {
                     Element e_team = new Element(StringConstants.CS_TEAM);
@@ -466,7 +470,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
                     e.addContent(e_clan);
                 }
             }
-        }
+        }*/
 
         /**
          * Objects
@@ -505,7 +509,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
             final List<Element> positions = e.getChildren(StringConstants.CS_POSITION);
             final Iterator<Element> k = positions.iterator();
             mDatas.clear();
-            mObjects.clear();
+            mObjects=new ArrayList();
             while (k.hasNext()) {
                 Element pos = k.next();
                 Comparable<Object> obj = null;
@@ -531,11 +535,11 @@ abstract public class Ranking implements IRanked, IXMLExport {
 
                 if (obj != null) {
                     
-                    int val1=e.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
-                    int val2=e.getAttribute(StringConstants.CS_RANK + 2).getIntValue();
-                    int val3=e.getAttribute(StringConstants.CS_RANK + 3).getIntValue();
-                    int val4=e.getAttribute(StringConstants.CS_RANK + 4).getIntValue();
-                    int val5=e.getAttribute(StringConstants.CS_RANK + 5).getIntValue();
+                    int val1=pos.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
+                    int val2=pos.getAttribute(StringConstants.CS_RANK + 2).getIntValue();
+                    int val3=pos.getAttribute(StringConstants.CS_RANK + 3).getIntValue();
+                    int val4=pos.getAttribute(StringConstants.CS_RANK + 4).getIntValue();
+                    int val5=pos.getAttribute(StringConstants.CS_RANK + 5).getIntValue();
                     
                     ObjectRanking or = new ObjectRanking(obj,val1,val2,val3,val4,val5);
                     mDatas.add(or);

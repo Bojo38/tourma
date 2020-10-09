@@ -6,21 +6,14 @@ package tourma.tableModel;
 
 import java.awt.Component;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Collections;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import tourma.data.Coach;
-import tourma.data.CoachMatch;
-import tourma.data.Criterion;
 import tourma.data.IWithNameAndPicture;
 import tourma.data.ObjectRanking;
 import tourma.data.Parameters;
-import tourma.data.Pool;
-import tourma.data.Round;
 import tourma.data.Tournament;
-import tourma.data.Value;
 import tourma.data.ranking.IndivRanking;
 import tourma.data.ranking.Ranking;
 import tourma.languages.Translate;
@@ -42,7 +35,7 @@ public final class MjtRankingIndiv extends MjtRanking {
     public MjtRankingIndiv(IndivRanking ranking,int min, int max) {
         super(ranking,min,max);
  
-        ranking.sortDatas();
+        
     }
 
     @Override

@@ -830,11 +830,8 @@ public final class JPNStatistics extends javax.swing.JPanel {
             column_name = 3;
         }
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            //Round r = mTournament.getRound(i);
-            IndivRanking ranking = new IndivRanking(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                    coach, mTournament.getParams().isTeamTournament(),
-                    false,
-                    false, false);
+            Round r = mTournament.getRound(i);
+            IndivRanking ranking=r.getRankings(false).getIndivRankingSet().getRanking();
 
             ArrayList<String> coach_names = new ArrayList<>();
             int count = ranking.getRowCount();
@@ -890,15 +887,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
         if (mTournament.getParams().isTeamTournament()) {
             for (int i = 0; i < mTournament.getRoundsCount(); i++) {
 
-                ArrayList<Team> teams = new ArrayList<>();
-                for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
-                    teams.add(Tournament.getTournament().getTeam(cpt));
-                }
-                TeamRanking ranking = new TeamRanking(
-                        mTournament.getParams().isTeamVictoryOnly(),
-                        i, mTournament.getParams(),
-                        teams,
-                        false);
+                TeamRanking ranking = Tournament.getTournament().getRound(i).getRankings(false).getTeamRankingSet().getRanking();
 
                 ArrayList<String> team_names = new ArrayList<>();
                 int count = ranking.getRowCount();

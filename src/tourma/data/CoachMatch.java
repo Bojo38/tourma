@@ -18,7 +18,6 @@ import java.util.logging.Logger;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
-import tourma.tableModel.MjtRanking;
 import tourma.utility.StringConstants;
 
 /**

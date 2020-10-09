@@ -7,12 +7,9 @@ package tourma.tableModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import tourma.data.Criterion;
-import tourma.data.Formula;
 import tourma.data.Tournament;
 import tourma.data.ranking.AnnexRanking;
 

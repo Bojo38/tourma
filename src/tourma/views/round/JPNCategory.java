@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import tourma.MainFrame;
 import tourma.data.Category;
 import tourma.data.Coach;
+import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.data.ranking.IndivRanking;
@@ -34,6 +35,7 @@ public final class JPNCategory extends javax.swing.JPanel {
     private final Tournament mTournament;
     private final Category mCategory;
     private final int mRoundNumber;
+    private final Round mRound;
 
     /**
      *
@@ -63,6 +65,7 @@ public final class JPNCategory extends javax.swing.JPanel {
         mTournament = t;
         mCategory = g;
         mRoundNumber = roundNumber;
+        mRound = t.getRound(roundNumber);
 
         if (t.getParams().isTeamTournament()) {
 
@@ -262,7 +265,7 @@ public final class JPNCategory extends javax.swing.JPanel {
         }
 
         jlbPageIndiv.setText(Integer.toString(mPageIndivIndex) + " / " + Integer.toString(mPageIndivCount));
-        IndivRanking ranking=new IndivRanking(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
+        IndivRanking ranking = new IndivRanking(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
                 al, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
         final MjtRankingIndiv tableModel = new MjtRankingIndiv(ranking);
         jtbCategory.setModel(tableModel);
@@ -276,18 +279,9 @@ public final class JPNCategory extends javax.swing.JPanel {
     private void updateTeam() {
         final ArrayList<Team> al = new ArrayList<>();
         jlbPageTeam.setText(Integer.toString(mPageTeamIndex) + " / " + Integer.toString(mPageTeamCount));
-        for (int i = 0; i < mTournament.getTeamsCount(); i++) {
-            final Team t = mTournament.getTeam(i);
-            if (t.containsCategory(mCategory)) {
-                al.add(t);
-            }
-        }
-
-        TeamRanking ranking=new TeamRanking(mTournament.getParams().isTeamTournament(),
-                mRoundNumber,mTournament.getParams(),
-                al,
-                mRoundOnly);
         
+        TeamRanking ranking = mRound.getRankings(mRoundOnly).getCategoryTeamRanking().get(mCategory);
+                
         final MjtRankingTeam tableModel = new MjtRankingTeam(ranking);
         jtbTeam.setModel(tableModel);
         jtbTeam.setDefaultRenderer(String.class, tableModel);

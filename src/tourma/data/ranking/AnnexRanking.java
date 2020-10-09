@@ -120,6 +120,10 @@ abstract public class AnnexRanking extends Ranking {
     @SuppressWarnings("ProtectedField")
     protected int mSubtype;
 
+    public void setSubtype(int mSubtype) {
+        this.mSubtype = mSubtype;
+    }
+
     public int getSubtype() {
         return mSubtype;
     }
@@ -139,6 +143,10 @@ abstract public class AnnexRanking extends Ranking {
         }
 
         e.setAttribute(StringConstants.CS_SUBTYPE, Integer.toString(mSubtype));
+        if (mType==null)
+        {
+            mType="";
+        }
         e.setAttribute(StringConstants.CS_TYPE, mType);
 
         /*e.removeChildren(StringConstants.CS_POSITION);
@@ -179,7 +187,7 @@ abstract public class AnnexRanking extends Ranking {
             final List<Element> positions = e.getChildren(StringConstants.CS_POSITION);
             final Iterator<Element> k = positions.iterator();
             mDatas.clear();
-            mObjects.clear();
+            mObjects=new ArrayList();
             while (k.hasNext()) {
                 Element pos = k.next();
                 Comparable<Object> obj = null;

@@ -374,20 +374,16 @@ public final class JFullScreenTeamRank extends JFullScreen {
                     teams.add(Tournament.getTournament().getTeam(cpt));
                 }
 
-                TeamRanking ranking = new TeamRanking(
-                        Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                        round, Tournament.getTournament().getParams(),
-                        teams,
-                        false);
+                TeamRanking ranking=Tournament.getTournament().getRound(round).getRankings(false).getTeamRankingSet().getRanking();
+    
                 rankeds.add(ranking);
             } else {
                 for (int i = 0; i < Tournament.getTournament().getPoolCount(); i++) {
                     Pool p = Tournament.getTournament().getPool(i);
-                    TeamRanking ranking = new TeamRanking(
-                            Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                            round, Tournament.getTournament().getParams(),
-                            p.getCompetitors(),
-                            false);
+                    
+                    TeamRanking ranking=Tournament.getTournament().getRound(round).getRankings(false).getPoolTeamRankings().get(p).getRanking();
+
+                    
                     ranking.setDetail(Integer.toString(i + 1));
                     rankeds.add(ranking);
                 }

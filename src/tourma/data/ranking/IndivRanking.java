@@ -5,7 +5,6 @@
  */
 package tourma.data.ranking;
 
-import com.sun.javafx.binding.StringConstant;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.jdom.DataConversionException;
@@ -51,6 +50,7 @@ public class IndivRanking extends Ranking {
         mTeamTournament = teamTour;
         mForCup = forCup;
         mForPool = forPool;
+   //     sortDatas();
 
     }
 
@@ -77,7 +77,7 @@ public class IndivRanking extends Ranking {
         mTeamTournament = teamTour;
         mForCup = forCup;
         mForPool = forPool;
-
+//        sortDatas();
     }
 
     protected boolean mTeamTournament;
@@ -116,13 +116,19 @@ public class IndivRanking extends Ranking {
         mDatas.clear();
         mDatas = new ArrayList();
 
+        Tournament tour=Tournament.getTournament();
         final ArrayList<Round> rounds = new ArrayList<>();
 
         if (mRoundOnly) {
-            rounds.add(Tournament.getTournament().getRound(mRound));
+            if (mRound < tour.getRoundsCount()) {
+                rounds.add(tour.getRound(mRound));
+            }
+
         } else {
             for (int l = 0; (l <= mRound); l++) {
-                rounds.add(Tournament.getTournament().getRound(l));
+                if (l < tour.getRoundsCount()) {
+                    rounds.add(tour.getRound(l));
+                }
             }
         }
 
@@ -318,7 +324,7 @@ public class IndivRanking extends Ranking {
 
         Collections.sort(mDatas);
 
-        final Tournament tour = Tournament.getTournament();
+        
 
         // On ajuste le tri par poule si nécessaire pour que
         // l'écart minimum entre 2 membres de la même poule
@@ -417,23 +423,21 @@ public class IndivRanking extends Ranking {
         Element e = super.getXMLElement();
         e.setName(StringConstants.CS_INDIV_RANKING);
 
-        e.setAttribute(StringConstants.CS_BYTEAM,Boolean.toString(mTeamTournament));
-        e.setAttribute(StringConstants.CS_POOL,Boolean.toString(mForPool));
-        e.setAttribute(StringConstants.CS_CUP,Boolean.toString(mForCup));
+        e.setAttribute(StringConstants.CS_BYTEAM, Boolean.toString(mTeamTournament));
+        e.setAttribute(StringConstants.CS_POOL, Boolean.toString(mForPool));
+        e.setAttribute(StringConstants.CS_CUP, Boolean.toString(mForCup));
         return e;
     }
 
     @Override
     public void setXMLElement(Element e) {
         super.setXMLElement(e);
-        
-        try{
-        mTeamTournament=e.getAttribute(StringConstants.CS_BYTEAM).getBooleanValue();
-        mForPool=e.getAttribute(StringConstants.CS_POOL).getBooleanValue();
-        mForCup=e.getAttribute(StringConstants.CS_CUP).getBooleanValue();
-        }
-        catch(DataConversionException dce)
-        {
+
+        try {
+            mTeamTournament = e.getAttribute(StringConstants.CS_BYTEAM).getBooleanValue();
+            mForPool = e.getAttribute(StringConstants.CS_POOL).getBooleanValue();
+            mForCup = e.getAttribute(StringConstants.CS_CUP).getBooleanValue();
+        } catch (DataConversionException dce) {
             dce.printStackTrace();
         }
     }

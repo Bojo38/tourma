@@ -95,6 +95,10 @@ public class Tournament implements IContainCoachs, Serializable {
         return mTeams;
     }
 
+     public ArrayList<Clan> getClans() {
+        return mClans;
+    }
+    
     public ArrayList<Coach> getCoachs() {
         return mCoachs;
     }
@@ -1640,9 +1644,12 @@ public class Tournament implements IContainCoachs, Serializable {
 
         while (j.hasNext()) {
             final Element round = j.next();
-            final Round r = new Round();
+            final Round r = new Round(getRoundsCount(),this);
             r.setXMLElement(round);
             mRounds.add(r);
+            
+            r.update();
+           
         }
     }
 
@@ -1830,7 +1837,7 @@ public class Tournament implements IContainCoachs, Serializable {
             }
 
             if (!bFound) {
-                Round local = new Round();
+                Round local = new Round(this.getRoundsCount(),this);
                 local.pull(round);
                 mRounds.add(local);
                 // Coaches and matches are synchronized later

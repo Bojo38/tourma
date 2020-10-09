@@ -5,6 +5,7 @@
  */
 package tourma.data.ranking;
 
+import com.itextpdf.text.pdf.PdfName;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.jdom.DataConversionException;
@@ -40,11 +41,28 @@ public class TeamRanking extends Ranking {
         sortDatas();
     }
 
-    public TeamRanking(final boolean teamVictory, final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList teams, final boolean round_only) {
-        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams, round_only);
+    public TeamRanking(final boolean teamVictory, final int round, Parameters params, final ArrayList teams, final boolean round_only, boolean forCup, boolean forPool) {
+        super(round, params.getRankingTeam1(), params.getRankingTeam2(), params.getRankingTeam3(), params.getRankingTeam4(), params.getRankingTeam5(), teams, round_only);
         mTeamVictory = teamVictory;
+        mForCup = forCup;
+        mForPool = forPool;
         sortDatas();
     }
+
+    public TeamRanking(final boolean teamVictory, final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList teams, final boolean round_only) {
+        this(teamVictory, round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams, round_only, false, false);
+    }
+
+    public TeamRanking(final boolean teamVictory, final int round, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final ArrayList teams, final boolean round_only, boolean forCup, boolean forPool) {
+        super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, teams, round_only);
+        mTeamVictory = teamVictory;
+        mForCup = forCup;
+        mForPool = forPool;
+        sortDatas();
+    }
+
+    boolean mForCup = false;
+    boolean mForPool = false;
 
     /**
      *
@@ -181,7 +199,7 @@ public class TeamRanking extends Ranking {
     }
 
     @Override
-    protected void sortDatas() {
+    public void sortDatas() {
 
         mDatas.clear();
         mDatas = new ArrayList();
@@ -189,10 +207,14 @@ public class TeamRanking extends Ranking {
         final ArrayList<Round> rounds = new ArrayList<>();
 
         if (mRoundOnly) {
-            rounds.add(Tournament.getTournament().getRound(mRound));
+            if (mRound < Tournament.getTournament().getRoundsCount()) {
+                rounds.add(Tournament.getTournament().getRound(mRound));
+            }
         } else {
             for (int l = 0; (l <= mRound); l++) {
-                rounds.add(Tournament.getTournament().getRound(l));
+                if (mRound < Tournament.getTournament().getRoundsCount()) {
+                    rounds.add(Tournament.getTournament().getRound(l));
+                }
             }
         }
 

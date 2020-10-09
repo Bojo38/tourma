@@ -132,7 +132,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 ((Tournament) tour).getParams().setXMLElement(element);
                                 element = doc.getRootElement().getChild(StringConstants.CS_ROUND);
 
-                                r = new Round();
+                                r = new Round(tour.getRoundsCount(),tour);
                                 r.setXMLElementForDisplay(element);
 
                                 if (clash) {

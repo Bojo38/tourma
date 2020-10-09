@@ -26,23 +26,22 @@ import tourma.utility.StringConstants;
  * @author WFMJ7631
  */
 public class AnnexTeamRanking extends AnnexRanking {
-    
-    public AnnexTeamRanking(Element e)
-    {
+
+    public AnnexTeamRanking(Element e) {
         super(e);
         setXMLElement(e);
     }
-    
+
     public AnnexTeamRanking(final int round, final Criterion criteria, final int subtype, final ArrayList<Team> teams, Parameters param, final boolean round_only) {
         super(round, criteria, subtype, teams, param.getRankingTeam1(), param.getRankingTeam2(), param.getRankingTeam3(), param.getRankingTeam4(), param.getRankingTeam5(), round_only);
         sortDatas();
     }
-    
+
     public AnnexTeamRanking(final int round, final Formula formula, final int subtype, final ArrayList<Team> teams, Parameters param, final boolean round_only) {
         super(round, formula, subtype, teams, param.getRankingTeam1(), param.getRankingTeam2(), param.getRankingTeam3(), param.getRankingTeam4(), param.getRankingTeam5(), round_only);
         sortDatas();
     }
-    
+
     public AnnexTeamRanking(final int round, final Criterion criteria, final int subtype, final ArrayList<Team> teams, final int ranking_type1, final int ranking_type2, final int ranking_type3, final int ranking_type4, final int ranking_type5, final boolean round_only) {
         super(round, criteria, subtype, teams, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, round_only);
         sortDatas();
@@ -81,10 +80,14 @@ public class AnnexTeamRanking extends AnnexRanking {
                 final ArrayList<Round> rounds = new ArrayList<>();
 
                 if (mRoundOnly) {
-                    rounds.add(Tournament.getTournament().getRound(mRound));
+                    if (mRound < Tournament.getTournament().getRoundsCount()) {
+                        rounds.add(Tournament.getTournament().getRound(mRound));
+                    }
                 } else {
                     for (int l = 0; (l <= mRound); l++) {
-                        rounds.add(Tournament.getTournament().getRound(l));
+                        if (mRound < Tournament.getTournament().getRoundsCount()) {
+                            rounds.add(Tournament.getTournament().getRound(l));
+                        }
                     }
                 }
 
@@ -165,10 +168,14 @@ public class AnnexTeamRanking extends AnnexRanking {
                 final ArrayList<Round> rounds = new ArrayList<>();
 
                 if (mRoundOnly) {
-                    rounds.add(Tournament.getTournament().getRound(mRound));
+                    if (mRound < Tournament.getTournament().getRoundsCount()) {
+                        rounds.add(Tournament.getTournament().getRound(mRound));
+                    }
                 } else {
                     for (int l = 0; (l <= mRound); l++) {
-                        rounds.add(Tournament.getTournament().getRound(l));
+                        if (mRound < Tournament.getTournament().getRoundsCount()) {
+                            rounds.add(Tournament.getTournament().getRound(l));
+                        }
                     }
                 }
 
@@ -414,13 +421,14 @@ public class AnnexTeamRanking extends AnnexRanking {
         }
 
     }
-  @Override
+
+    @Override
     public Element getXMLElement() {
-       Element e=super.getXMLElement();
-       e.setName(StringConstants.CS_ANNEX_TEAM_RANKING);
-       
-       return e;
-       
+        Element e = super.getXMLElement();
+        e.setName(StringConstants.CS_ANNEX_TEAM_RANKING);
+
+        return e;
+
     }
 
     @Override

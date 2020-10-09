@@ -114,6 +114,16 @@ public class Group implements IXMLExport, Serializable {
         mRosters = new ArrayList<>();
     }
 
+    public boolean isMember(Coach c)
+    {
+        RosterType rt=c.getRoster();
+        if (mRosters.contains(rt))
+        {
+            return true;
+        }
+        return false;
+    }
+    
     /**
      *
      * @return

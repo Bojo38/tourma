@@ -220,10 +220,11 @@ public final class Generation {
      * Generate the first round with free pairing
      */
     public static void generateFirstRoundFree() {
-        final Round r = new Round();
+        final Tournament tour = Tournament.getTournament();
+        final Round r = new Round(0, tour);
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
-        final Tournament tour = Tournament.getTournament();
+
         tour.clearRounds();
         tour.addRound(r);
     }
@@ -531,7 +532,7 @@ public final class Generation {
         tour.setRoundRobin(false);
         @SuppressWarnings("unchecked")
         final ArrayList<Competitor> comps = new ArrayList<>(competitors);
-        final Round r = new Round();
+        final Round r = new Round(0, tour);
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
         while (comps.size() > 0) {
@@ -680,7 +681,7 @@ public final class Generation {
         final Tournament tour = Tournament.getTournament();
 
         tour.setRoundRobin(false);
-        final Round r = new Round();
+        final Round r = new Round(0, tour);
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
 
@@ -942,7 +943,7 @@ public final class Generation {
             complete = (JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL (INCLUANT TOUS LES JOUEURS)?"), java.util.ResourceBundle.getBundle("tourma/languages/language").getString("ROUND ROBIN INTEGRAL"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION);
         }
         for (int i = 0; i < nbrounds; i++) {
-            final Round r = new Round();
+            final Round r = new Round(0, tour);
             r.setCurrentHour();
 
             for (int j = 0; j < c2part.size(); j++) {
@@ -990,7 +991,7 @@ public final class Generation {
         }
         int nb_matchs = nb_tmp / 2;
 
-        final Round r = new Round();
+        final Round r = new Round(0, tour);
         r.setCurrentHour();
 
         /*r.setLooserCup(
@@ -1418,7 +1419,7 @@ public final class Generation {
 
         final Tournament tour = Tournament.getTournament();
 
-        Round r = new Round();
+        Round r = new Round(tour.getRoundsCount(), tour);
         r.setCurrentHour();
 
         final ArrayList<ObjectRanking> datas_tmp;
@@ -1900,7 +1901,7 @@ public final class Generation {
         // First: Create ranking
         // previous rounds
 
-        Round r = new Round();
+        Round r = new Round(tour.getRoundsCount(), tour);
         if (tour.getPoolCount() == 0) {
 
             datas = getSortedRankingData(roundnumber);
@@ -1997,7 +1998,7 @@ public final class Generation {
     private static Round nextRoundCup(final Round round, final int roundnumber) {
 
         final Tournament tour = Tournament.getTournament();
-        Round r = new Round();
+        Round r = new Round(tour.getRoundsCount(), tour);
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
 
@@ -2080,7 +2081,6 @@ public final class Generation {
                     jdg.setVisible(true);
                 }
 
-
                 final int nb = (int) Math.pow(2, Tournament.getTournament().getCup().getRoundsCount());
 
                 Ranking datas;
@@ -2105,25 +2105,6 @@ public final class Generation {
                     jpn.add(jlb2, BorderLayout.NORTH);
                     jpn.add(jls, BorderLayout.CENTER);
 
-                    /*JPanel jpnsouth = new JPanel(new GridLayout(2, 2));
-                    JRadioButton jrbMixAll = new JRadioButton(Translate.translate(CS_MixAll));
-                    jrbMixAll.setSelected(true);
-                    JRadioButton jrbAbsoluteOrder = new JRadioButton(Translate.translate(CS_MixByAbsoluteRanking));
-                    JRadioButton jrbMixGroups = new JRadioButton(Translate.translate(CS_MixByCategoryRanking));
-                    JRadioButton jrbKeepGroup = new JRadioButton(Translate.translate(CS_KeepGroup));
-
-                    ButtonGroup bg = new ButtonGroup();
-                    bg.add(jrbMixAll);
-                    bg.add(jrbAbsoluteOrder);
-                    bg.add(jrbMixGroups);
-                    bg.add(jrbKeepGroup);
-
-                    jpnsouth.add(jrbMixAll);
-                    jpnsouth.add(jrbAbsoluteOrder);
-                    jpnsouth.add(jrbMixGroups);
-                    jpnsouth.add(jrbKeepGroup);
-
-                    jpn.add(jpnsouth, BorderLayout.SOUTH);*/
                     while (jls.getSelectedValuesList().isEmpty()) {
                         JOptionPane.showMessageDialog(null, jpn, Translate.translate(Translate.CS_Cup), JOptionPane.QUESTION_MESSAGE);
                     }
@@ -2150,18 +2131,6 @@ public final class Generation {
                         default:
                             mix = CATEGORY_DRAW.MIX_ALL;
                     }
-                    /*if (jrbMixAll.isSelected()) {
-                        mix = 0;
-                    }
-                    if (jrbAbsoluteOrder.isSelected()) {
-                        mix = 1;
-                    }
-                    if (jrbMixGroups.isSelected()) {
-                        mix = 2;
-                    }
-                    if (jrbKeepGroup.isSelected()) {
-                        mix = 3;
-                    }*/
 
                     datas = getSortedRankingDataCategories(roundnumber, jls.getSelectedValuesList(), mix, nb);
                 }
@@ -2192,7 +2161,7 @@ public final class Generation {
 
                     ArrayList<Coach> coachs;
                     ArrayList<Team> teams;
-                    final Round r2 = new Round();
+                    final Round r2 = new Round(tour.getRoundsCount(), tour);
 
                     if (tour.getParams().isTeamTournament()) {
                         if (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {
@@ -2422,7 +2391,7 @@ public final class Generation {
         final ArrayList<CoachMatch> matchs = new ArrayList<>();
         buildUntilRound(round, v, matchs);
 
-        Round r = new Round();
+        Round r = new Round(tour.getRoundsCount(), tour);
         if (tour.getPoolCount() == 0) {
             datas = getSortedRankingData(roundnumber);
             if (tour.getParams().isTeamTournament()) {
@@ -2517,47 +2486,29 @@ public final class Generation {
     };
 
     private static Ranking getSortedRankingDataCategories(int roundNumber, List<Category> categories, CATEGORY_DRAW mix, int nbPlayers) {
+
         // First, collect coachs by categories  
         final Tournament tour = Tournament.getTournament();
+        Round round = tour.getRound(roundNumber);
+
+        ArrayList<Ranking> rankings = new ArrayList<>();
+
         ArrayList<ArrayList<Competitor>> acomps = new ArrayList<>();
         for (Object obj : categories) {
             if (obj instanceof Category) {
                 Category cat = (Category) obj;
-                ArrayList<Competitor> comps = new ArrayList<>();
 
-                if (tour.getParams().isTeamTournament()
-                        && tour.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
-                    for (int i = 0; i < tour.getTeamsCount(); i++) {
-                        Team t = tour.getTeam(i);
-                        if (t.containsCategory(cat)) {
-                            comps.add(t);
-                        }
-                    }
+                if (Tournament.getTournament().getParams().isTeamTournament()
+                        && Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+
+                    TeamRanking t = round.getRankings(false).getCategoryTeamRanking().get(cat);
+
+                    rankings.add(t);
                 } else {
-                    for (int i = 0; i < tour.getCoachsCount(); i++) {
-                        Coach c = tour.getCoach(i);
-                        if (c.containsCategory(cat)) {
-                            comps.add(c);
-                        }
-                    }
+                    IndivRanking t = round.getRankings(false).getmCategoryIndivRanking().get(cat);
+                    rankings.add(t);
                 }
-                acomps.add(comps);
 
-            }
-        }
-
-        ArrayList<Ranking> rankings = new ArrayList<>();
-
-        // Order competitors by ranking
-        for (ArrayList<Competitor> acomp : acomps) {
-            if (Tournament.getTournament().getParams().isTeamTournament()
-                    && Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
-                TeamRanking t = new TeamRanking(Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                        roundNumber, Tournament.getTournament().getParams(), acomp, false);
-                rankings.add(t);
-            } else {
-                IndivRanking t = new IndivRanking(roundNumber, Tournament.getTournament().getParams(), acomp, Tournament.getTournament().getParams().isTeamTournament(), false, false, false);
-                rankings.add(t);
             }
         }
 
@@ -2599,6 +2550,7 @@ public final class Generation {
 
             if (Tournament.getTournament().getParams().isTeamTournament()
                     && Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+
                 mjt = new TeamRanking(Tournament.getTournament().getParams().isTeamVictoryOnly(), roundNumber, Tournament.getTournament().getParams(), c, false);
             } else {
                 mjt = new IndivRanking(roundNumber, Tournament.getTournament().getParams(), c, Tournament.getTournament().getParams().isTeamTournament(), false, false, false);
@@ -2620,6 +2572,7 @@ public final class Generation {
                     }
                     if (Tournament.getTournament().getParams().isTeamTournament()
                             && Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
+
                         m = new TeamRanking(Tournament.getTournament().getParams().isTeamVictoryOnly(),
                                 roundNumber, Tournament.getTournament().getParams(), sub, false);
                     } else {
@@ -2667,24 +2620,18 @@ public final class Generation {
 
     private static Ranking getSortedRankingData(final int roundnumber) {
         final Tournament tour = Tournament.getTournament();
+        Round round = tour.getRound(roundnumber);
         Ranking ranking;
         if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() != ETeamPairing.INDIVIDUAL_PAIRING)) {
-            ArrayList<Team> tmp_teams = new ArrayList<>();
-            for (int cpt = 0; cpt < tour.getTeamsCount(); cpt++) {
-                tmp_teams.add(tour.getTeam(cpt));
-            }
-            ranking = new TeamRanking(tour.getParams().isTeamVictoryOnly(), roundnumber, tour.getParams(), tmp_teams, false);
-
+            ranking = round.getRankings(false).getTeamRankingSet().getRanking();
         } else {
             final boolean forPool = (tour.getPoolCount() > 0) && (!tour.getRound(roundnumber).isCup());
-            final ArrayList<Coach> coaches = new ArrayList<>();
-            for (int i = 0; i < tour.getCoachsCount(); i++) {
-                Coach coach = tour.getCoach(i);
-                coaches.add(coach);
+
+            if (forPool) {
+                ranking = round.getRankings(false).getIndivRankingSet().getRankingForPool();
+            } else {
+                ranking = round.getRankings(false).getIndivRankingSet().getRanking();
             }
-            ranking = new IndivRanking(roundnumber,
-                    tour.getParams(),
-                    coaches, false, false, forPool, tour.getRound(roundnumber).isCup());
 
         }
         return ranking;
@@ -2693,14 +2640,12 @@ public final class Generation {
     private static Ranking getSortedRankingData(final Pool p, final int roundnumber) {
         Ranking ranking;
         final Tournament tour = Tournament.getTournament();
+        Round round = tour.getRound(roundnumber);
         if ((tour.getParams().isTeamTournament()) && (tour.getParams().getTeamPairing() != ETeamPairing.INDIVIDUAL_PAIRING)) {
-            ranking = new TeamRanking(tour.getParams().isTeamVictoryOnly(), roundnumber, tour.getParams(), p.getCompetitors(), false);
-        } else {
-            final boolean forPool = (tour.getPoolCount() > 0) && (!tour.getRound(roundnumber).isCup());
-            ranking = new IndivRanking(roundnumber,
-                    tour.getParams(),
-                    p.getCompetitors(), false, false, forPool, false);
+            ranking = round.getRankings(false).getPoolTeamRankings().get(p).getRanking();
 
+        } else {
+            ranking = round.getRankings(false).getPoolIndivRankings().get(p).getRanking();
         }
         return ranking;
     }
@@ -2710,7 +2655,8 @@ public final class Generation {
      * @return
      */
     private static Round nextRoundFree() {
-        final Round r = new Round();
+        Tournament tour = Tournament.getTournament();
+        final Round r = new Round(tour.getRoundsCount(), tour);
         //final Calendar cal = Calendar.getInstance();
         r.setCurrentHour();
         return r;
@@ -2724,7 +2670,7 @@ public final class Generation {
     private static Round nextRoundRandom(final Round round) {
         final Tournament tour = Tournament.getTournament();
 
-        Round r = new Round();
+        Round r = new Round(tour.getRoundsCount(), tour);
         r.clearMatchs();
 
         if (tour.getPoolCount() == 0) {
@@ -2807,7 +2753,7 @@ public final class Generation {
     private static Round nextRoundBalanced() {
         final Tournament tour = Tournament.getTournament();
 
-        Round r = new Round();
+        Round r = new Round(tour.getRoundsCount(), tour);
         if (tour.getPoolCount() == 0) {
             if (tour.getParams().isTeamTournament()) {
                 if (tour.getParams().getTeamPairing() == ETeamPairing.INDIVIDUAL_PAIRING) {

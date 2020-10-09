@@ -4,18 +4,9 @@
  */
 package tourma.tableModel;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import tourma.data.Coach;
-import tourma.data.CoachMatch;
 import tourma.data.Competitor;
-import tourma.data.Criterion;
-import tourma.data.Formula;
 import tourma.data.ObjectAnnexRanking;
-import tourma.data.Parameters;
-import tourma.data.Round;
-import tourma.data.Tournament;
-import tourma.data.Value;
 import tourma.data.ranking.AnnexIndivRanking;
 import tourma.data.ranking.AnnexRanking;
 import tourma.languages.Translate;

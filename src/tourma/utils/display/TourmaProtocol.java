@@ -110,8 +110,9 @@ public class TourmaProtocol {
         }
         ArrayList array = null;
         RankingForExport r = null;
-        Round round = null;
+        Round round = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
         Parameters params = null;
+
         if (object instanceof String) {
             TKey k = getKey((String) object);
 
@@ -145,18 +146,14 @@ public class TourmaProtocol {
                     r = new RankingForExport(RankingForExport.CS_Team,
                             RankingForExport.CS_General,
                             StringConstants.CS_NULL,
-                            new TeamRanking(
-                                    Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                                    Tournament.getTournament().getRoundsCount() - 1,
-                                    Tournament.getTournament().getParams(),
-                                    teams, false),
+                            round.getRankings(false).getTeamRankingSet().getRanking(),
                             Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
                     );
                 }
                 break;
                 case MATCHS:
                     params = Tournament.getTournament().getParams();
-                    round = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
+
                     break;
                 case CLAN_RANK: {
                     ArrayList<Clan> clans = new ArrayList<>();
@@ -383,7 +380,7 @@ public class TourmaProtocol {
                         r.setCriterion(crit);
                         array.add(r);
                     }
-                    
+
                     for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
                         Formula form = Tournament.getTournament().getParams().getFormula(i);
                         r = new RankingForExport(RankingForExport.CS_Clan_Annex,
@@ -397,7 +394,6 @@ public class TourmaProtocol {
                         r.setFormula(form);
                         array.add(r);
 
-  
                     }
                 }
                 break;
@@ -553,7 +549,6 @@ public class TourmaProtocol {
                             r.setFormula(form);
                             array.add(r);
 
-                            
                         }
                     }
                 }
@@ -629,7 +624,7 @@ public class TourmaProtocol {
                             r.setCriterion(crit);
                             array.add(r);
                         }
-                        
+
                         for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
                             Formula form = Tournament.getTournament().getParams().getFormula(i);
                             r = new RankingForExport(
@@ -688,11 +683,7 @@ public class TourmaProtocol {
                                 Translate.CS_Team,
                                 Integer.toString(cpt + 1),
                                 StringConstants.CS_NULL,
-                                new TeamRanking(
-                                        Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                                        Tournament.getTournament().getRoundsCount() - 1,
-                                        Tournament.getTournament().getParams(),
-                                        p.getCompetitors(), false),
+                                round.getRankings(false).getPoolTeamRankings().get(p).getRanking(),
                                 Tournament.getTournament().getRankingTypes(Tournament.getTournament().getParams().isTeamVictoryOnly())
                         );
                         array.add(r);

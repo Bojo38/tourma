@@ -234,6 +234,7 @@ public interface StringConstants {
     public static final String CS_ANNEX_INDIV_RANKING = "AnnexIndivRanking";
     public static final String CS_ANNEX_CLAN_RANKING = "AnnexClanRanking";
     public static final String CS_RANKINGS = "Rankings";
+    public static final String CS_RANKINGS_RO = "RankingsRoundOnly";
 
     public static final String CS_CLAN_RANKING_SET = "ClanRankingSet";
     public static final String CS_TEAM_RANKING_SET = "TeamRankingSet";

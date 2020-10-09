@@ -215,10 +215,11 @@ public final class JPNPool extends javax.swing.JPanel {
              MjtRanking model;
              if ((mTournament.getParams().isTeamTournament())
                      && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
-                 TeamRanking ranking = new TeamRanking(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mTournament.getParams(), mPool.getCompetitors(), mRoundOnly);
+
+                 TeamRanking ranking = mRound.getRankings(mRoundOnly).getPoolTeamRankings().get(mPool).getRanking();
                  model = new MjtRankingTeam(ranking);
              } else {
-                 IndivRanking ranking = new IndivRanking(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
+                 IndivRanking ranking = mRound.getRankings(mRoundOnly).getPoolIndivRankings().get(mPool).getRanking();
                  model = new MjtRankingIndiv(ranking);
              }
              final JdgRanking jdg = new JdgRanking(MainFrame.getMainFrame(), true,
@@ -247,10 +248,13 @@ public final class JPNPool extends javax.swing.JPanel {
                 MjtRanking model;
                 if ((mTournament.getParams().isTeamTournament())
                         && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
-                    TeamRanking ranking = new TeamRanking(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mTournament.getParams(), mPool.getCompetitors(), mRoundOnly);
+
+                    TeamRanking ranking = mRound.getRankings(mRoundOnly).getPoolTeamRankings().get(mPool).getRanking();
                     model = new MjtRankingTeam(ranking);
                 } else {
-                    IndivRanking ranking = new IndivRanking(i, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
+
+                    IndivRanking ranking = mRound.getRankings(mRoundOnly).getPoolIndivRankings().get(mPool).getRanking();
+
                     model = new MjtRankingIndiv(ranking);
                 }
 
@@ -383,7 +387,7 @@ public final class JPNPool extends javax.swing.JPanel {
                 && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
             MjtRankingTeam mRankingTeam;
 
-            TeamRanking ranking = new TeamRanking(mTournament.getParams().isTeamVictoryOnly(), v.size() - 1, mTournament.getParams(), mPool.getCompetitors(), mRoundOnly);
+            TeamRanking ranking = mRound.getRankings(mRoundOnly).getPoolTeamRankings().get(mPool).getRanking();
             if (this.mTournament.getParams().isDisplayByPages()) {
                 int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
                 int max = mPageIndex * mTournament.getParams().getPageSize();
@@ -403,7 +407,8 @@ public final class JPNPool extends javax.swing.JPanel {
         } else {
             MjtRankingIndiv mRankingIndiv;
 
-            IndivRanking ranking = new IndivRanking(r_index, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mPool.getCompetitors(), mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
+            IndivRanking ranking = mRound.getRankings(mRoundOnly).getPoolIndivRankings().get(mPool).getRanking();
+
             if (this.mTournament.getParams().isDisplayByPages()) {
                 int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
                 int max = mPageIndex * mTournament.getParams().getPageSize();
@@ -418,7 +423,6 @@ public final class JPNPool extends javax.swing.JPanel {
             jtbRankingPool.setModel(mRankingIndiv);
             jtbRankingPool.setDefaultRenderer(String.class, mRankingIndiv);
             jtbRankingPool.setDefaultRenderer(Integer.class, mRankingIndiv);
-            //TableFormat.setColumnSize(jtbRankingPool);
         }
     }
 

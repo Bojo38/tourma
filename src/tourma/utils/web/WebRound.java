@@ -881,23 +881,14 @@ public class WebRound {
     }
 
     protected static String createTeamRanking(Round r) {
-        ArrayList<Team> teams = new ArrayList<>();
-        for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
-            teams.add(Tournament.getTournament().getTeam(i));
-        }
 
-        return createTeamRanking(r, teams, Translate.translate(RankingForExport.CS_Team));
+        TeamRanking ranking = r.getRankings(false).getTeamRankingSet().getRanking();
+
+        return createTeamRanking(r, ranking, Translate.translate(RankingForExport.CS_Team));
     }
 
-    protected static String createTeamRanking(Round r, ArrayList<Team> teams, String rankName) {
+    protected static String createTeamRanking(Round r, TeamRanking ranking, String rankName) {
         StringBuilder s = new StringBuilder();
-
-        TeamRanking ranking = new TeamRanking(
-                Tournament.getTournament().getParams().isTeamVictoryOnly(),
-                Tournament.getTournament().getRoundIndex(r),
-                Tournament.getTournament().getParams(),
-                teams,
-                false);
 
         s.append("<div class=\"title\">" + StringEscapeUtils.escapeHtml4(rankName) + "</dev>");
         s.append("<div class=\"section\"><table\n"
@@ -1328,17 +1319,11 @@ public class WebRound {
             sb.append(createIndividualRanking(r, coachs, cat.getName()));
         }
 
-        // Find Teams of the Category
-        ArrayList<Team> teams = new ArrayList<>();
-        for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
-            Team t = Tournament.getTournament().getTeam(i);
-            if (t.containsCategory(cat)) {
-                teams.add(t);
-            }
+        TeamRanking ranking = r.getRankings(false).getCategoryTeamRanking().get(cat);
+        if (ranking != null) {
+            sb.append(createTeamRanking(r, ranking, cat.getName()));
         }
-        if (!teams.isEmpty()) {
-            sb.append(createTeamRanking(r, teams, cat.getName()));
-        }
+
         return sb.toString();
     }
 
@@ -1346,15 +1331,10 @@ public class WebRound {
         StringBuilder sb = new StringBuilder("");
         if ((Tournament.getTournament().getParams().isTeamTournament()) && (Tournament.getTournament().getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
             // Find Teams of the Pool
-            ArrayList<Team> teams = new ArrayList<>();
-            for (int i = 0; i < p.getCompetitorCount(); i++) {
-                Competitor comp = p.getCompetitor(i);
-                if (comp instanceof Team) {
-                    teams.add((Team) comp);
-                }
-            }
-            if (!teams.isEmpty()) {
-                sb.append(createTeamRanking(r, teams, p.getName()));
+
+            TeamRanking ranking = r.getRankings(false).getPoolTeamRankings().get(p).getRanking();
+            if (ranking != null) {
+                sb.append(createTeamRanking(r, ranking, p.getName()));
             }
 
         } else {
