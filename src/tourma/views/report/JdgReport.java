@@ -1476,12 +1476,9 @@ public final class JdgReport extends javax.swing.JDialog {
                 }
             }
         }
-        ArrayList<Clan> clans = new ArrayList<>();
-        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
-            clans.add(Tournament.getTournament().getClan(i));
-        }
 
-        ClanRanking ranking = new ClanRanking(mRoundNumber, Tournament.getTournament().getParams(), clans, false);
+        ClanRanking ranking = mRound.getRankings(false).getClanRankingSet().getRanking();;
+
         int rank = 0;
         for (int i = 0; i < ranking.getRowCount(); i++) {
             Object obj = ranking.getSortedObject(i).getObject();

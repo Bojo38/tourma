@@ -327,16 +327,10 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
                     final Criterion crit = mTournament.getParams().getCriteria(j);
 
-                    /* AnnexTeamRanking aranking = new AnnexTeamRanking(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                            teams, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
-                     */
                     AnnexTeamRanking aranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexPosRanking().get(crit);
                     MjtAnnexRank annex = new MjtAnnexRankTeam(aranking, true);
                     annexForRankings.put(crit, annex);
 
-                    /*aranking = new AnnexTeamRanking(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                            teams, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(), mRoundOnly);
-                     */
                     aranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexNegRanking().get(crit);
                     annex = new MjtAnnexRankTeam(aranking, true);
                     annexAgainstRankings.put(crit, annex);

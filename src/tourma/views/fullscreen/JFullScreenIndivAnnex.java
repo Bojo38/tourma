@@ -36,6 +36,7 @@ import tourma.data.ObjectAnnexRanking;
 import tourma.data.ObjectRanking;
 import tourma.data.Pool;
 import tourma.data.RankingForExport;
+import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.ranking.AnnexIndivRanking;
 import tourma.data.ranking.AnnexRanking;
@@ -56,6 +57,7 @@ import tourma.utils.display.IRanked;
 public final class JFullScreenIndivAnnex extends JFullScreen {
 
     private int round;
+    private Round mRound;
     private int indivRankType = C_GENERAL;
     private boolean loopStop = false;
 
@@ -219,25 +221,15 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
         this.indivRankType = type;
         try {
             round = r;
+            mRound = Tournament.getTournament().getRound(r);
             ArrayList<IRanked> rs = new ArrayList<>();
             if (indivRankType != C_POOL) {
-                final ArrayList<Coach> coaches = new ArrayList<>();
-                for (int cpt = 0; cpt < Tournament.getTournament().getCoachsCount(); cpt++) {
-                    coaches.add(Tournament.getTournament().getCoach(cpt));
-                }
 
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                     Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
-
-                    AnnexIndivRanking annexRank0 = new AnnexIndivRanking(round, crit, 0,
-                            coaches, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
-                            false);
-                    AnnexIndivRanking annexRank1 = new AnnexIndivRanking(round, crit, 1,
-                            coaches, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
-                            false);
-                    AnnexIndivRanking annexRank2 = new AnnexIndivRanking(round, crit, 2,
-                            coaches, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
-                            false);
+                    AnnexIndivRanking annexRank0 = mRound.getRankings(false).getIndivRankingSet().getAnnexPosRanking().get(crit);
+                    AnnexIndivRanking annexRank1 = mRound.getRankings(false).getIndivRankingSet().getAnnexNegRanking().get(crit);
+                    AnnexIndivRanking annexRank2 = mRound.getRankings(false).getIndivRankingSet().getAnnexDifRanking().get(crit);
 
                     rs.add(annexRank0);
                     rs.add(annexRank1);
@@ -246,22 +238,14 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
             } else {
                 for (int cpt = 0; cpt < Tournament.getTournament().getPoolCount(); cpt++) {
                     Pool p = Tournament.getTournament().getPool(cpt);
-                    final ArrayList<Coach> coaches = new ArrayList<>();
-                    for (int cpt2 = 0; cpt2 < p.getCompetitorCount(); cpt2++) {
-                        coaches.add((Coach) p.getCompetitor(cpt2));
-                    }
+
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
                         Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
 
-                        AnnexIndivRanking annexRank0 = new AnnexIndivRanking(round, crit, 0,
-                                coaches, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
-                                false);
-                        AnnexIndivRanking annexRank1 = new AnnexIndivRanking(round, crit, 1,
-                                coaches, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
-                                false);
-                        AnnexIndivRanking annexRank2 = new AnnexIndivRanking(round, crit, 2,
-                                coaches, Tournament.getTournament().getParams().getRankingIndiv1(), Tournament.getTournament().getParams().getRankingIndiv2(), Tournament.getTournament().getParams().getRankingIndiv3(), Tournament.getTournament().getParams().getRankingIndiv4(), Tournament.getTournament().getParams().getRankingIndiv5(), Tournament.getTournament().getParams().isTeamTournament(),
-                                false);
+                        AnnexIndivRanking annexRank0 = mRound.getRankings(false).getPoolIndivRankings().get(p).getAnnexPosRanking().get(crit);
+                        AnnexIndivRanking annexRank1 = mRound.getRankings(false).getPoolIndivRankings().get(p).getAnnexNegRanking().get(crit);
+                        AnnexIndivRanking annexRank2 = mRound.getRankings(false).getPoolIndivRankings().get(p).getAnnexDifRanking().get(crit);
+
                         annexRank0.setDetail(Integer.toString(cpt + 1));
                         annexRank1.setDetail(Integer.toString(cpt + 1));
                         annexRank2.setDetail(Integer.toString(cpt + 1));

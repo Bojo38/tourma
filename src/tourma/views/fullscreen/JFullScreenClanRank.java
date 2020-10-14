@@ -27,6 +27,7 @@ import org.jdom.input.SAXBuilder;
 import tourma.data.Clan;
 import tourma.data.Coach;
 import tourma.data.RankingForExport;
+import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.ranking.ClanRanking;
 import tourma.data.ranking.Ranking;
@@ -45,6 +46,7 @@ public final class JFullScreenClanRank extends JFullScreen {
     private static final long serialVersionUID = 10L;
 
     private int round;
+    private Round mRound;
 
     private boolean loopStop = false;
 
@@ -150,16 +152,9 @@ public final class JFullScreenClanRank extends JFullScreen {
         super();
         initComponents();
         round = r;
-        ArrayList<Clan> teams = new ArrayList<>();
-        for (int cpt = 0; cpt < Tournament.getTournament().getClansCount(); cpt++) {
-            teams.add(Tournament.getTournament().getClan(cpt));
-        }
+        mRound = Tournament.getTournament().getRound(r);
         try {
-            ClanRanking ranking = new ClanRanking(
-                    round,
-                    Tournament.getTournament().getParams(),
-                    teams,
-                    false);
+            ClanRanking ranking = mRound.getRankings(false).getClanRankingSet().getRanking();
             buildPanel(ranking);
         } catch (FontFormatException ffe) {
             ffe.printStackTrace();

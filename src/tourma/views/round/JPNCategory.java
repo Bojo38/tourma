@@ -255,18 +255,10 @@ public final class JPNCategory extends javax.swing.JPanel {
     }
 
     private void updateIndiv() {
-        final ArrayList<Coach> al = new ArrayList<>();
-
-        for (int i = 0; i < mTournament.getCoachsCount(); i++) {
-            final Coach c = mTournament.getCoach(i);
-            if (c.containsCategory(mCategory)) {
-                al.add(c);
-            }
-        }
 
         jlbPageIndiv.setText(Integer.toString(mPageIndivIndex) + " / " + Integer.toString(mPageIndivCount));
-        IndivRanking ranking = new IndivRanking(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                al, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
+        IndivRanking ranking = mRound.getRankings(mRoundOnly).getCategoryIndivRanking().get(mCategory);
+                
         final MjtRankingIndiv tableModel = new MjtRankingIndiv(ranking);
         jtbCategory.setModel(tableModel);
         jtbCategory.setDefaultRenderer(String.class, tableModel);

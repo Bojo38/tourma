@@ -2505,7 +2505,7 @@ public final class Generation {
 
                     rankings.add(t);
                 } else {
-                    IndivRanking t = round.getRankings(false).getmCategoryIndivRanking().get(cat);
+                    IndivRanking t = round.getRankings(false).getCategoryIndivRanking().get(cat);
                     rankings.add(t);
                 }
 

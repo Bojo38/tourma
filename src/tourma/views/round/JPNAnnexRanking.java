@@ -365,14 +365,10 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                 MjtAnnexRank model;
                 if (mClan) {
                     AnnexClanRanking ranking;
-                    if (mCriteria != null) {
-                        
-                        ranking = new AnnexClanRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                    if (mCriteria != null) {                        
+                        ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexPosRanking().get(mCriteria);                               
                     } else {
-                        ranking = new AnnexClanRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-
+                        ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexFormRanking().get(mFormula);    
                     }
                     model = new MjtAnnexRankClan(ranking);
 
@@ -380,12 +376,9 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                     if (mTeam) {
                         AnnexTeamRanking ranking;
                         if (mCriteria != null) {
-                            ranking = new AnnexTeamRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                            ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexPosRanking().get(mCriteria);   
                         } else {
-                            ranking = new AnnexTeamRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-
+                             ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexFormRanking().get(mFormula);    
                         }
                         model = new MjtAnnexRankTeam(ranking, true);
 
@@ -394,10 +387,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
                         if (mCriteria != null) {
                             ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexPosRanking().get(mCriteria);
-                            //ranking = new AnnexIndivRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                         } else {
                             ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexFormRanking().get(mFormula);
-                            //ranking = new AnnexIndivRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
                         }
 
                         model = new MjtAnnexRankIndiv(ranking, true);
@@ -429,13 +420,10 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                 MjtAnnexRank model;
                 if (mClan) {
                     AnnexClanRanking ranking;
-                    if (mCriteria != null) {
-                        ranking = new AnnexClanRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                    if (mCriteria != null) {                        
+                        ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexNegRanking().get(mCriteria);                               
                     } else {
-                        ranking = new AnnexClanRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-
+                        ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexFormRanking().get(mFormula);    
                     }
                     model = new MjtAnnexRankClan(ranking);
 
@@ -443,12 +431,9 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                     if (mTeam) {
                         AnnexTeamRanking ranking;
                         if (mCriteria != null) {
-                            ranking = new AnnexTeamRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                            ranking=mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexPosRanking().get(mCriteria);       
                         } else {
-                            ranking = new AnnexTeamRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                    mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-
+                            ranking=mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexFormRanking().get(mFormula);       
                         }
                         model = new MjtAnnexRankTeam(ranking, true);
 
@@ -457,10 +442,10 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
                         if (mCriteria != null) {
                             ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexNegRanking().get(mCriteria);
-                            //ranking = new AnnexIndivRanking(i, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+
                         } else {
                             ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexFormRanking().get(mFormula);
-                            //ranking = new AnnexIndivRanking(i, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+
                         }
 
                         model = new MjtAnnexRankIndiv(ranking, true);
@@ -568,12 +553,9 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             if (mClan) {
                 AnnexClanRanking ranking;
                 if (mCriteria != null) {
-                    ranking = new AnnexClanRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                            mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                    ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexPosRanking().get(mCriteria);
                 } else {
-                    ranking = new AnnexClanRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                            mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-
+                    ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexFormRanking().get(mFormula);
                 }
                 if (this.mTour.getParams().isDisplayByPages()) {
                     int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
@@ -590,13 +572,9 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                 if (mTeam) {
                     AnnexTeamRanking ranking;
                     if (mCriteria != null) {
-                        
-                        ranking = new AnnexTeamRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                        ranking=mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexPosRanking().get(mCriteria);
                     } else {
-                        ranking = new AnnexTeamRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-
+                        ranking=mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexFormRanking().get(mFormula);
                     }
 
                     if (this.mTour.getParams().isDisplayByPages()) {
@@ -616,10 +594,10 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
                     if (mCriteria != null) {
                         ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexPosRanking().get(mCriteria);
-                        //ranking = new AnnexIndivRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+
                     } else {
                         ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexFormRanking().get(mFormula);
-                        //ranking = new AnnexIndivRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_POSITIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+
                     }
 
                     if (this.mTour.getParams().isDisplayByPages()) {
@@ -664,15 +642,11 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
             MjtAnnexRank modelNeg;
             if (mClan) {
                 AnnexClanRanking ranking;
-                if (mCriteria != null) {
-                    
-                    ranking = new AnnexClanRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                            mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-                } else {
-                    ranking = new AnnexClanRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                            mTour.getDisplayClans(), mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-
-                }
+               if (mCriteria != null) {                        
+                        ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexNegRanking().get(mCriteria);                               
+                    } else {
+                        ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexNegRanking().get(mFormula);    
+                    }
                 if (this.mTour.getParams().isDisplayByPages()) {
                     int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
                     int max = mPagePosIndex * mTour.getParams().getPageSize();
@@ -688,12 +662,9 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                 if (mTeam) {
                     AnnexTeamRanking ranking;
                     if (mCriteria != null) {
-                        ranking = new AnnexTeamRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
+                        ranking=mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexNegRanking().get(mCriteria);
                     } else {
-                        ranking = new AnnexTeamRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                mTeams, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mRoundOnly);
-
+                        ranking=mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexFormRanking().get(mFormula);
                     }
 
                     if (this.mTour.getParams().isDisplayByPages()) {
@@ -713,10 +684,10 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
                     if (mCriteria != null) {
                         ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexNegRanking().get(mCriteria);
-                        //ranking = new AnnexIndivRanking(v.size() - 1, mCriteria, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+
                     } else {
                         ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexFormRanking().get(mFormula);
-                        //ranking = new AnnexIndivRanking(v.size() - 1, mFormula, Parameters.C_RANKING_SUBTYPE_NEGATIVE, mCoachs, mTour.getParams().getRankingIndiv1(), mTour.getParams().getRankingIndiv2(), mTour.getParams().getRankingIndiv3(), mTour.getParams().getRankingIndiv4(), mTour.getParams().getRankingIndiv5(), mTour.getParams().isTeamTournament(), mRoundOnly);
+
                     }
 
                     if (this.mTour.getParams().isDisplayByPages()) {

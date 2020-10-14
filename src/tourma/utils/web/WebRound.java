@@ -469,19 +469,21 @@ public class WebRound {
         return s.toString();
     }
 
-    protected static String createIndividualRanking(Round r, ArrayList<Coach> coachs, String rankName) {
+    protected static String createIndividualRanking(Round r, Object obj, String rankName) {
         StringBuilder s = new StringBuilder();
-        IndivRanking ranking = new IndivRanking(Tournament.getTournament().getRoundIndex(r),
-                Tournament.getTournament().getParams().getRankingIndiv1(),
-                Tournament.getTournament().getParams().getRankingIndiv2(),
-                Tournament.getTournament().getParams().getRankingIndiv3(),
-                Tournament.getTournament().getParams().getRankingIndiv4(),
-                Tournament.getTournament().getParams().getRankingIndiv5(),
-                coachs,
-                Tournament.getTournament().getParams().isTeamTournament(),
-                false,
-                false, false);
-
+        IndivRanking ranking = null;
+        if (obj instanceof Pool) {
+            ranking = r.getRankings(false).getPoolIndivRankings().get((Pool) obj).getRanking();
+        }
+        if (obj instanceof Category) {
+            ranking = r.getRankings(false).getCategoryIndivRanking().get((Category) obj);
+        }
+        if (obj instanceof Group) {
+            ranking = r.getRankings(false).getGroupRanking().get((Group) obj);
+        }
+        if (ranking == null) {
+            ranking = r.getRankings(false).getIndivRankingSet().getRanking();
+        }
         s.append("<div class=\"section\"><table\n"
                 + "             style = \"border-width:0px; margin-left: auto; margin-right: auto;text-align:center;\"\n"
                 + "        border = \"1\" cellpadding = \"0\" cellspacing = \"0\"\n"
@@ -592,24 +594,26 @@ public class WebRound {
     }
 
     protected static String createIndividualRanking(Round r) {
-        return createIndividualRanking(r, Tournament.getTournament().getActiveCoaches(), Translate.translate(RankingForExport.CS_Individual));
+        return createIndividualRanking(r, null, Translate.translate(RankingForExport.CS_Individual));
     }
 
     protected static String createIndividualCriteria(Round r, Criterion crit) {
         StringBuilder s = new StringBuilder();
         for (int subtype = 0; subtype < 3; subtype++) {
-            AnnexIndivRanking ranking = new AnnexIndivRanking(Tournament.getTournament().getRoundIndex(r),
-                    crit,
-                    subtype,
-                    Tournament.getTournament().getActiveCoaches(),
-                    Tournament.getTournament().getParams().getRankingIndiv1(),
-                    Tournament.getTournament().getParams().getRankingIndiv2(),
-                    Tournament.getTournament().getParams().getRankingIndiv3(),
-                    Tournament.getTournament().getParams().getRankingIndiv4(),
-                    Tournament.getTournament().getParams().getRankingIndiv5(),
-                    Tournament.getTournament().getParams().isTeamTournament(),
-                    false);
 
+            AnnexIndivRanking ranking = null;
+
+            switch (subtype) {
+                case 0:
+                    ranking = r.getRankings(false).getIndivRankingSet().getAnnexPosRanking().get(crit);
+                    break;
+                case 1:
+                    ranking = r.getRankings(false).getIndivRankingSet().getAnnexNegRanking().get(crit);
+                    break;
+                case 2:
+                    ranking = r.getRankings(false).getIndivRankingSet().getAnnexDifRanking().get(crit);
+                    break;
+            }
             String subTypeName = "";
             switch (subtype) {
                 case 0:
@@ -1005,23 +1009,20 @@ public class WebRound {
         }
 
         for (int subtype = 0; subtype < 3; subtype++) {
-            AnnexTeamRanking ranking = new AnnexTeamRanking(
-                    Tournament.getTournament().getRoundIndex(r),
-                    crit,
-                    subtype,
-                    teams,
-                    Tournament.getTournament().getParams(),
-                    false);
+            AnnexTeamRanking ranking = null;
 
             String subTypeName = "";
             switch (subtype) {
                 case 0:
+                    ranking = r.getRankings(false).getTeamRankingSet().getAnnexPosRanking().get(crit);
                     subTypeName = "+";
                     break;
                 case 1:
+                    ranking = r.getRankings(false).getTeamRankingSet().getAnnexNegRanking().get(crit);
                     subTypeName = "-";
                     break;
                 case 2:
+                    ranking = r.getRankings(false).getTeamRankingSet().getAnnexDifRanking().get(crit);
                     subTypeName = "+/-";
                     break;
             }
@@ -1099,12 +1100,7 @@ public class WebRound {
     protected static String createClanRanking(Round r) {
         StringBuilder s = new StringBuilder();
 
-        ArrayList<Clan> clans = new ArrayList<>();
-        for (int i = 0; i < Tournament.getTournament().getClansCount(); i++) {
-            clans.add(Tournament.getTournament().getClan(i));
-        }
-
-        ClanRanking ranking = new ClanRanking(Tournament.getTournament().getRoundIndex(r), Tournament.getTournament().getParams(), clans, false);
+        ClanRanking ranking = r.getRankings(false).getClanRankingSet().getRanking();
 
         s.append("<div class=\"section\"><table\n"
                 + "             style = \"border-width:0px;  margin-left: auto; margin-right: auto;text-align:center;\"\n"
@@ -1219,12 +1215,19 @@ public class WebRound {
         }
 
         for (int subtype = 0; subtype < 3; subtype++) {
-            AnnexClanRanking ranking = new AnnexClanRanking(
-                    Tournament.getTournament().getRoundIndex(r),
-                    crit,
-                    subtype,
-                    clans,
-                    Tournament.getTournament().getParams(), false);
+            AnnexClanRanking ranking = null;
+            switch (subtype) {
+                case 0:
+                    ranking = r.getRankings(false).getClanRankingSet().getAnnexPosRanking().get(crit);
+                    break;
+                case 1:
+                    ranking = r.getRankings(false).getClanRankingSet().getAnnexNegRanking().get(crit);
+                    break;
+                case 2:
+                    ranking = r.getRankings(false).getClanRankingSet().getAnnexDifRanking().get(crit);
+                    break;
+
+            }
 
             String subTypeName = "";
             switch (subtype) {
@@ -1294,29 +1297,16 @@ public class WebRound {
     }
 
     protected static String createGroupRanking(Round r, Group g) {
-        ArrayList<Coach> coachs = new ArrayList<>();
-        for (Coach c : Tournament.getTournament().getActiveCoaches()) {
-            if (g.containsRoster(c.getRoster())) {
-                coachs.add(c);
-            }
-        }
-        return createIndividualRanking(r, coachs, Translate.translate(RankingForExport.CS_Group) + " " + g.getName());
+
+        return createIndividualRanking(r, g, Translate.translate(RankingForExport.CS_Group) + " " + g.getName());
 
     }
 
     protected static String createCategoryRanking(Round r, Category cat) {
         StringBuilder sb = new StringBuilder("");
 
-        // Find Coachs of the Category
-        ArrayList<Coach> coachs = new ArrayList<>();
-        for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-            Coach c = Tournament.getTournament().getCoach(i);
-            if (c.containsCategory(cat)) {
-                coachs.add(c);
-            }
-        }
-        if (!coachs.isEmpty()) {
-            sb.append(createIndividualRanking(r, coachs, cat.getName()));
+        if (Tournament.getTournament().getCategoriesCount() > 1) {
+            sb.append(createIndividualRanking(r, cat, cat.getName()));
         }
 
         TeamRanking ranking = r.getRankings(false).getCategoryTeamRanking().get(cat);
@@ -1339,17 +1329,7 @@ public class WebRound {
 
         } else {
 
-            // Find Coachs of the Pool
-            ArrayList<Coach> coachs = new ArrayList<>();
-            for (int i = 0; i < p.getCompetitorCount(); i++) {
-                Competitor comp = p.getCompetitor(i);
-                if (comp instanceof Coach) {
-                    coachs.add((Coach) comp);
-                }
-            }
-            if (!coachs.isEmpty()) {
-                sb.append(createIndividualRanking(r, coachs, p.getName()));
-            }
+            sb.append(createIndividualRanking(r, p, p.getName()));
 
         }
 

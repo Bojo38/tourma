@@ -24,6 +24,7 @@ import tourma.data.Round;
 import tourma.data.Team;
 import tourma.data.Tournament;
 import tourma.data.ranking.AnnexIndivRanking;
+import tourma.data.ranking.AnnexRanking;
 import tourma.data.ranking.AnnexTeamRanking;
 import tourma.data.ranking.IndivRanking;
 import tourma.data.ranking.TeamRanking;
@@ -252,9 +253,7 @@ public final class JPNPool extends javax.swing.JPanel {
                     TeamRanking ranking = mRound.getRankings(mRoundOnly).getPoolTeamRankings().get(mPool).getRanking();
                     model = new MjtRankingTeam(ranking);
                 } else {
-
                     IndivRanking ranking = mRound.getRankings(mRoundOnly).getPoolIndivRankings().get(mPool).getRanking();
-
                     model = new MjtRankingIndiv(ranking);
                 }
 
@@ -278,38 +277,16 @@ public final class JPNPool extends javax.swing.JPanel {
                     MjtAnnexRank annexNeg;
                     if ((mTournament.getParams().isTeamTournament())
                             && (mTournament.getParams().getTeamPairing() == ETeamPairing.TEAM_PAIRING)) {
-                        AnnexTeamRanking rankingPos = new AnnexTeamRanking(
-                                v.size() - 1, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                                teams, mTournament.getParams(), mRoundOnly);
-                        annexPos
-                                = new MjtAnnexRankTeam(rankingPos, true);
-                        AnnexTeamRanking rankingNeg = new AnnexTeamRanking(
-                                v.size() - 1, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                                teams, mTournament.getParams(), mRoundOnly);
-                        annexNeg
-                                = new MjtAnnexRankTeam(rankingNeg, true);
+                        AnnexTeamRanking rankingPos = mRound.getRankings(mRoundOnly).getPoolTeamRankings().get(mPool).getAnnexPosRanking().get(crit);
+                        AnnexTeamRanking rankingNeg = mRound.getRankings(mRoundOnly).getPoolTeamRankings().get(mPool).getAnnexNegRanking().get(crit);
+                        annexPos= new MjtAnnexRankTeam(rankingPos, true);
+                        annexNeg= new MjtAnnexRankTeam(rankingNeg, true);
                     } else {
-                        AnnexIndivRanking rankingPos = new AnnexIndivRanking(v.size() - 1, crit,
-                                Parameters.C_RANKING_SUBTYPE_POSITIVE, coachs,
-                                mTournament.getParams().getRankingIndiv1(),
-                                mTournament.getParams().getRankingIndiv2(),
-                                mTournament.getParams().getRankingIndiv3(),
-                                mTournament.getParams().getRankingIndiv4(),
-                                mTournament.getParams().getRankingIndiv5(),
-                                mTournament.getParams().isTeamTournament(), mRoundOnly);
-                        annexPos
-                                = new MjtAnnexRankIndiv(rankingPos, true);
-
-                        AnnexIndivRanking rankingNeg = new AnnexIndivRanking(v.size() - 1, crit,
-                                Parameters.C_RANKING_SUBTYPE_NEGATIVE, coachs,
-                                mTournament.getParams().getRankingIndiv1(),
-                                mTournament.getParams().getRankingIndiv2(),
-                                mTournament.getParams().getRankingIndiv3(),
-                                mTournament.getParams().getRankingIndiv4(),
-                                mTournament.getParams().getRankingIndiv5(),
-                                mTournament.getParams().isTeamTournament(), mRoundOnly);
-                        annexNeg
-                                = new MjtAnnexRankIndiv(rankingNeg, true);
+                        AnnexIndivRanking rankingPos = mRound.getRankings(mRoundOnly).getPoolIndivRankings().get(mPool).getAnnexPosRanking().get(crit);
+                        AnnexIndivRanking rankingNeg = mRound.getRankings(mRoundOnly).getPoolIndivRankings().get(mPool).getAnnexNegRanking().get(crit);
+                        
+                        annexPos= new MjtAnnexRankIndiv(rankingPos, true);
+                        annexNeg= new MjtAnnexRankIndiv(rankingNeg, true);
                     }
                     annexForRankings.put(crit, annexPos);
                     annexAgainstRankings.put(crit, annexNeg);

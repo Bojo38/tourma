@@ -67,6 +67,26 @@ public class ClanRankingsSet implements IXMLExport {
         createRanking(rNumber, tour, roundOnly, tour.getClans());
     }
 
+    public ClanRanking getRanking() {
+        return mRanking;
+    }
+
+    public HashMap<Criterion, AnnexClanRanking> getAnnexPosRanking() {
+        return mAnnexPosRanking;
+    }
+
+    public HashMap<Criterion, AnnexClanRanking> getAnnexNegRanking() {
+        return mAnnexNegRanking;
+    }
+
+    public HashMap<Criterion, AnnexClanRanking> getAnnexDifRanking() {
+        return mAnnexDifRanking;
+    }
+
+    public HashMap<Formula, AnnexClanRanking> getAnnexFormRanking() {
+        return mAnnexFormRanking;
+    }
+    
     public void createRanking(int rNumber, Tournament tour, boolean roundOnly, ArrayList<Clan> clans) {
         mRanking = new ClanRanking(rNumber, tour.getParams(), clans, roundOnly);
 

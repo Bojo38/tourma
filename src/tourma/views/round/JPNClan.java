@@ -197,7 +197,8 @@ public final class JPNClan extends javax.swing.JPanel {
             if (mRound == mTournament.getRound(i)) {
                 MjtRankingClan model;
 
-                ClanRanking ranking = new ClanRanking(i, mTournament.getParams(), mTournament.getDisplayClans(), mRoundOnly);
+                ClanRanking ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getRanking();
+                
 
                 model = new MjtRankingClan(ranking);
 
@@ -215,20 +216,20 @@ public final class JPNClan extends javax.swing.JPanel {
 
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             if (mRound == mTournament.getRound(i)) {
-                ClanRanking ranking = new ClanRanking(i, mTournament.getParams(), mTournament.getDisplayClans(), mRoundOnly);
+                ClanRanking ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getRanking();
                 final MjtRankingClan model = new MjtRankingClan(ranking);
                 final HashMap<Criterion, MjtAnnexRank> annexForRankings = new HashMap<>();
                 final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
 
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
                     final Criterion crit = mTournament.getParams().getCriteria(j);
-                    AnnexClanRanking aranking = new AnnexClanRanking(i, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE,
-                            mTournament.getDisplayClans(), mTournament.getParams(), mRoundOnly);
+                    
+                    AnnexClanRanking aranking=mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexPosRanking().get(crit);
                     MjtAnnexRank annex = new MjtAnnexRankClan(aranking);
                     annexForRankings.put(crit, annex);
 
-                    aranking = new AnnexClanRanking(i, crit, Parameters.C_RANKING_SUBTYPE_NEGATIVE,
-                            mTournament.getDisplayClans(), mTournament.getParams(), mRoundOnly);
+                    aranking=mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexNegRanking().get(crit);
+                    
                     annex = new MjtAnnexRankClan(aranking);
                     annexAgainstRankings.put(crit, annex);
                 }
@@ -310,7 +311,7 @@ public final class JPNClan extends javax.swing.JPanel {
 
         jlbPage.setText(Integer.toString(mPageIndex) + " / " + Integer.toString(mPageCount));
 
-        ClanRanking ranking = new ClanRanking(v.size() - 1, mTournament.getParams(), mTournament.getDisplayClans(), mRoundOnly);
+        ClanRanking ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getRanking();
 
         if (this.mTournament.getParams().isDisplayByPages()) {
             int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();

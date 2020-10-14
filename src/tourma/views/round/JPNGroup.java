@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import tourma.MainFrame;
 import tourma.data.Coach;
 import tourma.data.Group;
+import tourma.data.Round;
 import tourma.data.Tournament;
 import tourma.data.ranking.IndivRanking;
 import tourma.languages.Translate;
@@ -31,7 +32,7 @@ public final class JPNGroup extends javax.swing.JPanel {
     private final Tournament mTournament;
     private final Group mGroup;
     private final int mRoundNumber;
-
+    private final Round mRound;
     private int mPageCount = 0;
     private int mPageIndex = 0;
 
@@ -52,6 +53,7 @@ public final class JPNGroup extends javax.swing.JPanel {
         mTournament = t;
         mGroup = g;
         mRoundNumber = roundNumber;
+        mRound = t.getRound(roundNumber);
         update();
     }
 
@@ -163,16 +165,16 @@ public final class JPNGroup extends javax.swing.JPanel {
             }
         }
 
-         jlbPage.setText(Integer.toString(mPageIndex) + " / " + Integer.toString(mPageCount));
-         
+        jlbPage.setText(Integer.toString(mPageIndex) + " / " + Integer.toString(mPageCount));
+
         mPageCount = list.size() / this.mTournament.getParams().getPageSize();
         if (mPageCount * this.mTournament.getParams().getPageSize() < list.size()) {
             mPageCount = mPageCount + 1;
         }
         mPageIndex = 1;
 
-        IndivRanking ranking=new IndivRanking(mRoundNumber, mTournament.getParams().getRankingIndiv1(), mTournament.getParams().getRankingIndiv2(), mTournament.getParams().getRankingIndiv3(), mTournament.getParams().getRankingIndiv4(), mTournament.getParams().getRankingIndiv5(),
-                    list, mTournament.getParams().isTeamTournament(), mRoundOnly, false, false);
+        IndivRanking ranking = mRound.getRankings(mRoundOnly).getGroupRanking().get(mGroup);
+       
         MjtRankingIndiv tableModel;
         if (this.mTournament.getParams().isDisplayByPages()) {
             int min = (mPageIndex - 1) * mTournament.getParams().getPageSize();
@@ -217,7 +219,7 @@ public final class JPNGroup extends javax.swing.JPanel {
         if (mPageIndex >= mPageCount) {
             mPageIndex = mPageCount;
         }
-         update();
+        update();
     }//GEN-LAST:event_jbtNextActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

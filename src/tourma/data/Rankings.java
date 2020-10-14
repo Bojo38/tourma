@@ -92,7 +92,7 @@ public class Rankings implements IXMLExport {
         this.mGroupRanking = mGroupRanking;
     }
 
-    public HashMap<Category, IndivRanking> getmCategoryIndivRanking() {
+    public HashMap<Category, IndivRanking> getCategoryIndivRanking() {
         return mCategoryIndivRanking;
     }
 
