@@ -1301,6 +1301,7 @@ and open the template in the editor.
         <cost>260000</cost>
         <team>HumanKey</team>
         <team>BretonianKey</team>
+        <team>OldWorldAllianceKey</team>
     </starplayer>
     
     <starplayer>

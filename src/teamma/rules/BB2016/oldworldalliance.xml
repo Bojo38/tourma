@@ -38,7 +38,7 @@ and open the template in the editor.
             <skills>
                 <skill>Animosity</skill>>
             </skills>
-            <cost>80000</cost>
+            <cost>50000</cost>
             <single>
                 <skillType>General</skillType>
                             
@@ -83,7 +83,7 @@ and open the template in the editor.
                 <skill>Catch</skill>
                 <skill>Animosity</skill>
             </skills>
-            <cost>70000</cost>
+            <cost>60000</cost>
             <single>
                 <skillType>General</skillType>
                 <skillType>Agility</skillType>
