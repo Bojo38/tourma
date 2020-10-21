@@ -119,7 +119,7 @@ public final class JdgParameters extends javax.swing.JDialog {
         jpnOK = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jcbMultiroster.setText(bundle.getString("MULTI ROSTER")); // NOI18N
         jPanel5.add(jcbMultiroster);
 

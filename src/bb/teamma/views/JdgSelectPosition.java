@@ -118,13 +118,13 @@ public class JdgSelectPosition extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jLabel1.setText(bundle.getString("Choisissez le type de joueur")); // NOI18N
         jpn.add(jLabel1);
 
         getContentPane().add(jpn, java.awt.BorderLayout.NORTH);
 
-        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("teamma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("bb/teamma/languages/language"); // NOI18N
         jbtOK.setText(bundle1.getString("OK")); // NOI18N
         jbtOK.setName("ok"); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {

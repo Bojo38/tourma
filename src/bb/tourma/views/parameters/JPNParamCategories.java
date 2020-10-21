@@ -54,8 +54,8 @@ public final class JPNParamCategories extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        jbtAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtAddCategory.setText(bundle.getString("Add")); // NOI18N
         jbtAddCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,7 +64,7 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         });
         jPanel13.add(jbtAddCategory);
 
-        jbtEditCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
+        jbtEditCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Swap.png"))); // NOI18N
         jbtEditCategory.setText(bundle.getString("Edit")); // NOI18N
         jbtEditCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,7 +73,7 @@ public final class JPNParamCategories extends javax.swing.JPanel {
         });
         jPanel13.add(jbtEditCategory);
 
-        jbtRemoveCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemoveCategory.setText(bundle.getString("Remove")); // NOI18N
         jbtRemoveCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

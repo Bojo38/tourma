@@ -82,7 +82,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GroupEdition"))); // NOI18N
         jPanel20.setLayout(new java.awt.GridLayout(1, 3, 2, 0));
 
@@ -110,7 +110,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         jPanel22.setLayout(new java.awt.GridLayout(5, 1));
         jPanel22.add(jPanel24);
 
-        jbtGroupToRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtGroupToRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Forward.png"))); // NOI18N
         jbtGroupToRight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtGroupToRightActionPerformed(evt);
@@ -119,7 +119,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         jPanel22.add(jbtGroupToRight);
         jPanel22.add(jLabel8);
 
-        jbtGrouToLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtGrouToLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Backward.png"))); // NOI18N
         jbtGrouToLeft.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtGrouToLeftActionPerformed(evt);
@@ -247,7 +247,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
 
         jPanel19.setLayout(new java.awt.GridLayout(5, 1, 1, 1));
 
-        jbtAddGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAddGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jbtAddGroup.setText(bundle.getString("Add")); // NOI18N
         jbtAddGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -256,7 +256,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         });
         jPanel19.add(jbtAddGroup);
 
-        jbtRemoveGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemoveGroup.setText(bundle.getString("Remove")); // NOI18N
         jbtRemoveGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -265,7 +265,7 @@ public final class JPNParamGroup extends javax.swing.JPanel {
         });
         jPanel19.add(jbtRemoveGroup);
 
-        jbtRenameGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
+        jbtRenameGroup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Swap.png"))); // NOI18N
         jbtRenameGroup.setText(bundle.getString("Rename")); // NOI18N
         jbtRenameGroup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

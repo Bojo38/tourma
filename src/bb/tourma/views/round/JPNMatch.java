@@ -164,7 +164,7 @@ public class JPNMatch extends javax.swing.JPanel {
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jlbPlayer1.setBackground(new java.awt.Color(255, 255, 255));
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jlbPlayer1.setText(bundle.getString("PLAYER 1")); // NOI18N
         jlbPlayer1.setMaximumSize(new java.awt.Dimension(135, 25));
         jlbPlayer1.setMinimumSize(new java.awt.Dimension(135, 25));

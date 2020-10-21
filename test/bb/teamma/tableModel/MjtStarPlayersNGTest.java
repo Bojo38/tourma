@@ -76,7 +76,7 @@ public class MjtStarPlayersNGTest {
             ar.add(lrb.getStarPlayer(i));
         }
         MjtStarPlayers instance = new MjtStarPlayers(ar);
-        int expResult = 75;
+        int expResult = 105;
         int result = instance.getRowCount();
         assertEquals(result, expResult);
 
@@ -115,7 +115,7 @@ public class MjtStarPlayersNGTest {
             ar.add(lrb.getStarPlayer(i));
         }
         MjtStarPlayers instance = new MjtStarPlayers(ar);
-        Object expResult = "Bertha Bigfist *CRP*";
+        Object expResult = "Slave Giant";
         Object result = instance.getValueAt(row, col);
         assertEquals(result, expResult);
 

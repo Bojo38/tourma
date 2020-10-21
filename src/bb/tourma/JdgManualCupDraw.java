@@ -146,8 +146,8 @@ public class JdgManualCupDraw extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +181,7 @@ public class JdgManualCupDraw extends javax.swing.JDialog {
 
         jPanel1.add(jPanel5, java.awt.BorderLayout.CENTER);
 
-        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddActionPerformed(evt);
@@ -213,7 +213,7 @@ public class JdgManualCupDraw extends javax.swing.JDialog {
 
         jpnMain.add(jsp, java.awt.BorderLayout.CENTER);
 
-        jbtDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtDel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtDelActionPerformed(evt);

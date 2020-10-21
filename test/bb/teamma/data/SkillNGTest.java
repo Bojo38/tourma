@@ -5,9 +5,6 @@
  */
 package bb.teamma.data;
 
-import bb.teamma.data.LRB;
-import bb.teamma.data.Skill;
-import bb.teamma.data.SkillType;
 import java.awt.Color;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;

@@ -203,8 +203,8 @@ public final class JdgReport extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setName("Ranking"); // NOI18N
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,7 +213,7 @@ public final class JdgReport extends javax.swing.JDialog {
         });
         jPanel1.add(jbtOK);
 
-        jbtPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Document.png"))); // NOI18N
         jbtPrint.setText(bundle.getString("Print")); // NOI18N
         jbtPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +222,7 @@ public final class JdgReport extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
-        jbtPrintAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtPrintAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Document.png"))); // NOI18N
         jbtPrintAll.setText(bundle.getString("PrintAll")); // NOI18N
         jbtPrintAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,7 +231,7 @@ public final class JdgReport extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrintAll);
 
-        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Html.png"))); // NOI18N
         jbtExport.setText(bundle.getString("HTMLExport")); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,7 +240,7 @@ public final class JdgReport extends javax.swing.JDialog {
         });
         jPanel1.add(jbtExport);
 
-        jbtExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/pdf.jpg"))); // NOI18N
+        jbtExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/pdf.jpg"))); // NOI18N
         jbtExportPDF.setText(bundle.getString("PDFExport")); // NOI18N
         jbtExportPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,7 +249,7 @@ public final class JdgReport extends javax.swing.JDialog {
         });
         jPanel1.add(jbtExportPDF);
 
-        jbtExportPDFAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/pdf.jpg"))); // NOI18N
+        jbtExportPDFAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/pdf.jpg"))); // NOI18N
         jbtExportPDFAll.setText(bundle.getString("PDFExportAll")); // NOI18N
         jbtExportPDFAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -703,8 +703,8 @@ public final class JdgReport extends javax.swing.JDialog {
         }
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("/tourma/views/report").toURI();
-            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
+            final URI uri = getClass().getResource("/bb/tourma/views/report").toURI();
+            if (uri.toString().contains(java.util.ResourceBundle.getBundle("bb/tourma/languages/language").getString(".JAR!"))) {
                 cfg.setClassForTemplateLoading(getClass(), StringConstants.CS_NULL);
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
@@ -1158,8 +1158,8 @@ public final class JdgReport extends javax.swing.JDialog {
         }
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("/tourma/views/report").toURI();
-            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
+            final URI uri = getClass().getResource("/bb/tourma/views/report").toURI();
+            if (uri.toString().contains(java.util.ResourceBundle.getBundle("bb/tourma/languages/language").getString(".JAR!"))) {
                 cfg.setClassForTemplateLoading(getClass(), StringConstants.CS_NULL);
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
@@ -1503,8 +1503,8 @@ public final class JdgReport extends javax.swing.JDialog {
         Criterion td = Tournament.getTournament().getParams().getCriteria(0);
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("/tourma/views/report").toURI();
-            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
+            final URI uri = getClass().getResource("/bb/tourma/views/report").toURI();
+            if (uri.toString().contains(java.util.ResourceBundle.getBundle("bb/tourma/languages/language").getString(".JAR!"))) {
                 cfg.setClassForTemplateLoading(getClass(), StringConstants.CS_NULL);
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));

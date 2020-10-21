@@ -75,8 +75,8 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        jbtAddCriteria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtAddCriteria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtAddCriteria.setText(bundle.getString("AJOUTER CRITÈRE")); // NOI18N
         jbtAddCriteria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,7 +85,7 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
         });
         jPanel16.add(jbtAddCriteria);
 
-        jbtRemoveCriteria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveCriteria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemoveCriteria.setText(bundle.getString("RETIRER CRITÈRE")); // NOI18N
         jbtRemoveCriteria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

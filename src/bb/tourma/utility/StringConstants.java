@@ -106,7 +106,7 @@ public interface StringConstants {
     /**
      *
      */
-    public static final String CS_LANGUAGE_RESOURCE = "tourma/languages/language";
+    public static final String CS_LANGUAGE_RESOURCE = "bb/tourma/languages/language";
     public static final String CS_PINCODE = "PinCode";
     public static final String CS_GROUP = "Group";
     public static final String CS_PICTURE = "Picture";

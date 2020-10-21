@@ -47,7 +47,7 @@ public final class JdgAbout extends javax.swing.JDialog {
         final int screenHeight = dmode.getHeight();
         this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
-        ResourceBundle copyright = java.util.ResourceBundle.getBundle("tourma/languages/copyrights");
+        ResourceBundle copyright = java.util.ResourceBundle.getBundle("bb/tourma/languages/copyrights");
 
         jlbNom.setText(Translate.translate(CS_Name)
                 + ": "
@@ -103,12 +103,12 @@ public final class JdgAbout extends javax.swing.JDialog {
         jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         setTitle(bundle.getString("A PROPOS DE")); // NOI18N
         setUndecorated(true);
         setResizable(false);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
         jButton1.setText(bundle.getString("OK")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

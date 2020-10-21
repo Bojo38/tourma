@@ -84,8 +84,8 @@ public final class JdgRosters extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Halt.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtCancel.setText(bundle.getString("Cancel")); // NOI18N
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,7 +94,7 @@ public final class JdgRosters extends javax.swing.JDialog {
         });
         jPanel2.add(jbtCancel);
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,7 +107,7 @@ public final class JdgRosters extends javax.swing.JDialog {
 
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jbtAdd.setText(bundle.getString("Add")); // NOI18N
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,7 +116,7 @@ public final class JdgRosters extends javax.swing.JDialog {
         });
         jPanel4.add(jbtAdd);
 
-        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemove.setText(bundle.getString("Remove")); // NOI18N
         jbtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,7 +125,7 @@ public final class JdgRosters extends javax.swing.JDialog {
         });
         jPanel4.add(jbtRemove);
 
-        jbtRemoveAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemoveAll.setText(bundle.getString("RemoveAll")); // NOI18N
         jbtRemoveAll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

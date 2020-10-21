@@ -89,7 +89,7 @@ public final class NAF {
         int i = 1;
         try {
             while (!stop) {
-                URL url = _singleton.getClass().getResource("/tourma/naf/naf_id" + i + ".xml");
+                URL url = _singleton.getClass().getResource("/bb/tourma/naf/naf_id" + i + ".xml");
                 if (url == null) {
                     stop = true;
                     break;

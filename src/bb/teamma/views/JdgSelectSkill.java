@@ -153,7 +153,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
 
         getContentPane().add(jpnSkills, java.awt.BorderLayout.CENTER);
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("teamma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/teamma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.setName("ok"); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {

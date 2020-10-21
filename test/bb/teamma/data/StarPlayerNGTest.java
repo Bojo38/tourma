@@ -5,13 +5,9 @@
  */
 package bb.teamma.data;
 
-import bb.teamma.data.LRB;
-import bb.teamma.data.Skill;
-import bb.teamma.data.SkillType;
-import bb.teamma.data.StarPlayer;
-import bb.teamma.data.RosterType;
 import java.util.Random;
 import org.testng.Assert;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -425,11 +421,7 @@ public class StarPlayerNGTest {
 
             if (instance != null) {
                 int result = instance.getCost();
-                if ((result == 0)&&(!instance.getName().equals("Grotty *CRP*"))
-                        &&(!instance.getName().equals("Crumbleberry *BB2016*"))
-                        &&(!instance.getName().equals("Valen Swift *BB2016*"))
-                        &&(!instance.getName().equals("Grombrindal, The White Dwarf *Special Event*"))
-                        &&(!instance.getName().equals("The Black Gobbo *Special Event*"))) {
+                if ((result == 0)&&(instance.getPair()==null)&&(!instance.getName().equals("Grombrindal, The White Dwarf"))&&(!instance.getName().equals("The Black Gobbo"))) {
                     fail("cost is null for "+instance.getName());
                 }
             } else {
@@ -688,12 +680,16 @@ public class StarPlayerNGTest {
     @Test
     public void testGetPair_name() {
         System.out.println("getPair_name");
-        StarPlayer instance = null;
-        String expResult = "";
+        StarPlayer instance = new StarPlayer("test");
+        
         String result = instance.getPair_name();
+        assertEquals(result, "");
+        instance.setPair_name("pair");        
+        String expResult = "pair";
+        result = instance.getPair_name();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
     }
 
     /**
@@ -702,11 +698,14 @@ public class StarPlayerNGTest {
     @Test
     public void testSetPair_name() {
         System.out.println("setPair_name");
-        String _pair_name = "";
-        StarPlayer instance = null;
-        instance.setPair_name(_pair_name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         StarPlayer instance = new StarPlayer("test");
+        
+        String result = instance.getPair_name();
+        assertEquals(result, "");
+        instance.setPair_name("pair");        
+        String expResult = "pair";
+        result = instance.getPair_name();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -715,12 +714,16 @@ public class StarPlayerNGTest {
     @Test
     public void testGetPair() {
         System.out.println("getPair");
-        StarPlayer instance = null;
+        StarPlayer instance = new StarPlayer("Test");
         StarPlayer expResult = null;
         StarPlayer result = instance.getPair();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        StarPlayer pair = new StarPlayer("Pair");
+        instance.setPair(pair);
+        result = instance.getPair();
+        assertEquals(result, pair);
+        
     }
 
     /**
@@ -729,11 +732,15 @@ public class StarPlayerNGTest {
     @Test
     public void testSetPair() {
         System.out.println("setPair");
-        StarPlayer _pair = null;
-        StarPlayer instance = null;
-        instance.setPair(_pair);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        StarPlayer instance = new StarPlayer("Test");
+        StarPlayer expResult = null;
+        StarPlayer result = instance.getPair();
+        assertEquals(result, expResult);
+        
+        StarPlayer pair = new StarPlayer("Pair");
+        instance.setPair(pair);
+        result = instance.getPair();
+        assertEquals(result, pair);
     }
 
 }

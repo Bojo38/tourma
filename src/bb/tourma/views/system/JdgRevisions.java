@@ -87,14 +87,14 @@ public final class JdgRevisions extends javax.swing.JDialog {
         jxtVersions = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         setTitle(bundle.getString("Revisions")); // NOI18N
         setMinimumSize(new java.awt.Dimension(640, 480));
 
         jPanel1.setMinimumSize(new java.awt.Dimension(320, 33));
         jPanel1.setPreferredSize(new java.awt.Dimension(320, 33));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
         jButton1.setText(bundle.getString("OK")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

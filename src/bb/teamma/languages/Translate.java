@@ -18,7 +18,7 @@ public class Translate {
 
     public static String translate(String key) {
         if (sBundle == null) {
-            sBundle = java.util.ResourceBundle.getBundle("teamma/languages/language");
+            sBundle = java.util.ResourceBundle.getBundle("bb/teamma/languages/language");
         }
         String tmp="";
         

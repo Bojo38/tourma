@@ -99,8 +99,8 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
         jbtNAF = new javax.swing.JButton();
         jbtImportExcel = new javax.swing.JButton();
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.setName("ok"); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
@@ -110,7 +110,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
         });
         jPanel1.add(jbtOK);
 
-        jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
+        jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Halt.png"))); // NOI18N
         jbtCancel.setText(bundle.getString("ANNULER")); // NOI18N
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +148,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
 
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.Y_AXIS));
 
-        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddActionPerformed(evt);
@@ -156,7 +156,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
         });
         jPanel2.add(jbtAdd);
 
-        jbtMinus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtMinus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtMinus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtMinusActionPerformed(evt);
@@ -164,7 +164,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
         });
         jPanel2.add(jbtMinus);
 
-        jbtNAF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/naf.png"))); // NOI18N
+        jbtNAF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/naf.png"))); // NOI18N
         jbtNAF.setToolTipText("Update NAF number");
         jbtNAF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +173,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
         });
         jPanel2.add(jbtNAF);
 
-        jbtImportExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/excel.png"))); // NOI18N
+        jbtImportExcel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/excel.png"))); // NOI18N
         jbtImportExcel.setToolTipText("Import Excel File");
         jbtImportExcel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

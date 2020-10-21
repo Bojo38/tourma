@@ -44,7 +44,7 @@ public final class Icons {
     {
         if (sDICES==null)
         {
-            sDICES=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Dice.png"));
+            sDICES=new javax.swing.ImageIcon(Icons.class.getResource("/bb/tourma/images/Dice.png"));
         }
         return sDICES;
     }
@@ -57,7 +57,7 @@ public final class Icons {
     {
         if (sPARAMS==null)
         {
-            sPARAMS=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Tools.png"));
+            sPARAMS=new javax.swing.ImageIcon(Icons.class.getResource("/bb/tourma/images/Tools.png"));
         }
         return sPARAMS;
     }
@@ -70,7 +70,7 @@ public final class Icons {
     {
         if (sSTAR==null)
         {
-            sSTAR=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Star.png"));
+            sSTAR=new javax.swing.ImageIcon(Icons.class.getResource("/bb/tourma/images/Star.png"));
         }
         return sSTAR;
     }
@@ -83,7 +83,7 @@ public final class Icons {
     {
         if (sSTAT==null)
         {
-            sSTAT=new javax.swing.ImageIcon(Icons.class.getResource("/tourma/images/Statis.png"));
+            sSTAT=new javax.swing.ImageIcon(Icons.class.getResource("/bb/tourma/images/Statis.png"));
         }
         return sSTAT;
     }

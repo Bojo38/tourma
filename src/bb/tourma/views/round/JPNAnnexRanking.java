@@ -265,8 +265,8 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
         jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jbtPositive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtPositive.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Document.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtPositive.setText(bundle.getString("Positive")); // NOI18N
         jbtPositive.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -275,7 +275,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
         });
         jPanel3.add(jbtPositive);
 
-        jbtBackPos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBackPos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Backward.png"))); // NOI18N
         jbtBackPos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtBackPosActionPerformed(evt);
@@ -287,7 +287,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
         jlbPagePos.setText("jLabel1");
         jPanel3.add(jlbPagePos);
 
-        jbtNextPos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNextPos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Forward.png"))); // NOI18N
         jbtNextPos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextPosActionPerformed(evt);
@@ -316,7 +316,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
         jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jbtNegative.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtNegative.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Document.png"))); // NOI18N
         jbtNegative.setText(bundle.getString("Negative")); // NOI18N
         jbtNegative.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -325,7 +325,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
         });
         jPanel4.add(jbtNegative);
 
-        jbtBackNeg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBackNeg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Backward.png"))); // NOI18N
         jbtBackNeg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtBackNegActionPerformed(evt);
@@ -337,7 +337,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
         jlbPageNeg.setText("jLabel1");
         jPanel4.add(jlbPageNeg);
 
-        jbtNextNeg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNextNeg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Forward.png"))); // NOI18N
         jbtNextNeg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextNegActionPerformed(evt);

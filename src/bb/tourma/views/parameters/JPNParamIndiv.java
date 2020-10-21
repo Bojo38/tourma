@@ -75,7 +75,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
 
         setLayout(new java.awt.GridLayout(16, 2));
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jcxLargeVictory.setText(bundle.getString("LargeVictoryKey")); // NOI18N
         jcxLargeVictory.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jcxLargeVictory.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);

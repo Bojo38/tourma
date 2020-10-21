@@ -54,8 +54,8 @@ public final class JPNParamFormulas extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        jbtAddFormula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtAddFormula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtAddFormula.setText(bundle.getString("AJOUTER FORMULA")); // NOI18N
         jbtAddFormula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,7 +64,7 @@ public final class JPNParamFormulas extends javax.swing.JPanel {
         });
         jPanel16.add(jbtAddFormula);
 
-        jbtRemoveFormula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveFormula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemoveFormula.setText(bundle.getString("RETIRER FORMULE")); // NOI18N
         jbtRemoveFormula.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

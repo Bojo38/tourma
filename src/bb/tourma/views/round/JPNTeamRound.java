@@ -60,8 +60,8 @@ public final class JPNTeamRound extends javax.swing.JPanel {
     private int mPageMatchCount = 0;
     private int mPageMatchIndex = 0;
 
-    JButton jbtBackTeam = new JButton(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png")));
-    JButton jbtNextTeam = new JButton(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png")));
+    JButton jbtBackTeam = new JButton(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Backward.png")));
+    JButton jbtNextTeam = new JButton(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Forward.png")));
     JLabel jlbPageTeam = new JLabel();
     /**
      *
@@ -102,7 +102,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
             jpnMatchs.add(jsp, BorderLayout.CENTER);
 
             JPanel jpnButtons = new JPanel(new FlowLayout());
-            JButton jbtMatchs = new JButton(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png")));
+            JButton jbtMatchs = new JButton(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Document.png")));
             jbtMatchs.addActionListener((ActionEvent e) -> {
                 for (int i = 0; i < mTournament.getRoundsCount(); i++) {
                     if (mRound == mTournament.getRound(i)) {
@@ -217,7 +217,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
 
         jPanel8.setLayout(new java.awt.BorderLayout());
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("GeneralRankingKey"))); // NOI18N
         jScrollPane3.setPreferredSize(new java.awt.Dimension(466, 300));
 
@@ -237,7 +237,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
 
         jPanel8.add(jScrollPane3, java.awt.BorderLayout.CENTER);
 
-        jbtGeneralTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtGeneralTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Document.png"))); // NOI18N
         jbtGeneralTeam.setText(bundle.getString("GeneralRankingKey")); // NOI18N
         jbtGeneralTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,7 +246,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         });
         jPanel2.add(jbtGeneralTeam);
 
-        jbtGlobal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtGlobal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Document.png"))); // NOI18N
         jbtGlobal.setText(bundle.getString("GlobalRankingKey")); // NOI18N
         jbtGlobal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,7 +255,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         });
         jPanel2.add(jbtGlobal);
 
-        jbtBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Backward.png"))); // NOI18N
         jbtBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtBackActionPerformed(evt);
@@ -267,7 +267,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         jlbPage.setText("jLabel1");
         jPanel2.add(jlbPage);
 
-        jbtNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Forward.png"))); // NOI18N
         jbtNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextActionPerformed(evt);

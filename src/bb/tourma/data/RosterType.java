@@ -83,7 +83,7 @@ public class RosterType implements IXMLExport, Serializable {
 
     public static String translate(String key) {
         if (sBundle == null) {
-            sBundle = java.util.ResourceBundle.getBundle("tourma/languages/rosters");
+            sBundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/rosters");
         }
 
         String name = "";

@@ -83,7 +83,7 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         if (mTeam.getPicture() == null) {
             try {
-                java.net.URL url = getClass().getResource("/tourma/images/flags/Country France.png");
+                java.net.URL url = getClass().getResource("/bb/tourma/images/flags/Country France.png");
                 if (url != null) {
                     BufferedImage buf = ImageIO.read(url);
                     if (buf != null) {
@@ -193,8 +193,8 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,7 +203,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         });
         jPanel2.add(jbtOK);
 
-        jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
+        jbtCancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Halt.png"))); // NOI18N
         jbtCancel.setText(bundle.getString("Cancel")); // NOI18N
         jbtCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,7 +218,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         jPanel7.setPreferredSize(new java.awt.Dimension(450, 240));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
-        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jbtAdd.setText(bundle.getString("Add")); // NOI18N
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,7 +227,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         });
         jpnCoachButtons.add(jbtAdd);
 
-        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemove.setText(bundle.getString("Remove")); // NOI18N
         jbtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -236,7 +236,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         });
         jpnCoachButtons.add(jbtRemove);
 
-        jbtModify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
+        jbtModify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Swap.png"))); // NOI18N
         jbtModify.setText(bundle.getString("Modify")); // NOI18N
         jbtModify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,7 +296,7 @@ public final class JdgTeam extends javax.swing.JDialog {
 
         jpnBtns1.setLayout(new java.awt.GridLayout(3, 1, 1, 1));
 
-        jbtAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAddCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jbtAddCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtAddCategoryActionPerformed(evt);
@@ -304,7 +304,7 @@ public final class JdgTeam extends javax.swing.JDialog {
         });
         jpnBtns1.add(jbtAddCategory);
 
-        jbtDelCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtDelCategory.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtDelCategory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtDelCategoryActionPerformed(evt);
@@ -434,7 +434,7 @@ public final class JdgTeam extends javax.swing.JDialog {
                 }
                 // System.out.println("Tests "+name+" starts with "+pathToTest);
                 if (name.startsWith(pathToTest + "/")) { //filter according to the path
-                    BufferedImage bi = ImageIO.read(getClass().getResource("/tourma/images/flags/Country France.png"));
+                    BufferedImage bi = ImageIO.read(getClass().getResource("/bb/tourma/images/flags/Country France.png"));
                     bi = ImageIO.read(getClass().getResource("/" + name));
                     if (bi == null) {
                         System.out.println("/" + name + " returns a null image");
@@ -482,7 +482,7 @@ public final class JdgTeam extends javax.swing.JDialog {
 
             JComboBox<Object> combo = new JComboBox<>(objects);
             JPanel panel = new JPanel(new BorderLayout());
-            JLabel l = new JLabel(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("SelectPicture"));
+            JLabel l = new JLabel(java.util.ResourceBundle.getBundle("bb/tourma/languages/language").getString("SelectPicture"));
             panel.add(l, BorderLayout.NORTH);
             panel.add(combo, BorderLayout.CENTER);
 
@@ -492,7 +492,7 @@ public final class JdgTeam extends javax.swing.JDialog {
 
             if (combo.getSelectedItem() == empty) {
                 final JFileChooser jfc = new JFileChooser();
-                final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("Picture"), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
+                final FileFilter filter1 = new ExtensionFileFilter(java.util.ResourceBundle.getBundle("bb/tourma/languages/language").getString("Picture"), new String[]{"PNG", "png", "JPG", "jpg", "GIF", "gif"});
                 jfc.setFileFilter(filter1);
                 if (jfc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                     ImageIcon icon = new ImageIcon(jfc.getSelectedFile().getAbsolutePath());

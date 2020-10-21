@@ -5,12 +5,6 @@
  */
 package bb.teamma.data;
 
-import bb.teamma.data.LRB;
-import bb.teamma.data.PlayerType;
-import bb.teamma.data.StarPlayer;
-import bb.teamma.data.Roster;
-import bb.teamma.data.Player;
-import bb.teamma.data.RosterType;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -134,7 +128,7 @@ public class RosterNGTest {
 
             Assert.assertTrue(compareTwoFiles("necros_tmp.xml", "test/necros.xml"));
 
-            Files.delete(f.toPath());
+            //Files.delete(f.toPath());
         } catch (FileNotFoundException ex) {
             Logger.getLogger(RosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
@@ -690,12 +684,19 @@ public class RosterNGTest {
     @Test
     public void testGetInducementsSize() {
         System.out.println("getInducementsSize");
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         Roster instance = new Roster();
-        int expResult = 0;
+        RosterType rt=lrb.getRosterType(0);
+        instance.setRoster(rt);
+        InducementType it=rt.getInducementType(0);
+        
+        
+        Inducement expResult = new Inducement();
+        expResult.setType(it);
+        instance.setInducement(it, 1);
+        
         int result = instance.getInducementsSize();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, 1);
     }
 
     /**
@@ -704,13 +705,20 @@ public class RosterNGTest {
     @Test
     public void testGetInducement() {
         System.out.println("getInducement");
-        int i = 0;
+       
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         Roster instance = new Roster();
-        Inducement expResult = null;
-        Inducement result = instance.getInducement(i);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        RosterType rt=lrb.getRosterType(0);
+        instance.setRoster(rt);
+        InducementType it=rt.getInducementType(0);
+        
+        Inducement expResult = new Inducement();
+        expResult.setType(it);
+        instance.setInducement(it, 1);
+        
+        Inducement result = instance.getInducement(0);
+        assertEquals(result.getType(), expResult.getType());
+        
     }
 
     /**
@@ -719,12 +727,19 @@ public class RosterNGTest {
     @Test
     public void testSetInducement() {
         System.out.println("setInducement");
-        InducementType it = null;
-        int nb = 0;
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         Roster instance = new Roster();
-        instance.setInducement(it, nb);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        RosterType rt=lrb.getRosterType(0);
+        instance.setRoster(rt);
+        InducementType it=rt.getInducementType(0);
+        
+        
+        Inducement expResult = new Inducement();
+        expResult.setType(it);
+        instance.setInducement(it, 4);
+        
+        Inducement result = instance.getInducement(0);
+        assertEquals(result.getType(), expResult.getType());
     }
 
     /**
@@ -733,13 +748,19 @@ public class RosterNGTest {
     @Test
     public void testGetNbInduc() {
         System.out.println("getNbInduc");
-        InducementType it = null;
+        LRB lrb=LRB.getLRB(LRB.E_Version.BB2016);
         Roster instance = new Roster();
-        int expResult = 0;
+        RosterType rt=lrb.getRosterType(0);
+        instance.setRoster(rt);
+        InducementType it=rt.getInducementType(0);
+        
+        
+        Inducement expResult = new Inducement();
+        expResult.setType(it);
+        instance.setInducement(it, 4);
+        
         int result = instance.getNbInduc(it);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, 4);
     }
 
     /**
@@ -750,9 +771,11 @@ public class RosterNGTest {
         System.out.println("removeChampion");
         int i = 0;
         Roster instance = new Roster();
-        instance.removeChampion(i);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        StarPlayer sp=new StarPlayer("Test");
+        instance.addChampion(sp);
+        assertEquals(instance.getChampionCount(), 1);                
+        instance.removeChampion(0);
+        assertEquals(instance.getChampionCount(), 0);  
     }
 
     /**
@@ -761,11 +784,13 @@ public class RosterNGTest {
     @Test
     public void testRemoveChampion_StarPlayer() {
         System.out.println("removeChampion");
-        StarPlayer sp = null;
         Roster instance = new Roster();
+        StarPlayer sp=new StarPlayer("Test");
+        instance.addChampion(sp);
+        assertEquals(instance.getChampionCount(), 1);                
         instance.removeChampion(sp);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getChampionCount(), 0);                
+        
     }
 
 }

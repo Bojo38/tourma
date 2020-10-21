@@ -185,8 +185,8 @@ public final class LRB {
         }
 
         /* URL url;
-         url = getClass().getResource("/teamma/rules/rules.xml");*/
-        InputStream is = getClass().getResourceAsStream("/teamma/rules/" + path + "/rules.xml");
+         url = getClass().getResource("/bb/teamma/rules/rules.xml");*/
+        InputStream is = getClass().getResourceAsStream("/bb/teamma/rules/" + path + "/rules.xml");
         loadLRB(is, path);
         try {
             is.close();
@@ -261,8 +261,8 @@ public final class LRB {
             String skillfile = e_skillfile.getValue();
 
             LOG.log(Level.FINE, "loading {0} file", skillfile);
-            filename = "/teamma/rules/" + path + "/" + skillfile;
-            loadSkills(getClass().getResourceAsStream("/teamma/rules/" + path + "/" + skillfile));
+            filename = "/bb/teamma/rules/" + path + "/" + skillfile;
+            loadSkills(getClass().getResourceAsStream("/bb/teamma/rules/" + path + "/" + skillfile));
 
             Element e_teams = racine.getChild(CS_Teams);
             List<Element> l_teams = e_teams.getChildren(CS_Team);
@@ -273,16 +273,16 @@ public final class LRB {
                 Element e_team = cr.next();
                 String teamfile = e_team.getValue();
                 String imagename = e_team.getAttribute(CS_Picture).getValue();
-                filename = "/teamma/rules/" + path + "/" + teamfile;
-                loadTeam(getClass().getResourceAsStream("/teamma/rules/" + path + "/" + teamfile), imagename);
+                filename = "/bb/teamma/rules/" + path + "/" + teamfile;
+                loadTeam(getClass().getResourceAsStream("/bb/teamma/rules/" + path + "/" + teamfile), imagename);
             }
             /*
              * Get Star Players file name
              */
             Element e_starfile = racine.getChild(CS_Starplayers);
             String starfile = e_starfile.getValue();
-            filename = "/teamma/rules/" + path + "/" + starfile;
-            loadStarPlayers(getClass().getResourceAsStream("/teamma/rules/" + path + "/" + starfile));
+            filename = "/bb/teamma/rules/" + path + "/" + starfile;
+            loadStarPlayers(getClass().getResourceAsStream("/bb/teamma/rules/" + path + "/" + starfile));
 
         } catch (JDOMException | IOException jdomexception) {
             JOptionPane.showMessageDialog(null, "Loading " + filename + " " + jdomexception.getLocalizedMessage());

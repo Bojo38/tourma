@@ -75,8 +75,8 @@ public final class JPNTeams extends javax.swing.JPanel {
 
         add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
-        jbtAddTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtAddTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtAddTeam.setText(bundle.getString("Add")); // NOI18N
         jbtAddTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,7 +85,7 @@ public final class JPNTeams extends javax.swing.JPanel {
         });
         jPanel8.add(jbtAddTeam);
 
-        jbtRemoveTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemoveTeam.setText(bundle.getString("Remove")); // NOI18N
         jbtRemoveTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,7 +94,7 @@ public final class JPNTeams extends javax.swing.JPanel {
         });
         jPanel8.add(jbtRemoveTeam);
 
-        jbtModifyTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
+        jbtModifyTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Swap.png"))); // NOI18N
         jbtModifyTeam.setText(bundle.getString("Modify")); // NOI18N
         jbtModifyTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -58,31 +58,31 @@ public final class JPNParameters extends javax.swing.JPanel {
 
         jtpOptions.addTab(
                 Translate.translate(CS_Individual),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User.png")),
+                new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/User.png")),
                 mJpnIndiv);
         jtpOptions.addTab(
                 Translate.translate(CS_Criterias),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Tools.png")),
+                new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Tools.png")),
                 mJpnCriterias);
         jtpOptions.addTab(
                 Translate.translate(CS_Formulas),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Formula.png")),
+                new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Formula.png")),
                 mJpnFormulas);
         jtpOptions.addTab(
                 Translate.translate(CS_ByTeam),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Team.png")),
+                new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Team.png")),
                 mJpnTeam);
         jtpOptions.addTab(
                 Translate.translate(CS_Clan),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Clan.png")),
+                new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Clan.png")),
                 mJpnClan);
         jtpOptions.addTab(
                 Translate.translate(CS_Group),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group.png")),
+                new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Group.png")),
                 mJpnGroup);
         jtpOptions.addTab(
                 Translate.translate(CS_Category),
-                new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Group2.png")),
+                new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Group2.png")),
                 mJpnCategories);
 
         jpnTeamTour = new JPNTeams();
@@ -184,7 +184,7 @@ public final class JPNParameters extends javax.swing.JPanel {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TournamentKey"))); // NOI18N
         jPanel5.setLayout(new java.awt.GridLayout(4, 2));
 
@@ -253,7 +253,7 @@ public final class JPNParameters extends javax.swing.JPanel {
         jPanel7.setPreferredSize(new java.awt.Dimension(450, 240));
         jPanel7.setLayout(new java.awt.BorderLayout());
 
-        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jbtAdd.setText(bundle.getString("Add")); // NOI18N
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,7 +262,7 @@ public final class JPNParameters extends javax.swing.JPanel {
         });
         jpnCoachButtons.add(jbtAdd);
 
-        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemove.setText(bundle.getString("Remove")); // NOI18N
         jbtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,7 +271,7 @@ public final class JPNParameters extends javax.swing.JPanel {
         });
         jpnCoachButtons.add(jbtRemove);
 
-        jbtModify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
+        jbtModify.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Swap.png"))); // NOI18N
         jbtModify.setText(bundle.getString("Modify")); // NOI18N
         jbtModify.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

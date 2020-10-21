@@ -95,7 +95,7 @@ public class Translate {
 
     public static String translate(String key) {
         if (sBundle == null) {
-            sBundle = java.util.ResourceBundle.getBundle("tourma/languages/language");
+            sBundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language");
         }
         String result = key;
         try {

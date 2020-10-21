@@ -110,7 +110,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         jPanel12.setLayout(new java.awt.GridLayout(4, 2));
 
         jlbActivateClans.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jlbActivateClans.setText(bundle.getString("EnableClansKey")); // NOI18N
         jPanel12.add(jlbActivateClans);
 
@@ -164,7 +164,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
 
         add(jPanel12, java.awt.BorderLayout.NORTH);
 
-        jbtAddClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAddClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jbtAddClan.setText(bundle.getString("Add")); // NOI18N
         jbtAddClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,7 +173,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         });
         jPanel13.add(jbtAddClan);
 
-        jbtEditClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
+        jbtEditClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Swap.png"))); // NOI18N
         jbtEditClan.setText(bundle.getString("Edit")); // NOI18N
         jbtEditClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,7 +182,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         });
         jPanel13.add(jbtEditClan);
 
-        jbtEditClanIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
+        jbtEditClanIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Swap.png"))); // NOI18N
         jbtEditClanIcon.setText(bundle.getString("EditIcon")); // NOI18N
         jbtEditClanIcon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,7 +191,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
         });
         jPanel13.add(jbtEditClanIcon);
 
-        jbtRemoveClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveClan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemoveClan.setText(bundle.getString("Remove")); // NOI18N
         jbtRemoveClan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -316,7 +316,7 @@ public final class JPNParamClan extends javax.swing.JPanel {
     private void jbtEditClanIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEditClanIconActionPerformed
         if (jlsClans.getSelectedIndex() >= 0) {
             File folder;
-            folder = new File(getClass().getResource("/tourma/images/flags").getFile());
+            folder = new File(getClass().getResource("/bb/tourma/images/flags").getFile());
             File[] listOfFiles = folder.listFiles();
 
             Object[] objects = new Object[listOfFiles.length + 1];

@@ -131,8 +131,8 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
         Writer out = null;
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("/tourma/views/report").toURI();
-            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
+            final URI uri = getClass().getResource("/bb/tourma/views/report").toURI();
+            if (uri.toString().contains(java.util.ResourceBundle.getBundle("bb/tourma/languages/language").getString(".JAR!"))) {
                 cfg.setClassForTemplateLoading(getClass(), StringConstants.CS_NULL);
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
@@ -230,8 +230,8 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
         Writer out = null;
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("/tourma/views/report").toURI();
-            if (uri.toString().contains(java.util.ResourceBundle.getBundle("tourma/languages/language").getString(".JAR!"))) {
+            final URI uri = getClass().getResource("/bb/tourma/views/report").toURI();
+            if (uri.toString().contains(java.util.ResourceBundle.getBundle("bb/tourma/languages/language").getString(".JAR!"))) {
                 cfg.setClassForTemplateLoading(getClass(), StringConstants.CS_NULL);
             } else {
                 cfg.setDirectoryForTemplateLoading(new File(uri));
@@ -361,8 +361,8 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -371,7 +371,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
         });
         jPanel1.add(jbtOK);
 
-        jbtExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/pdf.jpg"))); // NOI18N
+        jbtExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/pdf.jpg"))); // NOI18N
         jbtExportPDF.setText(bundle.getString("PDFExport")); // NOI18N
         jbtExportPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -5,8 +5,6 @@
  */
 package bb.tourma.tableModel;
 
-import bb.tourma.tableModel.MjtRankingIndiv;
-import bb.tourma.tableModel.MjtRanking;
 import java.awt.Component;
 import java.io.File;
 import java.util.ArrayList;
@@ -23,21 +21,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import bb.tourma.data.Coach;
-import bb.tourma.data.CoachMatch;
-import static bb.tourma.data.CoachMatch.C_STARTING_RANK;
-import static bb.tourma.data.CoachMatch.getCoachTablePoints;
-import static bb.tourma.data.CoachMatch.getOppPointsByCoach;
 import bb.tourma.data.Criterion;
 import bb.tourma.data.ObjectRanking;
 import bb.tourma.data.Parameters;
-import bb.tourma.data.Round;
-import bb.tourma.data.Team;
-import bb.tourma.data.TeamMatch;
 import bb.tourma.data.Tournament;
-import bb.tourma.data.Value;
 import bb.tourma.languages.Translate;
-import static bb.tourma.tableModel.MjtRanking.getCriteriaByValue;
-import static bb.tourma.tableModel.MjtRanking.getSubtypeByValue;
 import bb.tourma.utility.StringConstants;
 
 /**

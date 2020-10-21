@@ -434,9 +434,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiAideEnLigne = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         setTitle(bundle.getString("SoftwareTitle")); // NOI18N
-        setIconImage((Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource(java.util.ResourceBundle.getBundle("tourma/languages/language").getString("IMAGES/ICONE.PNG")))));
+        setIconImage((Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource(java.util.ResourceBundle.getBundle("bb/tourma/languages/language").getString("IMAGES/ICONE.PNG")))));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -460,7 +460,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         jmnFile.setText(bundle.getString("FileKey")); // NOI18N
 
-        jmiNouveau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
+        jmiNouveau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/New.png"))); // NOI18N
         jmiNouveau.setText(bundle.getString("NewTourKey")); // NOI18N
         jmiNouveau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -469,7 +469,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnFile.add(jmiNouveau);
 
-        jmiCharger.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Open.png"))); // NOI18N
+        jmiCharger.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Open.png"))); // NOI18N
         jmiCharger.setText(bundle.getString("LoadTourKey")); // NOI18N
         jmiCharger.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -478,7 +478,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnFile.add(jmiCharger);
 
-        jmiSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Save.png"))); // NOI18N
+        jmiSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Save.png"))); // NOI18N
         jmiSave.setText(bundle.getString("SaveTourKey")); // NOI18N
         jmiSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -487,7 +487,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnFile.add(jmiSave);
 
-        jmiSaveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Save.png"))); // NOI18N
+        jmiSaveAs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Save.png"))); // NOI18N
         jmiSaveAs.setText(bundle.getString("SaveTourAsKey")); // NOI18N
         jmiSaveAs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -497,7 +497,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnFile.add(jmiSaveAs);
         jmnFile.add(jSeparator1);
 
-        jmiExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/naf.png"))); // NOI18N
+        jmiExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/naf.png"))); // NOI18N
         jmiExport.setText(bundle.getString("ExportNafResultKey")); // NOI18N
         jmiExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -506,7 +506,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnFile.add(jmiExport);
 
-        jmiExportFbb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExportFbb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Html.png"))); // NOI18N
         jmiExportFbb.setText(bundle.getString("ExportFBBResultXML")); // NOI18N
         jmiExportFbb.setActionCommand(bundle.getString("FBBExport")); // NOI18N
         jmiExportFbb.setEnabled(false);
@@ -518,7 +518,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnFile.add(jmiExportFbb);
 
-        jmiExportFbb1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExportFbb1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Html.png"))); // NOI18N
         jmiExportFbb1.setEnabled(false);
         jmiExportFbb1.setLabel(bundle.getString("FBBFullExport")); // NOI18N
         jmiExportFbb1.addActionListener(new java.awt.event.ActionListener() {
@@ -529,7 +529,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnFile.add(jmiExportFbb1);
         jmnFile.add(jSeparator2);
 
-        jmiExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Halt.png"))); // NOI18N
+        jmiExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Halt.png"))); // NOI18N
         jmiExit.setText(bundle.getString("QuitKey")); // NOI18N
         jmiExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -542,7 +542,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         jmnTools.setText(bundle.getString("Tools")); // NOI18N
 
-        jmiEditTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/New.png"))); // NOI18N
+        jmiEditTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/New.png"))); // NOI18N
         jmiEditTeam.setText(bundle.getString("ChangeRosters")); // NOI18N
         jmiEditTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -626,7 +626,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         jmnParameters.setText(bundle.getString("Parameters")); // NOI18N
 
-        jmiGenerateFirstRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
+        jmiGenerateFirstRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Generate.png"))); // NOI18N
         jmiGenerateFirstRound.setText(bundle.getString("GenerateFirstRound")); // NOI18N
         jmiGenerateFirstRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -645,7 +645,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnParameters.add(jmiEditRosterList);
         jmnParameters.add(jSeparator20);
 
-        jmiMassAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jmiMassAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jmiMassAdd.setText(bundle.getString("MassAdd")); // NOI18N
         jmiMassAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -655,7 +655,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnParameters.add(jmiMassAdd);
         jmnParameters.add(jSeparator6);
 
-        jmiSubstitutePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/User2.png"))); // NOI18N
+        jmiSubstitutePlayer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/User2.png"))); // NOI18N
         jmiSubstitutePlayer.setText(bundle.getString("MakeSubstitution")); // NOI18N
         jmiSubstitutePlayer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -689,7 +689,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnParameters.add(jmiEditWebPort);
 
-        jmiEditDescription.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Zoom.png"))); // NOI18N
+        jmiEditDescription.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Zoom.png"))); // NOI18N
         jmiEditDescription.setText(bundle.getString("EditDescription")); // NOI18N
         jmiEditDescription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -707,7 +707,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnParameters.add(jcxmiRemoteEdit);
         jmnParameters.add(jSeparator19);
 
-        jmiExportWebServerAsZIP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/zip_32.png"))); // NOI18N
+        jmiExportWebServerAsZIP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/zip_32.png"))); // NOI18N
         jmiExportWebServerAsZIP.setText(bundle.getString("ExportToZip")); // NOI18N
         jmiExportWebServerAsZIP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -716,7 +716,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnParameters.add(jmiExportWebServerAsZIP);
 
-        jmiExportWebServerToSite.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jmiExportWebServerToSite.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Html.png"))); // NOI18N
         jmiExportWebServerToSite.setText(bundle.getString("ExportWebToSite")); // NOI18N
         jmiExportWebServerToSite.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -730,7 +730,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnRound.setText(bundle.getString("CurrentRound")); // NOI18N
 
         jmiGenerateNextRound.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        jmiGenerateNextRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Generate.png"))); // NOI18N
+        jmiGenerateNextRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Generate.png"))); // NOI18N
         jmiGenerateNextRound.setText(bundle.getString("GenerateNextRoundKey")); // NOI18N
         jmiGenerateNextRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -741,7 +741,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnRound.add(jSeparator7);
 
         jmiDelRound.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
-        jmiDelRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/trashcan_empty.png"))); // NOI18N
+        jmiDelRound.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/trashcan_empty.png"))); // NOI18N
         jmiDelRound.setText(bundle.getString("DeleteCurrentRoundKey")); // NOI18N
         jmiDelRound.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -752,7 +752,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnRound.add(jSeparator8);
 
         jmiChangePairing.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.event.InputEvent.CTRL_MASK));
-        jmiChangePairing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Swap.png"))); // NOI18N
+        jmiChangePairing.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Swap.png"))); // NOI18N
         jmiChangePairing.setText(bundle.getString("ChangePairing")); // NOI18N
         jmiChangePairing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -762,7 +762,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnRound.add(jmiChangePairing);
 
         jmiEditCoef.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_K, java.awt.event.InputEvent.CTRL_MASK));
-        jmiEditCoef.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/reload.png"))); // NOI18N
+        jmiEditCoef.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/reload.png"))); // NOI18N
         jmiEditCoef.setText(bundle.getString("ChangeCoef")); // NOI18N
         jmiEditCoef.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -801,7 +801,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnRound.add(jSeparator10);
 
         jmiAddFreeMatch.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ADD, java.awt.event.InputEvent.CTRL_MASK));
-        jmiAddFreeMatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jmiAddFreeMatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jmiAddFreeMatch.setText(bundle.getString("AddMatch")); // NOI18N
         jmiAddFreeMatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -811,7 +811,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnRound.add(jmiAddFreeMatch);
 
         jmiDelFreeMatch.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SUBTRACT, java.awt.event.InputEvent.CTRL_MASK));
-        jmiDelFreeMatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jmiDelFreeMatch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jmiDelFreeMatch.setText(bundle.getString("DelMatch")); // NOI18N
         jmiDelFreeMatch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

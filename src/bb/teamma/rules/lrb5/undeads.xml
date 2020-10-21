@@ -46,7 +46,7 @@ and open the template in the editor.
         </playerType>
         <playerType>
             <limit>2</limit>
-            <position>Wigth</position>
+            <position>Wight</position>
             <movement>6</movement>
             <strength>3</strength>
             <agility>3</agility>

@@ -89,7 +89,7 @@ public final class JPNParamTeam extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Team Ranking"))); // NOI18N
         jPanel1.setLayout(new java.awt.GridLayout(21, 2));
 

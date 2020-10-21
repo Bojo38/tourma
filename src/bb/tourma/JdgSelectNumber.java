@@ -64,7 +64,7 @@ public final class JdgSelectNumber extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jbtOK = new javax.swing.JButton();
 
-		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+		java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
 		
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -86,7 +86,7 @@ public final class JdgSelectNumber extends javax.swing.JDialog {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -117,8 +117,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         setAlwaysOnTop(true);
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("teamma/languages/language"); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/teamma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,7 +127,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         });
         jPanel1.add(jbtOK);
 
-        jbtPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
+        jbtPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Document.png"))); // NOI18N
         jbtPrint.setText(bundle.getString("Print")); // NOI18N
         jbtPrint.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,7 +136,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         });
         jPanel1.add(jbtPrint);
 
-        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Html.png"))); // NOI18N
+        jbtExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Html.png"))); // NOI18N
         jbtExport.setText(bundle.getString("HTMLExport")); // NOI18N
         jbtExport.setName("jbtExport"); // NOI18N
         jbtExport.addActionListener(new java.awt.event.ActionListener() {
@@ -146,8 +146,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         });
         jPanel1.add(jbtExport);
 
-        jbtExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/pdf.jpg"))); // NOI18N
-        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtExportPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/pdf.jpg"))); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtExportPDF.setText(bundle1.getString("PDFExport")); // NOI18N
         jbtExportPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -382,7 +382,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         FileOutputStream fos = null;
         try {
             final Configuration cfg = new Configuration();
-            final URI uri = getClass().getResource("/teamma/views/report").toURI();
+            final URI uri = getClass().getResource("/bb/teamma/views/report").toURI();
             if (uri.toString().contains(".jar!")) {
                 cfg.setClassForTemplateLoading(getClass(), "");
             } else {

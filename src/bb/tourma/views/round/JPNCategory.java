@@ -152,7 +152,7 @@ public final class JPNCategory extends javax.swing.JPanel {
 
         setLayout(new java.awt.BorderLayout());
 
-        jbtBackIndiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBackIndiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Backward.png"))); // NOI18N
         jbtBackIndiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtBackIndivActionPerformed(evt);
@@ -164,7 +164,7 @@ public final class JPNCategory extends javax.swing.JPanel {
         jlbPageIndiv.setText("jLabel1");
         jPanel1.add(jlbPageIndiv);
 
-        jbtNextIndiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNextIndiv.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Forward.png"))); // NOI18N
         jbtNextIndiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextIndivActionPerformed(evt);
@@ -172,8 +172,8 @@ public final class JPNCategory extends javax.swing.JPanel {
         });
         jPanel1.add(jbtNextIndiv);
 
-        jbtGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Document.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtGeneral.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Document.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtGeneral.setText(bundle.getString("GeneralRankingKey")); // NOI18N
         jbtGeneral.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -182,7 +182,7 @@ public final class JPNCategory extends javax.swing.JPanel {
         });
         jPanel1.add(jbtGeneral);
 
-        jbtBackTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Backward.png"))); // NOI18N
+        jbtBackTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Backward.png"))); // NOI18N
         jbtBackTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtBackTeamActionPerformed(evt);
@@ -194,7 +194,7 @@ public final class JPNCategory extends javax.swing.JPanel {
         jlbPageTeam.setText("jLabel1");
         jPanel1.add(jlbPageTeam);
 
-        jbtNextTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Forward.png"))); // NOI18N
+        jbtNextTeam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Forward.png"))); // NOI18N
         jbtNextTeam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtNextTeamActionPerformed(evt);

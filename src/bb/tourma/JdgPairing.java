@@ -148,8 +148,8 @@ public final class JdgPairing extends javax.swing.JDialog {
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Select.png"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("tourma/languages/language"); // NOI18N
+        jbtOK.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Select.png"))); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         jbtOK.setText(bundle.getString("OK")); // NOI18N
         jbtOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,7 +172,7 @@ public final class JdgPairing extends javax.swing.JDialog {
         jcbTeam2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel3.add(jcbTeam2, java.awt.BorderLayout.EAST);
 
-        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Add.png"))); // NOI18N
+        jbtAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
         jbtAdd.setText(bundle.getString("Add")); // NOI18N
         jbtAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +181,7 @@ public final class JdgPairing extends javax.swing.JDialog {
         });
         jPanel4.add(jbtAdd);
 
-        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Close.png"))); // NOI18N
+        jbtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
         jbtRemove.setText(bundle.getString("Remove")); // NOI18N
         jbtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,7 +190,7 @@ public final class JdgPairing extends javax.swing.JDialog {
         });
         jPanel4.add(jbtRemove);
 
-        jbtSwiss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/swiss.png"))); // NOI18N
+        jbtSwiss.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/swiss.png"))); // NOI18N
         jbtSwiss.setText(bundle.getString("Swiss")); // NOI18N
         jbtSwiss.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -199,7 +199,7 @@ public final class JdgPairing extends javax.swing.JDialog {
         });
         jPanel4.add(jbtSwiss);
 
-        jbtRandom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tourma/images/Dice.png"))); // NOI18N
+        jbtRandom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Dice.png"))); // NOI18N
         jbtRandom.setText(bundle.getString("Random")); // NOI18N
         jbtRandom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

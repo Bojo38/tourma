@@ -107,34 +107,16 @@ public class JdgRosterNGTest {
             // Select tab and Choose Inducements
             window.tabbedPane("jtpGoods").selectTab(1);
 
-            String array[] = {"ExtraReroll", "BribeTheRef", "LocalApothecary", "Wizard", "Igor", "Babes", "Chef", "ChaosWizard", "Horatio", "Kari", "Fink", "Papa", "Galandril", "Krot"};
+            String array[] = {"chef", "bribe the ref", "Bloodweisers' babes", "wizard", "extra reroll", "local apothecary", "cards", "chaos sorcerer", "specialist assistant coaches", "temp agency cheerleaders", "weather mage", "horticulturalist of Nurgle", "Horatio X Schottenheim","Papa Skullbones"};
+
             for (String ext : array) {
                 if (window.slider("jsl" + ext).component().isEnabled()) {
                     window.slider("jsl" + ext).slideToMaximum();
-                    String cost = window.label("jlbCost" + ext).text();
+                    String cost = window.label("jlbTotalCost" + ext).text();
                     String nb = window.label("jlbNb" + ext).text();
-                    String price = window.label("jlbPrice" + ext).text();
+                    String price = window.label("jlbCost" + ext).text();
                     System.out.println(ext + ": " + nb + " * " + price + " = " + cost);
                     Assert.assertEquals(Integer.parseInt(cost), Integer.parseInt(nb) * Integer.parseInt(price));
-                }
-            }
-
-            if (window.slider("jslCardBudget").component().isEnabled()) {
-                window.slider("jslCardBudget").slideToMaximum();
-                int max = window.slider("jslCardBudget").component().getValue();
-                Random r = new Random();
-
-                for (int i = 0; i < 10; i++) {
-                    int set = Math.abs(r.nextInt()) % max;
-                    window.slider("jslCardBudget").slideTo(set);
-                    int nb = set / 50000;
-                    int nb2 = set % 50000;
-                    if (nb2 >= 25000) {
-                        nb++;
-                    }
-                    int value = nb * 50000;
-                    String cost = window.label("jlbCardBudget").text();
-                    Assert.assertEquals(Integer.parseInt(cost), value);
                 }
             }
 
@@ -220,12 +202,12 @@ public class JdgRosterNGTest {
                 Logger.getLogger(JdgRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            try {
+            /*try {
+                
                 Files.delete(f2.toPath());
             } catch (IOException ex) {
                 Logger.getLogger(JdgRosterNGTest.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            }*/
             // Select title and choose roster
             // enable
         } catch (InterruptedException ex) {
