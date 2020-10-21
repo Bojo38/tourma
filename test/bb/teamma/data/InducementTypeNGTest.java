@@ -17,7 +17,7 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class InducementTypeNGTest {
-    
+
     public InducementTypeNGTest() {
     }
 
@@ -47,8 +47,9 @@ public class InducementTypeNGTest {
         String expResult = "";
         String result = instance.getName();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance.setName("test");
+        assertEquals(instance.getName(), "test");
     }
 
     /**
@@ -57,11 +58,13 @@ public class InducementTypeNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String _name = "";
         InducementType instance = new InducementType();
-        instance.setName(_name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "";
+        String result = instance.getName();
+        assertEquals(result, expResult);
+
+        instance.setName("test");
+        assertEquals(instance.getName(), "test");
     }
 
     /**
@@ -74,8 +77,9 @@ public class InducementTypeNGTest {
         int expResult = 0;
         int result = instance.getCost();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance.setCost(100000);
+        assertEquals(instance.getCost(), 100000);
     }
 
     /**
@@ -87,8 +91,13 @@ public class InducementTypeNGTest {
         int _cost = 0;
         InducementType instance = new InducementType();
         instance.setCost(_cost);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        int expResult = 0;
+        int result = instance.getCost();
+        assertEquals(result, expResult);
+
+        instance.setCost(100000);
+        assertEquals(instance.getCost(), 100000);
     }
 
     /**
@@ -101,8 +110,9 @@ public class InducementTypeNGTest {
         int expResult = 0;
         int result = instance.getNbMax();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance.setNbMax(5);
+        assertEquals(instance.getNbMax(), 5);
     }
 
     /**
@@ -114,8 +124,9 @@ public class InducementTypeNGTest {
         int _nbMax = 0;
         InducementType instance = new InducementType();
         instance.setNbMax(_nbMax);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getNbMax(), _nbMax);
+        instance.setNbMax(5);
+        assertEquals(instance.getNbMax(), 5);
     }
-    
+
 }

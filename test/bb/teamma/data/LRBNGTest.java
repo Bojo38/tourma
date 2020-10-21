@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.testng.Assert;
+import static org.testng.Assert.*;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -156,7 +157,7 @@ public class LRBNGTest {
         LRB.unloadLRB();
         LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
         int result = instance.getRosterTypeCount();
-        assertEquals(result, 26);
+        assertEquals(result, 28);
     }
 
     /**
@@ -418,316 +419,6 @@ public class LRBNGTest {
     }
 
     /**
-     * Test of isChef_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsChef_enabled() {
-        System.out.println("isChef_enabled");
-        boolean expResult = false;
-        LRB.getLRB(LRB.E_Version.BB2016);
-        boolean result = LRB.isChef_enabled();
-        assertEquals(result, true);
-    }
-
-    /**
-     * Test of setChef_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetChef_enabled() {
-        System.out.println("setChef_enabled");
-        boolean _chef_enabled = false;
-        LRB.getLRB(LRB.E_Version.BB2016);
-        boolean result = LRB.isChef_enabled();
-        assertEquals(result, true);
-        LRB.setChef_enabled(_chef_enabled);
-        result = LRB.isChef_enabled();
-        assertEquals(result, false);
-    }
-
-    /**
-     * Test of isMercenaries_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsMercenaries_enabled() {
-        System.out.println("isMercenaries_enabled");
-        boolean expResult = true;
-        LRB.getLRB(LRB.E_Version.BB2016);
-        boolean result = LRB.isMercenaries_enabled();
-        assertEquals(result, expResult);
-    }
-
-    /**
-     * Test of setMercenaries_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetMercenaries_enabled() {
-        System.out.println("setMercenaries_enabled");
-        boolean expResult = true;
-        LRB.getLRB(LRB.E_Version.BB2016);
-        boolean result = LRB.isMercenaries_enabled();
-        assertEquals(result, expResult);
-
-        boolean _mercenaries_enabled = false;
-        LRB.setMercenaries_enabled(_mercenaries_enabled);
-        result = LRB.isMercenaries_enabled();
-        assertEquals(result, _mercenaries_enabled);
-    }
-
-    /**
-     * Test of isBabes_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsBabes_enabled() {
-        System.out.println("isBabes_enabled");
-        boolean expResult = true;
-        boolean result = LRB.isBabes_enabled();
-        assertEquals(result, expResult);
-    }
-
-    /**
-     * Test of setBabes_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetBabes_enabled() {
-        System.out.println("setBabes_enabled");
-        boolean _babes_enabled = false;
-        LRB.setBabes_enabled(_babes_enabled);
-
-        boolean result = LRB.isBabes_enabled();
-        assertEquals(result, _babes_enabled);
-        _babes_enabled = true;
-        LRB.setBabes_enabled(_babes_enabled);
-        result = LRB.isBabes_enabled();
-        assertEquals(result, _babes_enabled);
-    }
-
-    /**
-     * Test of isWizard_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsWizard_enabled() {
-        System.out.println("isWizard_enabled");
-        boolean expResult = true;
-        LRB.unloadLRB();
-        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
-        boolean result = instance.isWizard_enabled();
-        assertEquals(result, expResult);
-    }
-
-    /**
-     * Test of setWizard_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetWizard_enabled() {
-        System.out.println("setWizard_enabled");
-        boolean _wizard_enabled = false;
-        LRB.setWizard_enabled(_wizard_enabled);
-        boolean result = LRB.isWizard_enabled();
-        assertEquals(result, _wizard_enabled);
-        _wizard_enabled = true;
-        LRB.setWizard_enabled(_wizard_enabled);
-        result = LRB.isWizard_enabled();
-        assertEquals(result, _wizard_enabled);
-    }
-
-    /**
-     * Test of isReroll_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsReroll_enabled() {
-        System.out.println("isReroll_enabled");
-        boolean expResult = true;
-        LRB.unloadLRB();
-        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
-        boolean result = LRB.isReroll_enabled();
-        assertEquals(result, expResult);
-
-    }
-
-    /**
-     * Test of setReroll_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetReroll_enabled() {
-        System.out.println("setReroll_enabled");
-        boolean _reroll_enabled = false;
-        LRB.setReroll_enabled(_reroll_enabled);
-        boolean result = LRB.isReroll_enabled();
-        assertEquals(result, _reroll_enabled);
-        _reroll_enabled = true;
-        LRB.setReroll_enabled(_reroll_enabled);
-        result = LRB.isReroll_enabled();
-        assertEquals(result, _reroll_enabled);
-    }
-
-    /**
-     * Test of isLocal_apothecaries_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsLocal_apothecaries_enabled() {
-        System.out.println("isLocal_apothecaries_enabled");
-        boolean expResult = true;
-        boolean result = LRB.isLocal_apothecaries_enabled();
-        assertEquals(result, expResult);
-    }
-
-    /**
-     * Test of setLocal_apothecaries_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetLocal_apothecaries_enabled() {
-        System.out.println("setLocal_apothecaries_enabled");
-        boolean _local_apothecaries_enabled = false;
-        LRB.setLocal_apothecaries_enabled(_local_apothecaries_enabled);
-        boolean result = LRB.isLocal_apothecaries_enabled();
-        assertEquals(result, _local_apothecaries_enabled);
-        _local_apothecaries_enabled = true;
-        LRB.setLocal_apothecaries_enabled(_local_apothecaries_enabled);
-        result = LRB.isLocal_apothecaries_enabled();
-        assertEquals(result, _local_apothecaries_enabled);
-    }
-
-    /**
-     * Test of isIgor_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsIgor_enabled() {
-        System.out.println("isIgor_enabled");
-        boolean expResult = true;
-        boolean result = LRB.isIgor_enabled();
-        assertEquals(result, expResult);
-
-    }
-
-    /**
-     * Test of setIgor_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetIgor_enabled() {
-        System.out.println("setIgor_enabled");
-        boolean _igor_enabled = false;
-        LRB.setIgor_enabled(_igor_enabled);
-        boolean result = LRB.isIgor_enabled();
-        assertEquals(result, _igor_enabled);
-        _igor_enabled = true;
-        LRB.setIgor_enabled(_igor_enabled);
-        result = LRB.isIgor_enabled();
-        assertEquals(result, _igor_enabled);
-    }
-
-    /**
-     * Test of isCards_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsCards_enabled() {
-        System.out.println("isCards_enabled");
-        boolean expResult = true;
-        boolean result = LRB.isCards_enabled();
-        assertEquals(result, expResult);
-    }
-
-    /**
-     * Test of setCards_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetCards_enabled() {
-        System.out.println("setCards_enabled");
-        boolean _cards_enabled = false;
-        LRB.setCards_enabled(_cards_enabled);
-        boolean result = LRB.isCards_enabled();
-        assertEquals(result, _cards_enabled);
-        _cards_enabled = true;
-        LRB.setCards_enabled(_cards_enabled);
-        result = LRB.isCards_enabled();
-        assertEquals(result, _cards_enabled);
-    }
-
-    /**
-     * Test of isStarplayers_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsStarplayers_enabled() {
-        System.out.println("isStarplayers_enabled");
-        boolean expResult = true;
-        LRB.unloadLRB();
-        LRB instance = LRB.getLRB(LRB.E_Version.BB2016);
-        boolean result = instance.isStarplayers_enabled();
-        assertEquals(result, expResult);
-    }
-
-    /**
-     * Test of setStarplayers_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetStarplayers_enabled() {
-        System.out.println("setStarplayers_enabled");
-        boolean _starplayers_enabled = false;
-        LRB.setStarplayers_enabled(_starplayers_enabled);
-                boolean result = LRB.isStarplayers_enabled();
-        assertEquals(result, _starplayers_enabled);
-        _starplayers_enabled = true;
-        LRB.setStarplayers_enabled(_starplayers_enabled);
-                 result = LRB.isStarplayers_enabled();
-        assertEquals(result, _starplayers_enabled);
-    }
-
-    /**
-     * Test of isBribes_enabled method, of class LRB.
-     */
-    @Test
-    public void testIsBribes_enabled() {
-        System.out.println("isBribes_enabled");
-        boolean expResult = true;
-        boolean result = LRB.isBribes_enabled();
-        assertEquals(result, expResult);
-
-    }
-
-    /**
-     * Test of setBribes_enabled method, of class LRB.
-     */
-    @Test
-    public void testSetBribes_enabled() {
-        System.out.println("setBribes_enabled");
-        boolean _bribes_enabled = false;
-        LRB.setBribes_enabled(_bribes_enabled);
-         boolean result = LRB.isBribes_enabled();
-        assertEquals(result, _bribes_enabled);
-        _bribes_enabled = true;
-        LRB.setBribes_enabled(_bribes_enabled);
-          result = LRB.isBribes_enabled();
-        assertEquals(result, _bribes_enabled);
-    }
-
-    /**
-     * Test of isCheck_nb_big_guys method, of class LRB.
-     */
-    @Test
-    public void testIsCheck_nb_big_guys() {
-        System.out.println("isCheck_nb_big_guys");
-        boolean expResult = false;
-        boolean result = LRB.isCheck_nb_big_guys();
-        assertEquals(result, expResult);
-        
-    }
-
-    /**
-     * Test of setCheck_nb_big_guys method, of class LRB.
-     */
-    @Test
-    public void testSetCheck_nb_big_guys() {
-        System.out.println("setCheck_nb_big_guys");
-        boolean _check_nb_big_guys = false;
-        LRB.setCheck_nb_big_guys(_check_nb_big_guys);
-        boolean result = LRB.isCheck_nb_big_guys();
-        assertEquals(result, _check_nb_big_guys);
-        _check_nb_big_guys = true;
-        LRB.setCheck_nb_big_guys(_check_nb_big_guys);
-        result = LRB.isCheck_nb_big_guys();
-        assertEquals(result, _check_nb_big_guys);
-    }
-
-    /**
      * Test of getVersion method, of class LRB.
      */
     @Test
@@ -746,12 +437,11 @@ public class LRBNGTest {
     @Test
     public void testIsCheckNbBigGuys() {
         System.out.println("isCheckNbBigGuys");
-        LRB instance = null;
+         LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
         boolean expResult = false;
-        boolean result = instance.isCheckNbBigGuys();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean result = lrb.isCheckNbBigGuys();
+        assertEquals(result, expResult);      
+        
     }
 
     /**
@@ -760,11 +450,15 @@ public class LRBNGTest {
     @Test
     public void testSetCheckNbBigGuys() {
         System.out.println("setCheckNbBigGuys");
-        boolean check_nb_big_guys = false;
-        LRB instance = null;
-        instance.setCheckNbBigGuys(check_nb_big_guys);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2016);
+        boolean result=lrb.isCheckNbBigGuys();
+        assertEquals(result, false);
+        
+        lrb.setCheckNbBigGuys(true);
+        result=lrb.isCheckNbBigGuys();
+        assertEquals(result, true);
+        
     }
 
 }

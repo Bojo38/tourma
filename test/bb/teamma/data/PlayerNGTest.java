@@ -5,12 +5,6 @@
  */
 package bb.teamma.data;
 
-import bb.teamma.data.LRB;
-import bb.teamma.data.PlayerType;
-import bb.teamma.data.Skill;
-import bb.teamma.data.SkillType;
-import bb.teamma.data.Roster;
-import bb.teamma.data.Player;
 import java.io.File;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;

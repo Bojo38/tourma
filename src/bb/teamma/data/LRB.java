@@ -43,10 +43,6 @@ public final class LRB {
     private static final Object myLock = new Object();
     private static final Logger LOG = Logger.getLogger(LRB.class.getName());
 
-    public static boolean isChef_enabled() {
-        return _chef_enabled;
-    }
-
     private E_Version _version = E_Version.BB2016;
 
     public E_Version getVersion() {
@@ -61,16 +57,8 @@ public final class LRB {
         _starplayers_enabled = starplayers_enabled;
     }
 
-    private static boolean _chef_enabled = true;
-    private static boolean _bribes_enabled = true;
-
-    public static boolean isBribes_enabled() {
-        return _bribes_enabled;
-    }
-
-    public static void setBribes_enabled(boolean _bribes_enabled) {
-        LRB._bribes_enabled = _bribes_enabled;
-    }
+    
+   
 
     private boolean _starplayers_enabled = true;
     private boolean _check_nb_big_guys = false;

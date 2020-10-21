@@ -10,9 +10,9 @@ package bb.teamma.data;
  * @author WFMJ7631
  */
 public class InducementType {
-    private String _name;
-    private int _cost;
-    private int _nbMax;
+    private String _name="";
+    private int _cost=0;
+    private int _nbMax=0;
 
     public String getName() {
         return _name;
