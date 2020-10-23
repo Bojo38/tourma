@@ -126,11 +126,11 @@ public class IRankedNGTest {
             return 0;
         }
 
-        public String getDetail() throws RemoteException {
+        public String getDetail()  {
             return "";
         }
 
-        public void setDetail(String s) throws RemoteException {
+        public void setDetail(String s){
         }
     }
     

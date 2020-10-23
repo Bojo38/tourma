@@ -263,7 +263,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
     private void addCounterPerRoster() {
 
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            Criterion crit = mTournament.getParams().getCriteria(i);
+            Criterion crit = mTournament.getParams().getCriterion(i);
             final HashMap<String, Double> plus = new HashMap<>();
             final HashMap<String, Double> minus = new HashMap<>();
             final HashMap<String, Double> total = new HashMap<>();
@@ -389,7 +389,7 @@ public final class JPNStatistics extends javax.swing.JPanel {
             total.put(roster, 0.0);
         }
 
-        final Criterion Td = mTournament.getParams().getCriteria(0);
+        final Criterion Td = mTournament.getParams().getCriterion(0);
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
             final Round r = mTournament.getRound(i);
             for (int j = 0; j < r.getCoachMatchs().size(); j++) {

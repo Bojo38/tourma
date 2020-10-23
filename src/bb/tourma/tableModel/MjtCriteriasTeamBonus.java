@@ -86,25 +86,25 @@ public class MjtCriteriasTeamBonus extends AbstractTableModel implements TableCe
         Object result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                result = mParams.getCriteria(row).getName();
+                result = mParams.getCriterion(row).getName();
                 break;
             case 1:
-                result = mParams.getCriteria(row).getOffensiveThresholdByTeam();
+                result = mParams.getCriterion(row).getOffensiveThresholdByTeam();
                 break;
             case 2:
-                result = mParams.getCriteria(row).getOffensiveDiffThresholdByTeam();
+                result = mParams.getCriterion(row).getOffensiveDiffThresholdByTeam();
                 break;
             case 3:
-                result = mParams.getCriteria(row).getDefensiveDiffThresholdByTeam();
+                result = mParams.getCriterion(row).getDefensiveDiffThresholdByTeam();
                 break;
             case 4:
-                result = mParams.getCriteria(row).getOffensiveBonusesByTeam();
+                result = mParams.getCriterion(row).getOffensiveBonusesByTeam();
                 break;
             case 5:
-                result = mParams.getCriteria(row).getOffensiveDiffBonusesByTeam();
+                result = mParams.getCriterion(row).getOffensiveDiffBonusesByTeam();
                 break;
             case 6:
-                result = mParams.getCriteria(row).getDefensiveDiffBonusesByTeam();
+                result = mParams.getCriterion(row).getDefensiveDiffBonusesByTeam();
                 break;
             default:
         }
@@ -118,7 +118,7 @@ public class MjtCriteriasTeamBonus extends AbstractTableModel implements TableCe
             boolean exists = false;
             for (int i = 0; i < mParams.getCriteriaCount(); i++) {
                 if (i != row) {
-                    if (value.toString().equals(mParams.getCriteria(i).getName())) {
+                    if (value.toString().equals(mParams.getCriterion(i).getName())) {
                         exists = true;
                         break;
                     }
@@ -131,7 +131,7 @@ public class MjtCriteriasTeamBonus extends AbstractTableModel implements TableCe
             } else {
 
                 String tmp = value.toString();
-                final Criterion c = mParams.getCriteria(row);
+                final Criterion c = mParams.getCriterion(row);
                 int val;
                 switch (col) {
                     case 0:

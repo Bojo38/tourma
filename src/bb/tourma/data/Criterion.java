@@ -38,6 +38,25 @@ public class Criterion implements IXMLExport, Serializable {
         this.mPointsFor = crit.mPointsFor;
         this.mPointsTeamAgainst = crit.mPointsTeamAgainst;
         this.mPointsTeamFor = crit.mPointsTeamFor;
+
+        this.mAccronym = crit.mAccronym;
+
+        this.mCriticalValueThreshold = crit.mCriticalValueThreshold;
+        this.mOffensiveDiffThreshold = crit.mOffensiveDiffThreshold;
+        this.mDefensiveDiffThreshold = crit.mDefensiveDiffThreshold;
+        this.mOffensiveDiffBonuses = crit.mOffensiveDiffBonuses;
+        this.mDefensiveDiffBonuses = crit.mDefensiveDiffBonuses;
+        this.mOffensiveThreshold = crit.mOffensiveThreshold;
+        this.mOffensiveBonuses = crit.mOffensiveBonuses;
+        this.mOffensiveDiffThresholdByTeam = crit.mOffensiveDiffThresholdByTeam;
+        this.mDefensiveDiffThresholdByTeam = crit.mDefensiveDiffThresholdByTeam;
+        this.mOffensiveDiffBonusesByTeam = crit.mOffensiveDiffBonusesByTeam;
+        this.mDefensiveDiffBonusesByTeam = crit.mDefensiveDiffBonusesByTeam;
+        this.mOffensiveThresholdByTeam = crit.mOffensiveThresholdByTeam;
+        this.mOffensiveBonusesByTeam = crit.mOffensiveBonusesByTeam;
+        this.mOffensiveDiffBonusesForTeam = crit.mOffensiveDiffBonusesForTeam;
+        this.mDefensiveDiffBonusesForTeam = crit.mDefensiveDiffBonusesForTeam;
+        this.mOffensiveBonusesForTeam = crit.mOffensiveBonusesForTeam;
     }
 
     protected static final Logger LOG = Logger.getLogger(Criterion.class.getName());
@@ -52,12 +71,10 @@ public class Criterion implements IXMLExport, Serializable {
     protected String mAccronym;
 
     public String getAccronym() {
-        if (mAccronym==null)
-        {
+        if (mAccronym == null) {
             return mName;
         }
-        if (mAccronym.equals(""))
-        {
+        if (mAccronym.equals("")) {
             return mName;
         }
         return mAccronym;
@@ -99,7 +116,6 @@ public class Criterion implements IXMLExport, Serializable {
      */
     protected int mDefensiveDiffThreshold;
 
-    
     /**
      * Value if offensive diff bonus
      */
@@ -146,7 +162,7 @@ public class Criterion implements IXMLExport, Serializable {
      * Value if offensive bonus
      */
     protected int mOffensiveBonusesByTeam;
-    
+
     /**
      * Value if offensive diff bonus
      */
@@ -161,7 +177,6 @@ public class Criterion implements IXMLExport, Serializable {
      */
     protected int mOffensiveBonusesForTeam;
 
-    
     /**
      *
      * @param name
@@ -228,11 +243,10 @@ public class Criterion implements IXMLExport, Serializable {
         crit.setAttribute(StringConstants.CS_DIFF_DEFENSIVE_BONUS_THRESHOLD, Integer.toString(this.getDefensiveDiffThreshold()));
         crit.setAttribute(StringConstants.CS_OFFENSIVE_BONUS_THRESHOLD, Integer.toString(this.getOffensiveThreshold()));
         crit.setAttribute(StringConstants.CS_DIFF_OFFENSIVE_BONUS_THRESHOLD, Integer.toString(this.getOffensiveDiffThreshold()));
-        
+
         crit.setAttribute(StringConstants.CS_FOR_TEAM_DIFF_DEFENSIVE_BONUS, Integer.toString(this.getDefensiveDiffBonusesForTeam()));
         crit.setAttribute(StringConstants.CS_FOR_TEAM_OFFENSIVE_BONUS, Integer.toString(this.getOffensiveBonusesForTeam()));
         crit.setAttribute(StringConstants.CS_FOR_TEAM_DIFF_OFFENSIVE_BONUS, Integer.toString(this.getOffensiveDiffBonusesForTeam()));
-
 
         crit.setAttribute(StringConstants.CS_TEAM_DIFF_DEFENSIVE_BONUS, Integer.toString(this.getDefensiveDiffBonusesByTeam()));
         crit.setAttribute(StringConstants.CS_TEAM_OFFENSIVE_BONUS, Integer.toString(this.getOffensiveBonusesByTeam()));
@@ -262,11 +276,11 @@ public class Criterion implements IXMLExport, Serializable {
             this.setPointsTeamAgainst(criteria.getAttribute(StringConstants.CS_TEAM_POINTS_AGAINST).getIntValue());
             try {
                 this.setCriticalThreshold(criteria.getAttribute(StringConstants.CS_CRITICAL_THRESHOLD).getIntValue());
-                
+
             } catch (NullPointerException npe) {
                 this.setCriticalThreshold(10);
             }
-             try {
+            try {
                 this.setAccronym(criteria.getAttributeValue(StringConstants.CS_CRITERION_ACCRONYM));
             } catch (NullPointerException npe) {
                 this.setCriticalThreshold(10);
@@ -277,21 +291,21 @@ public class Criterion implements IXMLExport, Serializable {
                 this.setDefensiveDiffBonuses(criteria.getAttribute(StringConstants.CS_DIFF_DEFENSIVE_BONUS).getIntValue());
                 this.setDefensiveDiffBonusesForTeam(criteria.getAttribute(StringConstants.CS_FOR_TEAM_DIFF_DEFENSIVE_BONUS).getIntValue());
                 this.setDefensiveDiffBonusesByTeam(criteria.getAttribute(StringConstants.CS_TEAM_DIFF_DEFENSIVE_BONUS).getIntValue());
-                
+
                 this.setDefensiveDiffThreshold(criteria.getAttribute(StringConstants.CS_DIFF_DEFENSIVE_BONUS_THRESHOLD).getIntValue());
                 this.setDefensiveDiffThresholdByTeam(criteria.getAttribute(StringConstants.CS_TEAM_DIFF_DEFENSIVE_BONUS_THRESHOLD).getIntValue());
-                
+
                 this.setOffensiveBonuses(criteria.getAttribute(StringConstants.CS_OFFENSIVE_BONUS).getIntValue());
                 this.setOffensiveBonusesForTeam(criteria.getAttribute(StringConstants.CS_FOR_TEAM_OFFENSIVE_BONUS).getIntValue());
                 this.setOffensiveBonusesByTeam(criteria.getAttribute(StringConstants.CS_TEAM_OFFENSIVE_BONUS).getIntValue());
-                
+
                 this.setOffensiveDiffBonuses(criteria.getAttribute(StringConstants.CS_DIFF_OFFENSIVE_BONUS).getIntValue());
-                this.setOffensiveDiffBonusesForTeam(criteria.getAttribute(StringConstants.CS_FOR_TEAM_DIFF_OFFENSIVE_BONUS).getIntValue());                
-                this.setOffensiveDiffBonusesByTeam(criteria.getAttribute(StringConstants.CS_TEAM_DIFF_OFFENSIVE_BONUS).getIntValue());                
-                
+                this.setOffensiveDiffBonusesForTeam(criteria.getAttribute(StringConstants.CS_FOR_TEAM_DIFF_OFFENSIVE_BONUS).getIntValue());
+                this.setOffensiveDiffBonusesByTeam(criteria.getAttribute(StringConstants.CS_TEAM_DIFF_OFFENSIVE_BONUS).getIntValue());
+
                 this.setOffensiveDiffThreshold(criteria.getAttribute(StringConstants.CS_DIFF_OFFENSIVE_BONUS_THRESHOLD).getIntValue());
                 this.setOffensiveDiffThresholdByTeam(criteria.getAttribute(StringConstants.CS_TEAM_DIFF_OFFENSIVE_BONUS_THRESHOLD).getIntValue());
-                
+
                 this.setOffensiveThreshold(criteria.getAttribute(StringConstants.CS_OFFENSIVE_BONUS_THRESHOLD).getIntValue());
                 this.setOffensiveThresholdByTeam(criteria.getAttribute(StringConstants.CS_TEAM_OFFENSIVE_BONUS_THRESHOLD).getIntValue());
 
@@ -384,8 +398,7 @@ public class Criterion implements IXMLExport, Serializable {
     public void setPointsTeamAgainst(int mPointsTeamAgainst) {
         this.mPointsTeamAgainst = mPointsTeamAgainst;
     }
-    
-    
+
     public int getOffensiveDiffThreshold() {
         return mOffensiveDiffThreshold;
     }
@@ -482,7 +495,6 @@ public class Criterion implements IXMLExport, Serializable {
         this.mOffensiveThresholdByTeam = mOffensiveThresholdByTeam;
     }
 
-
     public int getOffensiveDiffBonusesForTeam() {
         return mOffensiveDiffBonusesForTeam;
     }
@@ -497,7 +509,7 @@ public class Criterion implements IXMLExport, Serializable {
 
     public void setDefensiveDiffBonusesForTeam(int mDefensiveDiffBonusesForTeam) {
         this.mDefensiveDiffBonusesForTeam = mDefensiveDiffBonusesForTeam;
-    } 
+    }
 
     public int getOffensiveBonusesForTeam() {
         return mOffensiveBonusesForTeam;
@@ -506,6 +518,5 @@ public class Criterion implements IXMLExport, Serializable {
     public void setOffensiveBonusesForTeam(int mOffensiveBonusesForTeam) {
         this.mOffensiveBonusesForTeam = mOffensiveBonusesForTeam;
     }
-    
-    
+
 }

@@ -42,7 +42,7 @@ public class Parameters implements IXMLExport, Serializable {
         this.UID = UID;
     }
 
-    public Criterion getCriteria(String name) {
+    public Criterion getCriterion(String name) {
         for (Criterion criteria : mCriterias) {
             if (criteria.getName().equals(name) || criteria.getAccronym().equals(name)) {
                 return criteria;
@@ -89,7 +89,7 @@ public class Parameters implements IXMLExport, Serializable {
         boolean bFound = false;
         for (int i = 0; i < params.getCriteriaCount(); i++) {
             bFound = false;
-            Criterion crit = params.getCriteria(i);
+            Criterion crit = params.getCriterion(i);
             for (Criterion c : mCriterias) {
                 if ((crit.getUID() == c.UID) || (crit.getName().equals(c.getName()))) {
                     bFound = true;
@@ -661,7 +661,7 @@ public class Parameters implements IXMLExport, Serializable {
         params.setAttribute(StringConstants.CS_PLACE, this.getTournamentName());
 
         for (int i = 0; i < this.getCriteriaCount(); i++) {
-            final Element crit = getCriteria(i).getXMLElement();
+            final Element crit = Parameters.this.getCriterion(i).getXMLElement();
             params.addContent(crit);
         }
 
@@ -1149,11 +1149,11 @@ public class Parameters implements IXMLExport, Serializable {
      * @param i
      * @return the mCriterias
      */
-    public Criterion getCriteria(int i) {
+    public Criterion getCriterion(int i) {
         return mCriterias.get(i);
     }
 
-    public int getIndexOfCriteria(Criterion c) {
+    public int getIndexOfCriterion(Criterion c) {
         return mCriterias.indexOf(c);
     }
 

@@ -44,12 +44,6 @@ import bb.tourma.data.ranking.ClanRanking;
 import bb.tourma.data.ranking.IndivRanking;
 import bb.tourma.data.ranking.TeamRanking;
 import bb.tourma.languages.Translate;
-import bb.tourma.tableModel.MjtAnnexRankClan;
-import bb.tourma.tableModel.MjtAnnexRankIndiv;
-import bb.tourma.tableModel.MjtAnnexRankTeam;
-import bb.tourma.tableModel.MjtRankingClan;
-import bb.tourma.tableModel.MjtRankingIndiv;
-import bb.tourma.tableModel.MjtRankingTeam;
 import bb.tourma.utility.StringConstants;
 import bb.tourma.utils.NAF;
 
@@ -95,10 +89,10 @@ public class Tournament implements IContainCoachs, Serializable {
         return mTeams;
     }
 
-     public ArrayList<Clan> getClans() {
+    public ArrayList<Clan> getClans() {
         return mClans;
     }
-    
+
     public ArrayList<Coach> getCoachs() {
         return mCoachs;
     }
@@ -791,10 +785,10 @@ public class Tournament implements IContainCoachs, Serializable {
         // Save rounds
         for (int i = 0; i < mRounds.size(); i++) {
 
+            mRounds.get(i).setRoundIndex(this,i);
             final Element round = mRounds.get(i).getXMLElement();
 
             if (withRanking) {
-
                 // Build list of rankings
                 final ArrayList<RankingForExport> rankings = new ArrayList<>();
                 final boolean forPool = (mPools.size() > 0) && (!mRounds.get(i).isCup());
@@ -868,7 +862,7 @@ public class Tournament implements IContainCoachs, Serializable {
                 }
                 // Annex ranking
                 for (int j = 0; j < mParams.getCriteriaCount(); j++) {
-                    final Criterion criteria = mParams.getCriteria(j);
+                    final Criterion criteria = mParams.getCriterion(j);
                     rankings.add(new RankingForExport(RankingForExport.CS_Individual,
                             criteria.getName(),
                             RankingForExport.CS_Positive,
@@ -1335,7 +1329,7 @@ public class Tournament implements IContainCoachs, Serializable {
         Criterion critInj = null;
 
         for (int i = 0; i < mParams.getCriteriaCount(); i++) {
-            final Criterion crit = mParams.getCriteria(i);
+            final Criterion crit = mParams.getCriterion(i);
             if (i == 0) {
                 critTd = crit;
             }
@@ -1644,15 +1638,21 @@ public class Tournament implements IContainCoachs, Serializable {
 
         while (j.hasNext()) {
             final Element round = j.next();
-            final Round r = new Round(getRoundsCount(),this);
+            final Round r = new Round(getRoundsCount(), this);
             r.setXMLElement(round);
+            r.setRoundIndex(this, getRoundsCount());
             mRounds.add(r);
-            
+
             r.update();
-           
+
         }
     }
 
+    public static void clear()
+    {
+        mSingleton=null;
+    }
+    
     /**
      *
      * @param file
@@ -1660,7 +1660,6 @@ public class Tournament implements IContainCoachs, Serializable {
     public void loadXML(final java.io.File file) {
 
         final SAXBuilder sxb = new SAXBuilder();
-
         try {
             final org.jdom.Document document = sxb.build(file);
             final Element racine = document.getRootElement();
@@ -1837,7 +1836,7 @@ public class Tournament implements IContainCoachs, Serializable {
             }
 
             if (!bFound) {
-                Round local = new Round(this.getRoundsCount(),this);
+                Round local = new Round(this.getRoundsCount(), this);
                 local.pull(round);
                 mRounds.add(local);
                 // Coaches and matches are synchronized later

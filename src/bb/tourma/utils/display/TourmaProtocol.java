@@ -178,7 +178,7 @@ public class TourmaProtocol {
                     }
                     array = new ArrayList();
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                        Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                         r = new RankingForExport(RankingForExport.CS_Individual_Annex,
                                 crit.getName(),
                                 RankingForExport.CS_Positive,
@@ -264,7 +264,7 @@ public class TourmaProtocol {
                     }
                     array = new ArrayList();
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                        Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                         r = new RankingForExport(RankingForExport.CS_Team_Annex,
                                 crit.getName(),
                                 RankingForExport.CS_Positive,
@@ -346,7 +346,7 @@ public class TourmaProtocol {
                     }
                     array = new ArrayList();
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                        Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                         r = new RankingForExport(RankingForExport.CS_Clan_Annex,
                                 crit.getName(),
                                 RankingForExport.CS_Positive,
@@ -470,7 +470,7 @@ public class TourmaProtocol {
                             }
                         }
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                            Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                             r = new RankingForExport(
                                     RankingForExport.CS_Individual_Annex,
                                     crit.getName() + "-" + g.getName(),
@@ -566,7 +566,7 @@ public class TourmaProtocol {
                             }
                         }
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                            Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                             r = new RankingForExport(
                                     RankingForExport.CS_Individual_Annex,
                                     crit.getName() + "-" + cat.getName(),

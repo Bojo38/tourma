@@ -399,7 +399,7 @@ public final class JdgGlobal extends javax.swing.JDialog {
             final ArrayList criterias = new ArrayList();
             for (int i = 0; i < mTour.getParams().getCriteriaCount(); i++) {
                 final HashMap criteria = new HashMap();
-                final Criterion c = mTour.getParams().getCriteria(i);
+                final Criterion c = mTour.getParams().getCriterion(i);
                 criteria.put(ReportKeys.CS_Name, StringEscapeUtils.escapeHtml3(c.getName()));
 
                 final MjtAnnexRank annexFor = mAnnexForRankings.get(c);

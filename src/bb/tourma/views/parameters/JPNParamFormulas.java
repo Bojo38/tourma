@@ -101,7 +101,7 @@ public final class JPNParamFormulas extends javax.swing.JPanel {
         final Formula f = new Formula(
                 Translate.translate(CS_Formula)
                 + " " + Integer.toString(nb));
-        f.setFormula(Tournament.getTournament().getParams().getCriteria(0).getAccronym()+"1");
+        f.setFormula(Tournament.getTournament().getParams().getCriterion(0).getAccronym()+"1");
         Tournament.getTournament().getParams().addFormula(f);
         
         for (int i = 0; i < mTournament.getRoundsCount(); i++) {
@@ -148,7 +148,7 @@ public final class JPNParamFormulas extends javax.swing.JPanel {
         description+="\n";
         for (int i=0; i<Tournament.getTournament().getParams().getCriteriaCount(); i++)
         {
-            Criterion crit=Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit=Tournament.getTournament().getParams().getCriterion(i);
             description+=crit.getAccronym()+"1 / "+crit.getAccronym()+"2\n";
         }
         jtxpDescription.setText(description);

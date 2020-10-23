@@ -204,7 +204,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                 if (!pool) {
 
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                        Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                         AnnexTeamRanking annexRank0 = mRound.getRankings(false).getTeamRankingSet().getAnnexPosRanking().get(crit);
                         AnnexTeamRanking annexRank1 = mRound.getRankings(false).getTeamRankingSet().getAnnexNegRanking().get(crit);
                         AnnexTeamRanking annexRank2 = mRound.getRankings(false).getTeamRankingSet().getAnnexDifRanking().get(crit);
@@ -225,7 +225,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
                         Pool p = Tournament.getTournament().getPool(cpt);
 
                         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                            Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
 
                             AnnexTeamRanking annexRank0 = mRound.getRankings(false).getPoolTeamRankings().get(p).getAnnexPosRanking().get(crit);
                             AnnexTeamRanking annexRank1 = mRound.getRankings(false).getPoolTeamRankings().get(p).getAnnexNegRanking().get(crit);
@@ -247,7 +247,7 @@ public final class JFullScreenClanTeamAnnex extends JFullScreen {
 
                 ArrayList<IRanked> rs = new ArrayList<>();
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                    Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                      AnnexClanRanking annexRank0 = mRound.getRankings(false).getClanRankingSet().getAnnexPosRanking().get(crit);
                      AnnexClanRanking annexRank1 = mRound.getRankings(false).getClanRankingSet().getAnnexNegRanking().get(crit);
                      AnnexClanRanking annexRank2 = mRound.getRankings(false).getClanRankingSet().getAnnexDifRanking().get(crit);

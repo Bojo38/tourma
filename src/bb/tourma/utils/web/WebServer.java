@@ -575,7 +575,7 @@ public class WebServer extends NanoHTTPD {
                 files.add(getWebpageFile("/round" + i + "_indiv", "round" + i + "_indiv.html", tmpDir));
 
                 for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                    Criterion c = Tournament.getTournament().getParams().getCriteria(j);
+                    Criterion c = Tournament.getTournament().getParams().getCriterion(j);
                     files.add(getWebpageFile("/round" + i + "_indiv_crit" + j, "round" + i + "_indiv_crit" + j + ".html", tmpDir));
                 }
 
@@ -587,7 +587,7 @@ public class WebServer extends NanoHTTPD {
                     files.add(getWebpageFile("/round" + i + "_teams", "round" + i + "_teams.html", tmpDir));
 
                     for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                        Criterion c = Tournament.getTournament().getParams().getCriteria(j);
+                        Criterion c = Tournament.getTournament().getParams().getCriterion(j);
                         files.add(getWebpageFile("/round" + i + "_team_crit" + j, "round" + i + "_team_crit" + j + ".html", tmpDir));
                     }
                 }
@@ -595,7 +595,7 @@ public class WebServer extends NanoHTTPD {
                 if (Tournament.getTournament().getClansCount() > 1) {
                     files.add(getWebpageFile("/round" + i + "_clans", "round" + i + "_clans.html", tmpDir));
                     for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                        Criterion c = Tournament.getTournament().getParams().getCriteria(j);
+                        Criterion c = Tournament.getTournament().getParams().getCriterion(j);
                         files.add(getWebpageFile("/round" + i + "_clan_crit" + j, "round" + i + "_clan_crit" + j + ".html", tmpDir));
                     }
                 }

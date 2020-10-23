@@ -763,13 +763,13 @@ public final class JdgReport extends javax.swing.JDialog {
 
             final ArrayList criterias = new ArrayList();
             for (int i = 0; i < nb_criterias; i++) {
-                criterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getAccronym()));
+                criterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriterion(i).getAccronym()));
             }
             root.put(ReportKeys.CS_Criterias, criterias);
 
             final ArrayList rcriterias = new ArrayList();
             for (int i = nb_criterias - 1; i >= 0; i--) {
-                rcriterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getAccronym()));
+                rcriterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriterion(i).getAccronym()));
             }
             root.put("rcriterias", rcriterias);
 
@@ -791,11 +791,11 @@ public final class JdgReport extends javax.swing.JDialog {
 
             ArrayList<Integer> values = new ArrayList<>();
 
-            Criterion td = Tournament.getTournament().getParams().getCriteria(0);
+            Criterion td = Tournament.getTournament().getParams().getCriterion(0);
 
             // Find value + for each matches
             for (int j = 0; j < nb_criterias; j++) {
-                Criterion crit = mTour.getParams().getCriteria(j);
+                Criterion crit = mTour.getParams().getCriterion(j);
                 int val = 0;
                 for (int k = 0; k < coach.getMatchCount(); k++) {
                     CoachMatch cm = (CoachMatch) coach.getMatch(k);
@@ -829,7 +829,7 @@ public final class JdgReport extends javax.swing.JDialog {
             }
             // Find value - for each matches
             for (int j = 0; j < nb_criterias; j++) {
-                Criterion crit = mTour.getParams().getCriteria(j);
+                Criterion crit = mTour.getParams().getCriterion(j);
                 int val = 0;
                 for (int k = 0; k < coach.getMatchCount(); k++) {
                     CoachMatch cm = (CoachMatch) coach.getMatch(k);
@@ -864,7 +864,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
             hCoach.put("values", values);
             coaches_summary.add(hCoach);
-            //StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getName()));
+            //StringEscapeUtils.escapeHtml3(mTour.getParams().getCriterion(i).getName()));
 
             root.put("coaches_summary", coaches_summary);
 
@@ -884,7 +884,7 @@ public final class JdgReport extends javax.swing.JDialog {
             ArrayList values2 = new ArrayList();
             Round r = Tournament.getTournament().getRound(round_index - 1);
             for (int j = 0; j < nb_criterias; j++) {
-                Criterion crit = mTour.getParams().getCriteria(j);
+                Criterion crit = mTour.getParams().getCriterion(j);
                 int val = 0;
                 for (int k = 0; k < coach.getMatchCount(); k++) {
                     CoachMatch cm = (CoachMatch) coach.getMatch(k);
@@ -947,7 +947,7 @@ public final class JdgReport extends javax.swing.JDialog {
                 values = new ArrayList();
                 r = Tournament.getTournament().getRound(j);
                 for (int k = 0; k < nb_criterias; k++) {
-                    Criterion crit = mTour.getParams().getCriteria(k);
+                    Criterion crit = mTour.getParams().getCriterion(k);
                     int val = 0;
                     for (int l = 0; l < coach.getMatchCount(); l++) {
                         CoachMatch cm = (CoachMatch) coach.getMatch(l);
@@ -1055,7 +1055,7 @@ public final class JdgReport extends javax.swing.JDialog {
                 ArrayList val1 = new ArrayList();
                 ArrayList val2 = new ArrayList();
                 for (int k = 0; k < nb_criterias; k++) {
-                    Criterion crit = mTour.getParams().getCriteria(k);
+                    Criterion crit = mTour.getParams().getCriterion(k);
                     Value value = cm.getValue(crit);
 
                     if (crit == td) {
@@ -1203,13 +1203,13 @@ public final class JdgReport extends javax.swing.JDialog {
 
             final ArrayList criterias = new ArrayList();
             for (int i = 0; i < nb_criterias; i++) {
-                criterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getAccronym()));
+                criterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriterion(i).getAccronym()));
             }
             root.put(ReportKeys.CS_Criterias, criterias);
 
             final ArrayList rcriterias = new ArrayList();
             for (int i = nb_criterias - 1; i >= 0; i--) {
-                rcriterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getAccronym()));
+                rcriterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriterion(i).getAccronym()));
             }
             root.put("rcriterias", rcriterias);
 
@@ -1247,7 +1247,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
                 // Find value + for each matches
                 for (int j = 0; j < nb_criterias; j++) {
-                    Criterion crit = mTour.getParams().getCriteria(j);
+                    Criterion crit = mTour.getParams().getCriterion(j);
                     int val = 0;
                     for (int k = 0; k < coach.getMatchCount(); k++) {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
@@ -1263,7 +1263,7 @@ public final class JdgReport extends javax.swing.JDialog {
                 }
                 // Find value - for each matches
                 for (int j = 0; j < nb_criterias; j++) {
-                    Criterion crit = mTour.getParams().getCriteria(j);
+                    Criterion crit = mTour.getParams().getCriterion(j);
                     int val = 0;
                     for (int k = 0; k < coach.getMatchCount(); k++) {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
@@ -1280,7 +1280,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
                 hCoach.put("values", values);
                 coaches_summary.add(hCoach);
-                //StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getName()));
+                //StringEscapeUtils.escapeHtml3(mTour.getParams().getCriterion(i).getName()));
             }
             root.put("coaches_summary", coaches_summary);
 
@@ -1301,7 +1301,7 @@ public final class JdgReport extends javax.swing.JDialog {
                 ArrayList values = new ArrayList();
                 Round r = Tournament.getTournament().getRound(round_index - 1);
                 for (int j = 0; j < nb_criterias; j++) {
-                    Criterion crit = mTour.getParams().getCriteria(j);
+                    Criterion crit = mTour.getParams().getCriterion(j);
                     int val = 0;
                     for (int k = 0; k < coach.getMatchCount(); k++) {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
@@ -1343,7 +1343,7 @@ public final class JdgReport extends javax.swing.JDialog {
                     values = new ArrayList();
                     r = Tournament.getTournament().getRound(j);
                     for (int k = 0; k < nb_criterias; k++) {
-                        Criterion crit = mTour.getParams().getCriteria(k);
+                        Criterion crit = mTour.getParams().getCriterion(k);
                         int val = 0;
                         for (int l = 0; l < coach.getMatchCount(); l++) {
                             CoachMatch cm = (CoachMatch) coach.getMatch(l);
@@ -1415,7 +1415,7 @@ public final class JdgReport extends javax.swing.JDialog {
                     ArrayList values1 = new ArrayList();
                     ArrayList values2 = new ArrayList();
                     for (int k = 0; k < nb_criterias; k++) {
-                        Criterion crit = mTour.getParams().getCriteria(k);
+                        Criterion crit = mTour.getParams().getCriterion(k);
                         Value value = cm.getValue(crit);
                         values1.add(0, value.getValue1());
                         values2.add(value.getValue2());
@@ -1500,7 +1500,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
         mRanking = new IndivRanking(mRoundNumber, Tournament.getTournament().getParams(), coaches, Tournament.getTournament().getParams().isTeamTournament(), false, false, false);
         
-        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriterion(0);
         try {
             final Configuration cfg = new Configuration();
             final URI uri = getClass().getResource("/bb/tourma/views/report").toURI();
@@ -1548,13 +1548,13 @@ public final class JdgReport extends javax.swing.JDialog {
 
             final ArrayList criterias = new ArrayList();
             for (int i = 0; i < nb_criterias; i++) {
-                criterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getAccronym()));
+                criterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriterion(i).getAccronym()));
             }
             root.put(ReportKeys.CS_Criterias, criterias);
 
             final ArrayList rcriterias = new ArrayList();
             for (int i = nb_criterias - 1; i >= 0; i--) {
-                rcriterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getAccronym()));
+                rcriterias.add(StringEscapeUtils.escapeHtml3(mTour.getParams().getCriterion(i).getAccronym()));
             }
             root.put("rcriterias", rcriterias);
 
@@ -1582,7 +1582,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
                 // Find value + for each matches
                 for (int j = 0; j < nb_criterias; j++) {
-                    Criterion crit = mTour.getParams().getCriteria(j);
+                    Criterion crit = mTour.getParams().getCriterion(j);
                     int val = 0;
                     for (int k = 0; k < coach.getMatchCount(); k++) {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
@@ -1616,7 +1616,7 @@ public final class JdgReport extends javax.swing.JDialog {
                 }
                 // Find value - for each matches
                 for (int j = 0; j < nb_criterias; j++) {
-                    Criterion crit = mTour.getParams().getCriteria(j);
+                    Criterion crit = mTour.getParams().getCriterion(j);
                     int val = 0;
                     for (int k = 0; k < coach.getMatchCount(); k++) {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
@@ -1651,7 +1651,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
                 hCoach.put("values", values);
                 coaches_summary.add(hCoach);
-                //StringEscapeUtils.escapeHtml3(mTour.getParams().getCriteria(i).getName()));
+                //StringEscapeUtils.escapeHtml3(mTour.getParams().getCriterion(i).getName()));
             }
             root.put("coaches_summary", coaches_summary);
 
@@ -1672,7 +1672,7 @@ public final class JdgReport extends javax.swing.JDialog {
                 ArrayList values = new ArrayList();
                 Round r = Tournament.getTournament().getRound(round_index - 1);
                 for (int j = 0; j < nb_criterias; j++) {
-                    Criterion crit = mTour.getParams().getCriteria(j);
+                    Criterion crit = mTour.getParams().getCriterion(j);
                     int val = 0;
                     for (int k = 0; k < coach.getMatchCount(); k++) {
                         CoachMatch cm = (CoachMatch) coach.getMatch(k);
@@ -1734,7 +1734,7 @@ public final class JdgReport extends javax.swing.JDialog {
                     values = new ArrayList();
                     r = Tournament.getTournament().getRound(j);
                     for (int k = 0; k < nb_criterias; k++) {
-                        Criterion crit = mTour.getParams().getCriteria(k);
+                        Criterion crit = mTour.getParams().getCriterion(k);
                         int val = 0;
                         for (int l = 0; l < coach.getMatchCount(); l++) {
                             CoachMatch cm = (CoachMatch) coach.getMatch(l);
@@ -1867,7 +1867,7 @@ public final class JdgReport extends javax.swing.JDialog {
                     ArrayList values1 = new ArrayList();
                     ArrayList values2 = new ArrayList();
                     for (int k = 0; k < nb_criterias; k++) {
-                        Criterion crit = mTour.getParams().getCriteria(k);
+                        Criterion crit = mTour.getParams().getCriterion(k);
                         Value value = cm.getValue(crit);
 
                         if (crit == td) {

@@ -5,6 +5,7 @@
  */
 package bb.tourma.data;
 
+import java.io.File;
 import java.util.ArrayList;
 import org.jdom.Element;
 import static org.testng.Assert.*;
@@ -25,10 +26,12 @@ public class CupNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        Tournament.clear();
     }
 
     @BeforeMethod

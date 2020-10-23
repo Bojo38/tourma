@@ -299,20 +299,21 @@ public class AnnexClanRanking extends AnnexRanking {
 
                         while ((l <= mRound) && (!bFound)) {
 
-                            //for (int l = 0; (l <= mRound) && (!bFound); l++) {
-                            final Round r = Tournament.getTournament().getRound(l);
-                            if (r.containsMatch(m)) {
-                                if (mCriterion != null) {
-                                    aValue.add(m.getValue(mCriterion, mSubtype, c));
-                                } else {
-                                    aValue.add(m.getValue(mFormula, c));
-                                }
+                            if (l < Tournament.getTournament().getRoundsCount()) {
+                                final Round r = Tournament.getTournament().getRound(l);
+                                if (r.containsMatch(m)) {
+                                    if (mCriterion != null) {
+                                        aValue.add(m.getValue(mCriterion, mSubtype, c));
+                                    } else {
+                                        aValue.add(m.getValue(mFormula, c));
+                                    }
 
-                                aValue1.add(m.getValue(1, c));
-                                aValue3.add(m.getValue(2, c));
-                                aValue3.add(m.getValue(3, c));
-                                aValue4.add(m.getValue(4, c));
-                                aValue5.add(m.getValue(5, c));
+                                    aValue1.add(m.getValue(1, c));
+                                    aValue3.add(m.getValue(2, c));
+                                    aValue3.add(m.getValue(3, c));
+                                    aValue4.add(m.getValue(4, c));
+                                    aValue5.add(m.getValue(5, c));
+                                }
                             }
                             l++;
                         }

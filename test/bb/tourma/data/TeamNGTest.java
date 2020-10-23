@@ -566,7 +566,7 @@ public class TeamNGTest {
             }
         }
         TeamMatch tm = (TeamMatch) r.getMatch(0);
-        Round r2 = new Round();
+        Round r2 = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Assert.assertFalse(((Team) tm.getCompetitor1()).canPlay(((Team) tm.getCompetitor2()), r2));
 
         TeamMatch tm2 = (TeamMatch) r.getMatch(1);
@@ -655,7 +655,7 @@ public class TeamNGTest {
         }
 
         Team instance = (Team) tm.getCompetitor1();
-        HashMap<Team, Integer> result = instance.getTeamOppositionCount(opponents, new Round());
+        HashMap<Team, Integer> result = instance.getTeamOppositionCount(opponents, new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament()));
         assertEquals(result.get((Team) tm.getCompetitor2()).intValue(), instance.getCoachsCount());
         assertEquals(result.get((Team) tm2.getCompetitor2()).intValue(), 0);
 

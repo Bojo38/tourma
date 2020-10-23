@@ -129,7 +129,7 @@ public class WebMatchResult {
                     sb.append("</th>");
                 }
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                    Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                     sb.append("<tr>");
                     sb.append("<td  class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(crit.getName()) + "</td>");
 
@@ -222,7 +222,7 @@ public class WebMatchResult {
             } else {
                 // Enter Values
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                    Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
 
                     String crit1 = parms.get(crit.getName() + "1");
                     String crit2 = parms.get(crit.getName() + "2");
@@ -272,7 +272,7 @@ public class WebMatchResult {
             sb.append("</th>");
 
             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                 Value v = coachmatch.getValue(crit);
                 sb.append("<tr>");
                 sb.append("<td>" + StringEscapeUtils.escapeHtml4(crit.getName()) + "</td>");

@@ -343,7 +343,7 @@ public class CoachNGTest {
             fail("No coach in tournament");
         }
         Coach instance = Coach.getCoach("Lord Bojo");
-        CoachMatch cm = new CoachMatch(new Round());
+        CoachMatch cm = new CoachMatch(new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament()));
         int nb = instance.getMatchCount();
         instance.addMatch(cm);
         assertEquals(nb + 1, instance.getMatchCount());
@@ -366,7 +366,7 @@ public class CoachNGTest {
         Coach instance = Coach.getCoach("Lord Bojo");
         Coach c = new Coach("None");
         int nb = instance.getMatchCount();
-        CoachMatch cm = instance.createMatch(c, new Round());
+        CoachMatch cm = instance.createMatch(c, new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament()));
         instance.addMatch(cm);
         assertEquals(nb + 1, instance.getMatchCount());
         instance.removeMatch(cm);
@@ -521,7 +521,7 @@ public class CoachNGTest {
         }
         Coach instance = Coach.getCoach("Lord Bojo");
         Coach n = new Coach("Opponent");
-        Round r = new Round();
+        Round r = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         CoachMatch cm = new CoachMatch(r);
         int nb = instance.getMatchCount();
         instance.addMatchRoundRobin(n, r,true);

@@ -159,7 +159,7 @@ public class MatchNGTest {
     @Test
     public void testGetRound() {
         System.out.println("getRound");
-        Round r=new Round();
+        Round r=new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Match instance = new MatchImpl();
         instance.setRound(r);
         assertTrue(r== instance.getRound());
@@ -171,7 +171,7 @@ public class MatchNGTest {
     @Test
     public void testSetRound() {
         System.out.println("setRound");
-       Round r=new Round();
+       Round r=new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Match instance = new MatchImpl();
         instance.setRound(r);
         assertTrue(r== instance.getRound());

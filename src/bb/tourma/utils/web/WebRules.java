@@ -85,7 +85,7 @@ public class WebRules {
         }
         rules.append("</tr>");
         for (int i = 0; i < params.getCriteriaCount(); i++) {
-            Criterion crit = params.getCriteria(i);
+            Criterion crit = params.getCriterion(i);
             rules.append("<tr>");
             rules.append("<td class=\"tab_result\">" + StringEscapeUtils.escapeHtml4(crit.getName()) + "</td>");
             rules.append("<td class=\"tab_result\">" + crit.getPointsFor() + "</td>");

@@ -75,7 +75,7 @@ public class TeamRanking extends Ranking {
 
         int nbVictory = 0;
         int nbLost = 0;
-        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriterion(0);
         for (int i = 0; i < v.size(); i++) {
             final CoachMatch m = v.get(i);
             final Value val = m.getValue(td);
@@ -121,7 +121,7 @@ public class TeamRanking extends Ranking {
 
         int nbVictory = 0;
         int nbLost = 0;
-        Criterion td = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion td = Tournament.getTournament().getParams().getCriterion(0);
         for (int i = 0; i < v.size(); i++) {
             final CoachMatch m = v.get(i);
             final Value val = m.getValue(td);
@@ -136,7 +136,7 @@ public class TeamRanking extends Ranking {
 
                 for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
 
-                    final Criterion cri = Tournament.getTournament().getParams().getCriteria(j);
+                    final Criterion cri = Tournament.getTournament().getParams().getCriterion(j);
                     final Value va = m.getValue(cri);
                     value += va.getValue1() + cri.getPointsFor();
                     value += va.getValue2() + cri.getPointsAgainst();
@@ -152,7 +152,7 @@ public class TeamRanking extends Ranking {
                     }
                 }
                 for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                    final Criterion cri = Tournament.getTournament().getParams().getCriteria(j);
+                    final Criterion cri = Tournament.getTournament().getParams().getCriterion(j);
                     final Value va = m.getValue(cri);
                     value += va.getValue2() + cri.getPointsFor();
                     value += va.getValue1() + cri.getPointsAgainst();
@@ -190,11 +190,11 @@ public class TeamRanking extends Ranking {
 
     protected boolean mTeamVictory;
 
-    public boolean ismTeamVictory() {
+    public boolean isTeamVictory() {
         return mTeamVictory;
     }
 
-    public void setmTeamVictory(boolean mTeamVictory) {
+    public void setTeamVictory(boolean mTeamVictory) {
         this.mTeamVictory = mTeamVictory;
     }
 
@@ -486,7 +486,7 @@ public class TeamRanking extends Ranking {
         // On ajuste le tri par poule si nécessaire pour que
         // l'écart minimum entre 2 membres de la même poule
         // soit le nombre de joueurs de la poule
-        if ((tour.getPoolCount() > 0) && (tour.getRoundsCount() > 0) && (!tour.getRound(mRound).isCup())) {
+        if ((tour.getPoolCount() > 0) && (tour.getRoundsCount() > 0) && (!mForCup)) {
             if (mObjects.size() > tour.getPool(0).getCompetitorCount()) {
                 final int nbPool = tour.getPoolCount();
                 Pool p;
@@ -511,13 +511,12 @@ public class TeamRanking extends Ranking {
                         datas.add(mjtr.mDatas.get(j));
                     }
                 }
-
                 mDatas = datas;
             }
         }
     }
 
-    protected void updateHeadByHeadValue(int round_index, int valueIndex, ObjectRanking or1, ObjectRanking or2) {
+    private void updateHeadByHeadValue(int round_index, int valueIndex, ObjectRanking or1, ObjectRanking or2) {
 
         if (or1.getObject() instanceof Team) {
             Team t = (Team) or1.getObject();

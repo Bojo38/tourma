@@ -104,13 +104,13 @@ public class RankedNGTest {
         System.out.println("getDetail");
         IRanked instance = new RankedImpl();
         String expResult = "";
-        try {
+        /*try {
             String result = instance.getDetail();
             //assertEquals(result, expResult);
             // TODO review the generated test code and remove the default call to fail.
         } catch (RemoteException e) {
 
-        }
+        }*/
         fail("The test case is a prototype.");
     }
 
@@ -122,12 +122,12 @@ public class RankedNGTest {
         System.out.println("setDetail");
         String s = "";
         IRanked instance = new RankedImpl();
-        try {
+        /*try {
             instance.setDetail(s);
             // TODO review the generated test code and remove the default call to fail.
         } catch (RemoteException e) {
 
-        }
+        }*/
         fail("The test case is a prototype.");
     }
 

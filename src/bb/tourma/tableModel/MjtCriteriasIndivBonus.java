@@ -98,34 +98,34 @@ public class MjtCriteriasIndivBonus extends AbstractTableModel implements TableC
         Object result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                result = mParams.getCriteria(row).getName();
+                result = mParams.getCriterion(row).getName();
                 break;
             case 1:
-                result = mParams.getCriteria(row).getOffensiveThreshold();
+                result = mParams.getCriterion(row).getOffensiveThreshold();
                 break;
             case 2:
-                result = mParams.getCriteria(row).getOffensiveDiffThreshold();
+                result = mParams.getCriterion(row).getOffensiveDiffThreshold();
                 break;
             case 3:
-                result = mParams.getCriteria(row).getDefensiveDiffThreshold();
+                result = mParams.getCriterion(row).getDefensiveDiffThreshold();
                 break;
             case 4:
-                result = mParams.getCriteria(row).getOffensiveBonuses();
+                result = mParams.getCriterion(row).getOffensiveBonuses();
                 break;
             case 5:
-                result = mParams.getCriteria(row).getOffensiveDiffBonuses();
+                result = mParams.getCriterion(row).getOffensiveDiffBonuses();
                 break;
             case 6:
-                result = mParams.getCriteria(row).getDefensiveDiffBonuses();
+                result = mParams.getCriterion(row).getDefensiveDiffBonuses();
                 break;
             case 7:
-                result = mParams.getCriteria(row).getOffensiveBonusesForTeam();
+                result = mParams.getCriterion(row).getOffensiveBonusesForTeam();
                 break;
             case 8:
-                result = mParams.getCriteria(row).getOffensiveDiffBonusesForTeam();
+                result = mParams.getCriterion(row).getOffensiveDiffBonusesForTeam();
                 break;
             case 9:
-                result = mParams.getCriteria(row).getDefensiveDiffBonusesForTeam();
+                result = mParams.getCriterion(row).getDefensiveDiffBonusesForTeam();
                 break;
             default:
         }
@@ -139,7 +139,7 @@ public class MjtCriteriasIndivBonus extends AbstractTableModel implements TableC
             boolean exists = false;
             for (int i = 0; i < mParams.getCriteriaCount(); i++) {
                 if (i != row) {
-                    if (value.toString().equals(mParams.getCriteria(i).getName())) {
+                    if (value.toString().equals(mParams.getCriterion(i).getName())) {
                         exists = true;
                         break;
                     }
@@ -152,7 +152,7 @@ public class MjtCriteriasIndivBonus extends AbstractTableModel implements TableC
             } else {
                 
                 String tmp = value.toString();
-                final Criterion c = mParams.getCriteria(row);
+                final Criterion c = mParams.getCriterion(row);
                 int val;
                 switch (col) {
                     case 0:

@@ -272,10 +272,10 @@ public class AnnexIndivRanking extends AnnexRanking {
         Collections.sort(mDatas);
     }
 
-    protected void updateHeadByHeadValue(int round_index, int valueIndex, ObjectAnnexRanking or1, ObjectAnnexRanking or2) {
+    private void updateHeadByHeadValue(int round_index, int valueIndex, ObjectAnnexRanking or1, ObjectAnnexRanking or2) {
         Coach c = (Coach) or1.getObject();
         Coach c2 = (Coach) or2.getObject();
-        Criterion Tds = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion Tds = Tournament.getTournament().getParams().getCriterion(0);
 
         for (int l = 0; l < c.getMatchCount(); l++) {
             CoachMatch cm = (CoachMatch) c.getMatch(l);

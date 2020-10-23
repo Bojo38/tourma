@@ -77,7 +77,7 @@ public final class JPNClan extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            final Criterion criteria = mTournament.getParams().getCriteria(i);
+            final Criterion criteria = mTournament.getParams().getCriterion(i);
             final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, t, coachs, teams, mRound, true, false);
             jtpAnnexRank.add(criteria.getName(), jpn);
         }
@@ -222,7 +222,7 @@ public final class JPNClan extends javax.swing.JPanel {
                 final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
 
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
-                    final Criterion crit = mTournament.getParams().getCriteria(j);
+                    final Criterion crit = mTournament.getParams().getCriterion(j);
                     
                     AnnexClanRanking aranking=mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexPosRanking().get(crit);
                     MjtAnnexRank annex = new MjtAnnexRankClan(aranking);

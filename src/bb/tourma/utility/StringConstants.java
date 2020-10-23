@@ -238,6 +238,8 @@ public interface StringConstants {
 
     public static final String CS_CLAN_RANKING_SET = "ClanRankingSet";
     public static final String CS_TEAM_RANKING_SET = "TeamRankingSet";
+    public static final String CS_TEAM_RANKING_FOR_CUP = "TeamRankingSetForCup";
+    public static final String CS_TEAM_RANKING_FOR_POOL = "TeamRankingSetForPool";
     public static final String CS_INDIV_RANKING_SET = "IndivRankingSet";
 
     public static final String CS_GROUP_RANKING = "GroupRanking";

@@ -158,7 +158,7 @@ public final class Generation {
     private static void applyPortugal(final Round round) {
         Parameters params = Tournament.getTournament().getParams();
         if (params.isPortugal()) {
-            Criterion td = params.getCriteria(0);
+            Criterion td = params.getCriterion(0);
             ArrayList<CoachMatch> acm = round.getCoachMatchs();
             for (int i = 0; i < acm.size(); i++) {
                 CoachMatch cm = acm.get(i);
@@ -1614,11 +1614,17 @@ public final class Generation {
 
         if (params.isTeamTournament() && params.getTeamPairing() == ETeamPairing.TEAM_PAIRING) {
             for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
-                comps.add(Tournament.getTournament().getTeam(i));
+                Team t = Tournament.getTournament().getTeam(i);
+                if (t != Team.getNullTeam()) {
+                    comps.add(Tournament.getTournament().getTeam(i));
+                }
             }
         } else {
             for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
-                comps.add(Tournament.getTournament().getCoach(i));
+                Coach c = Tournament.getTournament().getCoach(i);
+                if (c != Coach.getNullCoach()) {
+                    comps.add(c);
+                }
             }
         }
 
@@ -1751,14 +1757,20 @@ public final class Generation {
         } else {
             nullElt = Team.getNullTeam();
         }
-        for (int i = 0; i < nbPlayers; i++) {
+        int maxPlayers = nbPlayers;
+        for (int i = 0; i < maxPlayers; i++) {
             Competitor c;
             if (i < datas.getRowCount()) {
                 c = ((Competitor) datas.getSortedObject(i).getObject());
+                if (c != nullElt) {
+                    comps.add(c);
+                } else {
+                    maxPlayers++;
+                }
             } else {
                 c = nullElt;
+                comps.add(c);
             }
-            comps.add(c);
         }
 
         // Reorder to create pairing 1st against last

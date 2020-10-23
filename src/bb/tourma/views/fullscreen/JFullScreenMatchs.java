@@ -212,7 +212,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             int width = gd.getDisplayMode().getWidth();
             int height = gd.getDisplayMode().getHeight();
 
-            Criterion td = Tournament.getTournament().getParams().getCriteria(0);
+            Criterion td = Tournament.getTournament().getParams().getCriterion(0);
 
             float size = (float) height / fontRatio;
             Font f0 = font.deriveFont(Font.ITALIC, size);
@@ -314,7 +314,7 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                     Font f2 = font.deriveFont(Font.ITALIC, (float) height / 75);
                     for (int j = 1; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
-                        Criterion crit = Tournament.getTournament().getParams().getCriteria(j);
+                        Criterion crit = Tournament.getTournament().getParams().getCriterion(j);
                         value1 = cm.getValue(crit).getValue1();
                         value2 = cm.getValue(crit).getValue2();
                         JLabel tmp = new JLabel("" + value1 + " " + crit.getName() + " " + value2);
@@ -432,7 +432,7 @@ public final class JFullScreenMatchs extends JFullScreen {
 
                         Font f2 = font.deriveFont(Font.ITALIC, (float) height / 75);
                         for (int k = 1; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
-                            Criterion crit = Tournament.getTournament().getParams().getCriteria(k);
+                            Criterion crit = Tournament.getTournament().getParams().getCriterion(k);
                             value1 = cm.getValue(crit).getValue1();
                             value2 = cm.getValue(crit).getValue2();
                             JLabel tmp = new JLabel("" + value1 + " " + crit.getName() + " " + value2);
@@ -533,7 +533,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             if (comp.equals(cm.getLooser())) {
                 f = looser;
             } else {
-                Criterion td = Tournament.getTournament().getParams().getCriteria(0);
+                Criterion td = Tournament.getTournament().getParams().getCriterion(0);
                 if ((cm.getValue(td).getValue1() == -1) || (cm.getValue(td).getValue2() == -1)) {
                     f = def;
                 } else {
@@ -725,11 +725,11 @@ public final class JFullScreenMatchs extends JFullScreen {
                 int p_width = 0;
                 if (tm.getCompetitor1() == t) {
                     c = (Coach) tm.getMatch(i).getCompetitor1();
-                    score = tm.getMatch(i).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1();
+                    score = tm.getMatch(i).getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue1();
                 }
                 if (tm.getCompetitor2() == t) {
                     c = (Coach) tm.getMatch(i).getCompetitor2();
-                    score = tm.getMatch(i).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2();
+                    score = tm.getMatch(i).getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue2();
                 }
 
                 if (c != null) {
@@ -1046,8 +1046,8 @@ public final class JFullScreenMatchs extends JFullScreen {
                             jpnClash2 = createClashTeamPane((Team) m.getCompetitor2(), (TeamMatch) m, true);
                         }
                         if (m instanceof CoachMatch) {
-                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1(), false, i);
-                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2(), true, i);
+                            jpnClash1 = createClashCoachPane((Coach) m.getCompetitor1(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue1(), false, i);
+                            jpnClash2 = createClashCoachPane((Coach) m.getCompetitor2(), ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue2(), true, i);
                         }
 
                         if ((jpnClash1 != null) && (jpnClash2 != null)) {

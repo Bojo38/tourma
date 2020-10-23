@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -19,12 +18,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdom.Element;
-import bb.tourma.data.ranking.AnnexIndivRanking;
-import bb.tourma.data.ranking.IndivRanking;
-import bb.tourma.data.ranking.TeamRanking;
-import bb.tourma.data.ranking.ClanRanking;
-import bb.tourma.data.ranking.AnnexClanRanking;
-import bb.tourma.data.ranking.AnnexTeamRanking;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
 
@@ -105,15 +98,22 @@ public class Round implements IXMLExport, Serializable {
     Rankings mRankings = new Rankings(false);
     Rankings mRankingsRoundOnly = new Rankings(true);
 
+    
     /**
      * Default constructor
      */
     public Round(int rNumber, Tournament tour) {
         mMatchs = new ArrayList<>();
 
+        try
+        {
         mRankings.createRankings(rNumber, tour);
         mRankingsRoundOnly.createRankings(rNumber, tour);
-
+        }
+        catch(java.lang.IndexOutOfBoundsException ite)
+        {
+            ite.printStackTrace();
+        }
     }
 
     @Override
@@ -416,6 +416,11 @@ public class Round implements IXMLExport, Serializable {
         return (Date) mHour.clone();
     }
 
+    public void setRoundIndex(Tournament tour,int i)
+    {
+        mRankings.setRoundIndex(tour, i);
+        mRankingsRoundOnly.setRoundIndex(tour,i);
+    }
     /**
      *
      * @return
@@ -425,6 +430,7 @@ public class Round implements IXMLExport, Serializable {
 
         if (mRankingToUpdate) {
             mRankings.update();
+            mRankingsRoundOnly.update();
         }
 
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
@@ -435,8 +441,6 @@ public class Round implements IXMLExport, Serializable {
         }
         round.setAttribute(StringConstants.CS_DATE, format.format(this.getHour()));
 
-//        round.setAttribute(StringConstants.CS_LOOSERCUP, Boolean.toString(isLooserCup()));
-//        round.setAttribute(StringConstants.CS_THIRDPLACE, Boolean.toString(isThirdPlace()));
         round.setAttribute(StringConstants.CS_CUP, Boolean.toString(isCup()));
         round.setAttribute(StringConstants.CS_TOUR, Integer.toString(getCupTour()));
         round.setAttribute(StringConstants.CS_MAXTOUR, Integer.toString(getCupMaxTour()));
@@ -450,6 +454,7 @@ public class Round implements IXMLExport, Serializable {
         }
 
         round.addContent(mRankings.getXMLElement());
+        mRankingsRoundOnly.setRoundOnly(true);
         round.addContent(mRankingsRoundOnly.getXMLElement());
 
         return round;
@@ -486,8 +491,8 @@ public class Round implements IXMLExport, Serializable {
     public void update() {
         mRankings.setRoundOnly(false);
         mRankings.update();
-        mRankingsRoundOnly.setRoundOnly(false);
-        //mRankingsRoundOnly.update();
+        mRankingsRoundOnly.setRoundOnly(true);
+        mRankingsRoundOnly.update();
 
         mRankingToUpdate = false;
         mRankingUpdated = true;
@@ -510,11 +515,9 @@ public class Round implements IXMLExport, Serializable {
         }
 
         try {
-//            setLooserCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_LOOSERCUP)));
             setCup(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_CUP)));
             setCupTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_TOUR)));
             setCupMaxTour(Integer.parseInt(round.getAttributeValue(StringConstants.CS_MAXTOUR)));
-            //           setThirdPlace(Boolean.parseBoolean(round.getAttributeValue(StringConstants.CS_THIRDPLACE)));
         } catch (NumberFormatException e) {
             LOG.log(Level.FINE, e.getLocalizedMessage());
         }

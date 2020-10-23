@@ -19,8 +19,8 @@ import bb.tourma.utility.StringConstants;
  */
 public class Pool implements IXMLExport, Serializable {
 
-        protected static AtomicInteger sGenUID=new AtomicInteger(0);
-    protected int UID=sGenUID.incrementAndGet();
+    protected static AtomicInteger sGenUID = new AtomicInteger(0);
+    protected int UID = sGenUID.incrementAndGet();
 
     public int getUID() {
         return UID;
@@ -50,10 +50,16 @@ public class Pool implements IXMLExport, Serializable {
     public Element getXMLElement() {
         final Element pool = new Element(StringConstants.CS_POOL);
         pool.setAttribute(StringConstants.CS_NAME, this.getName());
+
         for (Competitor mCompetitor : mCompetitors) {
-            final Element coach = new Element(StringConstants.CS_COACH);
-            coach.setAttribute(StringConstants.CS_NAME, mCompetitor.getName());
-            pool.addContent(coach);
+            Element competitor = null;
+            if (mCompetitor instanceof Coach) {
+                competitor = new Element(StringConstants.CS_COACH);
+            } else {
+                competitor = new Element(StringConstants.CS_TEAM);
+            }
+            competitor.setAttribute(StringConstants.CS_NAME, mCompetitor.getName());
+            pool.addContent(competitor);
         }
         return pool;
     }
@@ -73,9 +79,15 @@ public class Pool implements IXMLExport, Serializable {
             final Element competitor = ro.next();
             final String name = competitor.getAttributeValue(StringConstants.CS_NAME);
             Competitor c = Coach.getCoach(name);
-            if (c == null) {
-                c = Team.getTeam(name);
-            }
+            mCompetitors.add(c);
+        }
+        
+        final List<Element> teams = pool.getChildren(StringConstants.CS_TEAM);
+        ro = teams.iterator();
+        while (ro.hasNext()) {
+            final Element competitor = ro.next();
+            final String name = competitor.getAttributeValue(StringConstants.CS_NAME);
+            Competitor c = Team.getTeam(name);
             mCompetitors.add(c);
         }
     }

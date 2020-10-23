@@ -145,7 +145,7 @@ public final class RankingForExport implements IXMLExport, IRanked, Serializable
         }
 
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
             rank.setAttribute(new Attribute("C" + (i + 1), crit.getName()));
         }
 

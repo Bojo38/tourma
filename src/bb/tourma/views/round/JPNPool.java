@@ -79,7 +79,7 @@ public final class JPNPool extends javax.swing.JPanel {
         mPageIndex = 1;
 
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            final Criterion criteria = mTournament.getParams().getCriteria(i);
+            final Criterion criteria = mTournament.getParams().getCriterion(i);
             if (!mTournament.getParams().isTeamTournament()) {
                 final JPNAnnexRanking jpn = new JPNAnnexRanking(criteria.getName(), criteria, mTournament, mRound, false, false, p.getCompetitors(), new ArrayList<Team>());
                 jtpAnnexRank.add(criteria.getName(), jpn);
@@ -272,7 +272,7 @@ public final class JPNPool extends javax.swing.JPanel {
                 final HashMap<Criterion, MjtAnnexRank> annexForRankings = new HashMap<>();
                 final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
-                    final Criterion crit = mTournament.getParams().getCriteria(j);
+                    final Criterion crit = mTournament.getParams().getCriterion(j);
                     MjtAnnexRank annexPos;
                     MjtAnnexRank annexNeg;
                     if ((mTournament.getParams().isTeamTournament())

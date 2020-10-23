@@ -47,7 +47,7 @@ public class JPNMatch extends javax.swing.JPanel {
 
         if (m instanceof CoachMatch) {
 
-            final Value v = ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriteria(0));
+            final Value v = ((CoachMatch) m).getValue(Tournament.getTournament().getParams().getCriterion(0));
             if ((v.getValue1() == -1) || (v.getValue2() == -1)) {
                 jlbScore1.setText("");
                 jlbScore2.setText("");

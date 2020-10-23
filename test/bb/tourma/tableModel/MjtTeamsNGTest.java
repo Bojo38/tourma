@@ -42,7 +42,7 @@ public class MjtTeamsNGTest {
         for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
             teams.add(Tournament.getTournament().getTeam(i));
         }
-        //crit=Tournament.getTournament().getParams().getCriteria(0);
+        //crit=Tournament.getTournament().getParams().getCriterion(0);
         instance = new MjtTeams(teams);
     }
 

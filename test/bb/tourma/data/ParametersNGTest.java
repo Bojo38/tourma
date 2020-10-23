@@ -209,7 +209,7 @@ public class ParametersNGTest {
     }
 
     /**
-     * Test of getCriteria method, of class Parameters.
+     * Test of getCriterion method, of class Parameters.
      */
     @Test
     public void testGetCriteria() {
@@ -218,7 +218,7 @@ public class ParametersNGTest {
         Parameters instance = new Parameters();
         int nb = instance.getCriteriaCount();
         instance.addCriteria(c);
-        assertEquals(c, instance.getCriteria(nb));
+        assertEquals(c, instance.getCriterion(nb));
     }
 
     /**
@@ -1711,7 +1711,7 @@ public class ParametersNGTest {
     }
 
     /**
-     * Test of getIndexOfCriteria method, of class Parameters.
+     * Test of getIndexOfCriterion method, of class Parameters.
      */
     @Test
     public void testGetIndexOfCriteria() {
@@ -1720,7 +1720,7 @@ public class ParametersNGTest {
         Parameters instance = new Parameters();
         int expResult = instance.getCriteriaCount();
         instance.addCriteria(c);
-        int result = instance.getIndexOfCriteria(c);
+        int result = instance.getIndexOfCriterion(c);
         assertEquals(result, expResult);
 
     }
@@ -1884,7 +1884,7 @@ public class ParametersNGTest {
     }
 
     /**
-     * Test of getCriteria method, of class Parameters.
+     * Test of getCriterion method, of class Parameters.
      */
     @Test
     public void testGetCriteria_String() {
@@ -1892,7 +1892,7 @@ public class ParametersNGTest {
         String name = "";
         Parameters instance = new Parameters();
         Criterion expResult = null;
-        Criterion result = instance.getCriteria(name);
+        Criterion result = instance.getCriterion(name);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -1939,7 +1939,7 @@ public class ParametersNGTest {
     }
 
     /**
-     * Test of getCriteria method, of class Parameters.
+     * Test of getCriterion method, of class Parameters.
      */
     @Test
     public void testGetCriteria_int() {
@@ -1947,7 +1947,7 @@ public class ParametersNGTest {
         int i = 0;
         Parameters instance = new Parameters();
         Criterion expResult = null;
-        Criterion result = instance.getCriteria(i);
+        Criterion result = instance.getCriterion(i);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -2177,7 +2177,7 @@ public class ParametersNGTest {
         System.out.println("gemRankingTeam2");
         Parameters instance = new Parameters();
         int expResult = 0;
-        int result = instance.gemRankingTeam2();
+        int result = instance.getRankingTeam2();
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

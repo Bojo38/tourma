@@ -26,6 +26,39 @@ import bb.tourma.utility.StringConstants;
 public class IndivRankingsSet implements IXMLExport {
 
 
+    public void setRoundIndex(int index)
+    {
+        mRanking.setRoundIndex(index);
+
+        if (mRankingForCup != null) {
+            mRankingForCup.setRoundIndex(index);
+        }
+        if (mRankingForPool != null) {
+            mRankingForPool.setRoundIndex(index);
+        }
+
+        if (mAnnexPosRanking != null) {
+            for (Criterion c : mAnnexPosRanking.keySet()) {
+                mAnnexPosRanking.get(c).setRoundIndex(index);
+            }
+        }
+        if (mAnnexNegRanking != null) {
+            for (Criterion c : mAnnexNegRanking.keySet()) {
+                mAnnexNegRanking.get(c).setRoundIndex(index);
+            }
+        }
+        if (mAnnexDifRanking != null) {
+            for (Criterion c : mAnnexDifRanking.keySet()) {
+                mAnnexDifRanking.get(c).setRoundIndex(index);
+            }
+        }
+        if (mAnnexFormRanking != null) {
+            for (Formula c : mAnnexFormRanking.keySet()) {
+                mAnnexFormRanking.get(c).setRoundIndex(index);
+            }
+        }
+    }
+    
     public void setRoundOnly(boolean roundOnly) {
 
         mRanking.setRoundOnly(roundOnly);
@@ -134,7 +167,7 @@ public class IndivRankingsSet implements IXMLExport {
         mAnnexDifRanking = new HashMap<>();
 
         for (int i = 0; i < tour.getParams().getCriteriaCount(); i++) {
-            Criterion crit = tour.getParams().getCriteria(i);
+            Criterion crit = tour.getParams().getCriterion(i);
 
             AnnexIndivRanking annexPos = new AnnexIndivRanking(rNumber, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE, coachs,
                     tour.getParams().getRankingIndiv1(),
@@ -291,7 +324,7 @@ public class IndivRankingsSet implements IXMLExport {
             String criterion_name = child.getAttributeValue(StringConstants.CS_CRITERION);
 
             if (criterion_name != null) {
-                Criterion crit = Tournament.getTournament().getParams().getCriteria(criterion_name);
+                Criterion crit = Tournament.getTournament().getParams().getCriterion(criterion_name);
 
                 String subtype = child.getAttributeValue(StringConstants.CS_SUBTYPE);
 
@@ -347,6 +380,7 @@ public class IndivRankingsSet implements IXMLExport {
         /**
          * @TODO forCup & forPool
          */
+        
         final Element child = e.getChild(StringConstants.CS_INDIV_RANKING);
         mRanking = new IndivRanking(child);
     }

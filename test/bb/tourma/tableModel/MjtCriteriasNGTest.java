@@ -39,7 +39,7 @@ public class MjtCriteriasNGTest {
         Tournament.getTournament().loadXML(new File("./test/params.xml"));
 
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            crits.add(Tournament.getTournament().getParams().getCriteria(i));
+            crits.add(Tournament.getTournament().getParams().getCriterion(i));
         }
         instance = new MjtCriterias(Tournament.getTournament());
     }

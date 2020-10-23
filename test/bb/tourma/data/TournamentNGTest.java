@@ -715,7 +715,7 @@ public class TournamentNGTest {
         tour.loadXML(new File("./test/tournament.xml"));
         Assert.assertTrue(tour.getRoundsCount() > 1);
         int nb = tour.getRoundsCount();
-        Round cl = new Round();
+        Round cl = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         tour.addRound(cl);
         assertEquals(tour.getRoundsCount(), nb + 1);
     }

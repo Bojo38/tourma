@@ -107,7 +107,7 @@ public class MjtMatchesNGTest {
                     expResult = Translate.translate(Translate.CS_Coach) + " 2";
                     break;
                 default:
-                    final Criterion crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
+                    final Criterion crit = Tournament.getTournament().getParams().getCriterion((col - 3) / 2);
                     if ((col - 3) % 2 > 0) {
                         expResult = crit.getName() + " 2";
                     } else {
@@ -139,16 +139,16 @@ public class MjtMatchesNGTest {
                         expResult = cm.getCompetitor1().getName() + StringConstants.CS_THICK + ((Coach) cm.getCompetitor1()).getStringRoster();
                         break;
                     case 2:
-                        expResult = cm.getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1();
+                        expResult = cm.getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue1();
                         break;
                     case 3:
-                        expResult = cm.getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2();
+                        expResult = cm.getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue2();
                         break;
                     case 4:
                         expResult = cm.getCompetitor2().getName() + StringConstants.CS_THICK + ((Coach) cm.getCompetitor2()).getStringRoster();
                         break;
                     default:
-                        crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
+                        crit = Tournament.getTournament().getParams().getCriterion((col - 3) / 2);
                         if ((col - 3) % 2 > 0) {
                             expResult = cm.getValue(crit).getValue2();
                         } else {
@@ -182,15 +182,15 @@ public class MjtMatchesNGTest {
                     case 4:
                         continue;
                     case 2:
-                        save = cm.getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1();
+                        save = cm.getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue1();
                         expResult = 1;
                         break;
                     case 3:
                         expResult = 2;
-                        save = cm.getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2();
+                        save = cm.getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue2();
                         break;
                     default:
-                        crit = Tournament.getTournament().getParams().getCriteria((col - 3) / 2);
+                        crit = Tournament.getTournament().getParams().getCriterion((col - 3) / 2);
                         if ((col - 3) % 2 > 0) {
                             save = cm.getValue(crit).getValue2();
                             expResult = col;

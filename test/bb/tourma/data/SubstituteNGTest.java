@@ -98,7 +98,7 @@ public class SubstituteNGTest {
     @Test
     public void testGetMatch() {
         System.out.println("getMatch");
-        CoachMatch mMatch = new CoachMatch(new Round());
+        CoachMatch mMatch = new CoachMatch(new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament()));
         Substitute instance = new Substitute();
         instance.setMatch(mMatch);
         assertEquals(mMatch, instance.getMatch());
@@ -110,7 +110,7 @@ public class SubstituteNGTest {
     @Test
     public void testSetMatch() {
         System.out.println("setMatch");
-        CoachMatch mMatch = new CoachMatch(new Round());
+        CoachMatch mMatch = new CoachMatch(new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament()));
         Substitute instance = new Substitute();
         instance.setMatch(mMatch);
         assertEquals(mMatch, instance.getMatch());

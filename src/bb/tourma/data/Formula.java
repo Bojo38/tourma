@@ -129,7 +129,7 @@ public class Formula implements IXMLExport, Serializable {
                             Criterion c = null;
                             String variable = object.substring(0, object.length() - 1);
                             for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                                Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                                Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                                 if (crit.getAccronym().equals(variable)) {
                                     c = crit;
                                     break;

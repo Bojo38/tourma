@@ -73,7 +73,7 @@ public class CompetitorNGTest {
     public void testAddMatch_Competitor_Round() {
         System.out.println("addMatch");
         Competitor opponent = new CompetitorImpl();
-        Round r = new Round();
+        Round r = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Competitor instance = new CompetitorImpl();
         instance.addMatch(opponent, r);
         Assert.assertTrue(instance.getMatchCount() == 1);
@@ -86,7 +86,7 @@ public class CompetitorNGTest {
     public void testAddMatchRoundRobin() {
         System.out.println("addMatchRoundRobin");
         Competitor opponent = new CompetitorImpl();
-        Round r = new Round();
+        Round r = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Competitor instance = new CompetitorImpl();
         instance.addMatchRoundRobin(opponent, r,true);
         Assert.assertTrue(instance.getMatchCount() == 1);
@@ -286,7 +286,7 @@ public class CompetitorNGTest {
     public void testGetMatch() {
         System.out.println("getMatch");
         Competitor opponent = new CompetitorImpl();
-        Round r = new Round();
+        Round r = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Competitor instance = new CompetitorImpl();
         Match m = new CoachMatch(r);
         m.setCompetitor1(instance);
@@ -303,7 +303,7 @@ public class CompetitorNGTest {
     public void testGetMatchCount() {
         System.out.println("getMatchCount");
         Competitor opponent = new CompetitorImpl();
-        Round r = new Round();
+        Round r = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Competitor instance = new CompetitorImpl();
         Match m = new CoachMatch(r);
         m.setCompetitor1(instance);
@@ -320,7 +320,7 @@ public class CompetitorNGTest {
     public void testAddMatch_Match() {
         System.out.println("addMatch");
         Competitor opponent = new CompetitorImpl();
-        Round r = new Round();
+        Round r = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Competitor instance = new CompetitorImpl();
         Match m = new CoachMatch(r);
         m.setCompetitor1(instance);
@@ -336,7 +336,7 @@ public class CompetitorNGTest {
     public void testRemoveMatch() {
         System.out.println("removeMatch");
         Competitor opponent = new CompetitorImpl();
-        Round r = new Round();
+        Round r = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Competitor instance = new CompetitorImpl();
         instance.setName("Test");
         opponent.setName("Test2");
@@ -381,7 +381,7 @@ public class CompetitorNGTest {
     public void testMatchIndex() {
         System.out.println("matchIndex");
         Competitor opponent = new CompetitorImpl();
-        Round r = new Round();
+        Round r = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Competitor instance = new CompetitorImpl();
         Match m = new CoachMatch(r);
         m.setCompetitor1(instance);
@@ -401,7 +401,7 @@ public class CompetitorNGTest {
     public void testClearMatchs() {
         System.out.println("clearMatchs");
         Competitor opponent = new CompetitorImpl();
-        Round r = new Round();
+        Round r = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         Competitor instance = new CompetitorImpl();
         Match m = new CoachMatch(r);
         m.setCompetitor1(instance);

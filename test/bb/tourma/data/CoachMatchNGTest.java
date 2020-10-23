@@ -5,16 +5,6 @@
  */
 package bb.tourma.data;
 
-import bb.tourma.data.Competitor;
-import bb.tourma.data.Round;
-import bb.tourma.data.Tournament;
-import bb.tourma.data.RosterType;
-import bb.tourma.data.Value;
-import bb.tourma.data.Match;
-import bb.tourma.data.CoachMatch;
-import bb.tourma.data.Coach;
-import bb.tourma.data.Substitute;
-import bb.tourma.data.Criterion;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -49,10 +39,11 @@ public class CoachMatchNGTest {
     }
 
     Tournament t;
+
     @BeforeMethod
     public void setUpMethod() throws Exception {
-        t=Tournament.getTournament();
-        t.loadXML(new File("./test/coachMatch.xml"));
+        t = Tournament.getTournament();
+        t.loadXML(new File("./test/tournament.xml"));
     }
 
     @AfterMethod
@@ -72,14 +63,33 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
         CoachMatch instance = acm.get(0);
         Round r = instance.getRound();
         Element result = instance.getXMLElement();
 
         CoachMatch cm = new CoachMatch(r);
         cm.setXMLElement(result);
-        assertEquals(instance, cm);
+
+        assertEquals(instance.isConcedeedBy1(), cm.isConcedeedBy1());
+        assertEquals(instance.isConcedeedBy2(), cm.isConcedeedBy2());
+        assertEquals(instance.isRefusedBy1(), cm.isRefusedBy1());
+        assertEquals(instance.isRefusedBy2(), cm.isRefusedBy2());
+        assertEquals(instance.getRoster1(), cm.getRoster1());
+        assertEquals(instance.getRoster2(), cm.getRoster2());
+
+        assertEquals(instance.getCompetitor1(), cm.getCompetitor1());
+        assertEquals(instance.getCompetitor2(), cm.getCompetitor2());
+
+        for (Criterion c : cm.getValues().keySet()) {
+            Value v = cm.getValue(c);
+            if (v == null) {
+                fail("Criteria value " + c.getName() + " not present in re-built coachmatch");
+            }
+            assertEquals(v.getValue1(), instance.getValues().get(c).getValue1());
+            assertEquals(v.getValue2(), instance.getValues().get(c).getValue2());
+        }
+
     }
 
     /**
@@ -95,14 +105,32 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
         CoachMatch instance = acm.get(0);
         Round r = instance.getRound();
         Element result = instance.getXMLElement();
 
         CoachMatch cm = new CoachMatch(r);
         cm.setXMLElement(result);
-        assertEquals(instance, cm);
+
+        assertEquals(instance.isConcedeedBy1(), cm.isConcedeedBy1());
+        assertEquals(instance.isConcedeedBy2(), cm.isConcedeedBy2());
+        assertEquals(instance.isRefusedBy1(), cm.isRefusedBy1());
+        assertEquals(instance.isRefusedBy2(), cm.isRefusedBy2());
+        assertEquals(instance.getRoster1(), cm.getRoster1());
+        assertEquals(instance.getRoster2(), cm.getRoster2());
+
+        assertEquals(instance.getCompetitor1(), cm.getCompetitor1());
+        assertEquals(instance.getCompetitor2(), cm.getCompetitor2());
+
+        for (Criterion c : cm.getValues().keySet()) {
+            Value v = cm.getValue(c);
+            if (v == null) {
+                fail("Criteria value " + c.getName() + " not present in re-built coachmatch");
+            }
+            assertEquals(v.getValue1(), instance.getValues().get(c).getValue1());
+            assertEquals(v.getValue2(), instance.getValues().get(c).getValue2());
+        }
     }
 
     /**
@@ -118,7 +146,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
         CoachMatch instance = acm.get(0);
         bb.tourma.data.Value val = instance.getValue(crit);
 
@@ -154,7 +182,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
         CoachMatch instance = acm.get(0);
         bb.tourma.data.Value val = instance.getValue(crit);
 
@@ -190,7 +218,7 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
         CoachMatch instance = acm.get(0);
         bb.tourma.data.Value val = instance.getValue(crit);
 
@@ -575,7 +603,7 @@ public class CoachMatchNGTest {
         }
         CoachMatch instance = acm.get(0);
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
             assertNotNull(instance.getValue(crit));
         }
     }
@@ -613,7 +641,7 @@ public class CoachMatchNGTest {
         }
         CoachMatch instance = acm.get(0);
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
             Value v = instance.getValue(crit);
             Value v2 = new Value(crit);
             v2.setValue1(10);
@@ -638,7 +666,7 @@ public class CoachMatchNGTest {
         }
         CoachMatch instance = acm.get(0);
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
             Value v = instance.getValue(crit);
             assertNotNull(instance.getValue(crit));
             instance.removeValue(crit);
@@ -661,14 +689,32 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
         CoachMatch instance = acm.get(0);
         Round r = instance.getRound();
         Element result = instance.getXMLElementForDisplay();
 
         CoachMatch cm = new CoachMatch(r);
         cm.setXMLElementForDisplay(result);
-        assertEquals(instance, cm);
+
+        assertEquals(instance.isConcedeedBy1(), cm.isConcedeedBy1());
+        assertEquals(instance.isConcedeedBy2(), cm.isConcedeedBy2());
+        assertEquals(instance.isRefusedBy1(), cm.isRefusedBy1());
+        assertEquals(instance.isRefusedBy2(), cm.isRefusedBy2());
+        assertEquals(instance.getRoster1(), cm.getRoster1());
+        assertEquals(instance.getRoster2(), cm.getRoster2());
+
+        assertEquals(instance.getCompetitor1(), cm.getCompetitor1());
+        assertEquals(instance.getCompetitor2(), cm.getCompetitor2());
+
+        for (Criterion c : cm.getValues().keySet()) {
+            Value v = cm.getValue(c);
+            if (v == null) {
+                fail("Criteria value " + c.getName() + " not present in re-built coachmatch");
+            }
+            assertEquals(v.getValue1(), instance.getValues().get(c).getValue1());
+            assertEquals(v.getValue2(), instance.getValues().get(c).getValue2());
+        }
     }
 
     /**
@@ -684,14 +730,32 @@ public class CoachMatchNGTest {
         if (acm.isEmpty()) {
             fail("No match in round");
         }
-        Criterion crit = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
         CoachMatch instance = acm.get(0);
         Round r = instance.getRound();
         Element result = instance.getXMLElementForDisplay();
 
         CoachMatch cm = new CoachMatch(r);
         cm.setXMLElementForDisplay(result);
-        assertEquals(instance, cm);
+        assertEquals(instance.isConcedeedBy1(), cm.isConcedeedBy1());
+        assertEquals(instance.isConcedeedBy2(), cm.isConcedeedBy2());
+        assertEquals(instance.isRefusedBy1(), cm.isRefusedBy1());
+        assertEquals(instance.isRefusedBy2(), cm.isRefusedBy2());
+        assertEquals(instance.getRoster1(), cm.getRoster1());
+        assertEquals(instance.getRoster2(), cm.getRoster2());
+
+        assertEquals(instance.getCompetitor1(), cm.getCompetitor1());
+        assertEquals(instance.getCompetitor2(), cm.getCompetitor2());
+
+        for (Criterion c : cm.getValues().keySet()) {
+            Value v = cm.getValue(c);
+            if (v == null) {
+                fail("Criteria value " + c.getName() + " not present in re-built coachmatch");
+            }
+            assertEquals(v.getValue1(), instance.getValues().get(c).getValue1());
+            assertEquals(v.getValue2(), instance.getValues().get(c).getValue2());
+        }
+
     }
 
     /**
@@ -743,23 +807,7 @@ public class CoachMatchNGTest {
         CoachMatch instance = acm.get(0);
         CoachMatch compare = new CoachMatch(instance.getRound());
 
-        compare.setCompetitor1(instance.getCompetitor1());
-        compare.setCompetitor2(instance.getCompetitor2());
-        compare.setConcedeedBy1(instance.isConcedeedBy1());
-        compare.setConcedeedBy2(instance.isConcedeedBy2());
-        compare.setRefusedBy1(instance.isRefusedBy1());
-        compare.setRefusedBy2(instance.isRefusedBy2());
-        compare.setRoster1(instance.getRoster1());
-        compare.setRoster2(instance.getRoster2());
-
-        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
-            Value v = instance.getValue(crit);
-            Value value = new Value(crit);
-            value.setValue1(v.getValue1());
-            value.setValue2(v.getValue2());
-            compare.putValue(crit, value);
-        }
+        compare.setUID(instance.getUID());
 
         assertEquals(instance, compare);
 
@@ -816,8 +864,8 @@ public class CoachMatchNGTest {
     @Test
     public void testIsRemotely() {
         System.out.println("isRemotely");
-        Coach c=t.getCoach(0);
-        CoachMatch instance = (CoachMatch)c.getMatch(0);
+        Coach c = t.getCoach(0);
+        CoachMatch instance = (CoachMatch) c.getMatch(0);
         boolean expResult = false;
         boolean result = instance.isRemotely();
         assertEquals(result, expResult);
@@ -830,8 +878,8 @@ public class CoachMatchNGTest {
     public void testSetRemotely() {
         System.out.println("setRemotely");
         boolean isRemotely = false;
-        Coach c=t.getCoach(0);
-        CoachMatch instance = (CoachMatch)c.getMatch(0);
+        Coach c = t.getCoach(0);
+        CoachMatch instance = (CoachMatch) c.getMatch(0);
 
         instance.setRemotely(isRemotely);
         Assert.assertFalse(instance.isRemotely());
@@ -844,8 +892,8 @@ public class CoachMatchNGTest {
     public void testGetUID() {
         System.out.println("getUID");
         Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
-        int expResult = 242;
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
+        int expResult = 256;
         int result = c.getUID();
         assertEquals(result, expResult);
 
@@ -858,10 +906,10 @@ public class CoachMatchNGTest {
     public void testSetUID() {
         System.out.println("setUID");
         int UID = 0;
-        Coach c=t.getCoach(0);
-        CoachMatch instance = (CoachMatch)c.getMatch(0);
+        Coach c = t.getCoach(0);
+        CoachMatch instance = (CoachMatch) c.getMatch(0);
         instance.setUID(UID);
-        assertEquals(instance.getUID(),UID);
+        assertEquals(instance.getUID(), UID);
     }
 
     /**
@@ -870,8 +918,8 @@ public class CoachMatchNGTest {
     @Test
     public void testIsUpdated() {
         System.out.println("isUpdated");
-        Coach c=t.getCoach(0);
-        CoachMatch instance = (CoachMatch)c.getMatch(0);
+        Coach c = t.getCoach(0);
+        CoachMatch instance = (CoachMatch) c.getMatch(0);
 
         boolean expResult = true;
         boolean result = instance.isUpdated();
@@ -907,11 +955,11 @@ public class CoachMatchNGTest {
     public void testSetUpdated() {
         System.out.println("setUpdated");
         boolean updated = false;
-                Coach c=t.getCoach(0);
-        CoachMatch instance = (CoachMatch)c.getMatch(0);
+        Coach c = t.getCoach(0);
+        CoachMatch instance = (CoachMatch) c.getMatch(0);
 
         instance.setUpdated(updated);
-       Assert.assertFalse(instance.isRemotely());
+        Assert.assertFalse(instance.isRemotely());
     }
 
     /**
@@ -920,8 +968,8 @@ public class CoachMatchNGTest {
     @Test
     public void testGetGroupModifier() {
         System.out.println("getGroupModifier");
-Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
         int expResult = 0;
         int result = CoachMatch.getGroupModifier(c, m);
         assertEquals(result, expResult);
@@ -933,10 +981,10 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetValue_Criteria() {
         System.out.println("getValue");
-        Criterion crit = t.getParams().getCriteria(0);
-        
-                Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        Criterion crit = t.getParams().getCriterion(0);
+
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
         Value expResult = new Value(crit);
         expResult.setValue1(4);
         expResult.setValue2(3);
@@ -951,8 +999,8 @@ Coach c = t.getCoach(0);
     @Test
     public void testRecomputeValues() {
         System.out.println("recomputeValues");
-        Coach c=t.getCoach(0);
-        CoachMatch instance = (CoachMatch)c.getMatch(0);
+        Coach c = t.getCoach(0);
+        CoachMatch instance = (CoachMatch) c.getMatch(0);
 
         instance.recomputeValues();
     }
@@ -988,8 +1036,8 @@ Coach c = t.getCoach(0);
     public void testRecomputeValue() {
         System.out.println("recomputeValue");
         int index = 0;
-        Coach c=t.getCoach(0);
-        CoachMatch instance = (CoachMatch)c.getMatch(0);
+        Coach c = t.getCoach(0);
+        CoachMatch instance = (CoachMatch) c.getMatch(0);
         int expResult = 0;
         int result = instance.recomputeValue(index, c);
         assertEquals(result, expResult);
@@ -1001,9 +1049,9 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetValue_Coach_int() {
         System.out.println("getValue");
-                Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
-        Criterion crit=t.getParams().getCriteria(0);
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
+        Criterion crit = t.getParams().getCriterion(0);
         int valueType = 0;
         int expResult = 0;
         int result = m.getValue(c, valueType);
@@ -1016,8 +1064,8 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetOppPointsByCoach() {
         System.out.println("getOppPointsByCoach");
-Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
         boolean includeCurrent = false;
         int expResult = 1827;
         int result = CoachMatch.getOppPointsByCoach(c, m, includeCurrent);
@@ -1031,12 +1079,12 @@ Coach c = t.getCoach(0);
     public void testGetCoachNbMatchs() {
         System.out.println("getCoachNbMatchs");
         Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch)c.getMatch(0);
+        CoachMatch m = (CoachMatch) c.getMatch(0);
         int expResult = 1;
-        
+
         int result = CoachMatch.getCoachNbMatchs(c, m);
         assertEquals(result, expResult);
-        
+
     }
 
     /**
@@ -1046,7 +1094,7 @@ Coach c = t.getCoach(0);
     public void testGetCoachTablePoints() {
         System.out.println("getCoachTablePoints");
         Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
         int expResult = 3;
         int result = CoachMatch.getCoachTablePoints(c, m);
         assertEquals(result, expResult);
@@ -1058,8 +1106,8 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetOppELOByCoach() {
         System.out.println("getOppELOByCoach");
-Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
         int expResult = 853;
         int result = CoachMatch.getOppELOByCoach(c, m);
         assertEquals(result, expResult);
@@ -1072,7 +1120,7 @@ Coach c = t.getCoach(0);
     public void testGetVNDByCoach() {
         System.out.println("getVNDByCoach");
         Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
         int expResult = 1000000;
         int result = CoachMatch.getVNDByCoach(c, m);
         assertEquals(result, expResult);
@@ -1085,7 +1133,7 @@ Coach c = t.getCoach(0);
     public void testGetELOByCoach() {
         System.out.println("getELOByCoach");
         Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
         int expResult = 1012;
         int result = CoachMatch.getELOByCoach(c, m);
         assertEquals(result, expResult);
@@ -1098,8 +1146,8 @@ Coach c = t.getCoach(0);
     public void testGetCriteriaBonusPoints() {
         System.out.println("getCriteriaBonusPoints");
         Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
-        Criterion crit = t.getParams().getCriteria(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
+        Criterion crit = t.getParams().getCriterion(0);
         int expResult = 0;
         int result = CoachMatch.getCriteriaBonusPoints(c, m, crit);
         assertEquals(result, expResult);
@@ -1112,7 +1160,7 @@ Coach c = t.getCoach(0);
     public void testGetCriteriasBonusPoints() {
         System.out.println("getCriteriasBonusPoints");
         Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
         int expResult = 0;
         int result = CoachMatch.getCriteriasBonusPoints(c, m);
         assertEquals(result, expResult);
@@ -1125,7 +1173,7 @@ Coach c = t.getCoach(0);
     public void testGetPointsByCoach() {
         System.out.println("getPointsByCoach");
         Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
         boolean withMainPoints = false;
         boolean withBonusPOints = false;
         int expResult = 0;
@@ -1139,10 +1187,10 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetValue_3args() {
         System.out.println("getValue");
-        Criterion crit = t.getParams().getCriteria(0);
+        Criterion crit = t.getParams().getCriterion(0);
         int subtype = 0;
-                Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
 
         int expResult = 4;
         int result = m.getValue(crit, subtype, c);
@@ -1155,12 +1203,12 @@ Coach c = t.getCoach(0);
     @Test
     public void testIsEntered() {
         System.out.println("isEntered");
-                Coach c = t.getCoach(0);
-        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount()-1);
+        Coach c = t.getCoach(0);
+        CoachMatch m = (CoachMatch) c.getMatch(c.getMatchCount() - 1);
 
         boolean expResult = true;
         boolean result = m.isEntered();
-       
+
         assertEquals(result, expResult);
 
     }
@@ -1171,13 +1219,13 @@ Coach c = t.getCoach(0);
     @Test
     public void testSwitchCoachs() {
         System.out.println("switchCoachs");
-        Coach c=t.getCoach(0);
-        CoachMatch instance = (CoachMatch)c.getMatch(0);
-        Coach c1=(Coach)instance.getCompetitor1();
-        Coach c2=(Coach)instance.getCompetitor2();
+        Coach c = t.getCoach(0);
+        CoachMatch instance = (CoachMatch) c.getMatch(0);
+        Coach c1 = (Coach) instance.getCompetitor1();
+        Coach c2 = (Coach) instance.getCompetitor2();
         instance.switchCoachs();
-        assertEquals((Coach)instance.getCompetitor1(), c2);
-        assertEquals((Coach)instance.getCompetitor2(), c1);
+        assertEquals((Coach) instance.getCompetitor1(), c2);
+        assertEquals((Coach) instance.getCompetitor2(), c1);
     }
 
     /**
@@ -1186,13 +1234,12 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetValue_Criterion() {
         System.out.println("getValue");
-        Criterion c = null;
-        CoachMatch instance = null;
-        Value expResult = null;
-        Value result = instance.getValue(c);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criterion c = t.getParams().getCriterion(0);
+        Value v = new Value(c);
+        CoachMatch instance = new CoachMatch(null);
+        instance.putValue(c, v);
+
+        assertEquals(instance.getValue(c), v);
     }
 
     /**
@@ -1201,13 +1248,13 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetValue_Formula() {
         System.out.println("getValue");
-        Formula f = null;
-        CoachMatch instance = null;
-        Value expResult = null;
-        Value result = instance.getValue(f);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Formula f = t.getParams().getFormula(0);
+        Value v = new Value(f);
+        CoachMatch instance = new CoachMatch(null);
+        instance.putValue(f, v);
+
+        assertEquals(instance.getValue(f), v);
+
     }
 
     /**
@@ -1216,12 +1263,16 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetComputedValueCount() {
         System.out.println("getComputedValueCount");
-        CoachMatch instance = null;
-        int expResult = 0;
+        Formula f = t.getParams().getFormula(0);
+        Value v = new Value(f);
+        CoachMatch instance = new CoachMatch(null);
+        instance.putValue(f, v);
+
+        assertEquals(instance.getValue(f), v);
+
         int result = instance.getComputedValueCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, 1);
+
     }
 
     /**
@@ -1230,12 +1281,12 @@ Coach c = t.getCoach(0);
     @Test
     public void testPutValue_Criterion_Value() {
         System.out.println("putValue");
-        Criterion c = null;
-        Value v = null;
-        CoachMatch instance = null;
+        Criterion c = t.getParams().getCriterion(0);
+        Value v = new Value(c);
+        CoachMatch instance = new CoachMatch(null);
         instance.putValue(c, v);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(instance.getValue(c), v);
     }
 
     /**
@@ -1244,12 +1295,12 @@ Coach c = t.getCoach(0);
     @Test
     public void testPutValue_Formula_Value() {
         System.out.println("putValue");
-        Formula f = null;
-        Value v = null;
-        CoachMatch instance = null;
+        Formula f = t.getParams().getFormula(0);
+        Value v = new Value(f);
+        CoachMatch instance = new CoachMatch(null);
         instance.putValue(f, v);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(instance.getValue(f), v);
     }
 
     /**
@@ -1258,11 +1309,15 @@ Coach c = t.getCoach(0);
     @Test
     public void testRemoveValue_Criterion() {
         System.out.println("removeValue");
-        Criterion c = null;
-        CoachMatch instance = null;
+        Criterion c = t.getParams().getCriterion(0);
+        Value v = new Value(c);
+        CoachMatch instance = new CoachMatch(null);
+        instance.putValue(c, v);
+
+        assertEquals(instance.getValue(c), v);
         instance.removeValue(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNull(instance.getValue(c));
+
     }
 
     /**
@@ -1271,11 +1326,14 @@ Coach c = t.getCoach(0);
     @Test
     public void testRemoveValue_Formula() {
         System.out.println("removeValue");
-        Formula f = null;
-        CoachMatch instance = null;
+        Formula f = t.getParams().getFormula(0);
+        Value v = new Value(f);
+        CoachMatch instance = new CoachMatch(null);
+        instance.putValue(f, v);
+
+        assertEquals(instance.getValue(f), v);
         instance.removeValue(f);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNull(instance.getValue(f));
     }
 
     /**
@@ -1284,14 +1342,33 @@ Coach c = t.getCoach(0);
     @Test
     public void testGetValue_Formula_Competitor() {
         System.out.println("getValue");
-        Formula formula = null;
-        Competitor c = null;
-        CoachMatch instance = null;
-        int expResult = 0;
-        int result = instance.getValue(formula, c);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Formula f = t.getParams().getFormula(0);
+        Value v = new Value(f);
+        CoachMatch instance = new CoachMatch(null);
+        instance.putValue(f, v);
+
+        assertEquals(instance.getValue(f), v);
+
+        Coach c1 = new Coach("Test1");
+        Coach c2 = new Coach("Test2");
+        instance.setCompetitor1(c1);
+        instance.setCompetitor2(c2);
+
+        int result = instance.getValue(f, c1);
+        assertEquals(result, 0);
+
+        v.setValue1(2);
+
+        result = instance.getValue(f, c1);
+        assertEquals(result, 2);
+
+        result = instance.getValue(f, c2);
+        assertEquals(result, 0);
+
+        v.setValue2(5);
+
+        result = instance.getValue(f, c2);
+        assertEquals(result, 5);
     }
 
 }

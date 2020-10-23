@@ -27,6 +27,38 @@ import bb.tourma.utility.StringConstants;
  */
 public class TeamRankingsSet implements IXMLExport {
 
+    public void setRoundIndex(int index) {
+        mRanking.setRoundIndex(index);
+
+        if (mRankingForCup != null) {
+            mRankingForCup.setRoundIndex(index);
+        }
+        if (mRankingForPool != null) {
+            mRankingForPool.setRoundIndex(index);
+        }
+
+        if (mAnnexPosRanking != null) {
+            for (Criterion c : mAnnexPosRanking.keySet()) {
+                mAnnexPosRanking.get(c).setRoundIndex(index);
+            }
+        }
+        if (mAnnexNegRanking != null) {
+            for (Criterion c : mAnnexNegRanking.keySet()) {
+                mAnnexNegRanking.get(c).setRoundIndex(index);
+            }
+        }
+        if (mAnnexDifRanking != null) {
+            for (Criterion c : mAnnexDifRanking.keySet()) {
+                mAnnexDifRanking.get(c).setRoundIndex(index);
+            }
+        }
+        if (mAnnexFormRanking != null) {
+            for (Formula c : mAnnexFormRanking.keySet()) {
+                mAnnexFormRanking.get(c).setRoundIndex(index);
+            }
+        }
+    }
+
     public void setRoundOnly(boolean roundOnly) {
 
         mRanking.setRoundOnly(roundOnly);
@@ -59,7 +91,7 @@ public class TeamRankingsSet implements IXMLExport {
             }
         }
     }
-    
+
     public TeamRankingsSet() {
 
     }
@@ -96,11 +128,11 @@ public class TeamRankingsSet implements IXMLExport {
     TeamRanking mRanking;
     TeamRanking mRankingForPool;
 
-    public TeamRanking getmRankingForPool() {
+    public TeamRanking getRankingForPool() {
         return mRankingForPool;
     }
 
-    public TeamRanking getmRankingForCup() {
+    public TeamRanking getRankingForCup() {
         return mRankingForCup;
     }
 
@@ -135,16 +167,17 @@ public class TeamRankingsSet implements IXMLExport {
     }
 
     public void createRanking(int rNumber, Tournament tour, boolean roundOnly, ArrayList<Team> teams) {
+
         mRanking = new TeamRanking(tour.getParams().isTeamVictoryOnly(), rNumber, tour.getParams(), teams, roundOnly);
-        mRankingForCup = new TeamRanking(tour.getParams().isTeamVictoryOnly(), rNumber, tour.getParams(), teams, roundOnly,true,false);
-        mRankingForPool = new TeamRanking(tour.getParams().isTeamVictoryOnly(), rNumber, tour.getParams(), teams, roundOnly,false,true);
+        mRankingForCup = new TeamRanking(tour.getParams().isTeamVictoryOnly(), rNumber, tour.getParams(), teams, roundOnly, true, false);
+        mRankingForPool = new TeamRanking(tour.getParams().isTeamVictoryOnly(), rNumber, tour.getParams(), teams, roundOnly, false, true);
 
         mAnnexPosRanking = new HashMap<>();
         mAnnexNegRanking = new HashMap<>();
         mAnnexDifRanking = new HashMap<>();
 
         for (int i = 0; i < tour.getParams().getCriteriaCount(); i++) {
-            Criterion crit = tour.getParams().getCriteria(i);
+            Criterion crit = tour.getParams().getCriterion(i);
 
             AnnexTeamRanking annexPos = new AnnexTeamRanking(rNumber, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE, teams,
                     tour.getParams(), roundOnly);
@@ -180,10 +213,18 @@ public class TeamRankingsSet implements IXMLExport {
             rankings.addContent(mRanking.getXMLElement());
         }
 
-        /**
-         * @TODO Missing For pool and For cup
-         */
-        
+        if (mRankingForCup != null) {
+            Element rankingForCup = mRankingForCup.getXMLElement();
+            rankingForCup.setName(StringConstants.CS_TEAM_RANKING_FOR_CUP);
+            rankings.addContent(rankingForCup);
+        }
+
+        if (mRankingForPool != null) {
+            Element mRankingForPool = this.mRankingForPool.getXMLElement();
+            mRankingForPool.setName(StringConstants.CS_TEAM_RANKING_FOR_POOL);
+            rankings.addContent(mRankingForPool);
+        }
+
         if (mAnnexPosRanking != null) {
             Set<Criterion> crits = mAnnexPosRanking.keySet();
             for (Criterion c : crits) {
@@ -240,7 +281,7 @@ public class TeamRankingsSet implements IXMLExport {
             String criterion_name = child.getAttributeValue(StringConstants.CS_CRITERION);
 
             if (criterion_name != null) {
-                Criterion crit = Tournament.getTournament().getParams().getCriteria(criterion_name);
+                Criterion crit = Tournament.getTournament().getParams().getCriterion(criterion_name);
 
                 String subtype = child.getAttributeValue(StringConstants.CS_SUBTYPE);
 
@@ -290,11 +331,18 @@ public class TeamRankingsSet implements IXMLExport {
             }
 
         }
-        
-        /**
-         * @TODO missing ForCup and For Pool
-         */
-        final Element child = e.getChild(StringConstants.CS_TEAM_RANKING);
+
+        Element child = e.getChild(StringConstants.CS_TEAM_RANKING_FOR_CUP);
+        if (child != null) {
+            mRankingForCup = new TeamRanking(child);
+        }
+
+        child = e.getChild(StringConstants.CS_TEAM_RANKING_FOR_POOL);
+        if (child != null) {
+            mRankingForPool = new TeamRanking(child);
+        }
+
+        child = e.getChild(StringConstants.CS_TEAM_RANKING);
         mRanking = new TeamRanking(child);
     }
 

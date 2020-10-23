@@ -6,9 +6,16 @@
 package bb.tourma.data.ranking;
 
 import bb.tourma.data.Criterion;
+import bb.tourma.data.Criterion;
+import bb.tourma.data.Formula;
 import bb.tourma.data.Formula;
 import bb.tourma.data.Team;
+import bb.tourma.data.Team;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.AnnexTeamRanking;
+import bb.tourma.data.ranking.TeamRanking;
+import bb.tourma.data.ranking.TeamRankingsSet;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,18 +31,20 @@ import org.testng.annotations.Test;
  *
  * @author WFMJ7631
  */
-public class TeamRankingsSetNGTest {
+public class ATeamRankingsSetNGTest {
 
-    public TeamRankingsSetNGTest() {
+    public ATeamRankingsSetNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        
         Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
     }
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        Tournament.clear();
     }
 
     @BeforeMethod
@@ -76,7 +85,6 @@ public class TeamRankingsSetNGTest {
     public void testGetRankingForPool() {
         System.out.println("getmRankingForPool");
 
-        Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
         Tournament tour = Tournament.getTournament();
         TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
 
@@ -93,7 +101,6 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testGetRankingForCup() {
         System.out.println("getmRankingForCup");
-        Tournament.getTournament().loadXML(new File("./test/cup_teams.xml"));
         TeamRankingsSet instance = Tournament.getTournament().getRound(0).getRankings(false).getTeamRankingSet();
         TeamRanking result = instance.getRanking();
         assertNotNull(result);

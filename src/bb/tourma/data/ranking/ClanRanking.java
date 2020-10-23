@@ -25,12 +25,11 @@ import bb.tourma.utility.StringConstants;
  */
 public class ClanRanking extends Ranking {
 
-    public ClanRanking(Element e)
-    {
+    public ClanRanking(Element e) {
         super(e);
         setXMLElement(e);
     }
-    
+
     public ClanRanking(final int round,
             Parameters params,
             final ArrayList<Clan> clans, final boolean round_only) {
@@ -278,18 +277,20 @@ public class ClanRanking extends Ranking {
 
                     while (j <= mRound) {
 
-                        Round r = Tournament.getTournament().getRound(j);
+                        if (j < Tournament.getTournament().getRoundsCount()) {
+                            Round r = Tournament.getTournament().getRound(j);
 
-                        ArrayList<CoachMatch> ar_cm = r.getCoachMatchs();
-                        for (int l = 0; l < c.getMatchCount(); l++) {
-                            final CoachMatch m = (CoachMatch) c.getMatch(l);
+                            ArrayList<CoachMatch> ar_cm = r.getCoachMatchs();
+                            for (int l = 0; l < c.getMatchCount(); l++) {
+                                final CoachMatch m = (CoachMatch) c.getMatch(l);
 
-                            if (ar_cm.contains(m)) {
-                                aValue1.add(m.getValue(1, c));
-                                aValue1.add(m.getValue(2, c));
-                                aValue1.add(m.getValue(3, c));
-                                aValue1.add(m.getValue(4, c));
-                                aValue1.add(m.getValue(5, c));
+                                if (ar_cm.contains(m)) {
+                                    aValue1.add(m.getValue(1, c));
+                                    aValue1.add(m.getValue(2, c));
+                                    aValue1.add(m.getValue(3, c));
+                                    aValue1.add(m.getValue(4, c));
+                                    aValue1.add(m.getValue(5, c));
+                                }
                             }
                         }
                         j++;

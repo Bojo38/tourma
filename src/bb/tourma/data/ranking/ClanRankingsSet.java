@@ -16,12 +16,8 @@ import bb.tourma.data.Criterion;
 import bb.tourma.data.Formula;
 import bb.tourma.data.IXMLExport;
 import bb.tourma.data.Parameters;
-import bb.tourma.data.Team;
 import bb.tourma.data.Tournament;
-import bb.tourma.data.ranking.AnnexClanRanking;
-import bb.tourma.data.ranking.AnnexTeamRanking;
 import bb.tourma.data.ranking.ClanRanking;
-import bb.tourma.data.ranking.TeamRanking;
 import bb.tourma.utility.StringConstants;
 
 /**
@@ -30,6 +26,33 @@ import bb.tourma.utility.StringConstants;
  */
 public class ClanRankingsSet implements IXMLExport {
 
+    
+    public void setRoundIndex(int index)
+    {
+        mRanking.setRoundIndex(index);
+
+        if (mAnnexPosRanking != null) {
+            for (Criterion c : mAnnexPosRanking.keySet()) {
+                mAnnexPosRanking.get(c).setRoundIndex(index);
+            }
+        }
+        if (mAnnexNegRanking != null) {
+            for (Criterion c : mAnnexNegRanking.keySet()) {
+                mAnnexNegRanking.get(c).setRoundIndex(index);
+            }
+        }
+        if (mAnnexDifRanking != null) {
+            for (Criterion c : mAnnexDifRanking.keySet()) {
+                mAnnexDifRanking.get(c).setRoundIndex(index);
+            }
+        }
+        if (mAnnexFormRanking != null) {
+            for (Formula c : mAnnexFormRanking.keySet()) {
+                mAnnexFormRanking.get(c).setRoundIndex(index);
+            }
+        }
+    }
+    
     public void setRoundOnly(boolean roundOnly) {
 
         mRanking.setRoundOnly(roundOnly);
@@ -55,7 +78,7 @@ public class ClanRankingsSet implements IXMLExport {
             }
         }
     }
-    
+
     public ClanRankingsSet(Element e) {
         setXMLElement(e);
     }
@@ -84,9 +107,13 @@ public class ClanRankingsSet implements IXMLExport {
     }
 
     public HashMap<Formula, AnnexClanRanking> getAnnexFormRanking() {
+        if (mAnnexFormRanking==null)
+        {
+            mAnnexFormRanking=new HashMap<>();
+        }        
         return mAnnexFormRanking;
     }
-    
+
     public void createRanking(int rNumber, Tournament tour, boolean roundOnly, ArrayList<Clan> clans) {
         mRanking = new ClanRanking(rNumber, tour.getParams(), clans, roundOnly);
 
@@ -95,7 +122,7 @@ public class ClanRankingsSet implements IXMLExport {
         mAnnexDifRanking = new HashMap<>();
 
         for (int i = 0; i < tour.getParams().getCriteriaCount(); i++) {
-            Criterion crit = tour.getParams().getCriteria(i);
+            Criterion crit = tour.getParams().getCriterion(i);
 
             AnnexClanRanking annexPos = new AnnexClanRanking(rNumber, crit, Parameters.C_RANKING_SUBTYPE_POSITIVE, clans,
                     tour.getParams(), roundOnly);
@@ -140,9 +167,11 @@ public class ClanRankingsSet implements IXMLExport {
         for (Criterion c : mAnnexDifRanking.keySet()) {
             mAnnexDifRanking.get(c).sortDatas();
         }
-        for (Formula c : mAnnexFormRanking.keySet()) {
-            mAnnexFormRanking.get(c).sortDatas();
-        }
+        if (mAnnexFormRanking != null) {
+            for (Formula c : mAnnexFormRanking.keySet()) {
+                mAnnexFormRanking.get(c).sortDatas();
+            }
+        }  
     }
 
     @Override
@@ -195,6 +224,7 @@ public class ClanRankingsSet implements IXMLExport {
                 rankings.addContent(granking);
             }
         }
+        
 
         return rankings;
     }
@@ -209,7 +239,7 @@ public class ClanRankingsSet implements IXMLExport {
             String criterion_name = child.getAttributeValue(StringConstants.CS_CRITERION);
 
             if (criterion_name != null) {
-                Criterion crit = Tournament.getTournament().getParams().getCriteria(criterion_name);
+                Criterion crit = Tournament.getTournament().getParams().getCriterion(criterion_name);
 
                 String subtype = child.getAttributeValue(StringConstants.CS_SUBTYPE);
 
@@ -253,13 +283,14 @@ public class ClanRankingsSet implements IXMLExport {
                 if (mAnnexFormRanking == null) {
                     mAnnexFormRanking = new HashMap<>();
                 }
-                AnnexClanRanking ranking = new AnnexClanRanking(child);
+                AnnexClanRanking ranking = new AnnexClanRanking(child.getChild(StringConstants.CS_ANNEX_CLAN_RANKING));
                 ranking.setFormula(form);
                 mAnnexFormRanking.put(form, ranking);
             }
 
         }
-        final Element child = e.getChild(StringConstants.CS_TEAM_RANKING);
+
+        final Element child = e.getChild(StringConstants.CS_CLAN_RANKING);
         mRanking = new ClanRanking(child);
     }
 

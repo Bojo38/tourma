@@ -177,7 +177,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                 ArrayList crits = new ArrayList();
                 for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
                     final Map crit = new HashMap();
-                    Criterion criteria = Tournament.getTournament().getParams().getCriteria(j);
+                    Criterion criteria = Tournament.getTournament().getParams().getCriterion(j);
                     if (j == 0) {
                         match.put("firstcriterianame", criteria.getName());
                     } else {
@@ -293,7 +293,7 @@ public final class JdgPrintLabel extends javax.swing.JDialog {
                         ArrayList crits = new ArrayList();
                         for (int k = 0; k < Tournament.getTournament().getParams().getCriteriaCount(); k++) {
                             final Map crit = new HashMap();
-                            Criterion criteria = Tournament.getTournament().getParams().getCriteria(k);
+                            Criterion criteria = Tournament.getTournament().getParams().getCriterion(k);
                             if (k == 0) {
                                 match.put("firstcriterianame", criteria.getName());
                             } else {

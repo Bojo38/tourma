@@ -201,7 +201,7 @@ public final class JPNParamCriterias extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveCriteriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveCriteriaActionPerformed
         if ((jtbCriteria.getSelectedRow() > 1) && (jtbCriteria.getSelectedRow() < mTournament.getParams().getCriteriaCount())) {
-            final Criterion crit = mTournament.getParams().getCriteria(jtbCriteria.getSelectedRow());
+            final Criterion crit = mTournament.getParams().getCriterion(jtbCriteria.getSelectedRow());
             for (int i = 0; i < mTournament.getRoundsCount(); i++) {
                 final Round r = mTournament.getRound(i);
                 for (int j = 0; j < r.getCoachMatchs().size(); j++) {

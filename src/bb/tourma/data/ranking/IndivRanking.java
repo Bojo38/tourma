@@ -330,7 +330,7 @@ public class IndivRanking extends Ranking {
         // l'écart minimum entre 2 membres de la même poule
         // soit le nombre de joueurs de la poule
         if ((mForPool) && (!tour.getParams()
-                .isTeamTournament())) {
+                .isTeamTournament())&&(tour.getPoolCount()>0)) {
             if (mObjects.size() > tour.getPool(0).getCompetitorCount()) {
                 final int nbPool = tour.getPoolCount();
                 Pool p;
@@ -378,10 +378,10 @@ public class IndivRanking extends Ranking {
         }
     }
 
-    protected void updateHeadByHeadValue(int round_index, int valueIndex, ObjectRanking or1, ObjectRanking or2) {
+    private void updateHeadByHeadValue(int round_index, int valueIndex, ObjectRanking or1, ObjectRanking or2) {
         Coach c = (Coach) or1.getObject();
         Coach c2 = (Coach) or2.getObject();
-        Criterion Tds = Tournament.getTournament().getParams().getCriteria(0);
+        Criterion Tds = Tournament.getTournament().getParams().getCriterion(0);
 
         for (int l = 0; l < c.getMatchCount(); l++) {
             CoachMatch cm = (CoachMatch) c.getMatch(l);

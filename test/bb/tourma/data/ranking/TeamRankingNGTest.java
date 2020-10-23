@@ -32,6 +32,7 @@ public class TeamRankingNGTest {
 
     @AfterClass
     public static void tearDownClass() throws Exception {
+        Tournament.clear();
     }
 
     @BeforeMethod

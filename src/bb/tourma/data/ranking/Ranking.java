@@ -112,7 +112,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
      * @param valueType
      * @return
      */
-    public static Criterion getCriteriaByValue(final int valueType) {
+    public static Criterion getCriterionByValue(final int valueType) {
         Criterion criteria = null;
 
         if (valueType > Parameters.C_MAX_RANKING) {
@@ -120,7 +120,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
 
             if (value / 3 < Tournament.getTournament().getParams().getCriteriaCount()) {
                 Parameters params = Tournament.getTournament().getParams();
-                criteria = params.getCriteria(value / 3);
+                criteria = params.getCriterion(value / 3);
             }
 
         }
@@ -195,7 +195,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
      */
     public static String getRankingString(final int rankingType) {
         String result = StringConstants.CS_NULL;
-        final Criterion c = getCriteriaByValue(rankingType);
+        final Criterion c = getCriterionByValue(rankingType);
         if (c == null) {
             Formula f = getFormulaByValue(rankingType);
             if (f == null) {
@@ -268,7 +268,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
         return result;
     }
 
-    protected int getValueFromArray(int rt, ArrayList<Integer> av) {
+    protected static int getValueFromArray(int rt, ArrayList<Integer> av) {
         int value = 0;
 
         if (av.size() > 0) {
@@ -285,7 +285,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
         return value;
     }
 
-    protected void removeMinValue(ArrayList<Integer> aValue) {
+    protected static  void removeMinValue(ArrayList<Integer> aValue) {
         int min = Integer.MAX_VALUE;
         int index = 0;
         if (aValue.size() > 0) {
@@ -299,7 +299,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
         }
     }
 
-    protected void removeMaxValue(ArrayList<Integer> aValue) {
+    protected static void removeMaxValue(ArrayList<Integer> aValue) {
         int max = Integer.MIN_VALUE;
         int index = 0;
         if (aValue.size() > 0) {
@@ -328,7 +328,6 @@ abstract public class Ranking implements IRanked, IXMLExport {
         ObjectRanking obj = (ObjectRanking) mDatas.get(index);
 
         switch (valIndex) {
-
             case 1:
                 return obj.getValue1();
             case 2:
@@ -447,34 +446,6 @@ abstract public class Ranking implements IRanked, IXMLExport {
         /**
          * Objects
          */
-        /*if (mObjects != null) {
-            for (Object obj : mObjects) {
-                if (obj instanceof Team) {
-                    Element e_team = new Element(StringConstants.CS_TEAM);
-                    Team t = (Team) obj;
-                    e_team.setAttribute(StringConstants.CS_NAME, t.getName());
-                    e.addContent(e_team);
-                }
-
-                if (obj instanceof Coach) {
-                    Element e_coach = new Element(StringConstants.CS_COACH);
-                    Coach c = (Coach) obj;
-                    e_coach.setAttribute(StringConstants.CS_NAME, c.getName());
-                    e.addContent(e_coach);
-                }
-
-                if (obj instanceof Clan) {
-                    Element e_clan = new Element(StringConstants.CS_CLAN);
-                    Clan c = (Clan) obj;
-                    e_clan.setAttribute(StringConstants.CS_NAME, c.getName());
-                    e.addContent(e_clan);
-                }
-            }
-        }*/
-
-        /**
-         * Objects
-         */
         if (mDatas != null) {
             for (int i = 0; i < mDatas.size(); i++) {
                 ObjectRanking obj = mDatas.get(i);
@@ -487,6 +458,11 @@ abstract public class Ranking implements IRanked, IXMLExport {
         return e;
     }
 
+    public void setRoundIndex(int i)
+    {
+        mRound=i;
+    }
+    
     @Override
     public void setXMLElement(Element e) {
 
@@ -548,6 +524,9 @@ abstract public class Ranking implements IRanked, IXMLExport {
             }
 
         } catch (DataConversionException dce) {
+            dce.printStackTrace();;
+        }
+        catch (NullPointerException dce) {
             dce.printStackTrace();;
         }
     }

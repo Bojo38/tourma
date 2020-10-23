@@ -75,7 +75,7 @@ public class ManualRanking extends Ranking {
       @Override
     public Element getXMLElement() {
        Element e = super.getXMLElement();
-        e.setName(StringConstants.CS_MANUAL_RANKING);
+       e.setName(StringConstants.CS_MANUAL_RANKING);
       
 
         return e;

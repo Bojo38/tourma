@@ -98,29 +98,29 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
         Object result = StringConstants.CS_NULL;
         switch (col) {
             case 0:
-                result = mParams.getCriteria(row).getName();
+                result = mParams.getCriterion(row).getName();
                 break;
             case 1:
-                result = mParams.getCriteria(row).getAccronym();
+                result = mParams.getCriterion(row).getAccronym();
                 break;
             case 2:
-                result = mParams.getCriteria(row).getPointsFor();
+                result = mParams.getCriterion(row).getPointsFor();
                 break;
             case 3:
-                result = mParams.getCriteria(row).getPointsAgainst();
+                result = mParams.getCriterion(row).getPointsAgainst();
                 break;
             case 4:
                 if (mParams.isTeamTournament()) {
-                    result = mParams.getCriteria(row).getPointsTeamFor();
+                    result = mParams.getCriterion(row).getPointsTeamFor();
                 } else {
-                    result = mParams.getCriteria(row).getCriticalThreshold();
+                    result = mParams.getCriterion(row).getCriticalThreshold();
                 }
                 break;
             case 5:
-                result = mParams.getCriteria(row).getPointsTeamAgainst();
+                result = mParams.getCriterion(row).getPointsTeamAgainst();
                 break;
             case 6:
-                result = mParams.getCriteria(row).getCriticalThreshold();
+                result = mParams.getCriterion(row).getCriticalThreshold();
                 break;
             default:
         }
@@ -134,7 +134,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
             boolean exists = false;
             for (int i = 0; i < mParams.getCriteriaCount(); i++) {
                 if (i != row) {
-                    if (value.toString().equals(mParams.getCriteria(i).getName())) {
+                    if (value.toString().equals(mParams.getCriterion(i).getName())) {
                         exists = true;
                         break;
                     }
@@ -147,7 +147,7 @@ public class MjtCriterias extends AbstractTableModel implements TableCellRendere
 
             } else {
                 String tmp = value.toString();
-                final Criterion c = mParams.getCriteria(row);
+                final Criterion c = mParams.getCriterion(row);
                 int val;
                 switch (col) {
                     case 0:

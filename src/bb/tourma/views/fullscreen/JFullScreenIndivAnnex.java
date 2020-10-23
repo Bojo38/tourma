@@ -226,7 +226,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
             if (indivRankType != C_POOL) {
 
                 for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                    Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                    Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
                     AnnexIndivRanking annexRank0 = mRound.getRankings(false).getIndivRankingSet().getAnnexPosRanking().get(crit);
                     AnnexIndivRanking annexRank1 = mRound.getRankings(false).getIndivRankingSet().getAnnexNegRanking().get(crit);
                     AnnexIndivRanking annexRank2 = mRound.getRankings(false).getIndivRankingSet().getAnnexDifRanking().get(crit);
@@ -240,7 +240,7 @@ public final class JFullScreenIndivAnnex extends JFullScreen {
                     Pool p = Tournament.getTournament().getPool(cpt);
 
                     for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                        Criterion crit = Tournament.getTournament().getParams().getCriteria(i);
+                        Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
 
                         AnnexIndivRanking annexRank0 = mRound.getRankings(false).getPoolIndivRankings().get(p).getAnnexPosRanking().get(crit);
                         AnnexIndivRanking annexRank1 = mRound.getRankings(false).getPoolIndivRankings().get(p).getAnnexNegRanking().get(crit);

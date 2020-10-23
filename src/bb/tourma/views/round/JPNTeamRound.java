@@ -144,7 +144,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            final Criterion criteria = mTournament.getParams().getCriteria(i);
+            final Criterion criteria = mTournament.getParams().getCriterion(i);
             ArrayList<Team> teams = new ArrayList<>();
             for (int cpt = 0; cpt < Tournament.getTournament().getTeamsCount(); cpt++) {
                 teams.add(Tournament.getTournament().getTeam(cpt));
@@ -325,7 +325,7 @@ public final class JPNTeamRound extends javax.swing.JPanel {
                 final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
 
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
-                    final Criterion crit = mTournament.getParams().getCriteria(j);
+                    final Criterion crit = mTournament.getParams().getCriterion(j);
 
                     AnnexTeamRanking aranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexPosRanking().get(crit);
                     MjtAnnexRank annex = new MjtAnnexRankTeam(aranking, true);

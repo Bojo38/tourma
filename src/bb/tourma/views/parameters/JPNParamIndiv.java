@@ -553,7 +553,7 @@ public class JPNParamIndiv extends javax.swing.JPanel {
         rankChoices.add(Translate.translate(Translate.CS_Teammates_Points));
         rankChoices.add(Translate.translate(Translate.CS_Teammates_VND));
         for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-            final Criterion criteria = Tournament.getTournament().getParams().getCriteria(i);
+            final Criterion criteria = Tournament.getTournament().getParams().getCriterion(i);
             rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Player));
             rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Opponent));
             rankChoices.add(criteria.getName() + " " + Translate.translate(CS_Difference));

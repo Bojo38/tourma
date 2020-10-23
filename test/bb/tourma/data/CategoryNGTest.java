@@ -279,11 +279,13 @@ public class CategoryNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String mName = "";
-        Category instance = null;
+        String mName = "Test2";
+        Category instance = new Category("Test");
         instance.setName(mName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        assertEquals(instance.getName(), mName);
+        
+
     }
 
 }

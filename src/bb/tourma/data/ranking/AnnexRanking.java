@@ -143,25 +143,12 @@ abstract public class AnnexRanking extends Ranking {
         }
 
         e.setAttribute(StringConstants.CS_SUBTYPE, Integer.toString(mSubtype));
-        if (mType==null)
-        {
-            mType="";
+        if (mType == null) {
+            mType = "";
         }
         e.setAttribute(StringConstants.CS_TYPE, mType);
 
-        /*e.removeChildren(StringConstants.CS_POSITION);
-
-         if (mDatas != null) {
-            for (int i = 0; i < mDatas.size(); i++) {
-                ObjectRanking obj = mDatas.get(i);
-                if (obj instanceof ObjectAnnexRanking) {
-                    Element or = ((ObjectAnnexRanking) obj).getXMLElement();
-                    or.setAttribute(StringConstants.CS_RANK, Integer.toString(i + 1));
-                    e.addContent(or);
-                }
-            }
-        }*/
-
+        
         return e;
     }
 
@@ -180,14 +167,25 @@ abstract public class AnnexRanking extends Ranking {
             mRoundOnly = e.getAttribute(StringConstants.CS_ROUNDONLY).getBooleanValue();
 
             mDetail = e.getAttribute(StringConstants.CS_DETAILS).getValue();
+            try {
+                String crit = e.getAttribute(StringConstants.CS_CRITERION).getValue();
+                this.mCriterion = Tournament.getTournament().getParams().getCriterion(crit);
+            } catch (NullPointerException npe) {
 
+            }
+            try {
+                String form = e.getAttribute(StringConstants.CS_FORMULA).getValue();
+                this.mFormula = Tournament.getTournament().getParams().getFormula(form);
+            } catch (NullPointerException npe) {
+
+            }
             /**
              * mDatas
              */
             final List<Element> positions = e.getChildren(StringConstants.CS_POSITION);
             final Iterator<Element> k = positions.iterator();
             mDatas.clear();
-            mObjects=new ArrayList();
+            mObjects = new ArrayList();
             while (k.hasNext()) {
                 Element pos = k.next();
                 Comparable<Object> obj = null;

@@ -29,7 +29,7 @@ public class Rankings implements IXMLExport {
 
     public void setRoundOnly(boolean roundOnly) {
         this.mRoundOnly = roundOnly;
-        
+
         if (mTeamRankingSet != null) {
             mTeamRankingSet.setRoundOnly(roundOnly);
         }
@@ -65,7 +65,7 @@ public class Rankings implements IXMLExport {
                 mPoolTeamRankings.get(g).setRoundOnly(roundOnly);
             }
         }
-                
+
     }
 
     public TeamRankingsSet getTeamRankingSet() {
@@ -167,6 +167,78 @@ public class Rankings implements IXMLExport {
     public Rankings(boolean roundOnly) {
         mIndivRankingSet = new IndivRankingsSet();
         mRoundOnly = roundOnly;
+    }
+
+    public void setRoundIndex(Tournament tour, int index) {
+        mIndivRankingSet.setRoundIndex(index);
+
+        if (tour.getParams().isTeamTournament()) {
+            if (mTeamRankingSet == null) {
+                mTeamRankingSet = new TeamRankingsSet();
+            }
+            mTeamRankingSet.setRoundIndex(index);
+        }
+
+        if (tour.getClansCount() > 1) {
+            if (mClanRankingSet == null) {
+                mClanRankingSet = new ClanRankingsSet();
+            }
+            mClanRankingSet.setRoundIndex(index);
+        }
+
+        if (tour.getGroupsCount() > 1) {
+            if (mGroupRanking == null) {
+                mGroupRanking = new HashMap<>();
+            }
+            for (int i = 0; i < tour.getGroupsCount(); i++) {
+
+                Group g = tour.getGroup(i);
+                mGroupRanking.get(g).setRoundIndex(index);
+            }
+        }
+
+        if (tour.getCategoriesCount() > 1) {
+            if (mCategoryIndivRanking == null) {
+                mCategoryIndivRanking = new HashMap<>();
+            }
+
+            if (mCategoryTeamRanking == null) {
+                mCategoryTeamRanking = new HashMap<>();
+            }
+            for (int i = 0; i < tour.getCategoriesCount(); i++) {
+                Category cat = tour.getCategory(i);
+                mCategoryIndivRanking.get(cat).setRoundIndex(index);
+                mCategoryTeamRanking.get(cat).setRoundIndex(index);
+            }
+        }
+        if (mPoolIndivRankings == null) {
+            mPoolIndivRankings = new HashMap<>();
+        }
+        if (mPoolTeamRankings == null) {
+            mPoolTeamRankings = new HashMap<>();
+        }
+        for (int i = 0; i < tour.getPoolCount(); i++) {
+            Pool p = tour.getPool(i);
+            ArrayList<Coach> listeC = new ArrayList<>();
+            ArrayList<Team> listeT = new ArrayList<>();
+            for (int j = 0; j < p.getCompetitorCount(); j++) {
+                Competitor comp = p.getCompetitor(j);
+                if (comp instanceof Coach) {
+                    listeC.add((Coach) comp);
+                }
+                if (comp instanceof Team) {
+                    listeT.add((Team) comp);
+                }
+            }
+
+            if (listeC.size() > 0) {
+                mPoolIndivRankings.get(p).setRoundIndex(index);
+            }
+
+            if (listeT.size() > 0) {
+                mPoolTeamRankings.get(p).setRoundIndex(index);
+            }
+        }
     }
 
     public void createRankings(int rNumber, Tournament tour) {
@@ -393,18 +465,28 @@ public class Rankings implements IXMLExport {
                         if (mPoolTeamRankings == null) {
                             mPoolTeamRankings = new HashMap<>();
                         }
-                        Pool p = Tournament.getTournament().getPool(mPoolTeamRankings.size());
-                        TeamRankingsSet r = new TeamRankingsSet(child);
-                        mPoolTeamRankings.put(p, r);
+                        try {
+                            int pIndex = child.getAttribute(StringConstants.CS_POOL).getIntValue()-1;
+                            TeamRankingsSet r = new TeamRankingsSet(child.getChild(StringConstants.CS_TEAM_RANKING_SET));
+                            Pool p = Tournament.getTournament().getPool(pIndex);
+                            mPoolTeamRankings.put(p, r);
+                        } catch (DataConversionException dte) {
+                            dte.printStackTrace();
+                        }
                     }
                     break;
                     case StringConstants.CS_POOL_INDIV_RANKING: {
-                        if (mPoolIndivRankings == null) {
-                            mPoolIndivRankings = new HashMap<>();
+                        try {
+                            if (mPoolIndivRankings == null) {
+                                mPoolIndivRankings = new HashMap<>();
+                            }
+                            int pIndex = child.getAttribute(StringConstants.CS_POOL).getIntValue()-1;
+                            Pool p = Tournament.getTournament().getPool(pIndex);
+                            IndivRankingsSet r = new IndivRankingsSet(child.getChild(StringConstants.CS_INDIV_RANKING_SET));
+                            mPoolIndivRankings.put(p, r);
+                        } catch (DataConversionException dte) {
+                            dte.printStackTrace();
                         }
-                        Pool p = Tournament.getTournament().getPool(mPoolIndivRankings.size());
-                        IndivRankingsSet r = new IndivRankingsSet(child);
-                        mPoolIndivRankings.put(p, r);
                     }
                     break;
                     case StringConstants.CS_CATEGORY_TEAM_RANKING: {
@@ -429,7 +511,7 @@ public class Rankings implements IXMLExport {
                             mGroupRanking = new HashMap<>();
                         }
                         Group g = Tournament.getTournament().getGroup(child.getAttributeValue(StringConstants.CS_GROUP));
-                        IndivRanking r = new IndivRanking(child);
+                        IndivRanking r = new IndivRanking(child.getChild(StringConstants.CS_INDIV_RANKING));
                         mGroupRanking.put(g, r);
                     }
                     break;

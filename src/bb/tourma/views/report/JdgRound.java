@@ -381,7 +381,7 @@ public final class JdgRound extends javax.swing.JDialog {
 
             final ArrayList<Object> crits = new ArrayList<>();
             for (int i = 1; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                crits.add(Tournament.getTournament().getParams().getCriteria(i).getName());
+                crits.add(Tournament.getTournament().getParams().getCriterion(i).getName());
             }
             root.put(ReportKeys.CS_Criterias, crits);
 
@@ -409,14 +409,14 @@ public final class JdgRound extends javax.swing.JDialog {
                     m.put(ReportKeys.CS_Coach1, StringEscapeUtils.escapeHtml4(((Coach) match.getCompetitor1()).getTeamMates().getName() + StringConstants.CS_THICK + match.getCompetitor1().getName()));
                 }
                 if (mResult) {
-                    m.put(ReportKeys.CS_Score1, match.getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue1());
-                    m.put(ReportKeys.CS_Score2, match.getValue(Tournament.getTournament().getParams().getCriteria(0)).getValue2());
+                    m.put(ReportKeys.CS_Score1, match.getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue1());
+                    m.put(ReportKeys.CS_Score2, match.getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue2());
 
                     final ArrayList<Object> values = new ArrayList<>();
                     for (int j = 1; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
                         final HashMap<String, Object> value = new HashMap<>();
-                        value.put(ReportKeys.CS_Value1, match.getValue(Tournament.getTournament().getParams().getCriteria(j)).getValue1());
-                        value.put(ReportKeys.CS_Value2, match.getValue(Tournament.getTournament().getParams().getCriteria(j)).getValue2());
+                        value.put(ReportKeys.CS_Value1, match.getValue(Tournament.getTournament().getParams().getCriterion(j)).getValue1());
+                        value.put(ReportKeys.CS_Value2, match.getValue(Tournament.getTournament().getParams().getCriterion(j)).getValue2());
                         values.add(value);
                     }
                     m.put(ReportKeys.CS_Values, values);

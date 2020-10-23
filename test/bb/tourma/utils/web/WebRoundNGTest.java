@@ -173,7 +173,7 @@ public class WebRoundNGTest {
         ArrayList<Team> teams = null;
         String rankName = "";
         String expResult = "";
-        String result = WebRound.createTeamRanking(r, teams, rankName);
+        String result = WebRound.createTeamRanking(r);//WebRound.createTeamRanking(r, teams, rankName);
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

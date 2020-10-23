@@ -168,7 +168,7 @@ public final class JPNRound extends javax.swing.JPanel {
             teams.add(t.getTeam(cpt));
         }
         for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
-            final Criterion criteria = mTournament.getParams().getCriteria(i);
+            final Criterion criteria = mTournament.getParams().getCriterion(i);
             final ArrayList<Coach> coaches = new ArrayList<>();
             for (int cpt = 0; cpt < t.getCoachsCount(); cpt++) {
                 coaches.add(t.getCoach(cpt));
@@ -302,7 +302,7 @@ public final class JPNRound extends javax.swing.JPanel {
         MjtRankingIndiv mRanking;
 
         IndivRanking ranking;
-        if (forPool) {
+        if ((forPool)&&(!Tournament.getTournament().getParams().isTeamTournament())) {
             ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForPool();
         } else if (forCup) {
             ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForCup();
@@ -704,7 +704,7 @@ public final class JPNRound extends javax.swing.JPanel {
                 final HashMap<Criterion, MjtAnnexRank> annexAgainstRankings = new HashMap<>();
                 for (int j = 0; j < mTournament.getParams().getCriteriaCount(); j++) {
 
-                    final Criterion crit = mTournament.getParams().getCriteria(j);
+                    final Criterion crit = mTournament.getParams().getCriterion(j);
                     AnnexIndivRanking aranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexPosRanking().get(crit);
                     MjtAnnexRank annex = new MjtAnnexRankIndiv(aranking, true);
                     annexForRankings.put(crit, annex);
@@ -836,7 +836,7 @@ public final class JPNRound extends javax.swing.JPanel {
             }
             if (critIndex >= 0) {
                 if (critIndex < Tournament.getTournament().getParams().getCriteriaCount()) {
-                    Value mv = match.getValues().get(Tournament.getTournament().getParams().getCriteria(critIndex));
+                    Value mv = match.getValues().get(Tournament.getTournament().getParams().getCriterion(critIndex));
                     if (c1) {
                         int v = mv.getValue1();
                         if (critIndex == 0) {
