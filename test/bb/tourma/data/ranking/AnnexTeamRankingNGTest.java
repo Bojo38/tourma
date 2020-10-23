@@ -5,7 +5,10 @@
  */
 package bb.tourma.data.ranking;
 
+import bb.tourma.data.Criterion;
 import bb.tourma.data.ObjectAnnexRanking;
+import bb.tourma.data.Tournament;
+import java.io.File;
 import org.jdom.Element;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
@@ -25,6 +28,7 @@ public class AnnexTeamRankingNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/team.xml"));
     }
 
     @AfterClass
@@ -45,27 +49,33 @@ public class AnnexTeamRankingNGTest {
     @Test
     public void testSortDatas() {
         System.out.println("sortDatas");
-        AnnexTeamRanking instance = null;
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
+        AnnexTeamRanking instance = Tournament.getTournament().getRound(1).getRankings(false).getTeamRankingSet().getAnnexPosRanking().get(crit);
+        Element result = instance.getXMLElement();
+        assertNotNull(result);
+
+        AnnexTeamRanking other = new AnnexTeamRanking(result);
+
+        assertEquals(other.getRankingType1(), instance.getRankingType1());
+        assertEquals(other.getRankingType2(), instance.getRankingType2());
+        assertEquals(other.getRankingType3(), instance.getRankingType3());
+        assertEquals(other.getRankingType4(), instance.getRankingType4());
+        assertEquals(other.getRankingType5(), instance.getRankingType5());
+        System.out.println("Criterion: " + instance.getCriterion().getName());
+        assertEquals(other.getCriterion(), instance.getCriterion());
+        assertEquals(other.getCount(), instance.getCount());
+        assertEquals(other.getFormula(), instance.getFormula());
+        assertEquals(other.getRound(), instance.getRound());
+
+        other.sortDatas();
         instance.sortDatas();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        for (int i = 0; i < other.getRowCount(); i++) {
+            System.out.println(other.getObject(i).toString()+ " / "+ instance.getObject(i).toString());
+            assertEquals(other.getObject(i), instance.getObject(i));
+        }
     }
 
-    /**
-     * Test of updateHeadByHeadValue method, of class AnnexTeamRanking.
-     */
-    @Test
-    public void testUpdateHeadByHeadValue() {
-        System.out.println("updateHeadByHeadValue");
-        int round_index = 0;
-        int valueIndex = 0;
-        ObjectAnnexRanking or1 = null;
-        ObjectAnnexRanking or2 = null;
-        AnnexTeamRanking instance = null;
-        instance.updateHeadByHeadValue(round_index, valueIndex, or1, or2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of getXMLElement method, of class AnnexTeamRanking.
@@ -73,12 +83,31 @@ public class AnnexTeamRankingNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        AnnexTeamRanking instance = null;
-        Element expResult = null;
+       Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
+        AnnexTeamRanking instance = Tournament.getTournament().getRound(1).getRankings(false).getTeamRankingSet().getAnnexPosRanking().get(crit);
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+
+        AnnexTeamRanking other = new AnnexTeamRanking(result);
+
+        assertEquals(other.getRankingType1(), instance.getRankingType1());
+        assertEquals(other.getRankingType2(), instance.getRankingType2());
+        assertEquals(other.getRankingType3(), instance.getRankingType3());
+        assertEquals(other.getRankingType4(), instance.getRankingType4());
+        assertEquals(other.getRankingType5(), instance.getRankingType5());
+        System.out.println("Criterion: " + instance.getCriterion().getName());
+        assertEquals(other.getCriterion(), instance.getCriterion());
+        assertEquals(other.getCount(), instance.getCount());
+        assertEquals(other.getFormula(), instance.getFormula());
+        assertEquals(other.getRound(), instance.getRound());
+
+        other.sortDatas();
+        instance.sortDatas();
+
+        for (int i = 0; i < other.getRowCount(); i++) {
+            System.out.println(other.getObject(i).toString()+ " / "+ instance.getObject(i).toString());
+            assertEquals(other.getObject(i), instance.getObject(i));
+        }
     }
 
     /**
@@ -87,11 +116,31 @@ public class AnnexTeamRankingNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        AnnexTeamRanking instance = null;
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
+        AnnexTeamRanking instance = Tournament.getTournament().getRound(1).getRankings(false).getTeamRankingSet().getAnnexPosRanking().get(crit);
+        Element result = instance.getXMLElement();
+        assertNotNull(result);
+
+        AnnexTeamRanking other = new AnnexTeamRanking(result);
+
+        assertEquals(other.getRankingType1(), instance.getRankingType1());
+        assertEquals(other.getRankingType2(), instance.getRankingType2());
+        assertEquals(other.getRankingType3(), instance.getRankingType3());
+        assertEquals(other.getRankingType4(), instance.getRankingType4());
+        assertEquals(other.getRankingType5(), instance.getRankingType5());
+        System.out.println("Criterion: " + instance.getCriterion().getName());
+        assertEquals(other.getCriterion(), instance.getCriterion());
+        assertEquals(other.getCount(), instance.getCount());
+        assertEquals(other.getFormula(), instance.getFormula());
+        assertEquals(other.getRound(), instance.getRound());
+
+        other.sortDatas();
+        instance.sortDatas();
+
+        for (int i = 0; i < other.getRowCount(); i++) {
+            System.out.println(other.getObject(i).toString()+ " / "+ instance.getObject(i).toString());
+            assertEquals(other.getObject(i), instance.getObject(i));
+        }
     }
     
 }

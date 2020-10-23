@@ -7,6 +7,9 @@ package bb.tourma.data.ranking;
 
 import bb.tourma.data.Clan;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.Formula;
+import bb.tourma.data.Criterion;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.jdom.Element;
@@ -22,12 +25,14 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class ClanRankingsSetNGTest {
-    
+
     public ClanRankingsSetNGTest() {
+
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
     }
 
     @AfterClass
@@ -49,16 +54,16 @@ public class ClanRankingsSetNGTest {
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean roundOnly = false;
-        ClanRankingsSet instance = new ClanRankingsSet();
+        Tournament tour = Tournament.getTournament();
+        ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
         instance.setRoundOnly(roundOnly);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of createRanking method, of class ClanRankingsSet.
+     * Test of createRanking method, of class ClanRankingsSet. Subcase of other
+     * function
      */
-    @Test
+    @Test(enabled = false)
     public void testCreateRanking_3args() {
         System.out.println("createRanking");
         int rNumber = 0;
@@ -76,12 +81,11 @@ public class ClanRankingsSetNGTest {
     @Test
     public void testGetRanking() {
         System.out.println("getRanking");
-        ClanRankingsSet instance = new ClanRankingsSet();
-        ClanRanking expResult = null;
+        Tournament tour = Tournament.getTournament();
+        ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
+
         ClanRanking result = instance.getRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -90,12 +94,12 @@ public class ClanRankingsSetNGTest {
     @Test
     public void testGetAnnexPosRanking() {
         System.out.println("getAnnexPosRanking");
-        ClanRankingsSet instance = new ClanRankingsSet();
-        HashMap expResult = null;
-        HashMap result = instance.getAnnexPosRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
+
+        HashMap<Criterion, AnnexClanRanking> result = instance.getAnnexPosRanking();
+        AnnexClanRanking res = result.get(tour.getParams().getCriterion(0));
+        assertNotNull(res);
     }
 
     /**
@@ -104,12 +108,12 @@ public class ClanRankingsSetNGTest {
     @Test
     public void testGetAnnexNegRanking() {
         System.out.println("getAnnexNegRanking");
-        ClanRankingsSet instance = new ClanRankingsSet();
-        HashMap expResult = null;
-        HashMap result = instance.getAnnexNegRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
+
+        HashMap<Criterion, AnnexClanRanking> result = instance.getAnnexNegRanking();
+        AnnexClanRanking res = result.get(tour.getParams().getCriterion(0));
+        assertNotNull(res);
     }
 
     /**
@@ -118,12 +122,12 @@ public class ClanRankingsSetNGTest {
     @Test
     public void testGetAnnexDifRanking() {
         System.out.println("getAnnexDifRanking");
-        ClanRankingsSet instance = new ClanRankingsSet();
-        HashMap expResult = null;
-        HashMap result = instance.getAnnexDifRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
+
+        HashMap<Criterion, AnnexClanRanking> result = instance.getAnnexPosRanking();
+        AnnexClanRanking res = result.get(tour.getParams().getCriterion(0));
+        assertNotNull(res);
     }
 
     /**
@@ -132,12 +136,12 @@ public class ClanRankingsSetNGTest {
     @Test
     public void testGetAnnexFormRanking() {
         System.out.println("getAnnexFormRanking");
-        ClanRankingsSet instance = new ClanRankingsSet();
-        HashMap expResult = null;
-        HashMap result = instance.getAnnexFormRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
+
+        HashMap<Formula, AnnexClanRanking> result = instance.getAnnexFormRanking();
+        AnnexClanRanking res = result.get(tour.getParams().getFormula(0));
+        assertNotNull(res);
     }
 
     /**
@@ -147,13 +151,13 @@ public class ClanRankingsSetNGTest {
     public void testCreateRanking_4args() {
         System.out.println("createRanking");
         int rNumber = 0;
-        Tournament tour = null;
+        Tournament tour = Tournament.getTournament();
         boolean roundOnly = false;
-        ArrayList<Clan> clans = null;
+        ArrayList<Clan> clans = tour.getClans();
         ClanRankingsSet instance = new ClanRankingsSet();
         instance.createRanking(rNumber, tour, roundOnly, clans);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertNotNull(instance.getRanking());
     }
 
     /**
@@ -162,10 +166,9 @@ public class ClanRankingsSetNGTest {
     @Test
     public void testUpdate() {
         System.out.println("update");
-        ClanRankingsSet instance = new ClanRankingsSet();
+        Tournament tour = Tournament.getTournament();
+        ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
         instance.update();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -174,12 +177,13 @@ public class ClanRankingsSetNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        ClanRankingsSet instance = new ClanRankingsSet();
-        Element expResult = null;
+        Tournament tour = Tournament.getTournament();
+        ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        ClanRankingsSet other = new ClanRankingsSet(result);
+
+        assertNotNull(other);
     }
 
     /**
@@ -188,11 +192,13 @@ public class ClanRankingsSetNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        ClanRankingsSet instance = new ClanRankingsSet();
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
+        Element result = instance.getXMLElement();
+
+        ClanRankingsSet other = new ClanRankingsSet(result);
+
+        assertNotNull(other);
     }
-    
+
 }

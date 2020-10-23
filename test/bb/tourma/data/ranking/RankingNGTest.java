@@ -5,11 +5,20 @@
  */
 package bb.tourma.data.ranking;
 
+import bb.tourma.data.Coach;
 import bb.tourma.data.Criterion;
 import bb.tourma.data.Formula;
 import bb.tourma.data.ObjectRanking;
+import bb.tourma.data.Parameters;
+import static bb.tourma.data.Parameters.C_RANKING_ELO;
+import static bb.tourma.data.Parameters.C_RANKING_POINTS;
+import bb.tourma.data.Tournament;
+import bb.tourma.languages.Translate;
+import java.io.File;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.jdom.Element;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
@@ -23,12 +32,13 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class RankingNGTest {
-    
+
     public RankingNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
     }
 
     @AfterClass
@@ -49,12 +59,14 @@ public class RankingNGTest {
     @Test
     public void testGetDetail() {
         System.out.println("getDetail");
-        Ranking instance = null;
+        Ranking instance = Tournament.getTournament().getRound(1).getRankings(false).getIndivRankingSet().getRanking();
         String expResult = "";
         String result = instance.getDetail();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance.setDetail("Test");
+        result = instance.getDetail();
+        assertEquals(result, "Test");
     }
 
     /**
@@ -63,11 +75,14 @@ public class RankingNGTest {
     @Test
     public void testSetDetail() {
         System.out.println("setDetail");
-        String d = "";
-        Ranking instance = null;
-        instance.setDetail(d);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Ranking instance = Tournament.getTournament().getRound(1).getRankings(false).getIndivRankingSet().getRanking();
+        String expResult = "Test";
+        String result = instance.getDetail();
+        assertEquals(result, expResult);
+
+        instance.setDetail("Test");
+        result = instance.getDetail();
+        assertEquals(result, "Test");
     }
 
     /**
@@ -77,10 +92,8 @@ public class RankingNGTest {
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean mRoundOnly = false;
-        Ranking instance = null;
+        Ranking instance = Tournament.getTournament().getRound(1).getRankings(false).getIndivRankingSet().getRanking();;
         instance.setRoundOnly(mRoundOnly);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -89,12 +102,10 @@ public class RankingNGTest {
     @Test
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        Ranking instance = null;
-        int expResult = 0;
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
+        int expResult = Tournament.getTournament().getCoachsCount();
         int result = instance.getRowCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -103,12 +114,21 @@ public class RankingNGTest {
     @Test
     public void testGetSubtypeByValue() {
         System.out.println("getSubtypeByValue");
-        int valueType = 0;
-        int expResult = 0;
-        int result = Ranking.getSubtypeByValue(valueType);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        int result = Ranking.getSubtypeByValue(Parameters.C_MAX_RANKING + 1);
+        assertEquals(result, 0);
+
+        result = Ranking.getSubtypeByValue(1);
+        assertEquals(result, -1);
+
+        result = Ranking.getSubtypeByValue(Parameters.C_MAX_RANKING + 2);
+        assertEquals(result, 1);
+
+        result = Ranking.getSubtypeByValue(Parameters.C_MAX_RANKING + 3);
+        assertEquals(result, 2);
+
+        result = Ranking.getSubtypeByValue(Parameters.C_MAX_RANKING + 4);
+        assertEquals(result, 0);
     }
 
     /**
@@ -118,11 +138,21 @@ public class RankingNGTest {
     public void testConvertVND() {
         System.out.println("convertVND");
         int value = 0;
-        String expResult = "";
+        String expResult = "0/0/0";
         String result = Ranking.convertVND(value);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = "0/1/0";
+        result = Ranking.convertVND(1000);
+        assertEquals(result, expResult);
+
+        expResult = "1/0/0";
+        result = Ranking.convertVND(1000000);
+        assertEquals(result, expResult);
+
+        expResult = "1/1/1";
+        result = Ranking.convertVND(1001001);
+        assertEquals(result, expResult);
     }
 
     /**
@@ -131,26 +161,46 @@ public class RankingNGTest {
     @Test
     public void testGetFormulaByValue() {
         System.out.println("getFormulaByValue");
-        int valueType = 0;
-        Formula expResult = null;
-        Formula result = Ranking.getFormulaByValue(valueType);
+        Formula expResult = Tournament.getTournament().getParams().getFormula(0);
+        Formula result = Ranking.getFormulaByValue(Parameters.C_MAX_RANKING + 1 + Tournament.getTournament().getParams().getCriteriaCount() * 3);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = null;
+        result = Ranking.getFormulaByValue(Parameters.C_MAX_RANKING + 1);
+        assertEquals(result, expResult);
+
+        expResult = null;
+        result = Ranking.getFormulaByValue(1);
+        assertEquals(result, expResult);
+
     }
 
     /**
-     * Test of getCriteriaByValue method, of class Ranking.
+     * Test of getCriterionByValue method, of class Ranking.
      */
     @Test
-    public void testGetCriteriaByValue() {
+    public void testGetCriterionByValue() {
         System.out.println("getCriteriaByValue");
-        int valueType = 0;
-        Criterion expResult = null;
-        Criterion result = Ranking.getCriteriaByValue(valueType);
+
+        Criterion expResult = Tournament.getTournament().getParams().getCriterion(0);
+        Criterion result = Ranking.getCriterionByValue(Parameters.C_MAX_RANKING + 1);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = null;
+        result = Ranking.getCriterionByValue(1);
+        assertEquals(result, expResult);
+
+        expResult = Tournament.getTournament().getParams().getCriterion(0);
+        result = Ranking.getCriterionByValue(Parameters.C_MAX_RANKING + 2);
+        assertEquals(result, expResult);
+
+        expResult = Tournament.getTournament().getParams().getCriterion(0);
+        result = Ranking.getCriterionByValue(Parameters.C_MAX_RANKING + 3);
+        assertEquals(result, expResult);
+
+        expResult = Tournament.getTournament().getParams().getCriterion(1);
+        result = Ranking.getCriterionByValue(Parameters.C_MAX_RANKING + 4);
+        assertEquals(result, expResult);
     }
 
     /**
@@ -159,13 +209,12 @@ public class RankingNGTest {
     @Test
     public void testGetRankingFromString() {
         System.out.println("getRankingFromString");
-        String ranking = "";
+        String ranking = Translate.translate(Translate.CS_Points);
         ArrayList<String> criterias = null;
-        int expResult = 0;
+        int expResult = C_RANKING_POINTS;
         int result = Ranking.getRankingFromString(ranking, criterias);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -175,11 +224,9 @@ public class RankingNGTest {
     public void testGetRankingString() {
         System.out.println("getRankingString");
         int rankingType = 0;
-        String expResult = "";
-        String result = Ranking.getRankingString(rankingType);
+        String expResult = Translate.translate(Translate.CS_Points);
+        String result = Ranking.getRankingString(C_RANKING_POINTS);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -189,13 +236,15 @@ public class RankingNGTest {
     public void testGetValueFromArray() {
         System.out.println("getValueFromArray");
         int rt = 0;
-        ArrayList<Integer> av = null;
-        Ranking instance = null;
-        int expResult = 0;
-        int result = instance.getValueFromArray(rt, av);
+        Integer[] ar = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        ArrayList<Integer> av = new ArrayList(Arrays.asList(ar));
+
+        int expResult = 9;
+        int result = Ranking.getValueFromArray(C_RANKING_ELO, av);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        expResult = 45;
+        result = Ranking.getValueFromArray(C_RANKING_POINTS, av);
+        assertEquals(result, expResult);
     }
 
     /**
@@ -204,11 +253,18 @@ public class RankingNGTest {
     @Test
     public void testRemoveMinValue() {
         System.out.println("removeMinValue");
-        ArrayList<Integer> aValue = null;
-        Ranking instance = null;
-        instance.removeMinValue(aValue);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Integer[] ar = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        ArrayList<Integer> av = new ArrayList(Arrays.asList(ar));
+        
+        Ranking.removeMinValue(av);
+        int[] result=new int[av.size()];
+        for (int i=0; i<av.size(); i++)
+        {
+            result[i]=av.get(i);
+        }
+        int[] exp = { 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        assertEquals(result,exp);        
     }
 
     /**
@@ -217,11 +273,17 @@ public class RankingNGTest {
     @Test
     public void testRemoveMaxValue() {
         System.out.println("removeMaxValue");
-        ArrayList<Integer> aValue = null;
-        Ranking instance = null;
-        instance.removeMaxValue(aValue);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Integer[] ar = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        ArrayList<Integer> av = new ArrayList(Arrays.asList(ar));
+        
+        Ranking.removeMaxValue(av);
+        int[] result=new int[av.size()];
+        for (int i=0; i<av.size(); i++)
+        {
+            result[i]=av.get(i);
+        }
+        int[] exp = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        assertEquals(result,exp);   
     }
 
     /**
@@ -230,12 +292,16 @@ public class RankingNGTest {
     @Test
     public void testGetRound() {
         System.out.println("getRound");
-        Ranking instance = null;
+
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
         int expResult = 0;
         int result = instance.getRound();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance = Tournament.getTournament().getRound(1).getRankings(false).getIndivRankingSet().getRanking();
+        expResult = 1;
+        result = instance.getRound();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -244,14 +310,10 @@ public class RankingNGTest {
     @Test
     public void testGetSortedValue() {
         System.out.println("getSortedValue");
-        int index = 0;
-        int valIndex = 0;
-        Ranking instance = null;
-        int expResult = 0;
-        int result = instance.getSortedValue(index, valIndex);
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
+        int expResult = 1006;
+        int result = instance.getSortedValue(0, 1);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -260,19 +322,18 @@ public class RankingNGTest {
     @Test
     public void testGetSortedObject() {
         System.out.println("getSortedObject");
-        int index = 0;
-        Ranking instance = null;
-        ObjectRanking expResult = null;
-        ObjectRanking result = instance.getSortedObject(index);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
+        String expResult = "papaGégé";
+        ObjectRanking result = instance.getSortedObject(0);
+        assertEquals(((Coach) result.getObject()).getName(), expResult);
     }
 
     /**
-     * Test of sortDatas method, of class Ranking.
+     * Test of sortDatas method, of class Ranking. useless test, already tested
+     * by child classes
      */
-    @Test
+    @Test(enabled = false)
     public void testSortDatas() throws Exception {
         System.out.println("sortDatas");
         Ranking instance = null;
@@ -287,12 +348,11 @@ public class RankingNGTest {
     @Test
     public void testGetRankingType1() {
         System.out.println("getRankingType1");
-        Ranking instance = null;
-        int expResult = 0;
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
+        int expResult = C_RANKING_POINTS;
         int result = instance.getRankingType1();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -301,12 +361,10 @@ public class RankingNGTest {
     @Test
     public void testGetRankingType2() {
         System.out.println("getRankingType2");
-        Ranking instance = null;
-        int expResult = 0;
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
+        int expResult = Parameters.C_RANKING_OPP_POINTS;
         int result = instance.getRankingType2();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -315,12 +373,10 @@ public class RankingNGTest {
     @Test
     public void testGetRankingType3() {
         System.out.println("getRankingType3");
-        Ranking instance = null;
-        int expResult = 0;
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
+        int expResult = Parameters.C_RANKING_NONE;
         int result = instance.getRankingType3();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -329,12 +385,10 @@ public class RankingNGTest {
     @Test
     public void testGetRankingType4() {
         System.out.println("getRankingType4");
-        Ranking instance = null;
-        int expResult = 0;
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
+        int expResult = Parameters.C_RANKING_NONE;
         int result = instance.getRankingType4();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -344,12 +398,12 @@ public class RankingNGTest {
     public void testGetObject() {
         System.out.println("getObject");
         int i = 0;
-        Ranking instance = null;
-        Object expResult = null;
-        Object result = instance.getObject(i);
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
+
+        Object expResult = Tournament.getTournament().getCoach(8);
+        Object result = instance.getObject(0);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -358,12 +412,10 @@ public class RankingNGTest {
     @Test
     public void testGetRankingType5() {
         System.out.println("getRankingType5");
-        Ranking instance = null;
-        int expResult = 0;
+        Ranking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getRanking();
+        int expResult = Parameters.C_RANKING_NONE;
         int result = instance.getRankingType5();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -372,18 +424,17 @@ public class RankingNGTest {
     @Test
     public void testGetCount() {
         System.out.println("getCount");
-        Ranking instance = null;
-        int expResult = 0;
+        Ranking instance = Tournament.getTournament().getRound(1).getRankings(false).getIndivRankingSet().getRanking();
+        int expResult = Tournament.getTournament().getCoachsCount();
         int result = instance.getCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getXMLElement method, of class Ranking.
+     * Test of getXMLElement method, of class Ranking. Useless test beacaus
+     * already passed by child classes
      */
-    @Test
+    @Test(enabled = false)
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
         Ranking instance = null;
@@ -395,9 +446,10 @@ public class RankingNGTest {
     }
 
     /**
-     * Test of setXMLElement method, of class Ranking.
+     * Test of setXMLElement method, of class Ranking. Useless test beacaus
+     * already passed by child classes
      */
-    @Test
+    @Test(enabled = false)
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
         Element e = null;
@@ -416,5 +468,5 @@ public class RankingNGTest {
         public void sortDatas() throws RemoteException {
         }
     }
-    
+
 }

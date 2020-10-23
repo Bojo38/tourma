@@ -5,8 +5,11 @@
  */
 package bb.tourma.data.ranking;
 
+import bb.tourma.data.Criterion;
+import bb.tourma.data.Formula;
 import bb.tourma.data.Team;
 import bb.tourma.data.Tournament;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.jdom.Element;
@@ -22,12 +25,13 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class TeamRankingsSetNGTest {
-    
+
     public TeamRankingsSetNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
     }
 
     @AfterClass
@@ -49,10 +53,9 @@ public class TeamRankingsSetNGTest {
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean roundOnly = false;
-        TeamRankingsSet instance = new TeamRankingsSet();
+        Tournament tour = Tournament.getTournament();
+        TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
         instance.setRoundOnly(roundOnly);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -61,38 +64,39 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testUpdate() {
         System.out.println("update");
-        TeamRankingsSet instance = new TeamRankingsSet();
+        Tournament tour = Tournament.getTournament();
+        TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
         instance.update();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of getmRankingForPool method, of class TeamRankingsSet.
+     * Test of getRankingForPool method, of class TeamRankingsSet.
      */
     @Test
-    public void testGetmRankingForPool() {
+    public void testGetRankingForPool() {
         System.out.println("getmRankingForPool");
-        TeamRankingsSet instance = new TeamRankingsSet();
-        TeamRanking expResult = null;
-        TeamRanking result = instance.getmRankingForPool();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
+        Tournament tour = Tournament.getTournament();
+        TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
+
+        TeamRanking result = instance.getRanking();
+        assertNotNull(result);
+
+        result = instance.getRankingForPool();
+        assertNotNull(result);
     }
 
     /**
-     * Test of getmRankingForCup method, of class TeamRankingsSet.
+     * Test of getRankingForCup method, of class TeamRankingsSet.
      */
     @Test
-    public void testGetmRankingForCup() {
+    public void testGetRankingForCup() {
         System.out.println("getmRankingForCup");
-        TeamRankingsSet instance = new TeamRankingsSet();
-        TeamRanking expResult = null;
-        TeamRanking result = instance.getmRankingForCup();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/cup_teams.xml"));
+        TeamRankingsSet instance = Tournament.getTournament().getRound(0).getRankings(false).getTeamRankingSet();
+        TeamRanking result = instance.getRanking();
+        assertNotNull(result);
     }
 
     /**
@@ -101,12 +105,9 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testGetRanking() {
         System.out.println("getRanking");
-        TeamRankingsSet instance = new TeamRankingsSet();
-        TeamRanking expResult = null;
+        TeamRankingsSet instance = Tournament.getTournament().getRound(0).getRankings(false).getTeamRankingSet();
         TeamRanking result = instance.getRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -115,12 +116,12 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testGetAnnexPosRanking() {
         System.out.println("getAnnexPosRanking");
-        TeamRankingsSet instance = new TeamRankingsSet();
-        HashMap expResult = null;
-        HashMap result = instance.getAnnexPosRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
+
+        HashMap<Criterion, AnnexTeamRanking> result = instance.getAnnexPosRanking();
+        AnnexTeamRanking res = result.get(tour.getParams().getCriterion(0));
+        assertNotNull(res);
     }
 
     /**
@@ -129,12 +130,12 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testGetAnnexNegRanking() {
         System.out.println("getAnnexNegRanking");
-        TeamRankingsSet instance = new TeamRankingsSet();
-        HashMap expResult = null;
-        HashMap result = instance.getAnnexNegRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
+
+        HashMap<Criterion, AnnexTeamRanking> result = instance.getAnnexNegRanking();
+        AnnexTeamRanking res = result.get(tour.getParams().getCriterion(0));
+        assertNotNull(res);
     }
 
     /**
@@ -143,12 +144,12 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testGetAnnexDifRanking() {
         System.out.println("getAnnexDifRanking");
-        TeamRankingsSet instance = new TeamRankingsSet();
-        HashMap expResult = null;
-        HashMap result = instance.getAnnexDifRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
+
+        HashMap<Criterion, AnnexTeamRanking> result = instance.getAnnexDifRanking();
+        AnnexTeamRanking res = result.get(tour.getParams().getCriterion(0));
+        assertNotNull(res);
     }
 
     /**
@@ -157,18 +158,18 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testGetAnnexFormRanking() {
         System.out.println("getAnnexFormRanking");
-        TeamRankingsSet instance = new TeamRankingsSet();
-        HashMap expResult = null;
-        HashMap result = instance.getAnnexFormRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
+
+        HashMap<Formula, AnnexTeamRanking> result = instance.getAnnexFormRanking();
+        AnnexTeamRanking res = result.get(tour.getParams().getFormula(0));
+        assertNotNull(res);
     }
 
     /**
      * Test of createRanking method, of class TeamRankingsSet.
      */
-    @Test
+    @Test(enabled = false)
     public void testCreateRanking_3args() {
         System.out.println("createRanking");
         int rNumber = 0;
@@ -186,14 +187,13 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testCreateRanking_4args() {
         System.out.println("createRanking");
-        int rNumber = 0;
-        Tournament tour = null;
+        Tournament tour = Tournament.getTournament();
         boolean roundOnly = false;
-        ArrayList<Team> teams = null;
+        ArrayList<Team> teams = tour.getTeams();
         TeamRankingsSet instance = new TeamRankingsSet();
-        instance.createRanking(rNumber, tour, roundOnly, teams);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.createRanking(0, tour, roundOnly, teams);
+
+        assertNotNull(instance.getRanking());
     }
 
     /**
@@ -202,12 +202,13 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        TeamRankingsSet instance = new TeamRankingsSet();
-        Element expResult = null;
+        Tournament tour = Tournament.getTournament();
+        TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        TeamRankingsSet other = new TeamRankingsSet(result);
+
+        assertNotNull(other);
     }
 
     /**
@@ -216,11 +217,13 @@ public class TeamRankingsSetNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        TeamRankingsSet instance = new TeamRankingsSet();
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+        TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
+        Element result = instance.getXMLElement();
+
+        TeamRankingsSet other = new TeamRankingsSet(result);
+
+        assertNotNull(other);
     }
-    
+
 }

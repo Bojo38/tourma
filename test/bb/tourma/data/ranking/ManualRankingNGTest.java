@@ -5,7 +5,10 @@
  */
 package bb.tourma.data.ranking;
 
+import bb.tourma.data.Coach;
 import bb.tourma.data.Competitor;
+import bb.tourma.data.Tournament;
+import java.io.File;
 import java.util.ArrayList;
 import org.jdom.Element;
 import static org.testng.Assert.*;
@@ -20,12 +23,13 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class ManualRankingNGTest {
-    
+
     public ManualRankingNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
     }
 
     @AfterClass
@@ -46,10 +50,11 @@ public class ManualRankingNGTest {
     @Test
     public void testSortDatas() {
         System.out.println("sortDatas");
-        ManualRanking instance = null;
+        ArrayList<Competitor> competitors = new ArrayList<Competitor>();
+        competitors.add(new Coach("Test1"));
+        competitors.add(new Coach("Test2"));
+        ManualRanking instance = new ManualRanking(0, 1, 2, 3, 4, 5, competitors, false);
         instance.sortDatas();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -58,11 +63,15 @@ public class ManualRankingNGTest {
     @Test
     public void testAddData() {
         System.out.println("addData");
-        Competitor obj = null;
-        ManualRanking instance = null;
-        instance.addData(obj);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Competitor obj = new Coach("Test");
+        ArrayList<Competitor> competitors = new ArrayList<Competitor>();
+        competitors.add(obj);
+        ManualRanking instance = new ManualRanking(0, 1, 2, 3, 4, 5, competitors, false);
+
+        assertEquals(instance.getCount(), 1);
+
+        instance.addData(new Coach("Test2"));
+        assertEquals(instance.getCount(), 2);
     }
 
     /**
@@ -71,11 +80,24 @@ public class ManualRankingNGTest {
     @Test
     public void testDelData() {
         System.out.println("delData");
-        Competitor obj = null;
-        ManualRanking instance = null;
+        Competitor obj = new Coach("Test");
+        ArrayList<Competitor> competitors = new ArrayList<Competitor>();
+        competitors.add(obj);
+        competitors.add(new Coach("Test2"));
+        ManualRanking instance = new ManualRanking(0, 1, 2, 3, 4, 5, competitors, false);
+
+        assertEquals(instance.getCount(), 2);
+
+        competitors = new ArrayList<Competitor>();
+        competitors.add(new Coach("Test3"));
+        competitors.add(new Coach("Test4"));
+
+        instance.addDatas(competitors);
+        assertEquals(instance.getCount(), 4);
         instance.delData(obj);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(instance.getCount(), 3);
+
     }
 
     /**
@@ -84,11 +106,20 @@ public class ManualRankingNGTest {
     @Test
     public void testAddDatas() {
         System.out.println("addDatas");
-        ArrayList<Competitor> objs = null;
-        ManualRanking instance = null;
-        instance.addDatas(objs);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Competitor obj = new Coach("Test");
+        ArrayList<Competitor> competitors = new ArrayList<Competitor>();
+        competitors.add(obj);
+        competitors.add(new Coach("Test2"));
+        ManualRanking instance = new ManualRanking(0, 1, 2, 3, 4, 5, competitors, false);
+
+        assertEquals(instance.getCount(), 2);
+
+        competitors = new ArrayList<Competitor>();
+        competitors.add(new Coach("Test3"));
+        competitors.add(new Coach("Test4"));
+
+        instance.addDatas(competitors);
+        assertEquals(instance.getCount(), 4);
     }
 
     /**
@@ -97,12 +128,33 @@ public class ManualRankingNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        ManualRanking instance = null;
+        ArrayList<Competitor> competitors = new ArrayList<Competitor>();
+        competitors.add(new Coach("Fyennij"));
+        competitors.add(new Coach("Hebijillan"));
+        ManualRanking instance = new ManualRanking(0, 1, 2, 3, 4, 5, competitors, false);
+        
         Element expResult = null;
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+
+        ManualRanking other = new ManualRanking(0, 1, 2, 3, 4, 5, competitors, false);
+        other.setXMLElement(result);
+
+        assertEquals(other.getRankingType1(), instance.getRankingType1());
+        assertEquals(other.getRankingType2(), instance.getRankingType2());
+        assertEquals(other.getRankingType3(), instance.getRankingType3());
+        assertEquals(other.getRankingType4(), instance.getRankingType4());
+        assertEquals(other.getRankingType5(), instance.getRankingType5());
+        assertEquals(other.getCount(), instance.getCount());
+        assertEquals(other.getRound(), instance.getRound());
+
+        other.sortDatas();
+        instance.sortDatas();
+
+        for (int i = 0; i < other.getRowCount(); i++) {
+            //System.out.println(other.getObject(i).toString()+ " / "+ instance.getObject(i).toString());
+            assertEquals(other.getObject(i), instance.getObject(i));
+        }
     }
 
     /**
@@ -111,11 +163,33 @@ public class ManualRankingNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        ManualRanking instance = null;
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ArrayList<Competitor> competitors = new ArrayList<Competitor>();
+        competitors.add(new Coach("Sran"));
+        competitors.add(new Coach("Hebijillan"));
+        ManualRanking instance = new ManualRanking(0, 1, 2, 3, 4, 5, competitors, false);
+        
+        Element expResult = null;
+        Element result = instance.getXMLElement();
+        assertNotNull(result);
+
+        ManualRanking other = new ManualRanking(0, 1, 2, 3, 4, 5, competitors, false);
+        other.setXMLElement(result);
+
+        assertEquals(other.getRankingType1(), instance.getRankingType1());
+        assertEquals(other.getRankingType2(), instance.getRankingType2());
+        assertEquals(other.getRankingType3(), instance.getRankingType3());
+        assertEquals(other.getRankingType4(), instance.getRankingType4());
+        assertEquals(other.getRankingType5(), instance.getRankingType5());
+        assertEquals(other.getCount(), instance.getCount());
+        assertEquals(other.getRound(), instance.getRound());
+
+        other.sortDatas();
+        instance.sortDatas();
+
+        for (int i = 0; i < other.getRowCount(); i++) {
+            //System.out.println(other.getObject(i).toString()+ " / "+ instance.getObject(i).toString());
+            assertEquals(other.getObject(i), instance.getObject(i));
+        }
     }
-    
+
 }

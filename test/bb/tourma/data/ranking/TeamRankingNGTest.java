@@ -6,6 +6,8 @@
 package bb.tourma.data.ranking;
 
 import bb.tourma.data.ObjectRanking;
+import bb.tourma.data.Tournament;
+import java.io.File;
 import org.jdom.Element;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
@@ -25,6 +27,7 @@ public class TeamRankingNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+         Tournament.getTournament().loadXML(new File("./test/team.xml"));
     }
 
     @AfterClass
@@ -40,30 +43,32 @@ public class TeamRankingNGTest {
     }
 
     /**
-     * Test of ismTeamVictory method, of class TeamRanking.
+     * Test of isTeamVictory method, of class TeamRanking.
      */
     @Test
-    public void testIsmTeamVictory() {
+    public void testIsTeamVictory() {
         System.out.println("ismTeamVictory");
-        TeamRanking instance = null;
-        boolean expResult = false;
-        boolean result = instance.ismTeamVictory();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        TeamRanking instance = Tournament.getTournament().getRound(1).getRankings(false).getTeamRankingSet().getRanking();;
+        boolean expResult = true;
+        boolean result = instance.isTeamVictory();
+        assertEquals(result, false);
+
     }
 
     /**
-     * Test of setmTeamVictory method, of class TeamRanking.
+     * Test of setTeamVictory method, of class TeamRanking.
      */
     @Test
-    public void testSetmTeamVictory() {
+    public void testSetTeamVictory() {
         System.out.println("setmTeamVictory");
-        boolean mTeamVictory = false;
-        TeamRanking instance = null;
-        instance.setmTeamVictory(mTeamVictory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       TeamRanking instance = Tournament.getTournament().getRound(1).getRankings(false).getTeamRankingSet().getRanking();;
+        boolean expResult = false;
+        boolean result = instance.isTeamVictory();
+        assertEquals(result, expResult);
+
+        instance.setTeamVictory(true);
+        result = instance.isTeamVictory();
+        assertEquals(result, true);
     }
 
     /**
@@ -72,27 +77,29 @@ public class TeamRankingNGTest {
     @Test
     public void testSortDatas() {
         System.out.println("sortDatas");
-        TeamRanking instance = null;
+        TeamRanking instance = Tournament.getTournament().getRound(1).getRankings(false).getTeamRankingSet().getRanking();
+        Element result = instance.getXMLElement();
+        assertNotNull(result);
+
+        TeamRanking other = new TeamRanking(result);
+
+        assertEquals(other.getRankingType1(), instance.getRankingType1());
+        assertEquals(other.getRankingType2(), instance.getRankingType2());
+        assertEquals(other.getRankingType3(), instance.getRankingType3());
+        assertEquals(other.getRankingType4(), instance.getRankingType4());
+        assertEquals(other.getRankingType5(), instance.getRankingType5());
+        assertEquals(other.getCount(), instance.getCount());
+        assertEquals(other.getRound(), instance.getRound());
+
+        other.sortDatas();
         instance.sortDatas();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        for (int i = 0; i < other.getRowCount(); i++) {
+            System.out.println(other.getObject(i).toString()+ " / "+ instance.getObject(i).toString());
+            assertEquals(other.getObject(i), instance.getObject(i));
+        }
     }
 
-    /**
-     * Test of updateHeadByHeadValue method, of class TeamRanking.
-     */
-    @Test
-    public void testUpdateHeadByHeadValue() {
-        System.out.println("updateHeadByHeadValue");
-        int round_index = 0;
-        int valueIndex = 0;
-        ObjectRanking or1 = null;
-        ObjectRanking or2 = null;
-        TeamRanking instance = null;
-        instance.updateHeadByHeadValue(round_index, valueIndex, or1, or2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
     /**
      * Test of getXMLElement method, of class TeamRanking.
@@ -100,12 +107,27 @@ public class TeamRankingNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        TeamRanking instance = null;
-        Element expResult = null;
+        TeamRanking instance = Tournament.getTournament().getRound(1).getRankings(false).getTeamRankingSet().getRanking();
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
+
+        TeamRanking other = new TeamRanking(result);
+
+        assertEquals(other.getRankingType1(), instance.getRankingType1());
+        assertEquals(other.getRankingType2(), instance.getRankingType2());
+        assertEquals(other.getRankingType3(), instance.getRankingType3());
+        assertEquals(other.getRankingType4(), instance.getRankingType4());
+        assertEquals(other.getRankingType5(), instance.getRankingType5());
+        assertEquals(other.getCount(), instance.getCount());
+        assertEquals(other.getRound(), instance.getRound());
+
+        other.sortDatas();
+        instance.sortDatas();
+
+        for (int i = 0; i < other.getRowCount(); i++) {
+            System.out.println(other.getObject(i).toString()+ " / "+ instance.getObject(i).toString());
+            assertEquals(other.getObject(i), instance.getObject(i));
+        }
     }
 
     /**
@@ -114,11 +136,27 @@ public class TeamRankingNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        TeamRanking instance = null;
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        TeamRanking instance = Tournament.getTournament().getRound(1).getRankings(false).getTeamRankingSet().getRanking();
+        Element result = instance.getXMLElement();
+        assertNotNull(result);
+
+        TeamRanking other = new TeamRanking(result);
+
+        assertEquals(other.getRankingType1(), instance.getRankingType1());
+        assertEquals(other.getRankingType2(), instance.getRankingType2());
+        assertEquals(other.getRankingType3(), instance.getRankingType3());
+        assertEquals(other.getRankingType4(), instance.getRankingType4());
+        assertEquals(other.getRankingType5(), instance.getRankingType5());
+        assertEquals(other.getCount(), instance.getCount());
+        assertEquals(other.getRound(), instance.getRound());
+
+        other.sortDatas();
+        instance.sortDatas();
+
+        for (int i = 0; i < other.getRowCount(); i++) {
+            System.out.println(other.getObject(i).toString()+ " / "+ instance.getObject(i).toString());
+            assertEquals(other.getObject(i), instance.getObject(i));
+        }
     }
     
 }

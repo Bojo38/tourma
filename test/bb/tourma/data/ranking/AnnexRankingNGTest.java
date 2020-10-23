@@ -7,6 +7,8 @@ package bb.tourma.data.ranking;
 
 import bb.tourma.data.Criterion;
 import bb.tourma.data.Formula;
+import bb.tourma.data.Tournament;
+import java.io.File;
 import org.jdom.Element;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
@@ -20,12 +22,13 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class AnnexRankingNGTest {
-    
+
     public AnnexRankingNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
     }
 
     @AfterClass
@@ -41,9 +44,10 @@ public class AnnexRankingNGTest {
     }
 
     /**
-     * Test of sortDatas method, of class AnnexRanking.
+     * Test of sortDatas method, of class AnnexRanking. test is useless because
+     * included by child classes tests
      */
-    @Test
+    @Test(enabled = false)
     public void testSortDatas() {
         System.out.println("sortDatas");
         AnnexRanking instance = null;
@@ -58,12 +62,10 @@ public class AnnexRankingNGTest {
     @Test
     public void testGetCriterion() {
         System.out.println("getCriterion");
-        AnnexRanking instance = null;
-        Criterion expResult = null;
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
+        AnnexRanking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getAnnexPosRanking().get(crit);
         Criterion result = instance.getCriterion();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, crit);
     }
 
     /**
@@ -72,11 +74,14 @@ public class AnnexRankingNGTest {
     @Test
     public void testSetCriterion() {
         System.out.println("setCriterion");
-        Criterion c = null;
-        AnnexRanking instance = null;
-        instance.setCriterion(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
+        Criterion crit2 = Tournament.getTournament().getParams().getCriterion(1);
+        AnnexRanking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getAnnexPosRanking().get(crit);
+        Criterion result = instance.getCriterion();
+        assertEquals(result, crit);
+        instance.setCriterion(crit2);
+        result = instance.getCriterion();
+        assertEquals(result, crit2);
     }
 
     /**
@@ -85,12 +90,10 @@ public class AnnexRankingNGTest {
     @Test
     public void testGetFormula() {
         System.out.println("getFormula");
-        AnnexRanking instance = null;
-        Formula expResult = null;
+        Formula form = Tournament.getTournament().getParams().getFormula(0);
+        AnnexRanking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getAnnexFormRanking().get(form);
         Formula result = instance.getFormula();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, form);
     }
 
     /**
@@ -99,11 +102,14 @@ public class AnnexRankingNGTest {
     @Test
     public void testSetFormula() {
         System.out.println("setFormula");
-        Formula f = null;
-        AnnexRanking instance = null;
+        Formula form = Tournament.getTournament().getParams().getFormula(0);
+        AnnexRanking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getAnnexFormRanking().get(form);
+        Formula result = instance.getFormula();
+        assertEquals(result, form);
+        Formula f = new Formula("Test");
         instance.setFormula(f);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        result = instance.getFormula();
+        assertEquals(result, f);
     }
 
     /**
@@ -112,11 +118,14 @@ public class AnnexRankingNGTest {
     @Test
     public void testSetSubtype() {
         System.out.println("setSubtype");
-        int mSubtype = 0;
-        AnnexRanking instance = null;
-        instance.setSubtype(mSubtype);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
+        AnnexRanking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getAnnexPosRanking().get(crit);
+        int expResult = 0;
+        int result = instance.getSubtype();
+        assertEquals(result, expResult);
+        instance.setSubtype(2);
+        result = instance.getSubtype();
+        assertEquals(result, 2);
     }
 
     /**
@@ -125,32 +134,45 @@ public class AnnexRankingNGTest {
     @Test
     public void testGetSubtype() {
         System.out.println("getSubtype");
-        AnnexRanking instance = null;
+        Criterion crit = Tournament.getTournament().getParams().getCriterion(0);
+        AnnexRanking instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getAnnexPosRanking().get(crit);
         int expResult = 0;
         int result = instance.getSubtype();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getAnnexNegRanking().get(crit);
+        expResult = 1;
+        result = instance.getSubtype();
+        assertEquals(result, expResult);
+        
+        instance = Tournament.getTournament().getRound(0).getRankings(false).getIndivRankingSet().getAnnexDifRanking().get(crit);
+        expResult = 2;
+        result = instance.getSubtype();
+        assertEquals(result, expResult);
+
     }
 
     /**
-     * Test of getXMLElement method, of class AnnexRanking.
+     * Test of getXMLElement method, of class AnnexRanking. test is useless
+     * because included by child classes tests
      */
-    @Test
+    @Test(enabled = false)
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
         AnnexRanking instance = null;
         Element expResult = null;
         Element result = instance.getXMLElement();
+
         assertEquals(result, expResult);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
     /**
-     * Test of setXMLElement method, of class AnnexRanking.
+     * Test of setXMLElement method, of class AnnexRanking. test is useless
+     * because included by child classes tests
      */
-    @Test
+    @Test(enabled = false)
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
         Element e = null;
@@ -169,5 +191,5 @@ public class AnnexRankingNGTest {
         public void sortDatas() {
         }
     }
-    
+
 }
