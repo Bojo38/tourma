@@ -25,23 +25,23 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class PoolNGTest {
-
+    
     public PoolNGTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() throws Exception {
     }
-
+    
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-
+    
     @BeforeMethod
     public void setUpMethod() throws Exception {
         Tournament.getTournament().loadXML(new File("./test/pools.xml"));
     }
-
+    
     @AfterMethod
     public void tearDownMethod() throws Exception {
     }
@@ -55,10 +55,10 @@ public class PoolNGTest {
         if (Tournament.getTournament().getPoolCount() == 0) {
             fail("No pool in file");
         }
-
+        
         Pool instance = Tournament.getTournament().getPool(0);
         Element e = instance.getXMLElement();
-
+        
         Pool bis = new Pool();
         bis.setXMLElement(e);
         assertEquals(bis, instance);
@@ -73,10 +73,10 @@ public class PoolNGTest {
         if (Tournament.getTournament().getPoolCount() == 0) {
             fail("No pool in file");
         }
-
+        
         Pool instance = Tournament.getTournament().getPool(0);
         Element e = instance.getXMLElement();
-
+        
         Pool bis = new Pool();
         bis.setXMLElement(e);
         assertEquals(bis, instance);
@@ -117,7 +117,7 @@ public class PoolNGTest {
         if (Tournament.getTournament().getPoolCount() == 0) {
             fail("No pool in file");
         }
-
+        
         Pool instance = Tournament.getTournament().getPool(0);
         for (int i = 0; i < instance.getCompetitorCount(); i++) {
             Competitor expResult = instance.getCompetitor(i);
@@ -134,7 +134,7 @@ public class PoolNGTest {
         if (Tournament.getTournament().getPoolCount() == 0) {
             fail("No pool in file");
         }
-
+        
         Pool instance = Tournament.getTournament().getPool(0);
         for (int i = 0; i < instance.getCompetitorCount(); i++) {
             Competitor expResult = instance.getCompetitor(i);
@@ -155,7 +155,7 @@ public class PoolNGTest {
         if (Tournament.getTournament().getPoolCount() == 0) {
             fail("No pool in file");
         }
-
+        
         Pool instance = Tournament.getTournament().getPool(0);
         for (int i = 0; i < instance.getCompetitorCount(); i++) {
             Competitor expResult = instance.getCompetitor(i);
@@ -176,7 +176,7 @@ public class PoolNGTest {
         if (Tournament.getTournament().getPoolCount() == 0) {
             fail("No pool in file");
         }
-
+        
         Pool instance = Tournament.getTournament().getPool(0);
         for (int i = 0; i < instance.getCompetitorCount(); i++) {
             Competitor expResult = instance.getCompetitor(i);
@@ -193,9 +193,7 @@ public class PoolNGTest {
         Pool instance = new Pool();
         int expResult = 0;
         int result = instance.getUID();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -206,9 +204,8 @@ public class PoolNGTest {
         System.out.println("setUID");
         int UID = 0;
         Pool instance = new Pool();
-        instance.setUID(UID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //instance.setUID(UID);
+        
     }
 
     /**
@@ -217,13 +214,15 @@ public class PoolNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object obj = null;
+        
         Pool instance = new Pool();
-        boolean expResult = false;
+        Element element = instance.getXMLElement();
+        Pool obj = new Pool();
+        obj.setXMLElement(element);
+        boolean expResult = true;
         boolean result = instance.equals(obj);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
-
+    
 }

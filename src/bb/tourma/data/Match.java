@@ -63,6 +63,16 @@ public abstract class Match implements IXMLExport, Serializable {
 
     public abstract void push(Match match);
 
+     protected boolean mFastCompare = true;
+
+    public boolean isFastCompare() {
+        return mFastCompare;
+    }
+
+    public void setFastCompare(boolean mFastCompare) {
+        this.mFastCompare = mFastCompare;
+    }
+    
     /**
      *
      * @return

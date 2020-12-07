@@ -195,7 +195,7 @@ public class IndivRankingsSetNGTest {
         System.out.println("getRankingForCup");
         Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
         Tournament tour = Tournament.getTournament();
-        IndivRankingsSet instance = tour.getRound(0).getRankings(false).getIndivRankingSet();
+        IndivRankingsSet instance = tour.getRound(Tournament.getTournament().getRoundsCount()-1).getRankings(false).getIndivRankingSet();
 
         IndivRanking result = instance.getRanking();
         assertNotNull(result);

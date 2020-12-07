@@ -808,7 +808,7 @@ public class Parameters implements IXMLExport, Serializable {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
 
         try {
-            this.semTournamentOrga(params.getAttribute(StringConstants.CS_ORGANIZER).getValue());
+            this.setTournamentOrga(params.getAttribute(StringConstants.CS_ORGANIZER).getValue());
             this.setTournamentName(params.getAttribute(StringConstants.CS_NAME).getValue());
 
             this.setPointsIndivVictory(params.getAttribute(StringConstants.CS_VICTORY).getIntValue());
@@ -895,6 +895,8 @@ public class Parameters implements IXMLExport, Serializable {
                     this.setDate(format.parse(params.getAttribute(StringConstants.CS_DATE).getValue()));
                 } catch (ParseException | NullPointerException pe) {
                 }
+                
+
 
             } catch (NullPointerException ne) {
                 this.setGapLargeVictory(3);
@@ -1013,7 +1015,6 @@ public class Parameters implements IXMLExport, Serializable {
         }
         try {
             this.setCrossPoolMatch(params.getAttribute(StringConstants.CS_CROSSMATCHPOOL).getBooleanValue());
-
         } catch (NullPointerException npe6) {
             this.setCrossPoolMatch(false);
         } catch (DataConversionException dce2) {
@@ -1470,7 +1471,7 @@ public class Parameters implements IXMLExport, Serializable {
     /**
      * @param mTournamentOrga the mTournamentOrga to set
      */
-    public void semTournamentOrga(String mTournamentOrga) {
+    public void setTournamentOrga(String mTournamentOrga) {
         this.mTournamentOrga = mTournamentOrga;
     }
 
@@ -2086,6 +2087,7 @@ public class Parameters implements IXMLExport, Serializable {
         boolean result;
         result = false;
         if (obj instanceof Parameters) {
+            result=true;
             Parameters params = (Parameters) obj;
 
             result &= params.mBestResultsIndiv == this.mBestResultsIndiv;
@@ -2147,7 +2149,7 @@ public class Parameters implements IXMLExport, Serializable {
             result &= params.mUseLargeVictory == this.mUseLargeVictory;
             result &= params.mUseLittleLoss == this.mUseLittleLoss;
 
-            result &= params.mCrossPoolMatch;
+            result &= params.mCrossPoolMatch== this.mCrossPoolMatch;
 
             result &= params.mTeamPairing == this.mTeamPairing;
             result &= params.mTeamIndivPairing == this.mTeamIndivPairing;

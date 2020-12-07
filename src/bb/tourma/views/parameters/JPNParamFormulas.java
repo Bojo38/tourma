@@ -13,9 +13,9 @@ import bb.tourma.data.ETeamPairing;
 import bb.tourma.data.Round;
 import bb.tourma.data.Tournament;
 import bb.tourma.data.Value;
+import bb.tourma.data.exceptions.FormulaValidityException;
 import bb.tourma.languages.Translate;
 import bb.tourma.tableModel.MjtFormulas;
-
 
 /**
  *
@@ -33,7 +33,7 @@ public final class JPNParamFormulas extends javax.swing.JPanel {
     }
 
     private final static String CS_Formula = "FORMULE";
-    private final static String CS_Possible_Variables="Variables possibles";
+    private final static String CS_Possible_Variables = "Variables possibles";
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -101,15 +101,19 @@ public final class JPNParamFormulas extends javax.swing.JPanel {
         final Formula f = new Formula(
                 Translate.translate(CS_Formula)
                 + " " + Integer.toString(nb));
-        f.setFormula(Tournament.getTournament().getParams().getCriterion(0).getAccronym()+"1");
-        Tournament.getTournament().getParams().addFormula(f);
-        
-        for (int i = 0; i < mTournament.getRoundsCount(); i++) {
-            final Round r = mTournament.getRound(i);
-            for (int j = 0; j < r.getCoachMatchs().size(); j++) {
-                final CoachMatch m = r.getCoachMatchs().get(j);
-                m.putValue(f,new Value(f));
+        try {
+            f.setFormula(Tournament.getTournament().getParams().getCriterion(0).getAccronym() + "1");
+            Tournament.getTournament().getParams().addFormula(f);
+
+            for (int i = 0; i < mTournament.getRoundsCount(); i++) {
+                final Round r = mTournament.getRound(i);
+                for (int j = 0; j < r.getCoachMatchs().size(); j++) {
+                    final CoachMatch m = r.getCoachMatchs().get(j);
+                    m.putValue(f, new Value(f));
+                }
             }
+        } catch (FormulaValidityException fve) {
+            JOptionPane.showMessageDialog(null, fve.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         update();
     }//GEN-LAST:event_jbtAddFormulaActionPerformed
@@ -136,7 +140,7 @@ public final class JPNParamFormulas extends javax.swing.JPanel {
 
         final boolean bTourStarted = false;//mTournament.getRoundsCount() > 0;
         jtbFormulas.setModel(new MjtFormulas(mTournament));
-       
+
         if (Tournament.getTournament().isClient()) {
             jtbFormulas.setEnabled(false);
         }
@@ -144,12 +148,11 @@ public final class JPNParamFormulas extends javax.swing.JPanel {
         jbtAddFormula.setEnabled(!bTourStarted && !Tournament.getTournament().isClient());
         jbtRemoveFormula.setEnabled(!bTourStarted && !Tournament.getTournament().isClient());
 
-        String description=Translate.translate(CS_Possible_Variables);
-        description+="\n";
-        for (int i=0; i<Tournament.getTournament().getParams().getCriteriaCount(); i++)
-        {
-            Criterion crit=Tournament.getTournament().getParams().getCriterion(i);
-            description+=crit.getAccronym()+"1 / "+crit.getAccronym()+"2\n";
+        String description = Translate.translate(CS_Possible_Variables);
+        description += "\n";
+        for (int i = 0; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
+            Criterion crit = Tournament.getTournament().getParams().getCriterion(i);
+            description += crit.getAccronym() + "1 / " + crit.getAccronym() + "2\n";
         }
         jtxpDescription.setText(description);
     }

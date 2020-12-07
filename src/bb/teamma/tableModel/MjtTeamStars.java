@@ -4,6 +4,7 @@
  */
 package bb.teamma.tableModel;
 
+import bb.teamma.data.LRB;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -23,22 +24,29 @@ import bb.teamma.languages.Translate;
 public class MjtTeamStars extends AbstractTableModel implements TableCellRenderer {
 
     /**
-     * 
+     *
      */
     private final Roster _roster;
+    private LRB.E_Version _version;
 
     /**
-     * 
+     *
      * @param roster
      */
-    public MjtTeamStars(Roster roster) {
+    public MjtTeamStars(Roster roster, LRB.E_Version version) {
         _roster = roster;
+        _version = version;
 
     }
 
     @Override
     public int getColumnCount() {
-        return 8;
+
+        if (_version == LRB.E_Version.BB2020) {
+            return 9;
+        } else {
+            return 8;
+        }
     }
 
     @Override
@@ -46,15 +54,16 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
         return _roster.getChampionCount();
     }
 
-        private final static String CS_Name = "Name";
+    private final static String CS_Name = "Name";
     private final static String CS_Position = "Position";
     private final static String CS_M = "M";
     private final static String CS_S = "S";
     private final static String CS_Ag = "Ag";
+    private final static String CS_P = "CP";
     private final static String CS_Ar = "Ar";
     private final static String CS_Skills = "Skills";
     private final static String CS_Cost = "Cost";
-    
+
     @Override
     public String getColumnName(int col) {
         switch (col) {
@@ -69,10 +78,24 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
             case 4:
                 return Translate.translate(CS_Ag);
             case 5:
-                return Translate.translate(CS_Ar);
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_P);
+                } else {
+                    return Translate.translate(CS_Ar);
+                }
             case 6:
-                return Translate.translate(CS_Skills);
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_Ar);
+                } else {
+                    return Translate.translate(CS_Skills);
+                }
             case 7:
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_Skills);
+                } else {
+                    return Translate.translate(CS_Cost);
+                }
+            case 8:
                 return Translate.translate(CS_Cost);
         }
         return "";
@@ -95,29 +118,89 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
                 case 3:
                     return player.getStrength();
                 case 4:
-                    return player.getAgility();
-                case 5:
-                    return player.getArmor();
-                case 6:
-                    /**
-                     * Build Skill string in HTML Begin by player type then
-                     * additional
-                     */
-                    ArrayList<String> skills = new ArrayList<>();
-                    for (i = 0; i < player.getSkillCount(); i++) {
-                        Skill s = player.getSkill(i);
-
-                        skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
-                    }
-
-                    for (i = 0; i < skills.size(); i++) {
-                        tmpstring.append(skills.get(i));
-                        if (i != skills.size() - 1) {
-                            tmpstring.append(", ");
+                    if (_version == LRB.E_Version.BB2020) {
+                        int p = player.getAgility();
+                        String t;
+                        if (p > 0) {
+                            t = Integer.toString(p) + "+";
+                        } else {
+                            t = "-";
                         }
+                        return t;
+                    } else {
+                        return player.getAgility();
                     }
-                    return (tmpstring.toString());
+                case 5:
+                    if (_version == LRB.E_Version.BB2020) {
+                        int p = player.getPass();
+                        String t;
+                        if (p > 0) {
+                            t = Integer.toString(p) + "+";
+                        } else {
+                            t = "-";
+                        }
+                        return t;
+                    } else {
+                        return player.getArmor();
+                    }
+                case 6:
+                    if (_version == LRB.E_Version.BB2020) {
+                        int p = player.getArmor();
+                        String t;
+                        if (p > 0) {
+                            t = Integer.toString(p) + "+";
+                        } else {
+                            t = "-";
+                        }
+                        return t;
+                    } else {
+                        /**
+                         * Build Skill string in HTML Begin by player type then
+                         * additional
+                         */
+                        ArrayList<String> skills = new ArrayList<>();
+                        for (i = 0; i < player.getSkillCount(); i++) {
+                            Skill s = player.getSkill(i);
+
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                        }
+
+                        for (i = 0; i < skills.size(); i++) {
+                            tmpstring.append(skills.get(i));
+                            if (i != skills.size() - 1) {
+                                tmpstring.append(", ");
+                            }
+                        }
+                        return (tmpstring.toString());
+                    }
                 case 7:
+                    if (_version == LRB.E_Version.BB2020) {
+                        /**
+                         * Build Skill string in HTML Begin by player type then
+                         * additional
+                         */
+                        ArrayList<String> skills = new ArrayList<>();
+                        for (i = 0; i < player.getSkillCount(); i++) {
+                            Skill s = player.getSkill(i);
+
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                        }
+
+                        for (i = 0; i < skills.size(); i++) {
+                            tmpstring.append(skills.get(i));
+                            if (i != skills.size() - 1) {
+                                tmpstring.append(", ");
+                            }
+                        }
+                        return (tmpstring.toString());
+
+                    } else {
+                        /**
+                         * Base Cost
+                         */
+                        return player.getCost();
+                    }
+                case 8:
                     /**
                      * Base Cost
                      */
@@ -133,11 +216,11 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
     }
 
     /**
-     * Don't need to implement this method unless your table's
-     * editable.
+     * Don't need to implement this method unless your table's editable.
+     *
      * @param row
      * @param col
-     * @return 
+     * @return
      */
     @Override
     public boolean isCellEditable(int row, int col) {
@@ -156,17 +239,17 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
         if (isSelected) {
             jta.setBackground(Color.LIGHT_GRAY);
         } else {
-                if (row % 2 !=0) {
-                    jta.setBackground(new Color(220, 220, 220));
-                } else {
-                    jta.setBackground(Color.WHITE);
-                }
-            
+            if (row % 2 != 0) {
+                jta.setBackground(new Color(220, 220, 220));
+            } else {
+                jta.setBackground(Color.WHITE);
+            }
+
         }
 
         jta.setEditable(false);
         if (value instanceof String) {
-            jta.setText("<center>" +  value + "</center>");
+            jta.setText("<center>" + value + "</center>");
         }
 
         if (value instanceof Integer) {
@@ -183,5 +266,5 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
 
         return jta;
     }
-    
+
 }

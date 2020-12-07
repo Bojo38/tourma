@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>ChaosRenegadesKey</name>
+    <reroll>70000</reroll>
+    <apothecary>true</apothecary>
+    
+    <max_big_guy>3</max_big_guy>
+    
+   <!--Favorite Of Nurgle -->
+    <inducements>
+        <inducement name="temp agency cheerleaders" max="4" cost="20000" />
+        <inducement name="part time assistant coaches" max="3" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="Bloodweisers kegs" max="2" cost="50000" />
+        <inducement name="special plays" max="5" cost="100000" />
+        <inducement name="extra team training" max="8" cost="100000" />
+        <inducement name="bribes" max="3" cost="100000" />
+        <inducement name="wandering apothecary" max="2" cost="100000" />
+        <!--<inducement name="mortuary assistant" max="1" cost="300000" />-->
+        <inducement name="plague doctor" max="1" cost="100000" />
+        <!--<inducement name="riotous rookies" max="1" cost="100000" />-->  
+        <inducement name="halfling master chef" max="1" cost="300000" />
+       
+        <inducement name="Joseph Bugman" max="1" cost="100000" />
+        <inducement name="wizard" max="1" cost="150000" />  
+        <inducement name="Biased referee" max="1" cost="120000" />
+    </inducements>
+
+    <playertypes>
+        <playerType>
+            <limit>12</limit>
+            <position>Renegade Human Linemen</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>9</armor>
+            <skills>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>                
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Renegade Human Thrower</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>3</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Pass</skill>
+                <skill>Animosity (All)</skill>
+                <skill>Safe Pair Of Hands</skill>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Mutation</skillType>
+                <skillType>Pass</skillType>
+            </single>
+            <double>                
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+                     
+        <playerType>
+            <limit>1</limit>
+            <position>Renegade Goblin</position>
+            <movement>6</movement>
+            <strength>2</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>8</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Stunty</skill>
+                <skill>Right Stuff</skill>
+                <skill>Animosity (All)</skill>
+            </skills>
+            <cost>40000</cost>
+            <single>               
+                <skillType>Agility</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Renegade Orc</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+           <pass>5</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Animosity (All)</skill>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Mutation</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>           
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Renegade Skaven</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>8</armor>
+            <skills>
+               <skill>Animosity (All)</skill>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Mutation</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>          
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Renegade Dark Elf</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>2</agility>
+             <pass>3</pass>
+            <armor>9</armor>
+            <skills>
+               <skill>Animosity (All)</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>            
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Renegade Troll</position>
+            <movement>4</movement>
+            <strength>5</strength>
+            <agility>5</agility>
+            <pass>5</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Always Hungry</skill>
+                <skill>Loner (4+)</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Projectile Vomit</skill>
+                <skill>Really Stupid</skill>
+                <skill>Regeneration</skill>
+                <skill>Throw Team-Mate</skill>
+                <skill>Big Guy</skill>     
+            </skills>
+            <cost>115000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Mutation</skillType>
+            </double>
+        </playerType>
+        
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Renegade Ogre</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>4</agility>
+             <pass>5</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Loner (4+)</skill>
+                <skill>Bone Head</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Thick Skull</skill>
+                <skill>Throw Team-Mate</skill>
+                <skill>Big Guy</skill>
+            </skills>
+            <cost>140000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Mutation</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Renegade Minotaur</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>4</agility>
+             <pass>-1</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Loner (4+)</skill>
+                <skill>Unchannelled Fury</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Thick Skull</skill>
+                <skill>Horns</skill>
+                <skill>Frenzy</skill>
+                <skill>Big Guy</skill>
+            </skills>
+            <cost>150000</cost>
+            <single>
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Mutation</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Renegade Rat Ogre</position>
+            <movement>6</movement>
+            <strength>5</strength>
+            <agility>4</agility>
+             <pass>-1</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Loner (4+)</skill>
+                <skill>Animal Savagery</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Prehensile Tail</skill>
+                <skill>Frenzy</skill>
+                <skill>Big Guy</skill>
+            </skills>
+            <cost>150000</cost>
+            <single>
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Mutation</skillType>
+            </double>
+        </playerType>
+        
+        
+        
+    </playertypes>
+</rostertype>
+
+

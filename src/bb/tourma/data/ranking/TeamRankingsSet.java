@@ -17,8 +17,6 @@ import bb.tourma.data.IXMLExport;
 import bb.tourma.data.Parameters;
 import bb.tourma.data.Team;
 import bb.tourma.data.Tournament;
-import bb.tourma.data.ranking.AnnexTeamRanking;
-import bb.tourma.data.ranking.TeamRanking;
 import bb.tourma.utility.StringConstants;
 
 /**
@@ -336,6 +334,7 @@ public class TeamRankingsSet implements IXMLExport {
         if (child != null) {
             mRankingForCup = new TeamRanking(child);
         }
+        
 
         child = e.getChild(StringConstants.CS_TEAM_RANKING_FOR_POOL);
         if (child != null) {

@@ -42,6 +42,10 @@ public class StarPlayer implements Serializable{
     /**
      * 
      */
+    private int _pass;
+    /**
+     * 
+     */
     private int _armor;
     /**
      * 
@@ -170,6 +174,20 @@ public class StarPlayer implements Serializable{
      */
     public void setAgility(int _agility) {
         this._agility = _agility;
+    }
+    
+    /**
+     * @return the _agility
+     */
+    public int getPass() {
+        return _pass;
+    }
+
+    /**
+     * @param _agility the _agility to set
+     */
+    public void setPass(int _pass) {
+        this._pass = _pass;
     }
 
     /**

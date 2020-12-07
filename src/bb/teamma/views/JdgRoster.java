@@ -59,8 +59,8 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private Roster _data = null;
     private Coach _coach = null;
-    private LRB.E_Version lrbversion = LRB.E_Version.BB2016;
-    private LRB _lrb = LRB.getLRB(LRB.E_Version.BB2016);
+    private LRB.E_Version lrbversion = LRB.E_Version.BB2020;
+    private LRB _lrb = LRB.getLRB(LRB.E_Version.BB2020);
     private int _max_champions = 2;
 
     /**
@@ -108,7 +108,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         int screenHeight = dmode.getHeight();
         this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
-        String[] lrbs = {"LRB1", "LRB2", "LRB3", "LRB4", "LRB5", "LRB6", "CRP1", "NAF2017"};
+        String[] lrbs = {"LRB1", "LRB2", "LRB3", "LRB4", "LRB5", "LRB6", "CRP1", "BB2016", "BB2020"};
 
         DefaultComboBoxModel jcbModel = new DefaultComboBoxModel(lrbs);
         jcbLRB.setModel(jcbModel);
@@ -116,7 +116,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         if (roster != null) {
             lrbversion = roster.getVersion();
         } else {
-            lrbversion = LRB.E_Version.BB2016;
+            lrbversion = LRB.E_Version.BB2020;
         }
 
         update();
@@ -996,18 +996,13 @@ public final class JdgRoster extends javax.swing.JDialog {
             }
 
             PlayerType pt = positions.get(0);
-            JdgSelectPosition jdg = new JdgSelectPosition(null, true, positions, pt);
+            JdgSelectPosition jdg = new JdgSelectPosition(null, true, positions, pt,lrbversion);
             jdg.setVisible(true);
             pt = jdg.getPosition();
 
-            /*String input = (String) JOptionPane.showInputDialog(this,
-                    Translate.translate(CS_ChooseKindOfplayer),
-                    Translate.translate(CS_PlayerChoice), JOptionPane.INFORMATION_MESSAGE,
-                    null, positions.toArray(), positions.get(0));
-             */
             if (pt != null) {
                 //  PlayerType pt = _data.getRoster().getPlayerType(input, true);
-                Player p = new Player(pt);
+                Player p = new Player(pt, lrbversion);
                 _data.addPlayer(p);
             }
         }
@@ -1152,7 +1147,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private void jcbLRBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbLRBActionPerformed
         int index = jcbLRB.getSelectedIndex();
-        LRB.E_Version newversion = LRB.E_Version.BB2016;
+        LRB.E_Version newversion = LRB.E_Version.BB2020;
         switch (index) {
             case 0:
                 newversion = LRB.E_Version.LRB1;
@@ -1177,6 +1172,9 @@ public final class JdgRoster extends javax.swing.JDialog {
                 break;
             case 7:
                 newversion = LRB.E_Version.BB2016;
+                break;
+             case 8:
+                newversion = LRB.E_Version.BB2020;
                 break;
         }
         if (newversion != lrbversion) {
@@ -1271,7 +1269,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         /**
          * Players
          */
-        MjtTeamPlayers playersModel = new MjtTeamPlayers(_data);
+        MjtTeamPlayers playersModel = new MjtTeamPlayers(_data,this.lrbversion);
 
         jtbPlayers.setModel(playersModel);
         jtbPlayers.getColumnModel().getColumn(0).setMinWidth(5);
@@ -1290,7 +1288,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         /**
          * Star players
          */
-        MjtTeamStars starsModel = new MjtTeamStars(_data);
+        MjtTeamStars starsModel = new MjtTeamStars(_data,this.lrbversion);
         jtbStars.setModel(starsModel);
         jtbStars.getColumnModel().getColumn(0).setMinWidth(80);
         jtbStars.getColumnModel().getColumn(1).setMinWidth(80);
@@ -1306,7 +1304,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             public void propertyChange(PropertyChangeEvent evt) {
                 if (evt.getPropertyName().equals("width")) {
                     jtbPlayers.setRowHeight(1);
-                    MjtTeamPlayers playersModel = new MjtTeamPlayers(_data);
+                    MjtTeamPlayers playersModel = new MjtTeamPlayers(_data, lrbversion);
                     jtbPlayers.setDefaultRenderer(String.class, playersModel);
                 }
             }

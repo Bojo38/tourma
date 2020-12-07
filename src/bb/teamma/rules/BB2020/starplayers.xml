@@ -1,0 +1,850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<StarPlayerList
+    xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+    xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <starplayer>
+        <name>The Black Gobbo</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Bombardier</position>
+        <movement>6</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <pass>3</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Bombardier</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Dodge</skill>
+            <skill>Loner (3+)</skill>
+            <skill>Side Step</skill>
+            <skill>Sneaky Git</skill>
+            <skill>Stab</skill>
+            <skill>Stunty</skill>
+            <skill>Sneakiest Of The Lot</skill>
+        </skills>
+        <special> If Black Gobbo is included, you can foul twice in a round if Black Gobbo does one of the 2 fouls.</special>
+        <cost>225000</cost>
+        <team>ChaosDwarfKey</team> <!-- bagarre des terres arides -->
+        <team>BlackOrcKey</team> <!-- bagarre des terres arides -->
+        <team>GoblinKey</team> <!-- bagarre des terres arides -->
+        <team>OgreKey</team> <!-- bagarre des terres arides -->
+        <team>OrcKey</team> <!-- bagarre des terres arides -->
+        <team>SnotlingKey</team> <!-- Défi des basfonds -->
+        <team>SkavenKey</team> <!-- Défi des basfonds -->
+        <team>UnderworldDenizenKey</team> <!-- Défi des basfonds -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Deeproot Strongbranch</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Treeman</position>
+        <movement>2</movement>
+        <strength>7</strength>
+        <agility>5</agility>
+        <pass>4</pass>
+        <armor>11</armor>
+        <skills>
+            <skill>Block</skill>
+            <skill>Loner (4+)</skill>
+            <skill>Mighty Blow (+2)</skill>
+            <skill>Stand Firm</skill>
+            <skill>Strong Arm</skill>
+            <skill>Thick Skull</skill>
+            <skill>Throw Team-Mate</skill>
+            <skill>Timm-Ber!</skill>
+            <skill>Reliable</skill>
+        </skills>
+       
+        <cost>280000</cost>
+        <team>OldWorldAllianceKey</team><!-- classique du vieux monde-->
+        <team>OgreKey</team><!-- classique du vieux monde-->
+        <team>ImperialNobilityKey</team><!-- classique du vieux monde-->
+        <team>HumanKey</team><!-- classique du vieux monde-->
+        <team>DwarfKey</team><!-- classique du vieux monde-->
+        <team>NorseKey</team><!-- classique du vieux monde-->
+        <team>HalflingKey</team> <!-- classique du vieux monde--> <!-- Coupe Dé à coudre Halfling -->
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Eldril Sidewinder</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Catcher</position>
+        <movement>8</movement>
+        <strength>3</strength>
+        <agility>2</agility>
+        <pass>5</pass>
+        <armor>8</armor>
+        <skills>
+            <skill>Catch</skill>
+            <skill>Dodge</skill>
+            <skill>Hypnotic Gaze</skill>
+            <skill>Loner (4+)</skill>
+            <skill>On The Ball</skill>
+
+            <skill>Nerves of Steel</skill>      
+            <skill>Mesmerizing Dance</skill>      
+        </skills>
+        <cost>230000</cost>
+        <team>DarkElfKey</team> <!-- Ligue des royaumes elfiques --> 
+        <team>ElfUnionKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>HighElfKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>WoodElfKey</team> <!-- Ligue des royaumes elfiques -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Glart Smashrip</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Skaven Blocker</position>
+        <movement>5</movement>
+        <strength>4</strength>
+        <agility>4</agility>
+        <pass>-1</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Block</skill>
+            <skill>Claws</skill>
+            <skill>Juggernaut</skill>
+            <skill>Grab</skill>
+            <skill>Stand Firm</skill>
+            <skill>Frenzied Rush</skill>
+        </skills>
+        <cost>195000</cost>
+        <team>SnotlingKey</team> <!-- Défi des basfonds -->
+        <team>SkavenKey</team> <!-- Défi des basfonds -->
+        <team>UnderworldDenizenKey</team> <!-- Défi des basfonds -->
+        <team>NurgleKey</team> <!-- Favorite of Nurgle -->
+        <team>ChaosRenegadesKey</team> <!-- Favorite of  -->
+        <team>ChaosChosenKey</team> <!-- Favorite of  -->
+        <team>ChaosDwarfKey</team> <!-- Favorite of  -->
+        <team>KhornesDaemonsKey</team> <!-- Favorite of Khorne -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Gloriel Summerbloom</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Thrower</position>
+        <movement>7</movement>
+        <strength>2</strength>
+        <agility>2</agility>
+        <pass>2</pass>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner (3+)</skill>
+            <skill>Accurate</skill>
+            <skill>Dodge</skill>
+            <skill>Pass</skill>
+            <skill>Side Step</skill>
+            <skill>Sure Hands</skill>
+            <skill>Shot Or Nothing</skill>
+        </skills>
+        <special>Once a match, when Gloriel throw the ball, she can use Desperate Pass skill.</special>
+        <cost>150000</cost>
+        <team>DarkElfKey</team> <!-- Ligue des royaumes elfiques --> 
+        <team>ElfUnionKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>HighElfKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>WoodElfKey</team> <!-- Ligue des royaumes elfiques -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Grak</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Ogre</position>
+        <movement>5</movement>
+        <strength>5</strength>
+        <agility>4</agility>
+        <pass>4</pass>
+        <armor>10</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Mighty Blow (+1)</skill>
+            <skill>Thick Skull</skill>
+            <skill>Kick Team-Mate</skill>
+            <skill>Bone Head</skill>
+            <skill>Two For One</skill>
+        </skills>
+       
+        <cost>250000</cost>
+        <pair_with>Crumbleberry</pair_with>
+        <name>AmazonKey</name>
+        <name>ImperialNobilityKey</name>
+        <name>ChaosChosenKey</name>
+        <team>ChaosRenegadesKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>DarkElfKey</team>
+        <team>DwarfKey</team>
+        <team>ElfUnionKey</team>
+        <team>GoblinKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>HumanKey</team>
+        <team>KhemriTombKingsKey</team>
+        <team>KhornesDaemonsKey</team>
+        <team>LizardmenKey</team>
+        <team>NecromanticHorrorKey</team>
+        <team>NorseKey</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SkavenKey</team>
+        <team>SlannKey</team>
+        <team>ShamblingUndeadKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>VampireKey</team>
+        <team>WoodElfKey</team>
+        <team>OldWorldAllianceKey</team>
+        <team>BlackOrcKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Crumbleberry</name>
+        <sources>
+            <source>BB2016</source>
+        </sources>
+        <position>Halfling catcher</position>
+        <movement>5</movement>
+        <strength>2</strength>
+        <agility>3</agility>
+        <pass>6</pass>
+        <armor>7</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Dodge</skill>
+            <skill>Stunty</skill>
+            <skill>Right Stuff</skill>
+            <skill>Sure Hands</skill>
+            <skill>Two For One</skill>
+        </skills>
+       
+        <cost>0</cost>
+        <pair_with>Grak</pair_with>
+        <name>AmazonKey</name>
+        <name>ImperialNobilityKey</name>
+        <name>ChaosChosenKey</name>
+        <team>ChaosRenegadesKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>DarkElfKey</team>
+        <team>DwarfKey</team>
+        <team>ElfUnionKey</team>
+        <team>GoblinKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>HumanKey</team>
+        <team>KhemriTombKingsKey</team>
+        <team>KhornesDaemonsKey</team>
+        <team>LizardmenKey</team>
+        <team>NecromanticHorrorKey</team>
+        <team>NorseKey</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SkavenKey</team>
+        <team>SlannKey</team>
+        <team>ShamblingUndeadKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>VampireKey</team>
+        <team>WoodElfKey</team>
+        <team>OldWorldAllianceKey</team>
+        <team>BlackOrcKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Gretchen Wätcher 'The Blood Bowl Widow'</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Banshee</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>2</agility>
+        <pass>-1</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Dodge</skill>
+            <skill>Foul Appearance</skill>
+            <skill>Jump Up</skill>
+            <skill>No Hand</skill>
+            <skill>Regeneration</skill>
+            <skill>Shadowing</skill>
+            <skill>Side Step</skill>
+            <skill>Incoporeal</skill>
+        </skills>
+        <cost>260000</cost>
+        <team>VampireKey</team> <!-- Spot de Sylvanie-->
+        <team>KhemriTombKingsKey</team> <!-- Spot de Sylvanie-->
+        <team>NecromanticHorrorKey</team> <!-- Spot de Sylvanie-->
+        <team>ShamblingUndeadKey</team> <!-- Spot de Sylvanie-->
+    </starplayer>
+    
+    <starplayer>
+        <name>Griff Oberwald</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Blitzer</position>
+        <movement>7</movement>
+        <strength>4</strength>
+        <agility>2</agility>
+        <pass>3</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner (3+)</skill>
+            <skill>Block</skill>
+            <skill>Dodge</skill>
+            <skill>Fend</skill>
+            <skill>Sprint</skill>
+            <skill>Sure Feet</skill>
+            <skill>Consummate Professionnal</skill>
+        </skills>
+        
+        <cost>280000</cost>
+        <team>OldWorldAllianceKey</team><!-- classique du vieux monde-->
+        <team>OgreKey</team><!-- classique du vieux monde-->
+        <team>ImperialNobilityKey</team><!-- classique du vieux monde-->
+        <team>HumanKey</team><!-- classique du vieux monde-->
+        <team>DwarfKey</team><!-- classique du vieux monde-->
+        <team>NorseKey</team><!-- classique du vieux monde-->
+        <team>HalflingKey</team> <!-- classique du vieux monde--> <!-- Coupe Dé à coudre Halfling -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Grim Ironjaw</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Dragon Slayer</position>
+        <movement>5</movement>
+        <strength>4</strength>
+        <agility>3</agility>
+        <pass>-1</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Block</skill>
+            <skill>Dauntless</skill>
+            <skill>Frenzy</skill>
+            <skill>Multiple Block</skill>
+            <skill>Thick Skull</skill>
+            <skill>Slayer</skill>
+        </skills>
+        
+        <cost>200000</cost>
+        <team>OldWorldAllianceKey</team><!-- classique du vieux monde-->
+        <team>OgreKey</team><!-- classique du vieux monde-->
+        <team>ImperialNobilityKey</team><!-- classique du vieux monde-->
+        <team>HumanKey</team><!-- classique du vieux monde-->
+        <team>DwarfKey</team><!-- classique du vieux monde-->  <!-- Worlds Edge Superleague-->
+        <team>NorseKey</team><!-- classique du vieux monde-->
+        <team>HalflingKey</team> <!-- classique du vieux monde--> <!-- Coupe Dé à coudre Halfling -->
+        <team>ChaosDwarfKey</team><!-- Worlds Edge Superleague-->
+    </starplayer>
+    
+    <starplayer>
+        <name>Hakflem Skuttlespike</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Gutter Runner</position>
+        <movement>9</movement>
+        <strength>3</strength>
+        <agility>2</agility>
+        <pass>3</pass>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Extra Arms</skill>
+            <skill>Two Heads</skill>
+            <skill>Dodge</skill>
+            <skill>Prehensile Tail</skill>
+            <skill>Treachearous</skill>
+        </skills>
+        <cost>180000</cost>
+        <team>SnotlingKey</team> <!-- Défi des basfonds -->
+        <team>SkavenKey</team> <!-- Défi des basfonds -->
+        <team>UnderworldDenizenKey</team> <!-- Défi des basfonds -->
+        <team>NurgleKey</team> <!-- Favorite of Nurgle -->
+        <team>ChaosRenegadesKey</team> <!-- Favorite of  -->
+        <team>ChaosChosenKey</team> <!-- Favorite of  -->
+        <team>ChaosDwarfKey</team> <!-- Favorite of  -->
+        <team>KhornesDaemonsKey</team> <!-- Favorite of Khorne -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Helmut Wulf</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Lineman</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <pass>-1</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Chainsaw</skill>
+            <skill>Secret Weapon</skill>
+            <skill>Stand Firm</skill>
+            <skill>Pro</skill>
+            <skill>Old Pro</skill>
+        </skills>
+        <cost>140000</cost>
+        <name>AmazonKey</name>
+        <name>ImperialNobilityKey</name>
+        <name>ChaosChosenKey</name>
+        <team>ChaosRenegadesKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>DarkElfKey</team>
+        <team>DwarfKey</team>
+        <team>ElfUnionKey</team>
+        <team>GoblinKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>HumanKey</team>
+        <team>KhemriTombKingsKey</team>
+        <team>KhornesDaemonsKey</team>
+        <team>LizardmenKey</team>
+        <team>NecromanticHorrorKey</team>
+        <team>NorseKey</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SkavenKey</team>
+        <team>SlannKey</team>
+        <team>ShamblingUndeadKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>VampireKey</team>
+        <team>WoodElfKey</team>
+        <team>OldWorldAllianceKey</team>
+        <team>BlackOrcKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Karla Von Kill</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Human Blitzer</position>
+        <movement>6</movement>
+        <strength>4</strength>
+        <agility>3</agility>
+        <pass>4</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Block</skill>
+            <skill>Dauntless</skill>
+            <skill>Dodge</skill>
+            <skill>Jump Up</skill>
+            <skill>Loner (4+)</skill>
+            <skill>Indomitable</skill>
+        </skills>
+        <cost>210000</cost>
+        <team>OldWorldAllianceKey</team><!-- classique du vieux monde-->
+        <team>OgreKey</team><!-- classique du vieux monde-->
+        <team>ImperialNobilityKey</team><!-- classique du vieux monde-->
+        <team>HumanKey</team><!-- classique du vieux monde-->
+        <team>DwarfKey</team><!-- classique du vieux monde-->  <!-- Worlds Edge Superleague-->
+        <team>NorseKey</team><!-- classique du vieux monde--> <!-- Lustrian Superleague -->
+        <team>HalflingKey</team> <!-- classique du vieux monde--> <!-- Coupe Dé à coudre Halfling -->
+        <team>LizardmenKey</team> <!-- Lustrian Superleague -->
+        <name>AmazonKey</name> <!-- Lustrian Superleague -->
+        <name>SlannKey</name> <!-- Lustrian Superleague -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Lord Borak The Despoiler</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Chaos Lord</position>
+        <movement>5</movement>
+        <strength>5</strength>
+        <agility>3</agility>
+        <pass>5</pass>
+        <armor>10</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Block</skill>
+            <skill>Mighty Blow (+1)</skill>
+            <skill>Dirty Player (+2)</skill>
+            <skill>Sneaky Git</skill>
+            <skill>Lord Of Chaos</skill>
+        </skills>
+        <cost>260000</cost>
+        <team>NurgleKey</team> <!-- Favorite of Nurgle -->
+        <team>ChaosRenegadesKey</team> <!-- Favorite of  -->
+        <team>ChaosChosenKey</team> <!-- Favorite of  -->
+        <team>ChaosDwarfKey</team> <!-- Favorite of  -->
+        <team>KhornesDaemonsKey</team> <!-- Favorite of Khorne -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Mighty Zug</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Blocker</position>
+        <movement>4</movement>
+        <strength>5</strength>
+        <agility>4</agility>
+        <pass>6</pass>
+        <armor>10</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Block</skill>
+            <skill>Mighty Blow (+1)</skill>
+            <skill>Destructive Blow</skill>
+        </skills>
+        <cost>220000</cost>
+        <team>OldWorldAllianceKey</team><!-- classique du vieux monde-->
+        <team>OgreKey</team><!-- classique du vieux monde-->
+        <team>ImperialNobilityKey</team><!-- classique du vieux monde-->
+        <team>HumanKey</team><!-- classique du vieux monde-->
+        <team>DwarfKey</team><!-- classique du vieux monde-->  <!-- Worlds Edge Superleague-->
+        <team>NorseKey</team><!-- classique du vieux monde--> <!-- Lustrian Superleague -->
+        <team>HalflingKey</team> <!-- classique du vieux monde--> <!-- Coupe Dé à coudre Halfling -->
+        <team>LizardmenKey</team> <!-- Lustrian Superleague -->
+        <name>AmazonKey</name> <!-- Lustrian Superleague -->
+        <name>SlannKey</name> <!-- Lustrian Superleague -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Morg'N'Torg</name>
+        <sources>
+            <source>CRP</source>
+            <source>Spike</source>
+        </sources>
+        <position>Superstar</position>
+        <movement>6</movement>
+        <strength>6</strength>
+        <agility>3</agility>
+        <pass>4</pass>
+        <armor>11</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Block</skill>
+            <skill>Mighty Blow (+2)</skill>
+            <skill>Thick Skull</skill>
+            <skill>Throw Team-Mate</skill>
+            <skill>The Ballista</skill>
+        </skills>
+        <cost>340000</cost>
+        <team>AmazonKey</team>
+        <team>ChaosChosenKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>ChaosRenegadesKey</team>
+        <team>DarkElfKey</team>
+        <team>DwarfKey</team>
+        <team>ElfUnionKey</team>
+        <team>GoblinKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>HumanKey</team>
+        <team>LizardmenKey</team>
+        <team>NorseKey</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SkavenKey</team>
+        <team>SlannKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>VampireKey</team>
+        <team>WoodElfKey</team>
+        <team>KhornesDaemonsKey</team>
+        <team>ImperialNobilityKey</team>
+        <team>SnotlingKey</team>
+        <team>OldWorldAllianceKey</team>
+        <team>BlackOrcKey</team>
+    </starplayer>
+    
+    <starplayer>
+        <name>Roxanna Darknails</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>With Elf</position>
+        <movement>8</movement>
+        <strength>3</strength>
+        <agility>1</agility>
+        <pass>4</pass>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Dodge</skill>
+            <skill>Frenzy</skill>
+            <skill>Jump Up</skill>
+            <skill>Juggernaut</skill>
+            <skill>Leap</skill>
+            <skill>Burst Of Speed</skill>
+        </skills>
+        <cost>270000</cost>
+        <team>DarkElfKey</team> <!-- Ligue des royaumes elfiques --> 
+        <team>ElfUnionKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>HighElfKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>WoodElfKey</team> <!-- Ligue des royaumes elfiques -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Rumbelow Sheepskin</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>halfling</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <pass>-1</pass>
+        <armor>8</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Block</skill>
+            <skill>Horns</skill>
+            <skill>Juggernaut</skill>
+            <skill>No Hand</skill>
+            <skill>Tackle</skill>
+            <skill>Thick Skull</skill>
+            <skill>Ram</skill>
+        </skills>
+        <cost>170000</cost>
+        <team>OldWorldAllianceKey</team><!-- classique du vieux monde-->
+        <team>OgreKey</team><!-- classique du vieux monde-->
+        <team>ImperialNobilityKey</team><!-- classique du vieux monde-->
+        <team>HumanKey</team><!-- classique du vieux monde-->
+        <team>DwarfKey</team><!-- classique du vieux monde-->  <!-- Worlds Edge Superleague-->
+        <team>NorseKey</team><!-- classique du vieux monde-->
+        <team>HalflingKey</team> <!-- classique du vieux monde--> <!-- Coupe Dé à coudre Halfling -->
+        <team>ChaosDwarfKey</team><!-- Worlds Edge Superleague-->
+    </starplayer>
+    
+    <starplayer>
+        <name>Skrull Halfheight</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Skeletal Dwarf</position>
+        <movement>6</movement>
+        <strength>3</strength>
+        <agility>4</agility>
+        <pass>4</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Accurate</skill>
+            <skill>Nerves of Steel</skill>
+            <skill>Pass</skill>
+            <skill>Regeneration</skill>
+            <skill>Sure Hands</skill>
+            <skill>Thick Skull</skill>
+            <skill>Strong Passing Game</skill>
+            
+        </skills>
+        <cost>150000</cost>
+        <team>DwarfKey</team><!-- classique du vieux monde-->  <!-- Worlds Edge Superleague-->
+        <team>ChaosDwarfKey</team><!-- Worlds Edge Superleague-->
+        <team>VampireKey</team> <!-- Spot de Sylvanie-->
+        <team>KhemriTombKingsKey</team> <!-- Spot de Sylvanie-->
+        <team>NecromanticHorrorKey</team> <!-- Spot de Sylvanie-->
+        <team>ShamblingUndeadKey</team> <!-- Spot de Sylvanie-->
+    </starplayer>
+    
+    
+    <starplayer>
+        <name>Lucien Swift</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Blitzer</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>2</agility>
+        <pass>5</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Block</skill>
+            <skill>Tackle</skill>            
+            <skill>Mighty Blow (+1)</skill>
+            <skill>Two For One</skill>
+        </skills>
+        <cost>340000</cost>
+        <pair_with>Valen Swift</pair_with>
+        <team>DarkElfKey</team> <!-- Ligue des royaumes elfiques --> 
+        <team>ElfUnionKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>HighElfKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>WoodElfKey</team> <!-- Ligue des royaumes elfiques -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Valen Swift</name>
+        <sources>
+            <source>Spike</source>
+        </sources>
+        <position>Thrower</position>
+        <movement>7</movement>
+        <strength>3</strength>
+        <agility>2</agility>
+        <pass>2</pass>
+        <armor>8</armor>
+        <skills>
+            <skill>Accurate</skill>
+            <skill>Loner (4+)</skill>
+            <skill>Nerves of Steel</skill>
+            <skill>Sure Hands</skill>
+            <skill>Pass</skill>
+            <skill>Safe Pass</skill>
+            <skill>Two For One</skill>
+        </skills>
+        <cost>0</cost>
+        <pair_with>Lucien Swift</pair_with>
+        <team>DarkElfKey</team> <!-- Ligue des royaumes elfiques --> 
+        <team>ElfUnionKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>HighElfKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>WoodElfKey</team> <!-- Ligue des royaumes elfiques -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Varag Ghoul-Chewer</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Blitzer</position>
+        <movement>6</movement>
+        <strength>5</strength>
+        <agility>3</agility>
+        <pass>5</pass>
+        <armor>10</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Block</skill>
+            <skill>Jump Up</skill>
+            <skill>Mighty Blow (+1)</skill>
+            <skill>Thick Skull</skill>
+            <skill>Destructive Blow</skill>
+        </skills>
+        <cost>280000</cost>
+        <team>ChaosDwarfKey</team> <!-- bagarre des terres arides -->
+        <team>BlackOrcKey</team> <!-- bagarre des terres arides -->
+        <team>GoblinKey</team> <!-- bagarre des terres arides -->
+        <team>OgreKey</team> <!-- bagarre des terres arides -->
+        <team>OrcKey</team> <!-- bagarre des terres arides -->
+        <team>SnotlingKey</team> <!-- Défi des basfonds -->
+        <team>SkavenKey</team> <!-- Défi des basfonds -->
+        <team>UnderworldDenizenKey</team> <!-- Défi des basfonds -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Grombrindal, The White Dwarf</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+            
+        <position>Dwarf Blocker</position>
+        <movement>5</movement>
+        <strength>3</strength>
+        <agility>3</agility>
+        <pass>4</pass>       
+        <armor>10</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Block</skill>
+            <skill>Dauntless</skill>
+            <skill>Mighty Blow (+1)</skill>
+            <skill>Stand Firm</skill>
+            <skill>Thick Skull</skill>
+            <skill>Wisdom Of The White Dwarf</skill>
+        </skills>
+        <cost>210000</cost>
+        <team>OldWorldAllianceKey</team><!-- classique du vieux monde-->
+        <team>OgreKey</team><!-- classique du vieux monde-->
+        <team>ImperialNobilityKey</team><!-- classique du vieux monde-->
+        <team>HumanKey</team><!-- classique du vieux monde-->
+        <team>DwarfKey</team><!-- classique du vieux monde-->  <!-- Worlds Edge Superleague-->
+        <team>NorseKey</team><!-- classique du vieux monde-->
+        <team>HalflingKey</team> <!-- classique du vieux monde--> <!-- Coupe Dé à coudre Halfling -->
+        <team>ChaosDwarfKey</team><!-- Worlds Edge Superleague-->
+        <team>LizardmenKey</team> <!-- Lustrian Superleague -->
+        <name>AmazonKey</name> <!-- Lustrian Superleague -->
+        <name>SlannKey</name> <!-- Lustrian Superleague -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Willow Rosebark</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Dryad</position>
+        <movement>5</movement>
+        <strength>4</strength>
+        <agility>3</agility>
+        <pass>6</pass>
+        <armor>9</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Dauntless</skill>
+            <skill>Side Step</skill>
+            <skill>Thick Skull</skill>
+            <skill>Indomitable</skill>
+        </skills>
+        <cost>150000</cost>
+        <team>DarkElfKey</team> <!-- Ligue des royaumes elfiques --> 
+        <team>ElfUnionKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>HighElfKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>WoodElfKey</team> <!-- Ligue des royaumes elfiques -->
+    </starplayer>
+    
+    <starplayer>
+        <name>Zolcat The Zoat</name>
+        <sources>
+            <source>BB2020</source>
+        </sources>
+        <position>Blocker</position>
+        <movement>5</movement>
+        <strength>5</strength>
+        <agility>4</agility>
+        <pass>5</pass>
+        <armor>10</armor>
+        <skills>
+            <skill>Loner (4+)</skill>
+            <skill>Disturbing Presence</skill>
+            <skill>Juggernaut</skill>
+            <skill>Mighty Blow (+1)</skill>
+            <skill>Prehensile Tail</skill>
+            <skill>Regeneration</skill>
+            <skill>Sure Feet</skill>
+            <skill>Excuse Me, Are You A Zoat ?</skill>
+        </skills>
+        <cost>230000</cost>
+        <team>DarkElfKey</team> <!-- Ligue des royaumes elfiques --> 
+        <team>ElfUnionKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>HighElfKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>WoodElfKey</team> <!-- Ligue des royaumes elfiques -->
+        <team>LizardmenKey</team> <!-- Lustrian Superleague -->
+        <name>AmazonKey</name> <!-- Lustrian Superleague -->
+        <name>SlannKey</name> <!-- Lustrian Superleague -->
+    </starplayer>
+    
+    
+    
+</StarPlayerList>

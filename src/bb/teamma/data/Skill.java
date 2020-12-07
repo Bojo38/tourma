@@ -21,22 +21,36 @@ public class Skill implements Serializable{
      * 
      */
     public static final int _C_DOUBLE_COST=30000;
+    
+    public static final int _C_SINGLE_COST_2020=20000;
+    public static final int _C_DOUBLE_COST_2020=40000;
+    
+    public static final int _C_SINGLE_COST_2020_RANDOM=10000;
+    public static final int _C_DOUBLE_COST_2020_RANDOM=20000;
+    
     /**
      * 
      */
     public static final int _C_STRENGHT_COST=50000;
+    public static final int _C_STRENGHT_COST_2020=80000;
     /**
      * 
      */
     public static final int _C_AGILITY_COST=40000;
+    public static final int _C_AGILITY_COST_2020=40000;
+    
+    public static final int _C_PASS_COST=40000;
+     public static final int _C_PASS_COST_2020=20000;
     /**
      * 
      */
     public static final int _C_ARMOR_COST=30000;
+    public static final int _C_ARMOR_COST_2020=10000;
     /**
      * 
      */
     public static final int _C_MOVEMENT_COST=30000;
+     public static final int _C_MOVEMENT_COST_2020=20000;
     
     
     

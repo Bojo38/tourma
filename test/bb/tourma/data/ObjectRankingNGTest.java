@@ -7,6 +7,7 @@ package bb.tourma.data;
 
 import bb.tourma.data.ObjectRanking;
 import bb.tourma.data.Coach;
+import java.io.File;
 import org.jdom.Element;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -28,6 +29,7 @@ public class ObjectRankingNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
     }
 
     @AfterClass
@@ -379,10 +381,22 @@ public class ObjectRankingNGTest {
         System.out.println("setValue");
         int index = 0;
         int value = 0;
-        ObjectRanking instance = null;
-        instance.setValue(index, value);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        ObjectRanking instance = new ObjectAnnexRanking(new Coach("Test"), 1, 2, 
+                    3, 4, 5, 6);
+        
+        instance.setValue(0, 0);
+        instance.setValue(1, 1);
+        instance.setValue(2, 2);
+        instance.setValue(3, 3);
+        instance.setValue(4, 4);
+        instance.setValue(5, 5);
+
+        assertEquals(instance.getValue(0), 0);
+        assertEquals(instance.getValue(1), 1);
+        assertEquals(instance.getValue(2), 2);
+        assertEquals(instance.getValue(3), 3);
+        assertEquals(instance.getValue(4), 4);
+        
     }
 
     /**
@@ -391,13 +405,21 @@ public class ObjectRankingNGTest {
     @Test
     public void testGetValue() {
         System.out.println("getValue");
-        int index = 0;
-        ObjectRanking instance = null;
-        int expResult = 0;
-        int result = instance.getValue(index);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+             ObjectRanking instance = new ObjectAnnexRanking(new Coach("Test"), 1, 2, 
+                    3, 4, 5, 6);
+        
+        instance.setValue(0, 0);
+        instance.setValue(1, 1);
+        instance.setValue(2, 2);
+        instance.setValue(3, 3);
+        instance.setValue(4, 4);
+        instance.setValue(5, 5);
+
+        assertEquals(instance.getValue(0), 0);
+        assertEquals(instance.getValue(1), 1);
+        assertEquals(instance.getValue(2), 2);
+        assertEquals(instance.getValue(3), 3);
+        assertEquals(instance.getValue(4), 4);
     }
 
 }

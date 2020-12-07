@@ -26,7 +26,7 @@ import bb.tourma.utility.StringConstants;
  */
 public class CoachMatch extends Match implements Serializable {
 
-    
+   
     /**
      * UID Seed
      */
@@ -414,42 +414,44 @@ public class CoachMatch extends Match implements Serializable {
 
     @Override
     public boolean equals(Object c) {
-        
+
         if (this == c) {
             return true;
         }
 
-        if (c instanceof CoachMatch)
-        {
-            return UID==((CoachMatch)c).UID;
+        if (c instanceof CoachMatch) {
+            if (UID == ((CoachMatch) c).UID) {
+                return true;
+            }
         }
-        
-       /*if (c instanceof CoachMatch) {
-            CoachMatch cm = (CoachMatch) c;
-            boolean equality = (this.concedeedBy1 == cm.concedeedBy1);
-            equality &= (this.concedeedBy2 == cm.concedeedBy2);
-            equality &= (this.refusedBy1 == cm.refusedBy1);
-            equality &= (this.refusedBy2 == cm.refusedBy2);
-            equality &= (this.mRoster1 == cm.mRoster1);
-            equality &= (this.mRoster2 == cm.mRoster2);
-            if ((getCompetitor1() != null) && (getCompetitor2() != null)) {
-                equality &= (this.getCompetitor1().equals(cm.getCompetitor1()));
-                equality &= (this.getCompetitor2().equals(cm.getCompetitor2()));
-            }
 
-            for (Criterion crit : this.mValues.keySet()) {
-                Value v = cm.getValue(crit);
-                if (v == null) {
-                    return false;
+        if (!mFastCompare) {
+            if (c instanceof CoachMatch) {
+                CoachMatch cm = (CoachMatch) c;
+                boolean equality = (this.concedeedBy1 == cm.concedeedBy1);
+                equality &= (this.concedeedBy2 == cm.concedeedBy2);
+                equality &= (this.refusedBy1 == cm.refusedBy1);
+                equality &= (this.refusedBy2 == cm.refusedBy2);
+                equality &= (this.mRoster1 == cm.mRoster1);
+                equality &= (this.mRoster2 == cm.mRoster2);
+                if ((getCompetitor1() != null) && (getCompetitor2() != null)) {
+                    equality &= (this.getCompetitor1().equals(cm.getCompetitor1()));
+                    equality &= (this.getCompetitor2().equals(cm.getCompetitor2()));
                 }
-                equality &= v.getValue1() == this.mValues.get(crit).getValue1();
-                equality &= v.getValue2() == this.mValues.get(crit).getValue2();
+
+                for (Criterion crit : this.mValues.keySet()) {
+                    Value v = cm.getValue(crit);
+                    if (v == null) {
+                        return false;
+                    }
+                    equality &= v.getValue1() == this.mValues.get(crit).getValue1();
+                    equality &= v.getValue2() == this.mValues.get(crit).getValue2();
+                }
+
+                return equality;
+
             }
-            
-
-            return equality;
-
-        }*/
+        }
 
         return false;
     }
@@ -813,6 +815,7 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * IS match refused by coach 1
+     *
      * @return the refusedBy1
      */
     public boolean isRefusedBy1() {
@@ -821,6 +824,7 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * Refused 1 Setter
+     *
      * @param refusedBy1 the refusedBy1 to set
      */
     public void setRefusedBy1(boolean refusedBy1) {
@@ -830,6 +834,7 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * IS match refused by coach 2
+     *
      * @return the refusedBy2
      */
     public boolean isRefusedBy2() {
@@ -838,6 +843,7 @@ public class CoachMatch extends Match implements Serializable {
 
     /**
      * Refused 2 Setter
+     *
      * @param refusedBy2 the refusedBy2 to set
      */
     public void setRefusedBy2(boolean refusedBy2) {

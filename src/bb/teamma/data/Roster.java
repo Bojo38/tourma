@@ -28,8 +28,8 @@ public class Roster implements IXMLExport, Serializable {
     private final static String CS_Rerolls = "Rerolls";
     private final static String CS_Inducements = "Inducements";
     private final static String CS_Inducement = "Inducement";
-     private final static String CS_Nb = "Nb";
-      private final static String CS_Type = "Type";
+    private final static String CS_Nb = "Nb";
+    private final static String CS_Type = "Type";
     private final static String CS_Chef = "Chef";
     private final static String CS_Igor = "Igor";
     private final static String CS_Wizard = "Wizard";
@@ -79,10 +79,8 @@ public class Roster implements IXMLExport, Serializable {
     /*
      * Inducements
      */
-   
 
-   
-    /*
+ /*
      * No mercenary ?
      */
     /**
@@ -119,13 +117,13 @@ public class Roster implements IXMLExport, Serializable {
 
         this._rerolls = roster._rerolls;
 
-
-        this._roster = LRB.getLRB(roster.getRoster().getVersion()).getRosterType(roster.getRoster().getName());
+        LRB lrb = LRB.getLRB(roster.getRoster().getVersion());
+        this._roster = lrb.getRosterType(roster.getRoster().getName());
 
         this._players.clear();
         for (int i = 0; i < roster.getPlayerCount(); i++) {
-            PlayerType pt = LRB.getLRB(roster.getRoster().getVersion()).getRosterType(roster.getRoster().getName()).getPlayerType(roster.getPlayer(i).getName(), false);
-            Player p = new Player(pt);
+            PlayerType pt = lrb.getRosterType(roster.getRoster().getName()).getPlayerType(roster.getPlayer(i).getName(), false);
+            Player p = new Player(pt, lrb.getVersion());
             p.pull(roster.getPlayer(i), roster.getRoster().getVersion());
             _players.add(p);
         }
@@ -206,12 +204,9 @@ public class Roster implements IXMLExport, Serializable {
             cost += _champion.getCost();
         }
 
-     
-        for (Inducement induc:_inducements)
-        {
-            cost+=induc.getNb()*induc.getType().getCost();
+        for (Inducement induc : _inducements) {
+            cost += induc.getNb() * induc.getType().getCost();
         }
-       
 
         return cost;
     }
@@ -251,7 +246,10 @@ public class Roster implements IXMLExport, Serializable {
                     compo.setAttribute(CS_LRB, "CRP1");
                     break;
                 case BB2016:
-                    compo.setAttribute(CS_LRB, "NAF2017");
+                    compo.setAttribute(CS_LRB, "BB2016");
+                    break;
+                case BB2020:
+                    compo.setAttribute(CS_LRB, "BB2020");
                     break;
 
             }
@@ -264,14 +262,12 @@ public class Roster implements IXMLExport, Serializable {
             compo.setAttribute(CS_Rerolls, Integer.toString(this.getRerolls()));
 
             final Element inducements = new Element(CS_Inducements);
-            for (Inducement induc: _inducements)
-            {
-                Element e_induc=new Element(CS_Inducement);
-                e_induc.setAttribute(CS_Nb,Integer.toString(induc._nb));
-                e_induc.setAttribute(CS_Type,induc._type.getName());
+            for (Inducement induc : _inducements) {
+                Element e_induc = new Element(CS_Inducement);
+                e_induc.setAttribute(CS_Nb, Integer.toString(induc._nb));
+                e_induc.setAttribute(CS_Type, induc._type.getName());
                 inducements.addContent(e_induc);
             }
-          
 
             for (int cpt = 0; cpt < getChampionCount(); cpt++) {
                 StarPlayer _champion = getChampion(cpt);
@@ -344,6 +340,9 @@ public class Roster implements IXMLExport, Serializable {
             if (slrb.equals("BB2016")) {
                 version = LRB.E_Version.BB2016;
             }
+            if (slrb.equals("BB2020")) {
+                version = LRB.E_Version.BB2020;
+            }
         } catch (NullPointerException npe) {
 
         }
@@ -359,14 +358,14 @@ public class Roster implements IXMLExport, Serializable {
 
         final Element inducements = e.getChild(CS_Inducements);
         if (inducements != null) {
-            
+
             final List<Element> inducs = inducements.getChildren(CS_Inducement);
             final Iterator<Element> i_induc = inducs.iterator();
             while (i_induc.hasNext()) {
                 final Element e_induc = i_induc.next();
                 final String it_name = e_induc.getAttributeValue(CS_Type);
-                InducementType it= this.getRoster().getInducementType(it_name);
-                this.setInducement(it, Integer.parseInt( e_induc.getAttributeValue(CS_Nb)));
+                InducementType it = this.getRoster().getInducementType(it_name);
+                this.setInducement(it, Integer.parseInt(e_induc.getAttributeValue(CS_Nb)));
             }
 
             final List<Element> stars = inducements.getChildren(CS_StarPlayer);
@@ -385,7 +384,7 @@ public class Roster implements IXMLExport, Serializable {
         while (ip.hasNext()) {
             final Element p = ip.next();
             if (this.getRoster() != null) {
-                final bb.teamma.data.Player pl = new Player(this.getRoster().getPlayerType(p.getAttributeValue(CS_Position), false));
+                final bb.teamma.data.Player pl = new Player(this.getRoster().getPlayerType(p.getAttributeValue(CS_Position), false), lrb.getVersion());
                 pl.setName(p.getAttributeValue(CS_Name));
 
                 final List<Element> skills = p.getChildren(CS_Skill);
@@ -432,8 +431,6 @@ public class Roster implements IXMLExport, Serializable {
         this._assistants = _assistants;
     }
 
-   
-
     /**
      * @param i
      * @return the _champions
@@ -449,12 +446,13 @@ public class Roster implements IXMLExport, Serializable {
         _champions.remove(i);
     }
 
-     /**
+    /**
      * @param i
      */
     public void removeChampion(StarPlayer sp) {
         _champions.remove(sp);
     }
+
     /**
      * @param sp
      */

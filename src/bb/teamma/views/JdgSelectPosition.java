@@ -4,6 +4,7 @@
  */
 package bb.teamma.views;
 
+import bb.teamma.data.LRB;
 import java.awt.Dimension;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
@@ -24,6 +25,7 @@ public class JdgSelectPosition extends javax.swing.JDialog {
     private ArrayList<PlayerType> mPositions;
     private StarPlayer mStarPlayer;
     private ArrayList<StarPlayer> mStarPlayers;
+    LRB.E_Version _version;
 
     /**
      * Creates new form JdgSelectSkill
@@ -32,14 +34,15 @@ public class JdgSelectPosition extends javax.swing.JDialog {
      * @param modal
      * @param player
      */
-    public JdgSelectPosition(java.awt.Frame parent, boolean modal, ArrayList<PlayerType> positions, PlayerType pt) {
+    public JdgSelectPosition(java.awt.Frame parent, boolean modal, ArrayList<PlayerType> positions, PlayerType pt, LRB.E_Version version) {
         super(parent, modal);
         initComponents();
 
+        _version=version;
         mPlayerType = pt;
         mPositions = positions;
 
-        MjtPlayerTypes model = new MjtPlayerTypes(mPositions);
+        MjtPlayerTypes model = new MjtPlayerTypes(mPositions,version);
         jtPositions.setModel(model);
 
         jtPositions.setDefaultRenderer(Integer.class, model);
@@ -73,7 +76,7 @@ public class JdgSelectPosition extends javax.swing.JDialog {
         mStarPlayer = sp;
         mStarPlayers = starplayers;
 
-        MjtStarPlayers model = new MjtStarPlayers(mStarPlayers);
+        MjtStarPlayers model = new MjtStarPlayers(mStarPlayers,_version);
         jtPositions.setModel(model);
 
         jtPositions.setDefaultRenderer(Integer.class, model);

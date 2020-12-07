@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<skills>
+    <category>
+        <name>General</name>
+        <accronym>G</accronym>
+        <special>false</special>
+        <skill>Random General Skill</skill>
+        <skill>Strip Ball</skill>
+        <skill>Block</skill>
+        <skill>Kick</skill>
+        <skill>Frenzy</skill>
+        <skill>Dauntless</skill>
+        <skill>Dirty Player (+1)</skill>
+        <skill>Wrestle</skill>
+        <skill>Fend</skill>
+        <skill>Shadowing</skill>
+        <skill>Sure Hands</skill>
+        <skill>Pro</skill>
+        <skill>Tackle</skill>
+    </category>
+    <category>
+        <name>Pass</name>
+        <accronym>P</accronym>
+        <special>false</special>
+        <skill>Random Pass Skill</skill>
+        <skill>Cannoneer</skill>
+        <skill>Leader</skill>
+        <skill>Dump-Off</skill>
+        <skill>Fumblerooskie</skill>
+        <skill>Nerves of Steel</skill>
+        <skill>Pass</skill>  
+        <skill>Safe Pass</skill>       
+        <skill>Running Pass</skill>      
+        <skill>Hail Mary Pass</skill>  
+        <skill>Cloud Burster</skill>
+        <skill>Accurate</skill>       
+        <skill>On The Ball</skill>
+    </category>
+    <category>
+        <name>Strength</name>
+        <accronym>S</accronym>
+        <special>false</special>
+        <skill>Random Strength Skill</skill>
+        <skill>Brawler</skill>
+        <skill>Multiple Block</skill>
+        <skill>Strong Arm</skill>
+        <skill>Mighty Blow (+1)</skill>
+        <skill>Arm Bar</skill>
+        <skill>Thick Skull</skill>
+        <skill>Break Tackle</skill>
+        <skill>Guard</skill>
+        <skill>Juggernaut</skill>
+        <skill>Pile Driver</skill>
+        <skill>Grab</skill>
+        <skill>Stand Firm</skill>
+    </category>
+    <category>
+        <name>Mutation</name>
+        <accronym>M</accronym>
+        <special>false</special>
+        <skill>Random Mutation</skill>
+        <skill>Extra Arms</skill>
+        <skill>Horns</skill>
+        <skill>Two Heads</skill>
+        <skill>Monstrous Mouth</skill>
+        <skill>Claws</skill>
+        <skill>Big Hand</skill>
+        <skill>Iron Hard Skin</skill>
+        <skill>Disturbing Presence</skill>
+        <skill>Prehensile Tail</skill>
+        <skill>Foul Appearance</skill>
+        <skill>Tentacles</skill>
+        <skill>Very Long Legs</skill>
+    </category>
+    <category>
+        <name>Agility</name>
+        <accronym>A</accronym>
+        <special>false</special>
+        <skill>Random Agility Skill</skill>
+        <skill>Defensive</skill>
+        <skill>Sure Feet</skill>
+        <skill>Dodge</skill>
+        <skill>Side Step</skill>
+        <skill>Safe Pair Of Hands</skill>
+        <skill>Catch</skill>
+        <skill>Diving Catch</skill>
+        <skill>Jump Up</skill>
+        <skill>Leap</skill>
+        <skill>Sneaky Git</skill>
+        <skill>Sprint</skill>
+        <skill>Diving Tackle</skill>
+    </category>
+    <category>
+        <name>Traits</name>
+        <accronym>T</accronym>
+        <special>true</special>
+        <skill>Animosity (All)</skill>
+        <skill>Animosity (Big Un Blockers)</skill>
+        <skill>Animosity (Orc Linemen)</skill>
+        <skill>Animosity (Underworld Goblin Linemen)</skill>
+        <skill>Animosity (Dwarves, Halflings)</skill>
+        <skill>Animosity (Dwarves, Humans)</skill>
+        <skill>Secret Weapon</skill>
+        <skill>Bombardier</skill>
+        <skill>Kick Team-Mate</skill>
+        <skill>Bone Head</skill>
+        <skill>Ball And Chain</skill>
+        <skill>Plague Ridden</skill>
+        <skill>Decay</skill>
+        <skill>Swarming</skill>
+        <skill>Pogo Stick</skill>
+        <skill>Unchannelled Fury</skill>
+        <skill>Projectile Vomit</skill>
+        <skill>Really Stupid</skill>
+        <skill>Throw Team-Mate</skill>
+        <skill>Titchy</skill>
+        <skill>Stunty</skill>
+        <skill>Swoop</skill>
+        <skill>Right Stuff</skill>
+        <skill>Stab</skill>
+        <skill>Take Roots</skill>
+        <skill>Hypnotic Gaze</skill>
+        <skill>Regeneration</skill>
+        <skill>Loner (3+)</skill>
+        <skill>Loner (4+)</skill>
+        <skill>Loner (5+)</skill>
+        <skill>Mighty Blow (+2)</skill>
+        <skill>No Hand</skill>
+        <skill>Animal Savagery</skill>
+        <skill>Timm-Ber!</skill>
+        <skill>Always Hungry</skill>
+        <skill>Chainsaw</skill>
+        <skill>Big Guy</skill>
+        <skill>Dirty Player (+2)</skill>
+    </category>
+    <category>
+        <name>Characteristics</name>
+        <accronym>C</accronym>
+        <special>true</special>
+        <skill>+1 Movement</skill>
+        <skill>+1 Strength</skill>
+        <skill>-1 Agility</skill>
+        <skill>-1 Pass</skill>
+        <skill>+1 Armor</skill>
+    </category>
+    <category>
+        <name>Injury</name>
+        <accronym>I</accronym>
+        <special>true</special>
+        <skill>Niggling Injury</skill>
+        <skill>-1 Movement</skill>
+        <skill>-1 Strength</skill>
+        <skill>+1 Agility</skill>
+        <skill>+1 Pass</skill>
+        <skill>-1 Armor</skill>
+    </category>
+    <category>
+        <name>Special</name>
+        <accronym>S</accronym>
+        <special>true</special>
+        <skill>Sneakiest Of The Lot</skill>
+        <skill>Reliable</skill>      
+        <skill>Mesmerizing Dance</skill> 
+        <skill>Frenzied Rush</skill>    
+        <skill>Shot Or Nothing</skill>
+        <skill>Incoporeal</skill>
+        <skill>Consummate Professionnal</skill>
+         <skill>Slayer</skill>
+        <skill>Treachearous</skill>
+        <skill>Old Pro</skill>
+        <skill>Lord Of Chaos</skill>
+        <skill>Crushing Blow</skill>
+        <skill>The Ballista</skill>
+        <skill>Burst Of Speed</skill>
+        <skill>Ram</skill>
+        <skill>Strong Passing Game</skill>
+        <skill>Two For One</skill>
+        <skill>Destructive Blow</skill>
+        <skill>Wisdom Of The White Dwarf</skill>
+        <skill>Indomitable</skill> 
+        <skill>Excuse Me, Are You A Zoat ?</skill>
+    </category>
+</skills>

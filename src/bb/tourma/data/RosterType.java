@@ -129,7 +129,6 @@ public class RosterType implements IXMLExport, Serializable {
         mRostersNames.add(translate("SkavenKey"));
         mRostersNames.add(translate("SlannKey"));
         mRostersNames.add(translate("VampireKey"));
-        mRostersNames.add(translate("BretonianKey"));
         mRostersNames.add(translate("SnotlingKey"));
         mRostersNames.add(translate("OldWorldAllianceKey"));
 

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>HalflingKey</name>
+    <reroll>60000</reroll>
+    <apothecary>true</apothecary>
+    <max_big_guy>2</max_big_guy>
+    <!-- Halfling Thimble Cup -->
+    <inducements>
+        <inducement name="temp agency cheerleaders" max="4" cost="20000" />
+        <inducement name="part time assistant coaches" max="3" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="Bloodweisers kegs" max="2" cost="50000" />
+        <inducement name="special plays" max="5" cost="100000" />
+        <inducement name="extra team training" max="8" cost="100000" />
+        <inducement name="bribes" max="3" cost="50000" />
+        <inducement name="wandering apothecary" max="2" cost="100000" />
+        <!--<inducement name="mortuary assistant" max="1" cost="300000" />-->
+        <!--<inducement name="plague doctor" max="1" cost="100000" />-->
+        <!--<inducement name="riotous rookies" max="1" cost="100000" />-->  
+        <inducement name="halfling master chef" max="1" cost="100000" />
+       
+        <inducement name="Joseph Bugman" max="1" cost="100000" />
+        <inducement name="wizard" max="1" cost="150000" />  
+        <inducement name="Biased referee" max="1" cost="80000" />
+    </inducements> 
+
+    <playertypes>               
+        <playerType>
+            <limit>2</limit>
+            <position>Altern Forest Treeman</position>
+            <movement>2</movement>
+            <strength>6</strength>
+            <agility>5</agility>
+            <pass>5</pass>
+            <armor>11</armor>
+            <skills>
+                <skill>Take Roots</skill>
+                <skill>Stand Firm</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Thick Skull</skill>
+                <skill>Strong Arm</skill>
+                <skill>Throw Team-Mate</skill>
+                <skill>Timm-Ber!</skill>
+                <skill>Big Guy</skill>
+            </skills>
+            <cost>120000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>16</limit>
+            <position>Halfling Hopeful Linemen</position>
+            <movement>5</movement>
+            <strength>2</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Stunty</skill>
+                <skill>Right Stuff</skill>
+            </skills>
+            <cost>30000</cost>
+            <single>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>General</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>2</limit>
+            <position>Halfling Hefty</position>
+            <movement>5</movement>
+            <strength>2</strength>
+            <agility>3</agility>
+            <pass>3</pass>
+            <armor>8</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Stunty</skill>
+                <skill>Fend</skill>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>General</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>2</limit>
+            <position>Halfling Catcher</position>
+            <movement>5</movement>
+            <strength>2</strength>
+            <agility>3</agility>
+            <pass>5</pass>
+            <armor>7</armor>
+            <skills>
+                <skill>Catch</skill>
+                <skill>Dodge</skill>
+                <skill>Stunty</skill>
+                <skill>Right Stuff</skill>
+                <skill>Sprint</skill>
+            </skills>
+            <cost>55000</cost>
+            <single>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>General</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

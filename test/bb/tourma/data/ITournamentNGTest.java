@@ -52,8 +52,6 @@ public class ITournamentNGTest {
         Tournament expResult = null;
         Tournament result = instance.getTournament();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -66,8 +64,6 @@ public class ITournamentNGTest {
         HashMap expResult = null;
         HashMap result = instance.getRosterTypes();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -79,8 +75,6 @@ public class ITournamentNGTest {
         Tournament object = null;
         ITournament instance = new ITournamentImpl();
         instance.setTournament(object);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     public class ITournamentImpl implements ITournament {

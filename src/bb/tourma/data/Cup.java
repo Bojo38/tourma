@@ -414,6 +414,7 @@ public class Cup implements IXMLExport, Serializable {
     public int getRoundsCount() {
         return mRoundsCount;
     }
+    
 
     public void setRoundsCount(int mRoundsCount) {
         this.mRoundsCount = mRoundsCount;

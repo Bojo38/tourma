@@ -5,7 +5,6 @@
  */
 package bb.tourma.data;
 
-import bb.tourma.data.GroupPoints;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 import org.testng.annotations.AfterClass;
@@ -120,9 +119,7 @@ public class GroupPointsNGTest {
         GroupPoints instance = new GroupPoints();
         int expResult = 0;
         int result = instance.getUID();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
 
     /**
@@ -134,8 +131,7 @@ public class GroupPointsNGTest {
         int UID = 0;
         GroupPoints instance = new GroupPoints();
         instance.setUID(UID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -146,9 +142,8 @@ public class GroupPointsNGTest {
         System.out.println("pull");
         GroupPoints gp = null;
         GroupPoints instance = new GroupPoints();
-        instance.pull(gp);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //instance.pull(gp);
+        
     }
 
     /**
@@ -157,13 +152,31 @@ public class GroupPointsNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object obj = null;
         GroupPoints instance = new GroupPoints();
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
+        
+        instance.setDrawPoints(100);
+        instance.setLossPoints(0);
+        instance.setVictoryPoints(300);
+        
+         GroupPoints instance2 = new GroupPoints();
+        
+        instance2.setDrawPoints(100);
+        instance2.setLossPoints(0);
+        instance2.setVictoryPoints(300);
+        
+        boolean expResult = true;
+        boolean result = instance.equals(instance2);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        
+        instance2.setDrawPoints(100);
+        instance2.setLossPoints(0);
+        instance2.setVictoryPoints(200);
+        
+        expResult = false;
+        result = instance.equals(instance2);
+        assertEquals(result, expResult);
+        
     }
     
 }

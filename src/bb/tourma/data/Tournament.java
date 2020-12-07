@@ -785,7 +785,7 @@ public class Tournament implements IContainCoachs, Serializable {
         // Save rounds
         for (int i = 0; i < mRounds.size(); i++) {
 
-            mRounds.get(i).setRoundIndex(this,i);
+            mRounds.get(i).setRoundIndex(this, i);
             final Element round = mRounds.get(i).getXMLElement();
 
             if (withRanking) {
@@ -1620,6 +1620,9 @@ public class Tournament implements IContainCoachs, Serializable {
             mPools.add(po);
         }
 
+        /**
+         * Cup
+         */
         Element cup = racine.getChild(StringConstants.CS_CUP);
         if (cup != null) {
             if (mCup == null) {
@@ -1646,13 +1649,13 @@ public class Tournament implements IContainCoachs, Serializable {
             r.update();
 
         }
+
     }
 
-    public static void clear()
-    {
-        mSingleton=null;
+    public static void clear() {
+        mSingleton = null;
     }
-    
+
     /**
      *
      * @param file

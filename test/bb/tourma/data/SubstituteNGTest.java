@@ -178,9 +178,7 @@ public class SubstituteNGTest {
         Substitute instance = new Substitute();
         int expResult = 0;
         int result = instance.getUID();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(result, expResult);
     }
 
     /**
@@ -192,8 +190,6 @@ public class SubstituteNGTest {
         int UID = 0;
         Substitute instance = new Substitute();
         instance.setUID(UID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -202,13 +198,17 @@ public class SubstituteNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object c = null;
+        Substitute copy=new Substitute();
         Substitute instance = new Substitute();
         boolean expResult = false;
-        boolean result = instance.equals(c);
+        
+        instance.setSubstitute(new Coach("Test Sub"));
+        instance.setTitular(new Coach("test Tit"));
+        
+        copy.setXMLElement(instance.getXMLElement());
+        
+        boolean result = instance.equals(copy);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

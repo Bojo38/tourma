@@ -25,9 +25,7 @@ import bb.tourma.utility.StringConstants;
  */
 public class IndivRankingsSet implements IXMLExport {
 
-
-    public void setRoundIndex(int index)
-    {
+    public void setRoundIndex(int index) {
         mRanking.setRoundIndex(index);
 
         if (mRankingForCup != null) {
@@ -58,7 +56,7 @@ public class IndivRankingsSet implements IXMLExport {
             }
         }
     }
-    
+
     public void setRoundOnly(boolean roundOnly) {
 
         mRanking.setRoundOnly(roundOnly);
@@ -265,9 +263,18 @@ public class IndivRankingsSet implements IXMLExport {
             rankings.addContent(mRanking.getXMLElement());
         }
 
-        /**
-         * @TODO forCup & forPool
-         */
+        if (mRankingForCup != null) {
+            Element rankingForCup = mRankingForCup.getXMLElement();
+            rankingForCup.setName(StringConstants.CS_INDIV_RANKING_FOR_CUP);
+            rankings.addContent(rankingForCup);
+        }
+
+        if (mRankingForPool != null) {
+            Element mRankingForPool = this.mRankingForPool.getXMLElement();
+            mRankingForPool.setName(StringConstants.CS_INDIV_RANKING_FOR_POOL);
+            rankings.addContent(mRankingForPool);
+        }
+
         if (mAnnexPosRanking != null) {
             Set<Criterion> crits = mAnnexPosRanking.keySet();
             for (Criterion c : crits) {
@@ -377,11 +384,17 @@ public class IndivRankingsSet implements IXMLExport {
 
         }
 
-        /**
-         * @TODO forCup & forPool
-         */
-        
-        final Element child = e.getChild(StringConstants.CS_INDIV_RANKING);
+        Element child = e.getChild(StringConstants.CS_INDIV_RANKING_FOR_CUP);
+        if (child != null) {
+            mRankingForCup = new IndivRanking(child);
+        }
+
+        child = e.getChild(StringConstants.CS_INDIV_RANKING_FOR_POOL);
+        if (child != null) {
+            mRankingForPool = new IndivRanking(child);
+        }
+
+        child = e.getChild(StringConstants.CS_INDIV_RANKING);
         mRanking = new IndivRanking(child);
     }
 

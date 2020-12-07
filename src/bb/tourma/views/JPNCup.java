@@ -6,13 +6,10 @@ package bb.tourma.views;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import org.jfree.ui.tabbedui.VerticalLayout;
-import bb.tourma.data.Cup;
 import bb.tourma.data.CupRound;
 import bb.tourma.data.CupTable;
 import bb.tourma.data.Match;
@@ -70,8 +67,8 @@ public final class JPNCup extends javax.swing.JPanel {
 
         jpnCup.removeAll();
 
-        int nbTables = Tournament.getTournament().getCup().getTables().size();
-        int nbRounds=Tournament.getTournament().getCup().getRoundsCount();
+        /*int nbTables = Tournament.getTournament().getCup().getTables().size();
+        int nbRounds=Tournament.getTournament().getCup().getRoundsCount();*/
         
         jpnCup.setLayout(new BoxLayout(jpnCup,BoxLayout.Y_AXIS));
 
@@ -112,110 +109,6 @@ public final class JPNCup extends javax.swing.JPanel {
             jpnCup.add(jpnTab);
             jpnCup.add(new JSeparator(JSeparator.HORIZONTAL));
         }
-
-        final ArrayList<Round> rounds_with_cup = new ArrayList<>();
-
-        //final ArrayList<Round> rounds = Tournament.getTournament().getRounds();
-        /*boolean bLooserCup = false;
-
-            for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
-                Round round = Tournament.getTournament().getRound(i);
-                if (round.isCup()) {
-                    rounds_with_cup.add(round);
-                    if (Tournament.getTournament().getCup().getType()==Cup.ROUND_TYPE.LOOSER) {
-                        bLooserCup = true;
-                    }
-                }
-            }
-
-            jpnCup.removeAll();
-            final int max_width = rounds_with_cup.size() * 200;
-            int max_heigth = (int) Math.pow(2, rounds_with_cup.size()) * 150;
-            if (bLooserCup) {
-                max_heigth += max_heigth / 2;
-            }
-            jpnCup.setSize(max_width, max_heigth);
-
-            int nb_rounds=Tournament.getTournament().getCup().getRoundsCount();
-            final int max_nb_match =  (int) Math.pow(2, nb_rounds - 1);
-            final int base_high = 60;
-            final int total_high = 60 * max_nb_match;
-
-            int gap = 0;
-            int nb_looseMatch = 0;
-            int last_offset;
-            int offset = 0;
-            for (int i = 0; i < rounds_with_cup.size(); i++) {
-                final Round r = rounds_with_cup.get(i);
-                final int remaining_tour = nb_rounds - r.getCupTour() + 1;
-                int nb_match = (int) Math.pow(2, remaining_tour - 1) / 2;
-                if (nb_match == 0) {
-                    nb_match = 1;
-                }
-                final int last_gap = gap;
-                gap = total_high / nb_match;
-                last_offset = offset;
-                offset = (gap - base_high) / 2 + 5;
-                final int w = 175;
-                final int h = 50;
-                int x = i * 200 + 5;
-
-                //final Tournament tour = Tournament.getTournament();
-                for (int j = 0; j < nb_match; j++) {
-                    Match m;
-                    m = r.getMatch(j);
-
-                    final JPNMatch match = new JPNMatch(m, true);
-                    match.setSize(175, 50);
-                    //int y = j * gap + offset * 75 / 2 + 5;                
-                    final int y = j * gap + offset;
-                    jpnCup.add(match, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, w, h));
-
-                }
-
-                if (Tournament.getTournament().getCup().getType()==Cup.ROUND_TYPE.CLASSIC_THIRD) {
-                    Match m;
-                    m = r.getMatch(nb_match);
-
-                    final JPNMatch match = new JPNMatch(m, true);
-                    match.setSize(175, 50);
-                    //int y = j * gap + offset * 75 / 2 + 5;                
-                    final int y = (nb_match - 1) * gap + offset + 55;
-                    jpnCup.add(match, new org.netbeans.lib.awtextra.AbsoluteConstraints(x - 50, y, w, h));
-                    nb_match++;
-                }
-
-                if (Tournament.getTournament().getCup().getType()==Cup.ROUND_TYPE.LOOSER) {
-                    if (r.getCupTour() > 0) {
-                        nb_looseMatch = nb_looseMatch / 2 + nb_match;
-
-                        // Check the maximum round for looser cup 
-                        if (Math.round(Math.pow(2, i - 1) / 2) == rounds_with_cup.get(0).getMatchsCount()) {
-                            // We are at maximum looser cup round 
-                            nb_looseMatch = 1;
-                        }
-                        if (Math.pow(2, i - 1) / 2 > rounds_with_cup.get(0).getMatchsCount()) {
-                            // We are at maximum looser cup round 
-                            nb_looseMatch = 0;
-                        }
-
-                        int factor = 1;
-                        for (int j = nb_match; (j < nb_match + nb_looseMatch) && (j < r.getMatchsCount()); j++) {
-                            Match m;
-
-                            m = r.getMatch(j);
-
-                            final JPNMatch match = new JPNMatch(m, false);
-                            match.setSize(175, 50);
-                            final int y = (j - nb_match) * last_gap + last_offset + 30 + total_high;
-                            x = (i - 1) * 200 + 5;
-                            jpnCup.add(match, new org.netbeans.lib.awtextra.AbsoluteConstraints(x, y, w, h));
-
-                            // Draw line between the previous matches end this one
-                        }
-                    }
-                }
-            }*/
     }
     private static final Logger LOG = Logger.getLogger(JPNCup.class.getName());
 }

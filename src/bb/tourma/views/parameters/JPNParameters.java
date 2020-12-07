@@ -309,7 +309,7 @@ public final class JPNParameters extends javax.swing.JPanel {
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
 
-        mTournament.getParams().semTournamentOrga(jtfOrgas.getText() + evt.getKeyChar());
+        mTournament.getParams().setTournamentOrga(jtfOrgas.getText() + evt.getKeyChar());
 
     }//GEN-LAST:event_jtfOrgasKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
@@ -351,7 +351,7 @@ public final class JPNParameters extends javax.swing.JPanel {
 
     private void jtfOrgasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOrgasActionPerformed
 
-        mTournament.getParams().semTournamentOrga(jtfOrgas.getText());
+        mTournament.getParams().setTournamentOrga(jtfOrgas.getText());
 
     }//GEN-LAST:event_jtfOrgasActionPerformed
 

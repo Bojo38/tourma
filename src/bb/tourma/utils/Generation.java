@@ -1785,6 +1785,11 @@ public final class Generation {
             comps2.add(comps.get(nbPlayers - 2 * i - 2));
         }
 
+        if (nb_match == 1) {
+            comps2.add(comps.get(0));
+            comps2.add(comps.get(1));
+        }
+        
         // If Order is a category one, job already done.
         // If order is ranking, already done
         // If order is random

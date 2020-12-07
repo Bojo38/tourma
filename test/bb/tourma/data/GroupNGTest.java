@@ -9,6 +9,7 @@ import bb.tourma.data.Tournament;
 import bb.tourma.data.RosterType;
 import bb.tourma.data.Group;
 import bb.tourma.data.GroupPoints;
+import java.io.File;
 import org.jdom.Element;
 import org.testng.Assert;
 import static org.testng.Assert.assertEquals;
@@ -18,12 +19,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 /**
  *
  * @author WFMJ7631
  */
 public class GroupNGTest {
-    
+
     public GroupNGTest() {
     }
 
@@ -55,17 +57,16 @@ public class GroupNGTest {
         gp.setLossPoints(2);
         gp.setVictoryPoints(3);
         Group instance = new Group("Test2");
-        
+
         RosterType.addRosterName("abc");
         RosterType.addRosterName("def");
-        RosterType rt1=new RosterType("abc");
-        RosterType rt2=new RosterType("def");
+        RosterType rt1 = new RosterType("abc");
+        RosterType rt2 = new RosterType("def");
         RosterType.putRosterType("abc", rt1);
         RosterType.putRosterType("def", rt2);
         instance.addRoster(rt1);
         instance.addRoster(rt2);
-         
-        
+
         instance.setOpponentModificationPoints(g, gp);
 
         Element result = instance.getXMLElement();
@@ -81,23 +82,22 @@ public class GroupNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-      Group g = new Group("Test");
+        Group g = new Group("Test");
         GroupPoints gp = new GroupPoints();
         gp.setDrawPoints(1);
         gp.setLossPoints(2);
         gp.setVictoryPoints(3);
         Group instance = new Group("Test2");
-        
+
         RosterType.addRosterName("abc");
         RosterType.addRosterName("def");
-        RosterType rt1=new RosterType("abc");
-        RosterType rt2=new RosterType("def");
+        RosterType rt1 = new RosterType("abc");
+        RosterType rt2 = new RosterType("def");
         RosterType.putRosterType("abc", rt1);
         RosterType.putRosterType("def", rt2);
         instance.addRoster(rt1);
         instance.addRoster(rt2);
-         
-        
+
         instance.setOpponentModificationPoints(g, gp);
 
         Element result = instance.getXMLElement();
@@ -113,9 +113,9 @@ public class GroupNGTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        Group instance=new Group("Test");
+        Group instance = new Group("Test");
         instance.setName("Test2");
-        assertEquals(instance.getName(),"Test2");
+        assertEquals(instance.getName(), "Test2");
     }
 
     /**
@@ -124,9 +124,9 @@ public class GroupNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        Group instance=new Group("Test");
+        Group instance = new Group("Test");
         instance.setName("Test2");
-        assertEquals(instance.getName(),"Test2");
+        assertEquals(instance.getName(), "Test2");
     }
 
     /**
@@ -135,11 +135,11 @@ public class GroupNGTest {
     @Test
     public void testGetRoster() {
         System.out.println("getRoster");
-       Group instance=new Group("Test");
-        RosterType rt=new RosterType("abc");
-        assertEquals(instance.getRoster(0),null);
+        Group instance = new Group("Test");
+        RosterType rt = new RosterType("abc");
+        assertEquals(instance.getRoster(0), null);
         instance.addRoster(rt);
-        assertEquals(instance.getRoster(0),rt);
+        assertEquals(instance.getRoster(0), rt);
     }
 
     /**
@@ -148,12 +148,12 @@ public class GroupNGTest {
     @Test
     public void testGetRosterCount() {
         System.out.println("getRosterCount");
-       Group instance=new Group("Test");
-        RosterType rt=new RosterType("abc");
+        Group instance = new Group("Test");
+        RosterType rt = new RosterType("abc");
         instance.addRoster(rt);
-        assertEquals(instance.getRosterCount(),1);
+        assertEquals(instance.getRosterCount(), 1);
         instance.removeRoster(rt);
-        assertEquals(instance.getRosterCount(),0);
+        assertEquals(instance.getRosterCount(), 0);
     }
 
     /**
@@ -162,12 +162,12 @@ public class GroupNGTest {
     @Test
     public void testAddRoster() {
         System.out.println("addRoster");
-       Group instance=new Group("Test");
-        RosterType rt=new RosterType("abc");
+        Group instance = new Group("Test");
+        RosterType rt = new RosterType("abc");
         instance.addRoster(rt);
-        assertEquals(instance.getRosterCount(),1);
+        assertEquals(instance.getRosterCount(), 1);
         instance.removeRoster(rt);
-        assertEquals(instance.getRosterCount(),0);
+        assertEquals(instance.getRosterCount(), 0);
     }
 
     /**
@@ -176,12 +176,12 @@ public class GroupNGTest {
     @Test
     public void testRemoveRoster() {
         System.out.println("removeRoster");
-        Group instance=new Group("Test");
-        RosterType rt=new RosterType("abc");
+        Group instance = new Group("Test");
+        RosterType rt = new RosterType("abc");
         instance.addRoster(rt);
-        assertEquals(instance.getRosterCount(),1);
+        assertEquals(instance.getRosterCount(), 1);
         instance.removeRoster(rt);
-        assertEquals(instance.getRosterCount(),0);
+        assertEquals(instance.getRosterCount(), 0);
     }
 
     /**
@@ -190,12 +190,12 @@ public class GroupNGTest {
     @Test
     public void testNewRosters() {
         System.out.println("newRosters");
-        Group instance=new Group("Test");
-        RosterType rt=new RosterType("abc");
+        Group instance = new Group("Test");
+        RosterType rt = new RosterType("abc");
         instance.addRoster(rt);
-        assertEquals(instance.getRosterCount(),1);
+        assertEquals(instance.getRosterCount(), 1);
         instance.newRosters();
-        assertEquals(instance.getRosterCount(),0);
+        assertEquals(instance.getRosterCount(), 0);
     }
 
     /**
@@ -210,21 +210,21 @@ public class GroupNGTest {
         gp.setLossPoints(2);
         gp.setVictoryPoints(3);
         Group instance = new Group("Test2");
-        
+
         RosterType.addRosterName("abc");
         RosterType.addRosterName("def");
-        RosterType rt1=new RosterType("abc");
-        RosterType rt2=new RosterType("def");
+        RosterType rt1 = new RosterType("abc");
+        RosterType rt2 = new RosterType("def");
         RosterType.putRosterType("abc", rt1);
         RosterType.putRosterType("def", rt2);
         instance.addRoster(rt1);
         instance.addRoster(rt2);
-         
+
         Tournament.getTournament().addGroup(g);
         Tournament.getTournament().addGroup(instance);
-        
+
         instance.setOpponentModificationPoints(g, gp);
-        
+
         Element result1 = instance.getXMLElement();
         Element result2 = instance.getXMLElementForPoints();
 
@@ -232,7 +232,7 @@ public class GroupNGTest {
         g2.setXMLElement(result1);
         g2.setXMLElementForPoints(result2);
         assertEquals(instance, g2);
-        
+
         Tournament.getTournament().removeGroup(g);
         Tournament.getTournament().removeGroup(instance);
     }
@@ -243,27 +243,27 @@ public class GroupNGTest {
     @Test
     public void testSetXMLElementForPoints() {
         System.out.println("setXMLElementForPoints");
-       Group g = new Group("Test");
+        Group g = new Group("Test");
         GroupPoints gp = new GroupPoints();
         gp.setDrawPoints(1);
         gp.setLossPoints(2);
         gp.setVictoryPoints(3);
         Group instance = new Group("Test2");
-        
+
         RosterType.addRosterName("abc");
         RosterType.addRosterName("def");
-        RosterType rt1=new RosterType("abc");
-        RosterType rt2=new RosterType("def");
+        RosterType rt1 = new RosterType("abc");
+        RosterType rt2 = new RosterType("def");
         RosterType.putRosterType("abc", rt1);
         RosterType.putRosterType("def", rt2);
         instance.addRoster(rt1);
         instance.addRoster(rt2);
-         
+
         Tournament.getTournament().addGroup(g);
         Tournament.getTournament().addGroup(instance);
-        
+
         instance.setOpponentModificationPoints(g, gp);
-        
+
         Element result1 = instance.getXMLElement();
         Element result2 = instance.getXMLElementForPoints();
 
@@ -271,7 +271,7 @@ public class GroupNGTest {
         g2.setXMLElement(result1);
         g2.setXMLElementForPoints(result2);
         assertEquals(instance, g2);
-        
+
         Tournament.getTournament().removeGroup(g);
         Tournament.getTournament().removeGroup(instance);
     }
@@ -282,7 +282,7 @@ public class GroupNGTest {
     @Test
     public void testGetOpponentModificationPoints() {
         System.out.println("getOpponentModificationPoints");
-         Group g = new Group("Test");
+        Group g = new Group("Test");
         GroupPoints gp = new GroupPoints();
         gp.setDrawPoints(1);
         gp.setLossPoints(2);
@@ -290,7 +290,7 @@ public class GroupNGTest {
         Group instance = new Group("Test2");
         instance.setOpponentModificationPoints(g, gp);
 
-        GroupPoints result=instance.getOpponentModificationPoints(g);
+        GroupPoints result = instance.getOpponentModificationPoints(g);
         assertEquals(result.getDrawPoints(), 1);
         assertEquals(result.getLossPoints(), 2);
         assertEquals(result.getVictoryPoints(), 3);
@@ -310,11 +310,11 @@ public class GroupNGTest {
         Group instance = new Group("Test2");
         instance.setOpponentModificationPoints(g, gp);
 
-        GroupPoints result=instance.getOpponentModificationPoints(g);
+        GroupPoints result = instance.getOpponentModificationPoints(g);
         assertEquals(result.getDrawPoints(), 1);
         assertEquals(result.getLossPoints(), 2);
         assertEquals(result.getVictoryPoints(), 3);
-        
+
     }
 
     /**
@@ -331,15 +331,15 @@ public class GroupNGTest {
         Group instance = new Group("Test2");
         instance.setOpponentModificationPoints(g, gp);
 
-        GroupPoints result=instance.getOpponentModificationPoints(g);
+        GroupPoints result = instance.getOpponentModificationPoints(g);
         assertEquals(result.getDrawPoints(), 1);
         assertEquals(result.getLossPoints(), 2);
         assertEquals(result.getVictoryPoints(), 3);
-        
+
         instance.delOpponentModificationPoints(g);
-        result=instance.getOpponentModificationPoints(g);
+        result = instance.getOpponentModificationPoints(g);
         Assert.assertNull(result);
-        
+
     }
 
     /**
@@ -348,8 +348,8 @@ public class GroupNGTest {
     @Test
     public void testContainsRoster() {
         System.out.println("containsRoster");
-         Group instance=new Group("Test");
-        RosterType rt=new RosterType("abc");
+        Group instance = new Group("Test");
+        RosterType rt = new RosterType("abc");
         Assert.assertFalse(instance.containsRoster(rt));
         instance.addRoster(rt);
         Assert.assertTrue(instance.containsRoster(rt));
@@ -361,12 +361,12 @@ public class GroupNGTest {
     @Test
     public void testGetUID() {
         System.out.println("getUID");
-        Group instance = null;
-        int expResult = 0;
-        int result = instance.getUID();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int UID = 50;
+        Group instance = new Group("Test");
+        instance.setUID(UID);
+
+        assertEquals(instance.getUID(), UID);
+
     }
 
     /**
@@ -375,11 +375,11 @@ public class GroupNGTest {
     @Test
     public void testSetUID() {
         System.out.println("setUID");
-        int UID = 0;
-        Group instance = null;
+        int UID = 50;
+        Group instance = new Group("Test");
         instance.setUID(UID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(instance.getUID(), UID);
     }
 
     /**
@@ -390,9 +390,7 @@ public class GroupNGTest {
         System.out.println("pull");
         Group group = null;
         Group instance = null;
-        instance.pull(group);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //instance.pull(group);
     }
 
     /**
@@ -403,9 +401,8 @@ public class GroupNGTest {
         System.out.println("pullOpponentGroupModifierPoints");
         Group group = null;
         Group instance = null;
-        instance.pullOpponentGroupModifierPoints(group);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //instance.pullOpponentGroupModifierPoints(group);
+ 
     }
 
     /**
@@ -414,13 +411,14 @@ public class GroupNGTest {
     @Test
     public void testEquals() {
         System.out.println("equals");
-        Object obj = null;
-        Group instance = null;
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Group instance = Tournament.getTournament().getGroup(0);
+        
+        Element e=instance.getXMLElement();
+        Group g=new Group("Test");
+        g.setXMLElement(e);
+        
+        assertEquals(g.equals(instance), true);
     }
 
     /**
@@ -429,12 +427,11 @@ public class GroupNGTest {
     @Test
     public void testGetPoints() {
         System.out.println("getPoints");
-        Group instance = null;
+        Group instance = new Group("Test");
         int expResult = 0;
         int result = instance.getPoints();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -443,11 +440,13 @@ public class GroupNGTest {
     @Test
     public void testSetPoints() {
         System.out.println("setPoints");
-        int _points = 0;
-        Group instance = null;
+        int _points = 250;
+        Group instance = new Group("Test");
         instance.setPoints(_points);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        int expResult = 250;
+        int result = instance.getPoints();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -456,13 +455,19 @@ public class GroupNGTest {
     @Test
     public void testIsMember() {
         System.out.println("isMember");
-        Coach c = null;
-        Group instance = null;
+        
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+        
+        Coach c = Tournament.getTournament().getCoach(1);
+        Group instance = Tournament.getTournament().getGroup(0);
         boolean expResult = false;
         boolean result = instance.isMember(c);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        instance = Tournament.getTournament().getGroup(1);
+        expResult = true;
+        result = instance.isMember(c);
+        assertEquals(result, expResult);
     }
-    
+
 }

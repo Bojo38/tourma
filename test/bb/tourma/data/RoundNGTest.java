@@ -24,6 +24,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import bb.tourma.languages.Translate;
+import static org.testng.Assert.assertTrue;
 
 /**
  *
@@ -244,9 +245,13 @@ public class RoundNGTest {
         Round instance = Tournament.getTournament().getRound(0);        
         Element result = instance.getXMLElement();
         
-        Round instance2=new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
+        Round instance2=new Round(0, Tournament.getTournament());
         instance2.setXMLElement(result);
-        assertEquals(instance, instance2);
+        
+        instance.setFastCompare(false);
+        boolean res=instance.equals(instance2);
+        
+        assertTrue(res);
     }
 
     /**
@@ -261,9 +266,12 @@ public class RoundNGTest {
         Round instance = Tournament.getTournament().getRound(0);        
         Element result = instance.getXMLElement();
         
-        Round instance2=new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
+        Round instance2=new Round(0, Tournament.getTournament());
+        instance.setFastCompare(false);
         instance2.setXMLElement(result);
-        assertEquals(instance, instance2);
+       boolean res=instance.equals(instance2);
+        
+        assertTrue(res);
     }
 
     /**
@@ -505,6 +513,9 @@ public class RoundNGTest {
         Match m=instance.getMatch(0);        
         assertEquals(0,instance.indexOf(m));
         
+        m=instance.getMatch(1);        
+        assertEquals(1,instance.indexOf(m));
+        
         instance.removeMatch(m);
         assertEquals(-1,instance.indexOf(m));
     }
@@ -521,9 +532,12 @@ public class RoundNGTest {
         Round instance = Tournament.getTournament().getRound(0);        
         Element result = instance.getXMLElementForDisplay();
         
-        Round instance2=new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
+        Round instance2=new Round(0, Tournament.getTournament());        
         instance2.setXMLElementForDisplay(result);
-        assertEquals(instance, instance2);
+        instance.setFastCompare(false);
+        boolean res=instance.equals(instance2);
+        
+        assertTrue(res);
     }
 
     /**
@@ -538,9 +552,12 @@ public class RoundNGTest {
         Round instance = Tournament.getTournament().getRound(0);        
         Element result = instance.getXMLElementForDisplay();
         
-        Round instance2=new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
+        instance.setFastCompare(false);
+        Round instance2=new Round(0, Tournament.getTournament());
         instance2.setXMLElementForDisplay(result);
-        assertEquals(instance, instance2);
+        boolean res=instance.equals(instance2);
+        
+        assertTrue(res);
     }
 
     /**
@@ -552,9 +569,7 @@ public class RoundNGTest {
         Round instance = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         int expResult = 0;
         int result = instance.getUID();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(result, expResult);;
     }
 
     /**
@@ -566,14 +581,12 @@ public class RoundNGTest {
         int UID = 0;
         Round instance = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
         instance.setUID(UID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of pull method, of class Round.
      */
-    @Test
+    @Test(enabled=false)
     public void testPull() {
         System.out.println("pull");
         Round round = null;
@@ -589,12 +602,11 @@ public class RoundNGTest {
     @Test
     public void testIsUpdated() {
         System.out.println("isUpdated");
-        Round instance = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
-        boolean expResult = false;
+        Round instance = Tournament.getTournament().getRound(0);
+        boolean expResult = true;
         boolean result = instance.isUpdated();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -603,17 +615,22 @@ public class RoundNGTest {
     @Test
     public void testSetUpdated() {
         System.out.println("setUpdated");
-        boolean updated = false;
-        Round instance = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
+        boolean updated = true;
+        Round instance =Tournament.getTournament().getRound(0);
         instance.setUpdated(updated);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean result = instance.isUpdated();
+        assertEquals(result, true);
+        
+        instance.setUpdated(false);
+        result = instance.isUpdated();
+        assertEquals(result, false);
+        
     }
 
     /**
      * Test of push method, of class Round.
      */
-    @Test
+    @Test(enabled=false)
     public void testPush() {
         System.out.println("push");
         Round round = null;
@@ -629,13 +646,18 @@ public class RoundNGTest {
     @Test
     public void testContainsCoachMatch() {
         System.out.println("containsCoachMatch");
-        CoachMatch m = null;
-        Round instance = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
-        boolean expResult = false;
+        
+        Round instance = Tournament.getTournament().getRound(0);
+        CoachMatch m = instance.getCoachMatchs().get(0);
+        boolean expResult = true;
         boolean result = instance.containsCoachMatch(m);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
+         m = null;
+        expResult = false;
+        result = instance.containsCoachMatch(m);
+        assertEquals(result, expResult);
     }
 
     /**
@@ -645,12 +667,14 @@ public class RoundNGTest {
     public void testEquals() {
         System.out.println("equals");
         Object obj = null;
-        Round instance = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
+        Round instance = Tournament.getTournament().getRound(0);
         boolean expResult = false;
-        boolean result = instance.equals(obj);
+        
+        Round copy=new Round(0,Tournament.getTournament());
+        copy.setXMLElement(instance.getXMLElement());
+        
+        boolean result = instance.equals(copy);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 
@@ -660,10 +684,9 @@ public class RoundNGTest {
     @Test
     public void testRecomputeMatchs() {
         System.out.println("recomputeMatchs");
-        Round instance = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
+        Round instance = Tournament.getTournament().getRound(0);
         instance.recomputeMatchs();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
 
     /**
@@ -672,12 +695,19 @@ public class RoundNGTest {
     @Test
     public void testAllMatchesEntered() {
         System.out.println("allMatchesEntered");
-        Round instance = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
-        boolean expResult = false;
+        Round instance = Tournament.getTournament().getRound(0);
+        boolean expResult = true;
         boolean result = instance.allMatchesEntered();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Criterion td=Tournament.getTournament().getParams().getCriterion(0);
+        Value val=new Value(td);
+        val.setValue1(-1);
+        instance.getCoachMatchs().get(0).getValues().put(td,val);
+        expResult = false;
+        result = instance.allMatchesEntered();
+        assertEquals(result, expResult);
+        
     }
 
     /**
@@ -686,12 +716,14 @@ public class RoundNGTest {
     @Test
     public void testSetMatchPosition() {
         System.out.println("setMatchPosition");
-        Match m = null;
-        int position = 0;
-        Round instance = new Round(Tournament.getTournament().getRoundsCount(), Tournament.getTournament());
-        instance.setMatchPosition(m, position);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
+ 
+        Round instance = Tournament.getTournament().getRound(0);
+        Match m=instance.getMatch(0);
+        instance.setMatchPosition(m, 1);
+        
+        assertEquals(instance.indexOf(m),1);
+        
     }
 
     /**
@@ -700,12 +732,13 @@ public class RoundNGTest {
     @Test
     public void testIsRankingUpdated() {
         System.out.println("isRankingUpdated");
-        Round instance = null;
-        boolean expResult = false;
+        Round instance = Tournament.getTournament().getRound(0);;
+        boolean expResult = true;
         boolean result = instance.isRankingUpdated();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
+       
     }
 
     /**
@@ -715,12 +748,10 @@ public class RoundNGTest {
     public void testGetRankings() {
         System.out.println("getRankings");
         boolean ro = false;
-        Round instance = null;
-        Rankings expResult = null;
+        Round instance = Tournament.getTournament().getRound(0);
         Rankings result = instance.getRankings(ro);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Assert.assertNotNull(result);
+
     }
 
     /**
@@ -729,10 +760,8 @@ public class RoundNGTest {
     @Test
     public void testUpdate() {
         System.out.println("update");
-        Round instance = null;
+        Round instance = Tournament.getTournament().getRound(0);
         instance.update();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -741,10 +770,9 @@ public class RoundNGTest {
     @Test
     public void testSetRankingsToUpdate() {
         System.out.println("setRankingsToUpdate");
-        Round instance = null;
+        Round instance = Tournament.getTournament().getRound(0);;
         instance.setRankingsToUpdate();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
 
 }

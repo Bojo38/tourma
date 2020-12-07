@@ -5,15 +5,15 @@
  */
 package bb.tourma.data;
 
+import bb.tourma.data.exceptions.FormulaValidityException;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
-import javax.swing.JOptionPane;
 import org.jdom.Element;
 import bb.tourma.utility.Pair;
 import bb.tourma.utility.StringConstants;
+
 
 /**
  *
@@ -48,7 +48,7 @@ public class Formula implements IXMLExport, Serializable {
         return _formula;
     }
 
-    public void setFormula(String _formula) {
+    public void setFormula(String _formula) throws FormulaValidityException {
         if (isValid(_formula)) {
             this._formula = _formula;
         }
@@ -91,14 +91,13 @@ public class Formula implements IXMLExport, Serializable {
             this.setFormula(formula.getAttributeValue(StringConstants.CS_FORMULA));
             this.setName(formula.getAttributeValue(StringConstants.CS_NAME));
 
-        } catch (NullPointerException npe) {
-            this.setFormula("0");
+        } catch (NullPointerException|FormulaValidityException npe) {
+            this._formula="0";
             this.setName("F");
-
         }
     }
 
-    public boolean isValid(String formula) {
+    public boolean isValid(String formula) throws FormulaValidityException {
         boolean valid = true;
 
         Stack<Object> npi = transformToNPI(formula);
@@ -142,12 +141,16 @@ public class Formula implements IXMLExport, Serializable {
                                 pair = new Pair<>(ext, c);
                                 npi_crit.add(pair);
                             } else {
-                                JOptionPane.showMessageDialog(null, "Variable " + variable + " not found among criteras' accronyms", "Error", JOptionPane.ERROR_MESSAGE);
-                                valid = false;
+                                FormulaValidityException fve = new FormulaValidityException("Variable " + variable + " not found among criteras' accronyms");
+                                throw fve;
+                                //JOptionPane.showMessageDialog(null, "Variable " + variable + " not found among criteras' accronyms", "Error", JOptionPane.ERROR_MESSAGE);
+                                //valid = false;
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Last Character of variable " + object + " is not 1 or 2", "Error", JOptionPane.ERROR_MESSAGE);
-                            valid = false;
+                            FormulaValidityException fve = new FormulaValidityException("Last Character of variable " + object + " is not 1 or 2");
+                            throw fve;
+                            //JOptionPane.showMessageDialog(null, "Last Character of variable " + object + " is not 1 or 2", "Error", JOptionPane.ERROR_MESSAGE);
+                            //valid = false;
                         }
                     }
                 }

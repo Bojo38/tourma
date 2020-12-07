@@ -98,7 +98,15 @@ public class Round implements IXMLExport, Serializable {
     Rankings mRankings = new Rankings(false);
     Rankings mRankingsRoundOnly = new Rankings(true);
 
-    
+    protected boolean mFastCompare=true;
+
+    public boolean isFastCompare() {
+        return mFastCompare;
+    }
+
+    public void setFastCompare(boolean mFastCompare) {
+        this.mFastCompare = mFastCompare;
+    }
     /**
      * Default constructor
      */
@@ -284,7 +292,7 @@ public class Round implements IXMLExport, Serializable {
                 }
             }
         }
-        return 0;
+        return -1;
     }
 
     /**
@@ -761,7 +769,10 @@ public class Round implements IXMLExport, Serializable {
                 for (int i = 0; i < this.mMatchs.size(); i++) {
                     Match m = mMatchs.get(i);
                     Match mr = r.mMatchs.get(i);
+                    boolean tmp=m.isFastCompare();
+                    m.setFastCompare(mFastCompare);
                     result &= m.equals(mr);
+                    m.setFastCompare(tmp);
 
                 }
             }

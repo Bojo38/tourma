@@ -22,6 +22,7 @@ import bb.tourma.data.Tournament;
 import bb.tourma.data.Value;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
+import bb.tourma.data.exceptions.FormulaValidityException;
 
 /**
  *
@@ -116,15 +117,26 @@ public class MjtFormulas extends AbstractTableModel implements TableCellRenderer
                         f.setName(tmp);
                         break;
                     case 1:
-                        if (f.isValid(tmp)) {
-                            f.setFormula(tmp);
-                            for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
-                                Round round = Tournament.getTournament().getRound(i);
-                                for (int j = 0; j < round.getMatchsCount(); j++) {
-                                    Match match = round.getMatch(j);
-                                    if (match instanceof TeamMatch) {
-                                        for (int k = 0; k < ((TeamMatch) match).getMatchCount(); k++) {
-                                            CoachMatch cm = ((TeamMatch) match).getMatch(k);
+                        try {
+                            if (f.isValid(tmp)) {
+                                f.setFormula(tmp);
+                                for (int i = 0; i < Tournament.getTournament().getRoundsCount(); i++) {
+                                    Round round = Tournament.getTournament().getRound(i);
+                                    for (int j = 0; j < round.getMatchsCount(); j++) {
+                                        Match match = round.getMatch(j);
+                                        if (match instanceof TeamMatch) {
+                                            for (int k = 0; k < ((TeamMatch) match).getMatchCount(); k++) {
+                                                CoachMatch cm = ((TeamMatch) match).getMatch(k);
+                                                for (int l = 0; l < Tournament.getTournament().getParams().getFormulaCount(); l++) {
+                                                    Formula formula = Tournament.getTournament().getParams().getFormula(l);
+                                                    Value v = cm.getValue(formula);
+                                                    v.setValue1(formula.evaluate(cm.getValues(), 1));
+                                                    v.setValue2(formula.evaluate(cm.getValues(), 2));
+                                                }
+                                            }
+                                        }
+                                        if (match instanceof CoachMatch) {
+                                            CoachMatch cm = (CoachMatch) match;
                                             for (int l = 0; l < Tournament.getTournament().getParams().getFormulaCount(); l++) {
                                                 Formula formula = Tournament.getTournament().getParams().getFormula(l);
                                                 Value v = cm.getValue(formula);
@@ -133,17 +145,10 @@ public class MjtFormulas extends AbstractTableModel implements TableCellRenderer
                                             }
                                         }
                                     }
-                                    if (match instanceof CoachMatch) {
-                                        CoachMatch cm = (CoachMatch) match;
-                                        for (int l = 0; l < Tournament.getTournament().getParams().getFormulaCount(); l++) {
-                                            Formula formula = Tournament.getTournament().getParams().getFormula(l);
-                                            Value v = cm.getValue(formula);
-                                            v.setValue1(formula.evaluate(cm.getValues(), 1));
-                                            v.setValue2(formula.evaluate(cm.getValues(), 2));
-                                        }
-                                    }
                                 }
                             }
+                        } catch (FormulaValidityException fve) {
+                            JOptionPane.showMessageDialog(null, fve.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                         }
                         break;
                     default:

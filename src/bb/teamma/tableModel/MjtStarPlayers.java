@@ -4,6 +4,7 @@
  */
 package bb.teamma.tableModel;
 
+import bb.teamma.data.LRB;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -28,14 +29,15 @@ public class MjtStarPlayers extends AbstractTableModel implements TableCellRende
      *
      */
     ArrayList<StarPlayer> mPlayers;
+    LRB.E_Version _version;
 
     /**
      *
      * @param roster
      */
-    public MjtStarPlayers(ArrayList<StarPlayer> players) {
-        mPlayers=players;
-
+    public MjtStarPlayers(ArrayList<StarPlayer> players, LRB.E_Version version) {
+        mPlayers = players;
+        _version = version;
     }
 
     /**
@@ -44,7 +46,12 @@ public class MjtStarPlayers extends AbstractTableModel implements TableCellRende
      */
     @Override
     public int getColumnCount() {
-        return 8;
+
+        if (_version == LRB.E_Version.BB2020) {
+            return 9;
+        } else {
+            return 8;
+        }
     }
 
     /**
@@ -56,15 +63,15 @@ public class MjtStarPlayers extends AbstractTableModel implements TableCellRende
         return mPlayers.size();
     }
 
-     private final static String CS_Limit = "Limit";
+    private final static String CS_Limit = "Limit";
     private final static String CS_Position = "Position";
     private final static String CS_M = "M";
     private final static String CS_S = "S";
     private final static String CS_Ag = "Ag";
+    private final static String CS_P = "CP";
     private final static String CS_Ar = "Ar";
     private final static String CS_Skills = "Skills";
     private final static String CS_BaseCost = "Base Cost";
-    
 
     /**
      *
@@ -75,7 +82,7 @@ public class MjtStarPlayers extends AbstractTableModel implements TableCellRende
     public String getColumnName(int col) {
         switch (col) {
             case 0:
-                 return Translate.translate(bb.tourma.languages.Translate.CS_Name);
+                return Translate.translate(bb.tourma.languages.Translate.CS_Name);
             case 1:
                 return Translate.translate(CS_Position);
             case 2:
@@ -85,10 +92,24 @@ public class MjtStarPlayers extends AbstractTableModel implements TableCellRende
             case 4:
                 return Translate.translate(CS_Ag);
             case 5:
-                return Translate.translate(CS_Ar);
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_P);
+                } else {
+                    return Translate.translate(CS_Ar);
+                }
             case 6:
-                return Translate.translate(CS_Skills);
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_Ar);
+                } else {
+                    return Translate.translate(CS_Skills);
+                }
             case 7:
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_Skills);
+                } else {
+                    return Translate.translate(CS_BaseCost);
+                }
+            case 8:
                 return Translate.translate(CS_BaseCost);
         }
         return "";
@@ -121,32 +142,60 @@ public class MjtStarPlayers extends AbstractTableModel implements TableCellRende
                 case 4:
                     return pt.getAgility();
                 case 5:
-                    return pt.getArmor();
+                    if (_version == LRB.E_Version.BB2020) {
+                        return pt.getPass();
+                    } else {
+                        return pt.getArmor();
+                    }
                 case 6:
-                    /**
-                     * Build Skill string in HTML Begin by player type then
-                     * additional
-                     */
-                    ArrayList<String> skills = new ArrayList<>();
-                    for (i = 0; i < pt.getSkillCount(); i++) {
-                        Skill s = pt.getSkill(i);
-                        skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
-                    }
-                   
-
-                    for (i = 0; i < skills.size(); i++) {
-                        tmpstring.append(skills.get(i));
-                        if (i != skills.size() - 1) {
-                            tmpstring.append(", ");
+                    if (_version == LRB.E_Version.BB2020) {
+                        return pt.getArmor();
+                    } else {
+                        /**
+                         * Build Skill string in HTML Begin by player type then
+                         * additional
+                         */
+                        ArrayList<String> skills = new ArrayList<>();
+                        for (i = 0; i < pt.getSkillCount(); i++) {
+                            Skill s = pt.getSkill(i);
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
                         }
+
+                        for (i = 0; i < skills.size(); i++) {
+                            tmpstring.append(skills.get(i));
+                            if (i != skills.size() - 1) {
+                                tmpstring.append(", ");
+                            }
+                        }
+                        return (tmpstring.toString());
                     }
-                    return (tmpstring.toString());
-               
                 case 7:
-                    /**
-                     * Base Cost
-                     */
-                    return pt.getCost();                
+                    if (_version == LRB.E_Version.BB2020) {
+                        /**
+                         * Build Skill string in HTML Begin by player type then
+                         * additional
+                         */
+                        ArrayList<String> skills = new ArrayList<>();
+                        for (i = 0; i < pt.getSkillCount(); i++) {
+                            Skill s = pt.getSkill(i);
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                        }
+
+                        for (i = 0; i < skills.size(); i++) {
+                            tmpstring.append(skills.get(i));
+                            if (i != skills.size() - 1) {
+                                tmpstring.append(", ");
+                            }
+                        }
+                        return (tmpstring.toString());
+                    } else {
+                        /**
+                         * Base Cost
+                         */
+                        return pt.getCost();
+                    }
+                case 8:
+                    return pt.getCost();
             }
         }
         return "";

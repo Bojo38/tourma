@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>OgreKey</name>
+    <reroll>70000</reroll>
+    <apothecary>true</apothecary>
+    <max_big_guy>6</max_big_guy>
+    <inducements>
+        <inducement name="chef" max="1" cost="300000" />
+        <inducement name="bribe the ref" max="3" cost="100000" />
+        <inducement name="Bloodweisers' babes" max="2" cost="50000" />
+        <inducement name="wizard" max="1" cost="150000" />
+        <inducement name="extra reroll" max="4" cost="100000" />
+        <inducement name="local apothecary" max="1" cost="100000" />
+        <inducement name="cards" max="8" cost="50000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="halfling hot pot" max="1" cost="60000" />
+        <inducement name="riotous rookies" max="1" cost="100000" />
+        <inducement name="bottles of heady brew" max="3" cost="40000" />
+        <inducement name="firebelly" max="1" cost="150000" />
+        <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
+        <inducement name="Fink da Fixer" max="1" cost="50000" />
+        <inducement name="Joseph Bugman" max="1" cost="70000" />
+    </inducements>
+    <playertypes>               
+         <playerType>
+            <limit>5</limit>
+            <position>Ogre Blocker</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>4</agility>
+            <pass>5</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Bone Head</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Thick Skull</skill>
+                <skill>Throw Team-Mate</skill>
+                 <skill>Big Guy</skill>
+            </skills>
+            <cost>140000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Ogre Runt Punter</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>4</agility>
+            <pass>4</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Bone Head</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Thick Skull</skill>
+                <skill>Kick Team-Mate</skill>
+                 <skill>Big Guy</skill>
+            </skills>
+            <cost>145000</cost>
+            <single>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType> 
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>16</limit>
+            <position>Gnoblar Lineman</position>
+            <movement>5</movement>
+            <strength>1</strength>
+            <agility>3</agility>
+             <pass>5</pass>
+            <armor>6</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Right Stuff</skill>
+                <skill>Stunty</skill>
+                <skill>Titchy</skill>
+                <skill>Side Step</skill>
+            </skills>
+            <cost>15000</cost>
+            <single>
+                <skillType>Agility</skillType>                
+            </single>
+            <double>
+                <skillType>General</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

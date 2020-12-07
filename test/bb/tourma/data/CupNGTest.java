@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class CupNGTest {
-    
+
     public CupNGTest() {
     }
 
@@ -48,12 +48,10 @@ public class CupNGTest {
     @Test
     public void testGetTables() {
         System.out.println("getTables");
-        Cup instance = new Cup();
-        ArrayList expResult = null;
+        Cup instance = Tournament.getTournament().getCup();
+
         ArrayList result = instance.getTables();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -62,11 +60,11 @@ public class CupNGTest {
     @Test
     public void testCleanRound() {
         System.out.println("cleanRound");
-        Round r = null;
-        Cup instance = new Cup();
+        Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
+        Round r = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
+        Cup instance = Tournament.getTournament().getCup();
+
         instance.cleanRound(r);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -75,12 +73,11 @@ public class CupNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        Cup instance = new Cup();
-        Element expResult = null;
+        Cup instance = Tournament.getTournament().getCup();
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Cup cup = new Cup();
+        cup.setXMLElement(result);
+        //assertEquals(instance, cup);
     }
 
     /**
@@ -89,11 +86,11 @@ public class CupNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element cup = null;
-        Cup instance = new Cup();
-        instance.setXMLElement(cup);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Cup instance = Tournament.getTournament().getCup();
+        Element result = instance.getXMLElement();
+        Cup cup = new Cup();
+        cup.setXMLElement(result);
+        //assertEquals(instance, cup);
     }
 
     /**
@@ -102,12 +99,10 @@ public class CupNGTest {
     @Test
     public void testGetInitialDraw() {
         System.out.println("getInitialDraw");
-        Cup instance = new Cup();
-        Cup.INITIAL_DRAW expResult = null;
+        Cup instance = Tournament.getTournament().getCup();
+        Cup.INITIAL_DRAW expResult = Cup.INITIAL_DRAW.RANDOM;
         Cup.INITIAL_DRAW result = instance.getInitialDraw();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -116,11 +111,13 @@ public class CupNGTest {
     @Test
     public void testSetInitialDraw() {
         System.out.println("setInitialDraw");
-        Cup.INITIAL_DRAW mInitialDraw = null;
-        Cup instance = new Cup();
-        instance.setInitialDraw(mInitialDraw);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Cup instance = Tournament.getTournament().getCup();
+        Cup.INITIAL_DRAW expResult = Cup.INITIAL_DRAW.RANDOM;
+        Cup.INITIAL_DRAW result = instance.getInitialDraw();
+        assertEquals(result, expResult);
+        instance.setInitialDraw(Cup.INITIAL_DRAW.RANKING);
+        result = instance.getInitialDraw();
+        assertEquals(result, Cup.INITIAL_DRAW.RANKING);
     }
 
     /**
@@ -129,12 +126,14 @@ public class CupNGTest {
     @Test
     public void testIsShuffle() {
         System.out.println("isShuffle");
-        Cup instance = new Cup();
-        boolean expResult = false;
+        Cup instance = Tournament.getTournament().getCup();
+        boolean expResult = true;
         boolean result = instance.isShuffle();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance.setShuffle(false);
+        result = instance.isShuffle();
+        assertEquals(result, false);
     }
 
     /**
@@ -143,11 +142,16 @@ public class CupNGTest {
     @Test
     public void testSetShuffle() {
         System.out.println("setShuffle");
-        boolean mShuffle = false;
-        Cup instance = new Cup();
-        instance.setShuffle(mShuffle);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
+
+        Cup instance = Tournament.getTournament().getCup();
+        boolean expResult = true;
+        boolean result = instance.isShuffle();
+        assertEquals(result, expResult);
+
+        instance.setShuffle(false);
+        result = instance.isShuffle();
+        assertEquals(result, false);
     }
 
     /**
@@ -156,12 +160,16 @@ public class CupNGTest {
     @Test
     public void testGetType() {
         System.out.println("getType");
-        Cup instance = new Cup();
-        Cup.ROUND_TYPE expResult = null;
+        Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
+
+        Cup instance = Tournament.getTournament().getCup();
+        Cup.ROUND_TYPE expResult = Cup.ROUND_TYPE.LOOSER;
         Cup.ROUND_TYPE result = instance.getType();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance.setType(Cup.ROUND_TYPE.CLASSIC);
+        result = instance.getType();
+        assertEquals(result, Cup.ROUND_TYPE.CLASSIC);
     }
 
     /**
@@ -170,11 +178,15 @@ public class CupNGTest {
     @Test
     public void testSetType() {
         System.out.println("setType");
-        Cup.ROUND_TYPE mType = null;
-        Cup instance = new Cup();
-        instance.setType(mType);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
+        Cup instance = Tournament.getTournament().getCup();
+        Cup.ROUND_TYPE expResult = Cup.ROUND_TYPE.LOOSER;
+        Cup.ROUND_TYPE result = instance.getType();
+        assertEquals(result, expResult);
+
+        instance.setType(Cup.ROUND_TYPE.CLASSIC);
+        result = instance.getType();
+        assertEquals(result, Cup.ROUND_TYPE.CLASSIC);
     }
 
     /**
@@ -183,12 +195,13 @@ public class CupNGTest {
     @Test
     public void testGetRoundsCount() {
         System.out.println("getRoundsCount");
-        Cup instance = new Cup();
-        int expResult = 0;
+        Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
+        Cup instance = Tournament.getTournament().getCup();
+
+        int expResult = 3;
         int result = instance.getRoundsCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -197,11 +210,16 @@ public class CupNGTest {
     @Test
     public void testSetRoundsCount() {
         System.out.println("setRoundsCount");
-        int mRoundsCount = 0;
-        Cup instance = new Cup();
-        instance.setRoundsCount(mRoundsCount);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
+        Cup instance = Tournament.getTournament().getCup();
+
+        int expResult = 3;
+        int result = instance.getRoundsCount();
+        assertEquals(result, expResult);
+
+        instance.setRoundsCount(4);
+        result = instance.getRoundsCount();
+        assertEquals(result, 4);
     }
 
     /**
@@ -211,11 +229,13 @@ public class CupNGTest {
     public void testIsSwissForLoosers() {
         System.out.println("isSwissForLoosers");
         Cup instance = new Cup();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.isSwissForLoosers();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        instance.setSwissForLoosers(false);
+        result = instance.isSwissForLoosers();
+        assertEquals(result, false);
     }
 
     /**
@@ -224,11 +244,14 @@ public class CupNGTest {
     @Test
     public void testSetSwissForLoosers() {
         System.out.println("setSwissForLoosers");
-        boolean mSwissForLoosers = false;
         Cup instance = new Cup();
-        instance.setSwissForLoosers(mSwissForLoosers);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        boolean expResult = true;
+        boolean result = instance.isSwissForLoosers();
+        assertEquals(result, expResult);
+
+        instance.setSwissForLoosers(false);
+        result = instance.isSwissForLoosers();
+        assertEquals(result, false);
     }
 
     /**
@@ -237,16 +260,29 @@ public class CupNGTest {
     @Test
     public void testGenerateMatches() {
         System.out.println("generateMatches");
+        Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
+        Cup instance = Tournament.getTournament().getCup();
+
         int roundIndex = 0;
-        Round r = null;
-        ArrayList<Match> previousRoundMatches = null;
-        ArrayList<Competitor> competitors = null;
-        Cup instance = new Cup();
-        ArrayList expResult = null;
+        ArrayList<Match> previousRoundMatches = new ArrayList<>();
+        ArrayList<Competitor> competitors = new ArrayList<>();
+        ArrayList<Coach> coaches = Tournament.getTournament().getCoachs();
+        for (int i = 0; i < 4; i++) {
+            competitors.add(coaches.get(i));
+        }
+        Round r = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1);
+        for (int i = 0; i < 4; i++) {
+            competitors.add(coaches.get(i));
+        }
+        roundIndex = r.getCupTour();
+        Round r1 = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 2);
+        for (CoachMatch cm : r1.getCoachMatchs()) {
+
+            previousRoundMatches.add(cm);
+
+        }
         ArrayList result = instance.generateMatches(roundIndex, r, previousRoundMatches, competitors);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //assertEquals(result, expResult);
     }
-    
+
 }

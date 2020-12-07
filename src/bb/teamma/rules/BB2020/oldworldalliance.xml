@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>OldWorldAllianceKey</name>
+    <reroll>70000</reroll>
+    <apothecary>true</apothecary>
+    <max_big_guy>1</max_big_guy>
+    <inducements>
+        <inducement name="chef" max="1" cost="300000" />
+        <inducement name="bribe the ref" max="3" cost="100000" />
+        <inducement name="Bloodweisers' babes" max="2" cost="50000" />
+        <inducement name="wizard" max="1" cost="150000" />
+        <inducement name="extra reroll" max="4" cost="100000" />
+        <inducement name="local apothecary" max="1" cost="100000" />
+        <inducement name="cards" max="8" cost="50000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
+        <inducement name="Kari Coldsteal" max="1" cost="50000" />
+    </inducements>   
+    
+    <playertypes>               
+        <playerType>
+            <limit>12</limit>
+            <position>Old World Human Lineman</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>9</armor>
+            <skills>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>           
+            </single>
+            <double>
+                <skillType>Strength</skillType>    
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Old World Human Thrower</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>3</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Sure Hands</skill>
+                <skill>Pass</skill>
+                <skill>Animosity (Dwarves, Halflings)</skill>
+            </skills>
+            <cost>80000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Old World Human Catcher</position>
+            <movement>8</movement>
+            <strength>2</strength>
+            <agility>3</agility>
+            <pass>5</pass>
+            <armor>8</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Catch</skill>
+                <skill>Animosity (Dwarves, Halflings)</skill>
+            </skills>
+            <cost>65000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Old World Human Blitzer</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Animosity (Dwarves, Halflings)</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>2</limit>
+            <position>Old World Dwarf Blocker</position>
+            <movement>4</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <pass>5</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Brawler</skill>
+                <skill>Loner (3+)</skill>
+                <skill>Arm Bar</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>75000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Old World Dwarf Runner</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Sure Hands</skill>
+                <skill>Loner (3+)</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>85000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Old World Dwarf Blitzer</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Loner (3+)</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>80000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Old World Troll Slayer</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+             <pass>-1</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Loner (3+)</skill>
+                <skill>Thick Skull</skill>
+                <skill>Frenzy</skill>
+                <skill>Dauntless</skill>
+            </skills>
+            <cost>95000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>2</limit>
+            <position>Old World Halfling Hopeful</position>
+            <movement>5</movement>
+            <strength>2</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>7</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Stunty</skill>
+                <skill>Right Stuff</skill>
+                 <skill>Animosity (Dwarves, Humans)</skill>
+            </skills>
+            <cost>30000</cost>
+            <single>
+                <skillType>Agility</skillType> 
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Ogre</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>4</agility>
+            <pass>5</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Loner (4+)</skill>
+                <skill>Bone Head</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Thick Skull</skill>
+                <skill>Throw Team-Mate</skill>
+                <skill>Big Guy</skill>
+            </skills>
+            <cost>140000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Altern Forest Treeman</position>
+            <movement>2</movement>
+            <strength>6</strength>
+            <agility>5</agility>
+            <pass>5</pass>
+            <armor>11</armor>
+            <skills>
+                <skill>Take Roots</skill>
+                <skill>Stand Firm</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Thick Skull</skill>
+                <skill>Strong Arm</skill>
+                <skill>Throw Team-Mate</skill>
+                <skill>Timm-Ber!</skill>
+                <skill>Big Guy</skill>
+            </skills>
+            <cost>120000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

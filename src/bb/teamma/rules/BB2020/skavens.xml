@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>SkavenKey</name>
+    <reroll>50000</reroll>
+    <apothecary>true</apothecary>
+    <max_big_guy>1</max_big_guy>
+    <inducements>
+        <inducement name="chef" max="1" cost="300000" />
+        <inducement name="bribe the ref" max="3" cost="100000" />
+        <inducement name="Bloodweisers' babes" max="2" cost="50000" />
+        <inducement name="wizard" max="1" cost="150000" />
+        <inducement name="extra reroll" max="4" cost="100000" />
+        <inducement name="local apothecary" max="1" cost="100000" />
+        <inducement name="cards" max="8" cost="50000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
+        <inducement name="Krot Shockwhisker" max="1" cost="80000" />
+    </inducements>
+    <playertypes>               
+        <playerType>
+            <limit>2</limit>
+            <position>Blitzer</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>5</pass>
+            <armor>9</armor>
+            <skills>                
+                <skill>Block</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Mutation</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>2</limit>
+            <position>Thrower</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>2</pass>
+            <armor>8</armor>
+            <skills>
+                <skill>Sure Hands</skill>
+                <skill>Pass</skill>
+            </skills>
+            <cost>85000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Strength</skillType>
+                <skillType>Mutation</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>4</limit>
+            <position>Gutter Runner</position>
+            <movement>9</movement>
+            <strength>2</strength>
+            <agility>2</agility>
+            <pass>4</pass>
+            <armor>8</armor>
+            <skills>
+                <skill>Dodge</skill>
+            </skills>
+            <cost>85000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Mutation</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>16</limit>
+            <position>Skaven Clanrat Lineman</position>
+            <movement>7</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+             <pass>4</pass>
+            <armor>8</armor>
+            <skills>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Mutation</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Rat Ogre</position>
+            <movement>6</movement>
+            <strength>5</strength>
+            <agility>4</agility>
+             <pass>-1</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Loner (4+)</skill>
+                <skill>Animal Savagery</skill>
+                <skill>Prehensile Tail</skill>
+                <skill>Frenzy</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Big Guy</skill>
+            </skills>
+            <cost>150000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+                <skillType>Mutation</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>OrcKey</name>
+    <reroll>60000</reroll>
+    <max_big_guy>1</max_big_guy>
+    <apothecary>true</apothecary>
+    <inducements>
+        <inducement name="chef" max="1" cost="300000" />
+        <inducement name="bribe the ref" max="3" cost="100000" />
+        <inducement name="Bloodweisers' babes" max="2" cost="50000" />
+        <inducement name="wizard" max="1" cost="150000" />
+        <inducement name="extra reroll" max="4" cost="100000" />
+        <inducement name="local apothecary" max="1" cost="100000" />
+        <inducement name="cards" max="8" cost="50000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
+        <inducement name="Fink da Fixer" max="1" cost="50000" />
+    </inducements>
+    <playertypes>               
+        <playerType>
+            <limit>4</limit>
+            <position>Blitzer</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>4</pass>           
+            <armor>10</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Animosity (All)</skill>
+            </skills>
+            <cost>80000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Pass</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>4</limit>
+            <position>Big Un Blocker</position>
+            <movement>5</movement>
+            <strength>4</strength>
+            <agility>4</agility>
+             <pass>-1</pass>           
+            <armor>10</armor>
+            <skills>
+                <skill>Animosity (Big Un Blockers)</skill>
+            </skills>
+            <cost>90000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>                
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>4</limit>
+            <position>Goblin</position>
+            <movement>6</movement>
+            <strength>2</strength>
+            <agility>3</agility>
+            <pass>4</pass>           
+            <armor>8</armor>
+            <skills>
+                <skill>Dodge</skill>
+                <skill>Stunty</skill>
+                <skill>Right Stuff</skill>
+            </skills>
+            <cost>40000</cost>
+            <single>               
+                <skillType>Agility</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>16</limit>
+            <position>Orc Lineman</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+             <pass>4</pass>           
+            <armor>10</armor>
+            <skills>
+                <skill>Animosity (Orc Linemen)</skill>
+            </skills>
+            <cost>50000</cost>
+            <single>
+                <skillType>General</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>2</limit>
+            <position>Thrower</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>3</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Sure Hands</skill>
+                <skill>Pass</skill>
+                <skill>Animosity (All)</skill>
+            </skills>
+            <cost>65000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>                
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>1</limit>
+            <position>Untrained Troll</position>
+            <movement>4</movement>
+            <strength>5</strength>
+            <agility>5</agility>
+            <pass>5</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Loner (4+)</skill>
+                <skill>Really Stupid</skill>
+                <skill>Always Hungry</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Regeneration</skill>
+                <skill>Throw Team-Mate</skill>
+                <skill>Projectile Vomit</skill>
+            </skills>
+            <cost>115000</cost>
+            <single>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

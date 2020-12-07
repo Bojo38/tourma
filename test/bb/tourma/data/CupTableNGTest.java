@@ -5,6 +5,7 @@
  */
 package bb.tourma.data;
 
+import java.io.File;
 import java.util.ArrayList;
 import org.jdom.Element;
 import static org.testng.Assert.*;
@@ -19,8 +20,9 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class CupTableNGTest {
-    
+
     public CupTableNGTest() {
+        Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
     }
 
     @BeforeClass
@@ -45,12 +47,9 @@ public class CupTableNGTest {
     @Test
     public void testGetCupRounds() {
         System.out.println("getCupRounds");
-        CupTable instance = null;
-        ArrayList expResult = null;
+        CupTable instance = Tournament.getTournament().getCup().getTables().get(0);
         ArrayList result = instance.getCupRounds();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -59,11 +58,12 @@ public class CupTableNGTest {
     @Test
     public void testSetCupRounds() {
         System.out.println("setCupRounds");
-        ArrayList<CupRound> mCupRounds = null;
-        CupTable instance = null;
+        CupTable instance = Tournament.getTournament().getCup().getTables().get(0);
+        ArrayList result = instance.getCupRounds();
+        ArrayList<CupRound> mCupRounds = new ArrayList<>();
         instance.setCupRounds(mCupRounds);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        result = instance.getCupRounds();
+        assertEquals(result, mCupRounds);
     }
 
     /**
@@ -72,12 +72,11 @@ public class CupTableNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        CupTable instance = null;
-        Element expResult = null;
+        CupTable instance = Tournament.getTournament().getCup().getTables().get(0);
         Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      
+        CupTable ct=new CupTable(instance.getCupRounds().size(), false, false);
+        ct.setXMLElement(result);
     }
 
     /**
@@ -86,11 +85,11 @@ public class CupTableNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        CupTable instance = null;
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        CupTable instance = Tournament.getTournament().getCup().getTables().get(0);
+        Element result = instance.getXMLElement();
+      
+        CupTable ct=new CupTable(instance.getCupRounds().size(), false, false);
+        ct.setXMLElement(result);
     }
-    
+
 }

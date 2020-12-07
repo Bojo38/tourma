@@ -49,8 +49,7 @@ public class IXMLExportNGTest {
         Element expResult = null;
         Element result = instance.getXMLElement();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+      
     }
 
     /**
@@ -62,8 +61,7 @@ public class IXMLExportNGTest {
         Element e = null;
         IXMLExport instance = new IXMLExportImpl();
         instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
 
     public class IXMLExportImpl implements IXMLExport {

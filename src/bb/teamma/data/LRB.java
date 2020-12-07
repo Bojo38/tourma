@@ -22,9 +22,9 @@ import bb.teamma.languages.Translate;
  * @author WFMJ7631
  */
 public final class LRB {
-
+    
     public enum E_Version {
-        LRB1, LRB2, LRB3, LRB4, LRB5, LRB6, CRP1, BB2016
+        LRB1, LRB2, LRB3, LRB4, LRB5, LRB6, CRP1, BB2016, BB2020
     };
     /**
      *
@@ -37,39 +37,37 @@ public final class LRB {
     private static LRB _lrb6 = null;
     private static LRB _naf2017 = null;
     private static LRB _crp1 = null;
+    private static LRB _bb2020 = null;
     /**
      *
      */
     private static final Object myLock = new Object();
     private static final Logger LOG = Logger.getLogger(LRB.class.getName());
-
-    private E_Version _version = E_Version.BB2016;
-
+    
+    private E_Version _version = E_Version.BB2020;
+    
     public E_Version getVersion() {
         return _version;
     }
-
+    
     public boolean isStarplayers_enabled() {
         return _starplayers_enabled;
     }
-
+    
     public void setStarplayers_enabled(boolean starplayers_enabled) {
         _starplayers_enabled = starplayers_enabled;
     }
-
     
-   
-
     private boolean _starplayers_enabled = true;
     private boolean _check_nb_big_guys = false;
-
+    
     private int _min_ff = 0;
     private int _max_ff = 18;
-
+    
     public boolean isCheckNbBigGuys() {
         return _check_nb_big_guys;
     }
-
+    
     public void setCheckNbBigGuys(boolean check_nb_big_guys) {
         _check_nb_big_guys = check_nb_big_guys;
     }
@@ -121,7 +119,11 @@ public final class LRB {
                         _naf2017 = new LRB(version);
                     }
                     return _naf2017;
-
+                case BB2020:
+                    if (_bb2020 == null) {
+                        _bb2020 = new LRB(version);
+                    }
+                    return _bb2020;
             }
         }
         return null;
@@ -182,6 +184,9 @@ public final class LRB {
             case BB2016:
                 path = "BB2016";
                 break;
+            case BB2020:
+                path = "BB2020";
+                break;
         }
 
         /* URL url;
@@ -194,7 +199,7 @@ public final class LRB {
             LOG.severe(e.getLocalizedMessage());
         }
     }
-
+    
     private final static String CS_Name = "name";
     private final static String CS_Skills = "skills";
     private final static String CS_Teams = "teams";
@@ -208,7 +213,7 @@ public final class LRB {
     private final static String CS_Wizard = "wizard";
     private final static String CS_Cards = "cards";
     private final static String CS_Check_nb_big_guys = "check_nb_big_guys";
-
+    
     private final static String CS_ChaosWizard = "chaos_wizard";
     private final static String CS_KariColdstell = "kari_coldstell";
     private final static String CS_FinkDaFixer = "fink_da_fixer";
@@ -239,19 +244,19 @@ public final class LRB {
              */
             try {
                 Element e_inducements = racine.getChild(CS_Inducements);
-
+                
                 Element e_starplayers = e_inducements.getChild(CS_Starplayers);
                 _starplayers_enabled = e_starplayers.getText().equals("yes");
-
+                
                 try {
                     Element e_checkBG = racine.getChild(CS_Check_nb_big_guys);
                     _check_nb_big_guys = e_checkBG.getText().equals("yes");
                 } catch (Exception e) {
-
+                    
                 }
-
+                
             } catch (Exception exception) {
-
+                
             }
 
             /*
@@ -259,21 +264,22 @@ public final class LRB {
              */
             Element e_skillfile = racine.getChild(CS_Skills);
             String skillfile = e_skillfile.getValue();
-
+            
             LOG.log(Level.FINE, "loading {0} file", skillfile);
             filename = "/bb/teamma/rules/" + path + "/" + skillfile;
             loadSkills(getClass().getResourceAsStream("/bb/teamma/rules/" + path + "/" + skillfile));
-
+            
             Element e_teams = racine.getChild(CS_Teams);
             List<Element> l_teams = e_teams.getChildren(CS_Team);
             Iterator<Element> cr = l_teams.iterator();
             this.clearRosterTypes();
-
+            
             while (cr.hasNext()) {
                 Element e_team = cr.next();
                 String teamfile = e_team.getValue();
                 String imagename = e_team.getAttribute(CS_Picture).getValue();
                 filename = "/bb/teamma/rules/" + path + "/" + teamfile;
+                LOG.info("Loading team: " + teamfile);
                 loadTeam(getClass().getResourceAsStream("/bb/teamma/rules/" + path + "/" + teamfile), imagename);
             }
             /*
@@ -283,12 +289,12 @@ public final class LRB {
             String starfile = e_starfile.getValue();
             filename = "/bb/teamma/rules/" + path + "/" + starfile;
             loadStarPlayers(getClass().getResourceAsStream("/bb/teamma/rules/" + path + "/" + starfile));
-
+            
         } catch (JDOMException | IOException jdomexception) {
             JOptionPane.showMessageDialog(null, "Loading " + filename + " " + jdomexception.getLocalizedMessage());
         }
     }
-
+    
     private final static String CS_Category = "category";
     private final static String CS_Accronym = "accronym";
     private final static String CS_Special = "special";
@@ -303,27 +309,27 @@ public final class LRB {
             SAXBuilder sxb = new SAXBuilder();
             org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
-
+            
             List<Element> l_categories = racine.getChildren(CS_Category);
             Iterator<Element> cr = l_categories.iterator();
             clearSkillTypes();
-
+            
             while (cr.hasNext()) {
                 Element e_skillType = cr.next();
-
+                
                 Element e_name = e_skillType.getChild(CS_Name);
                 String st_name = e_name.getValue();
-
+                
                 Element e_accro = e_skillType.getChild(CS_Accronym);
                 String st_accro = e_accro.getValue();
-
+                
                 SkillType st = new SkillType(st_name, st_accro);
-
+                
                 Element e_special = e_skillType.getChild(CS_Special);
                 st.setSpecial(Boolean.parseBoolean(e_special.getValue()));
                 List<Element> l_skills = e_skillType.getChildren(CS_Skill);
                 Iterator<Element> i = l_skills.iterator();
-
+                
                 while (i.hasNext()) {
                     Element e_skill = i.next();
                     Skill s = new Skill(e_skill.getValue(), st);
@@ -331,12 +337,12 @@ public final class LRB {
                 }
                 addSkillType(st);
             }
-
+            
         } catch (JDOMException | IOException jdomexception) {
             JOptionPane.showMessageDialog(null, "Skills: " + jdomexception.getLocalizedMessage());
         }
     }
-
+    
     private final static String CS_Reroll = "reroll";
     private final static String CS_Apothecary = "apothecary";
     private final static String CS_MaxBigGuys = "max_big_guy";
@@ -348,6 +354,7 @@ public final class LRB {
     private final static String CS_Position = "position";
     private final static String CS_Limit = "limit";
     private final static String CS_Movement = "movement";
+    private final static String CS_Pass = "pass";
     private final static String CS_Strength = "strength";
     private final static String CS_Agility = "agility";
     private final static String CS_Armor = "armor";
@@ -357,7 +364,7 @@ public final class LRB {
     private final static String CS_Single = "single";
     private final static String CS_SkillType = "skillType";
     private final static String CS_Double = "double";
-
+    
     private final static String CS_SkillNotFound = "SkillNotFound";
     private final static String CS_SkillTypeNotFound = "SkillTypeNotFound";
     private final static String CS_RosterTypeNotFound = "RosterTypeNotFound";
@@ -373,32 +380,32 @@ public final class LRB {
             SAXBuilder sxb = new SAXBuilder();
             org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
-
+            
             Element e_name = racine.getChild(CS_Name);
-
+            
             String n = Translate.translate(e_name.getValue());
-
+            
             RosterType rt = new RosterType(n);
             rt.setImage(image);
             Element e_reroll_cost = racine.getChild(CS_Reroll);
             rt.setReroll_cost(Integer.parseInt(e_reroll_cost.getValue()));
-
+            
             Element e_apo = racine.getChild(CS_Apothecary);
             rt.setApothecary(Boolean.parseBoolean(e_apo.getValue()));
-
+            
             try {
                 Element e_max_big_guy = racine.getChild(CS_MaxBigGuys);
                 rt.setMaxBigGuys(Integer.parseInt(e_max_big_guy.getValue()));
             } catch (Exception e) {
-
+                
             }
-
+            
             Element e_inducements = racine.getChild(CS_Inducements);
             if (e_inducements != null) {
                 List<Element> l_inducType = e_inducements.getChildren(CS_Inducement);
                 Iterator<Element> cr = l_inducType.iterator();
                 rt.clearInducementType();
-
+                
                 while (cr.hasNext()) {
                     InducementType it = new InducementType();
                     Element e_it = cr.next();
@@ -408,21 +415,28 @@ public final class LRB {
                     rt.addInducementType(it);
                 }
             }
-
+            
             Element e_playerType = racine.getChild(CS_PlayerTypes);
             List<Element> l_players = e_playerType.getChildren(CS_PlayerType);
             Iterator<Element> cr = l_players.iterator();
             rt.clearPlayerType();
-
+            
             while (cr.hasNext()) {
                 Element e_player = cr.next();
-
+                
                 Element e_position = e_player.getChild(CS_Position);
                 PlayerType pt = new PlayerType(e_position.getValue());
+                LOG.info("Loding player: " + pt.getPosition());
                 Element e_limit = e_player.getChild(CS_Limit);
                 pt.setLimit(Integer.parseInt(e_limit.getValue()));
                 Element e_movement = e_player.getChild(CS_Movement);
                 pt.setMovement(Integer.parseInt(e_movement.getValue()));
+                try {
+                    Element e_pass = e_player.getChild(CS_Pass);
+                    pt.setPass(Integer.parseInt(e_pass.getValue()));
+                } catch (Exception e) {
+                    pt.setPass(-1);
+                }
                 Element e_strength = e_player.getChild(CS_Strength);
                 pt.setStrength(Integer.parseInt(e_strength.getValue()));
                 Element e_agility = e_player.getChild(CS_Agility);
@@ -431,7 +445,7 @@ public final class LRB {
                 pt.setArmor(Integer.parseInt(e_armor.getValue()));
                 Element e_cost = e_player.getChild(CS_Cost);
                 pt.setCost(Integer.parseInt(e_cost.getValue()));
-
+                
                 Element e_skills = e_player.getChild(CS_Skills);
                 List<Element> l_skills = e_skills.getChildren(CS_Skill);
                 Iterator<Element> i = l_skills.iterator();
@@ -444,7 +458,7 @@ public final class LRB {
                         pt.addSkill(s);
                     }
                 }
-
+                
                 Element e_single = e_player.getChild(CS_Single);
                 List<Element> l_singleskilltypes = e_single.getChildren(CS_SkillType);
                 Iterator<Element> j = l_singleskilltypes.iterator();
@@ -457,7 +471,7 @@ public final class LRB {
                         pt.addSingle(st);
                     }
                 }
-
+                
                 Element e_double = e_player.getChild(CS_Double);
                 List<Element> l_doubleskilltypes = e_double.getChildren(CS_SkillType);
                 j = l_doubleskilltypes.iterator();
@@ -478,7 +492,7 @@ public final class LRB {
             JOptionPane.showMessageDialog(null, "Team: from file " + file.toString() + " " + jdomexception.getLocalizedMessage());
         }
     }
-
+    
     private final static String CS_Starplayer = "starplayer";
 
     /**
@@ -490,30 +504,37 @@ public final class LRB {
             SAXBuilder sxb = new SAXBuilder();
             org.jdom.Document document = sxb.build(file);
             Element racine = document.getRootElement();
-
+            
             clearStarPlayers();
-
+            
             List<Element> stars = racine.getChildren(CS_Starplayer);
             Iterator<Element> j = stars.iterator();
             while (j.hasNext()) {
                 Element e_star = j.next();
-
+                
                 Element e_name = e_star.getChild(CS_Name);
                 StarPlayer sp = new StarPlayer(e_name.getValue());
-
+                
+                LOG.info("Loading StarPlayer: " + sp.getName());
+                
                 sp.setPosition(e_star.getChild(CS_Position).getValue());
                 sp.setMovement(Integer.parseInt(e_star.getChild(CS_Movement).getValue()));
                 sp.setStrength(Integer.parseInt(e_star.getChild(CS_Strength).getValue()));
                 sp.setAgility(Integer.parseInt(e_star.getChild(CS_Agility).getValue()));
+                try {
+                    sp.setPass(Integer.parseInt(e_star.getChild(CS_Pass).getValue()));
+                } catch (NullPointerException npe) {
+                    sp.setPass(-1);
+                }
                 sp.setArmor(Integer.parseInt(e_star.getChild(CS_Armor).getValue()));
                 sp.setCost(Integer.parseInt(e_star.getChild(CS_Cost).getValue()));
-
+                
                 try {
                     sp.setPair_name(e_star.getChild(CS_Pair_With).getValue());
                 } catch (Exception e) {
-
+                    
                 }
-
+                
                 List<Element> skilllist = e_star.getChild(CS_Skills).getChildren(CS_Skill);
                 Iterator<Element> i = skilllist.iterator();
                 while (i.hasNext()) {
@@ -525,7 +546,7 @@ public final class LRB {
                         sp.addSkill(s);
                     }
                 }
-
+                
                 List<Element> rosterlist = e_star.getChildren(CS_Team);
                 i = rosterlist.iterator();
                 while (i.hasNext()) {
@@ -541,7 +562,7 @@ public final class LRB {
                         rt.addAvailableStarPlayer(sp);
                     }
                 }
-
+                
                 addStarPlayer(sp);
             }
 
@@ -560,7 +581,7 @@ public final class LRB {
                     }
                 }
             }
-
+            
         } catch (JDOMException | IOException jdomexception) {
             JOptionPane.showMessageDialog(null, "Star players: " + jdomexception.getLocalizedMessage());
         }
@@ -600,11 +621,11 @@ public final class LRB {
         int i;
         for (i = 0; i < getSkillTypeCount(); i++) {
             SkillType st = getSkillType(i);
-
+            
             if (name.equals(st.getName())) {
                 return st;
             }
-
+            
         }
         return null;
     }
@@ -645,7 +666,7 @@ public final class LRB {
         int i;
         for (i = 0; i < getStarPlayerCount(); i++) {
             StarPlayer rt = getStarPlayer(i);
-
+            
             if (name.equals(rt.getName())) {
                 return rt;
             }
@@ -667,7 +688,7 @@ public final class LRB {
                 res.add(getRosterType(i).getName());
             }
         }
-
+        
         return res;
     }
 
@@ -678,7 +699,7 @@ public final class LRB {
     public RosterType getRosterType(int i) {
         return _rosterTypes.get(i);
     }
-
+    
     public RosterType getRosterType(String name) {
         for (RosterType rt : _rosterTypes) {
             if (rt.getName().equals(name)) {
@@ -804,5 +825,5 @@ public final class LRB {
         LRB._lrb6 = null;
         LRB._naf2017 = null;
     }
-
+    
 }

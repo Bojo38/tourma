@@ -32,6 +32,7 @@ public class PlayerType implements Serializable{
      * 
      */
     private int _agility;
+    private int _pass;
     /**
      * 
      */
@@ -98,6 +99,13 @@ public class PlayerType implements Serializable{
      */
     public int getAgility() {
         return _agility;
+    }
+    
+    /**
+     * @return the _agility
+     */
+    public int getPass() {
+        return _pass;
     }
 
     /**
@@ -253,6 +261,14 @@ public class PlayerType implements Serializable{
         this._agility = _agility;
     }
 
+    /**
+     *
+     * @param _pass
+     */
+    public void setPass(int pass) {
+        this._pass = pass;
+    }
+    
     /**
      *
      * @param _armor

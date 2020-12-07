@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>DwarfKey</name>
+    <reroll>50000</reroll>
+    <apothecary>true</apothecary>
+    <max_big_guy>0</max_big_guy>
+    <inducements>
+        <inducement name="chef" max="1" cost="300000" />
+        <inducement name="bribe the ref" max="3" cost="100000" />
+        <inducement name="Bloodweisers' babes" max="2" cost="50000" />
+        <inducement name="wizard" max="1" cost="150000" />
+        <inducement name="extra reroll" max="4" cost="100000" />
+        <inducement name="local apothecary" max="1" cost="100000" />
+        <inducement name="cards" max="8" cost="50000" />
+        <inducement name="specialist assistant coaches" max="5" cost="20000" />
+        <inducement name="temp agency cheerleaders" max="5" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="Horatio X Schottenheim" max="1" cost="80000" />
+        <inducement name="Kari Coldsteal" max="1" cost="50000" />
+        <inducement name="Joseph Bugman" max="1" cost="70000" />
+    </inducements>  
+    
+    
+    <playertypes>               
+        <playerType>
+            <limit>2</limit>
+            <position>Troll Slayer</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+            <pass>-1</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Dauntless</skill>
+                <skill>Block</skill>
+                <skill>Frenzy</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>95000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>2</limit>
+            <position>Blitzer</position>
+            <movement>5</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+             <pass>4</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>80000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Pass</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>2</limit>
+            <position>Runner</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>9</armor>
+            <skills>
+                <skill>Sure Hands</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>85000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Pass</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+        <playerType>
+            <limit>12</limit>
+            <position>Blocker</position>
+            <movement>4</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+             <pass>5</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Tackle</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>1</limit>
+            <position>Deathroller</position>
+            <movement>4</movement>
+            <strength>7</strength>
+            <agility>5</agility>
+            <pass>-1</pass>
+            <armor>11</armor>
+            <skills>
+                <skill>Loner (5+)</skill>
+                <skill>Secret Weapon</skill>
+                <skill>No Hand</skill>
+                <skill>Mighty Blow (+1)</skill>
+                <skill>Break Tackle</skill>
+                <skill>Dirty Player (+2)</skill>
+                <skill>Juggernaut</skill>
+                <skill>Stand Firm</skill>
+            </skills>
+            <cost>170000</cost>
+            <single>                
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+

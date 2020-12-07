@@ -31,9 +31,9 @@ import org.testng.annotations.Test;
  *
  * @author WFMJ7631
  */
-public class ATeamRankingsSetNGTest {
+public class TeamRankingsSetNGTest {
 
-    public ATeamRankingsSetNGTest() {
+    public TeamRankingsSetNGTest() {
     }
 
     @BeforeClass

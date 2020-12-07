@@ -31,13 +31,15 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
      *
      */
     private final Roster _roster;
+    private LRB.E_Version _version;
 
     /**
      *
      * @param roster
      */
-    public MjtTeamPlayers(Roster roster) {
+    public MjtTeamPlayers(Roster roster, LRB.E_Version version) {
         _roster = roster;
+        _version = version;
 
     }
 
@@ -47,7 +49,11 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
      */
     @Override
     public int getColumnCount() {
-        return 12;
+        if (_version == LRB.E_Version.BB2020) {
+            return 13;
+        } else {
+            return 12;
+        }
     }
 
     /**
@@ -65,6 +71,8 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
     private final static String CS_S = "S";
     private final static String CS_Ag = "Ag";
     private final static String CS_Ar = "Ar";
+
+    private final static String CS_P = "CP";
     private final static String CS_Skills = "Skills";
     private final static String CS_SR = "SR";
     private final static String CS_DR = "DR";
@@ -92,16 +100,42 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
             case 5:
                 return Translate.translate(CS_Ag);
             case 6:
-                return Translate.translate(CS_Ar);
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_P);
+                } else {
+                    return Translate.translate(CS_Ar);
+                }
             case 7:
-                return Translate.translate(CS_Skills);
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_Ar);
+                } else {
+                    return Translate.translate(CS_Skills);
+                }
             case 8:
-                return Translate.translate(CS_SR);
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_Skills);
+                } else {
+                    return Translate.translate(CS_SR);
+                }
             case 9:
-                return Translate.translate(CS_DR);
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_SR);
+                } else {
+                    return Translate.translate(CS_DR);
+                }
             case 10:
-                return Translate.translate(CS_BaseCost);
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_DR);
+                } else {
+                    return Translate.translate(CS_BaseCost);
+                }
             case 11:
+                if (_version == LRB.E_Version.BB2020) {
+                    return Translate.translate(CS_BaseCost);
+                } else {
+                    return Translate.translate(CS_Cost);
+                }
+            case 12:
                 return Translate.translate(CS_Cost);
         }
         return "";
@@ -136,57 +170,168 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                 case 5:
                     return player.getAgility();
                 case 6:
-                    return player.getArmor();
+                    if (_version == LRB.E_Version.BB2020) {
+                        return player.getPass();
+                    } else {
+                        return player.getArmor();
+                    }
                 case 7:
-                    /**
-                     * Build Skill string in HTML Begin by player type then
-                     * additional
-                     */
-                    ArrayList<String> skills = new ArrayList<>();
-                    for (i = 0; i < player.getPlayertype().getSkillCount(); i++) {
-                        Skill s = player.getPlayertype().getSkill(i);
-                        skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
-                    }
-                    for (i = 0; i < player.getSkillCount(); i++) {
-                        Skill s = player.getSkill(i);
-                        //int rgb=s.mColor.getRGB();
-                        int rgb = s.getmColor().getRed() * 65536 + s.getmColor().getGreen() * 256 + s.getmColor().getBlue();
-                        skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getmName()) + "</I></FONT>");
-                    }
-
-                    for (i = 0; i < skills.size(); i++) {
-                        tmpstring.append(skills.get(i));
-                        if (i != skills.size() - 1) {
-                            tmpstring.append(", ");
+                    if (_version == LRB.E_Version.BB2020) {
+                        return player.getArmor();
+                    } else {
+                        /**
+                         * Build Skill string in HTML Begin by player type then
+                         * additional
+                         */
+                        ArrayList<String> skills = new ArrayList<>();
+                        for (i = 0; i < player.getPlayertype().getSkillCount(); i++) {
+                            Skill s = player.getPlayertype().getSkill(i);
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
                         }
+                        for (i = 0; i < player.getSkillCount(); i++) {
+                            Skill s = player.getSkill(i);
+                            //int rgb=s.mColor.getRGB();
+                            int rgb = s.getmColor().getRed() * 65536 + s.getmColor().getGreen() * 256 + s.getmColor().getBlue();
+                            skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getmName()) + "</I></FONT>");
+                        }
+
+                        for (i = 0; i < skills.size(); i++) {
+                            tmpstring.append(skills.get(i));
+                            if (i != skills.size() - 1) {
+                                tmpstring.append(", ");
+                            }
+                        }
+                        return (tmpstring.toString());
                     }
-                    return (tmpstring.toString());
                 case 8:
-                    /**
-                     * SR
-                     */
-                    StringBuilder sr = new StringBuilder(32);
-                    for (i = 0; i < player.getPlayertype().getSingleCount(); i++) {
-                        SkillType st = player.getPlayertype().getSingle(i);
-                        sr.append(Translate.translate(st.getAccronym()));
+                    if (_version == LRB.E_Version.BB2020) {
+                        /**
+                         * Build Skill string in HTML Begin by player type then
+                         * additional
+                         */
+                        ArrayList<String> skills = new ArrayList<>();
+                        for (i = 0; i < player.getPlayertype().getSkillCount(); i++) {
+                            Skill s = player.getPlayertype().getSkill(i);
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                        }
+                        for (i = 0; i < player.getSkillCount(); i++) {
+                            Skill s = player.getSkill(i);
+                            //int rgb=s.mColor.getRGB();
+                            int rgb = s.getmColor().getRed() * 65536 + s.getmColor().getGreen() * 256 + s.getmColor().getBlue();
+                            skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getmName()) + "</I></FONT>");
+                        }
+
+                        for (i = 0; i < skills.size(); i++) {
+                            tmpstring.append(skills.get(i));
+                            if (i != skills.size() - 1) {
+                                tmpstring.append(", ");
+                            }
+                        }
+                        return (tmpstring.toString());
+                    } else {
+                        /**
+                         * SR
+                         */
+                        StringBuilder sr = new StringBuilder(32);
+                        for (i = 0; i < player.getPlayertype().getSingleCount(); i++) {
+                            SkillType st = player.getPlayertype().getSingle(i);
+                            sr.append(Translate.translate(st.getAccronym()));
+                        }
+                        return sr.toString();
                     }
-                    return sr.toString();
                 case 9:
-                    /**
-                     * DR
-                     */
-                    StringBuilder dr = new StringBuilder(32);
-                    for (i = 0; i < player.getPlayertype().getDoubleCount(); i++) {
-                        SkillType st = player.getPlayertype().getDouble(i);
-                        dr.append(Translate.translate(st.getAccronym()));
+                    if (_version == LRB.E_Version.BB2020) {
+                        /**
+                         * SR
+                         */
+                        StringBuilder sr = new StringBuilder(32);
+                        for (i = 0; i < player.getPlayertype().getSingleCount(); i++) {
+                            SkillType st = player.getPlayertype().getSingle(i);
+                            sr.append(Translate.translate(st.getAccronym()));
+                        }
+                        return sr.toString();
+                    } else {
+                        /**
+                         * DR
+                         */
+                        StringBuilder dr = new StringBuilder(32);
+                        for (i = 0; i < player.getPlayertype().getDoubleCount(); i++) {
+                            SkillType st = player.getPlayertype().getDouble(i);
+                            dr.append(Translate.translate(st.getAccronym()));
+                        }
+                        return dr.toString();
                     }
-                    return dr.toString();
                 case 10:
-                    /**
-                     * Base Cost
-                     */
-                    return player.getPlayertype().getCost();
+                    if (_version == LRB.E_Version.BB2020) {
+                        /**
+                         * DR
+                         */
+                        StringBuilder dr = new StringBuilder(32);
+                        for (i = 0; i < player.getPlayertype().getDoubleCount(); i++) {
+                            SkillType st = player.getPlayertype().getDouble(i);
+                            dr.append(Translate.translate(st.getAccronym()));
+                        }
+                        return dr.toString();
+                    } else {
+                        /**
+                         * Base Cost
+                         */
+                        return player.getPlayertype().getCost();
+                    }
                 case 11:
+                    if (_version == LRB.E_Version.BB2020) {
+                        /**
+                         * Base Cost
+                         */
+                        return player.getPlayertype().getCost();
+                    } else {
+                        /**
+                         * Real Cost
+                         */
+                        int skillCost = 0;
+                        for (i = 0; i < player.getSkillCount(); i++) {
+                            int j;
+                            SkillType st = player.getSkill(i).getmCategory();
+
+                            /**
+                             * If Single Roll, add 20000
+                             */
+                            for (j = 0; j < player.getPlayertype().getSingleCount(); j++) {
+                                if (st.equals(player.getPlayertype().getSingle(j))) {
+                                    skillCost += 20000;
+                                }
+                            }
+                            /**
+                             * If Double Roll, add 30000
+                             */
+                            for (j = 0; j < player.getPlayertype().getDoubleCount(); j++) {
+                                if (st.equals(player.getPlayertype().getDouble(j))) {
+                                    skillCost += 30000;
+                                }
+                            }
+
+                            /*
+                         * If charactristics, it depends.
+                             */
+                            if (st.equals(LRB.getLRB(_roster.getRoster().getVersion()).getSkillType(CS_Characteristics))) {
+                                Skill s = player.getSkill(i);
+                                if (s.getmName().equals(Player.CS_Plus1Movement)) {
+                                    skillCost += 30000;
+                                }
+                                if (s.getmName().equals(Player.CS_Plus1Armor)) {
+                                    skillCost += 30000;
+                                }
+                                if (s.getmName().equals(Player.CS_Plus1Agility)) {
+                                    skillCost += 40000;
+                                }
+                                if (s.getmName().equals(Player.CS_Plus1Strength)) {
+                                    skillCost += 50000;
+                                }
+                            }
+                        }
+                        return skillCost + player.getPlayertype().getCost();
+                    }
+                case 12:
                     /**
                      * Real Cost
                      */

@@ -1850,7 +1850,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                     if (round.getCupTour() == 0) {
                         mTournament.setCup(null);
                     } else {
-                        mTournament.getCup().cleanRound(round);
+                        if (mTournament.getCup() != null) {
+                            mTournament.getCup().cleanRound(round);
+                        }
                     }
                 }
 
@@ -3088,7 +3090,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jcxIgnoreCapsActionPerformed
 
     private void jcxDisplayByPagesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxDisplayByPagesActionPerformed
-         Tournament.getTournament().getParams().setDisplayByPages(jcxDisplayByPages.isSelected());
+        Tournament.getTournament().getParams().setDisplayByPages(jcxDisplayByPages.isSelected());
         if (jpnContent instanceof JPNRound) {
             ((JPNRound) jpnContent).update();
         }

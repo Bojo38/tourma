@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<?xml-stylesheet type="text/xsl" href="roster.xsl"?>
+
+<rostertype xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+            xsi:noNamespaceSchemaLocation='roster.xsd'>
+
+    <name>ChaosDwarfKey</name>
+    <reroll>70000</reroll>
+    <apothecary>true</apothecary>
+    <max_big_guy>1</max_big_guy>
+    <!--Favorite Of Nurgle -->
+    <inducements>
+        <inducement name="temp agency cheerleaders" max="4" cost="20000" />
+        <inducement name="part time assistant coaches" max="3" cost="20000" />
+        <inducement name="weather mage" max="1" cost="30000" />
+        <inducement name="Bloodweisers kegs" max="2" cost="50000" />
+        <inducement name="special plays" max="5" cost="100000" />
+        <inducement name="extra team training" max="8" cost="100000" />
+        <inducement name="bribes" max="3" cost="100000" />
+        <inducement name="wandering apothecary" max="2" cost="100000" />
+        <!--<inducement name="mortuary assistant" max="1" cost="300000" />-->
+        <inducement name="plague doctor" max="1" cost="100000" />
+        <!--<inducement name="riotous rookies" max="1" cost="100000" />-->  
+        <inducement name="halfling master chef" max="1" cost="300000" />
+       
+        <inducement name="Joseph Bugman" max="1" cost="100000" />
+        <inducement name="wizard" max="1" cost="150000" />  
+        <inducement name="Biased referee" max="1" cost="120000" />
+    </inducements>
+        
+    <playertypes>   
+        <playerType>
+            <limit>16</limit>
+            <position>Hobgoblin Lineman</position>
+            <movement>6</movement>
+            <strength>3</strength>
+            <agility>3</agility>
+            <pass>4</pass>
+            <armor>8</armor>
+            <skills>
+            </skills>
+            <cost>40000</cost>
+            <single>
+                <skillType>General</skillType>
+            </single>
+            <double>
+                <skillType>Strength</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>            
+        <playerType>
+            <limit>6</limit>
+            <position>Chaos Dwarf Blocker</position>
+            <movement>4</movement>
+            <strength>3</strength>
+            <agility>4</agility>
+             <pass>6</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Block</skill>
+                <skill>Tackle</skill>
+                <skill>Thick Skull</skill>
+            </skills>
+            <cost>70000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+                <skillType>Mutation</skillType>
+            </double>
+        </playerType>
+        <playerType>
+            <limit>2</limit>
+            <position>Bull Cantaur</position>
+            <movement>6</movement>
+            <strength>4</strength>
+            <agility>4</agility>
+             <pass>6</pass>
+            <armor>10</armor>
+            <skills>
+                <skill>Sure Feet</skill>
+                <skill>Sprint</skill>
+                 <skill>Thick Skull</skill>
+            </skills>
+            <cost>130000</cost>
+            <single>
+                <skillType>General</skillType>
+                <skillType>Strength</skillType>
+            </single>
+            <double>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+        
+         <playerType>
+            <limit>1</limit>
+            <position>Enslaved Minotaur</position>
+            <movement>5</movement>
+            <strength>5</strength>
+            <agility>4</agility>
+            <pass>-1</pass>
+            <armor>9</armor>
+            <skills>
+                 <skill>Animal Savagery</skill>
+                <skill>Loner (4+)</skill>
+                <skill>Frenzy</skill>
+                <skill>Horns</skill>  
+                <skill>Mighty Blow (+1)</skill>                  
+                <skill>Thick Skull</skill>               
+                   <skill>Big Guy</skill>     
+            </skills>
+            <cost>150000</cost>
+            <single>
+                <skillType>Strength</skillType>
+                <skillType>Mutation</skillType>
+            </single>
+            <double>
+                <skillType>General</skillType>
+                <skillType>Agility</skillType>
+            </double>
+        </playerType>
+    </playertypes>
+</rostertype>
+
+
