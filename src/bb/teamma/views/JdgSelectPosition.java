@@ -38,11 +38,11 @@ public class JdgSelectPosition extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
-        _version=version;
+        _version = version;
         mPlayerType = pt;
         mPositions = positions;
 
-        MjtPlayerTypes model = new MjtPlayerTypes(mPositions,version);
+        MjtPlayerTypes model = new MjtPlayerTypes(mPositions, version);
         jtPositions.setModel(model);
 
         jtPositions.setDefaultRenderer(Integer.class, model);
@@ -52,7 +52,22 @@ public class JdgSelectPosition extends javax.swing.JDialog {
 
         jtPositions.getSelectionModel().setSelectionInterval(index, index);
 
-        jtPositions.getColumnModel().getColumn(6).setMinWidth(200);
+        jtPositions.getColumnModel().getColumn(0).setMinWidth(5);
+        jtPositions.getColumnModel().getColumn(1).setMinWidth(150);
+        jtPositions.getColumnModel().getColumn(2).setMinWidth(5);
+        jtPositions.getColumnModel().getColumn(3).setMinWidth(5);
+        jtPositions.getColumnModel().getColumn(4).setMinWidth(5);
+        jtPositions.getColumnModel().getColumn(5).setMinWidth(5);
+
+        int columnIndex = 6;
+        if (version == LRB.E_Version.BB2020) {
+            jtPositions.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+
+        }
+        jtPositions.getColumnModel().getColumn(columnIndex++).setMinWidth(200);
+        jtPositions.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
+        jtPositions.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
+        jtPositions.getColumnModel().getColumn(columnIndex++).setMinWidth(20);
 
         this.setPreferredSize(new Dimension(400, 260));
         pack();
@@ -69,14 +84,15 @@ public class JdgSelectPosition extends javax.swing.JDialog {
 
     }
 
-    public JdgSelectPosition(java.awt.Frame parent, boolean modal, ArrayList<StarPlayer> starplayers, StarPlayer sp) {
+    public JdgSelectPosition(java.awt.Frame parent, boolean modal, ArrayList<StarPlayer> starplayers, StarPlayer sp, LRB.E_Version version) {
         super(parent, modal);
         initComponents();
 
+        _version=version;
         mStarPlayer = sp;
         mStarPlayers = starplayers;
 
-        MjtStarPlayers model = new MjtStarPlayers(mStarPlayers,_version);
+        MjtStarPlayers model = new MjtStarPlayers(mStarPlayers, _version);
         jtPositions.setModel(model);
 
         jtPositions.setDefaultRenderer(Integer.class, model);
@@ -86,7 +102,20 @@ public class JdgSelectPosition extends javax.swing.JDialog {
 
         jtPositions.getSelectionModel().setSelectionInterval(index, index);
 
-        jtPositions.getColumnModel().getColumn(6).setMinWidth(200);
+        jtPositions.getColumnModel().getColumn(0).setMinWidth(100);
+        jtPositions.getColumnModel().getColumn(1).setMinWidth(80);
+        jtPositions.getColumnModel().getColumn(2).setMinWidth(5);
+        jtPositions.getColumnModel().getColumn(3).setMinWidth(5);
+        jtPositions.getColumnModel().getColumn(4).setMinWidth(5);
+        jtPositions.getColumnModel().getColumn(5).setMinWidth(5);
+
+        int columnIndex = 6;
+        if (version == LRB.E_Version.BB2020) {
+            jtPositions.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+
+        }
+        jtPositions.getColumnModel().getColumn(columnIndex++).setMinWidth(200);
+        jtPositions.getColumnModel().getColumn(columnIndex++).setMinWidth(20);
 
         this.setPreferredSize(new Dimension(400, 260));
         pack();
@@ -168,13 +197,11 @@ public class JdgSelectPosition extends javax.swing.JDialog {
 
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
-        if (mPlayerType!=null)
-        {
+        if (mPlayerType != null) {
             mPlayerType = mPositions.get(jtPositions.getSelectedRow());
         }
-        if (mStarPlayer!=null)
-        {
-            mStarPlayer=mStarPlayers.get(jtPositions.getSelectedRow());
+        if (mStarPlayer != null) {
+            mStarPlayer = mStarPlayers.get(jtPositions.getSelectedRow());
         }
 
         this.setVisible(false);

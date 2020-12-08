@@ -996,7 +996,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             }
 
             PlayerType pt = positions.get(0);
-            JdgSelectPosition jdg = new JdgSelectPosition(null, true, positions, pt,lrbversion);
+            JdgSelectPosition jdg = new JdgSelectPosition(null, true, positions, pt, lrbversion);
             jdg.setVisible(true);
             pt = jdg.getPosition();
 
@@ -1046,7 +1046,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             }
 
             StarPlayer sp = names.get(0);
-            JdgSelectPosition jdg = new JdgSelectPosition(null, true, names, sp);
+            JdgSelectPosition jdg = new JdgSelectPosition(null, true, names, sp, lrbversion);
             jdg.setVisible(true);
 
             sp = jdg.getStarPlayer();
@@ -1115,8 +1115,8 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private void jbtImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtImportActionPerformed
         final JFileChooser jfc = new JFileChooser();
-        ResourceBundle rb=java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
-        String extf=rb.getString("TourMaXMLFile");
+        ResourceBundle rb = java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE);
+        String extf = rb.getString("TourMaXMLFile");
         final FileFilter filter1 = new ExtensionFileFilter(extf, new String[]{StringConstants.CS_XML, StringConstants.CS_MINXML});
         jfc.setFileFilter(filter1);
         if (jfc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
@@ -1173,7 +1173,7 @@ public final class JdgRoster extends javax.swing.JDialog {
             case 7:
                 newversion = LRB.E_Version.BB2016;
                 break;
-             case 8:
+            case 8:
                 newversion = LRB.E_Version.BB2020;
                 break;
         }
@@ -1269,26 +1269,31 @@ public final class JdgRoster extends javax.swing.JDialog {
         /**
          * Players
          */
-        MjtTeamPlayers playersModel = new MjtTeamPlayers(_data,this.lrbversion);
+        MjtTeamPlayers playersModel = new MjtTeamPlayers(_data, this.lrbversion);
 
         jtbPlayers.setModel(playersModel);
-        jtbPlayers.getColumnModel().getColumn(0).setMinWidth(5);
-        jtbPlayers.getColumnModel().getColumn(1).setMinWidth(80);
-        jtbPlayers.getColumnModel().getColumn(2).setMinWidth(80);
-        jtbPlayers.getColumnModel().getColumn(3).setMinWidth(5);
-        jtbPlayers.getColumnModel().getColumn(4).setMinWidth(5);
-        jtbPlayers.getColumnModel().getColumn(5).setMinWidth(5);
-        jtbPlayers.getColumnModel().getColumn(6).setMinWidth(5);
-        jtbPlayers.getColumnModel().getColumn(7).setMinWidth(200);
-        jtbPlayers.getColumnModel().getColumn(8).setMinWidth(10);
-        jtbPlayers.getColumnModel().getColumn(9).setMinWidth(10);
-        jtbPlayers.getColumnModel().getColumn(10).setMinWidth(10);
-        jtbPlayers.getColumnModel().getColumn(11).setMinWidth(10);
+        int columnIndex = 0;
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(20);
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(80);
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+        if (lrbversion == LRB.E_Version.BB2020) {
+            jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+        }
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(200);
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
+        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
+        
+        
 
         /**
          * Star players
          */
-        MjtTeamStars starsModel = new MjtTeamStars(_data,this.lrbversion);
+        MjtTeamStars starsModel = new MjtTeamStars(_data, this.lrbversion);
         jtbStars.setModel(starsModel);
         jtbStars.getColumnModel().getColumn(0).setMinWidth(80);
         jtbStars.getColumnModel().getColumn(1).setMinWidth(80);
@@ -1296,8 +1301,13 @@ public final class JdgRoster extends javax.swing.JDialog {
         jtbStars.getColumnModel().getColumn(3).setMinWidth(5);
         jtbStars.getColumnModel().getColumn(4).setMinWidth(5);
         jtbStars.getColumnModel().getColumn(5).setMinWidth(5);
-        jtbStars.getColumnModel().getColumn(6).setMinWidth(500);
-        jtbStars.getColumnModel().getColumn(7).setMinWidth(10);
+        int col = 6;
+        if (this.lrbversion == LRB.E_Version.BB2020) {
+            jtbStars.getColumnModel().getColumn(6).setMinWidth(5);
+            col++;
+        }
+        jtbStars.getColumnModel().getColumn(col++).setMinWidth(500);
+        jtbStars.getColumnModel().getColumn(col++).setMinWidth(10);
 
         jtbPlayers.getColumnModel().getColumn(7).addPropertyChangeListener(new PropertyChangeListener() {
             @Override
@@ -1305,7 +1315,22 @@ public final class JdgRoster extends javax.swing.JDialog {
                 if (evt.getPropertyName().equals("width")) {
                     jtbPlayers.setRowHeight(1);
                     MjtTeamPlayers playersModel = new MjtTeamPlayers(_data, lrbversion);
-                    jtbPlayers.setDefaultRenderer(String.class, playersModel);
+                    jtbPlayers.setModel(playersModel);
+                    int columnIndex = 0;
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(20);
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(80);
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+                    if (lrbversion == LRB.E_Version.BB2020) {
+                        jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+                    }
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(5);
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(200);
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
+                    jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
                 }
             }
         });
@@ -1380,7 +1405,7 @@ public final class JdgRoster extends javax.swing.JDialog {
 
     private JPanel createInducementPanel(InducementType it, Roster team) {
         JPanel jpn = new JPanel(new java.awt.GridBagLayout());
-        jpn.setName(it.getName()+"Inducement");
+        jpn.setName(it.getName() + "Inducement");
 
         java.awt.GridBagConstraints gridBagConstraints = new java.awt.GridBagConstraints();
         JLabel jlbName = new JLabel();
@@ -1401,7 +1426,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jslNb.setMinimumSize(new java.awt.Dimension(30, 23));
         jslNb.setName("jsl" + it.getName()); // NOI18N
         jslNb.setPreferredSize(new java.awt.Dimension(50, 23));
-        
+
         jpn.add(jslNb, new java.awt.GridBagConstraints());
 
         JLabel jlbNb = new JLabel();

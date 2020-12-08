@@ -140,16 +140,30 @@ public class MjtStarPlayers extends AbstractTableModel implements TableCellRende
                 case 3:
                     return pt.getStrength();
                 case 4:
-                    return pt.getAgility();
+                    int ag = pt.getAgility();
+                    if (_version == LRB.E_Version.BB2020) {
+                        String tmp = Integer.toString(ag) + "+";
+                        return tmp;
+                    } else {
+                        return ag;
+                    }
                 case 5:
                     if (_version == LRB.E_Version.BB2020) {
-                        return pt.getPass();
+                        int cp = pt.getPass();
+                        if (cp > 0) {
+                            String tmp = Integer.toString(cp) + "+";
+                            return tmp;
+                        } else {
+                            return "-";
+                        }
                     } else {
                         return pt.getArmor();
                     }
                 case 6:
                     if (_version == LRB.E_Version.BB2020) {
-                        return pt.getArmor();
+                        int ar = pt.getArmor();
+                        String tmp = Integer.toString(ar) + "+";
+                        return tmp;
                     } else {
                         /**
                          * Build Skill string in HTML Begin by player type then
