@@ -60,7 +60,7 @@ public class MjtPlayerTypesNGTest {
         {
             ar.add(rt.getPlayerType(i));
         }
-        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar,LRB.E_Version.BB2016);
         int expResult = 10;
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
@@ -80,7 +80,7 @@ public class MjtPlayerTypesNGTest {
         {
             ar.add(rt.getPlayerType(i));
         }
-        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar,LRB.E_Version.BB2016);
         int expResult = 4;
         int result = instance.getRowCount();
         assertEquals(result, expResult);
@@ -101,7 +101,7 @@ public class MjtPlayerTypesNGTest {
         {
             ar.add(rt.getPlayerType(i));
         }
-        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar,LRB.E_Version.BB2016);
         
         String expResult = "Position";
         String result = instance.getColumnName(col);
@@ -124,7 +124,7 @@ public class MjtPlayerTypesNGTest {
         {
             ar.add(rt.getPlayerType(i));
         }
-        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar,LRB.E_Version.BB2016);
         Object expResult = 4;
         Object result = instance.getValueAt(row, col);
         assertEquals(result, expResult);
@@ -145,7 +145,7 @@ public class MjtPlayerTypesNGTest {
         {
             ar.add(rt.getPlayerType(i));
         }
-        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar,LRB.E_Version.BB2016);
         
         Class expResult = String.class;
         Class result = instance.getColumnClass(c);
@@ -168,7 +168,7 @@ public class MjtPlayerTypesNGTest {
         {
             ar.add(rt.getPlayerType(i));
         }
-        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar,LRB.E_Version.BB2016);
         boolean expResult = false;
         boolean result = instance.isCellEditable(row, col);
         assertEquals(result, expResult);
@@ -194,7 +194,7 @@ public class MjtPlayerTypesNGTest {
         {
             ar.add(rt.getPlayerType(i));
         }
-        MjtPlayerTypes instance = new MjtPlayerTypes(ar);
+        MjtPlayerTypes instance = new MjtPlayerTypes(ar,LRB.E_Version.BB2016);
         
         String val="exemple";
         table=new JTable(instance);

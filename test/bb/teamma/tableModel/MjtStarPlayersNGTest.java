@@ -57,7 +57,7 @@ public class MjtStarPlayersNGTest {
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
         }
-        MjtStarPlayers instance = new MjtStarPlayers(ar);
+        MjtStarPlayers instance = new MjtStarPlayers(ar,LRB.E_Version.BB2016);
         int expResult = 8;
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
@@ -75,7 +75,7 @@ public class MjtStarPlayersNGTest {
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
         }
-        MjtStarPlayers instance = new MjtStarPlayers(ar);
+        MjtStarPlayers instance = new MjtStarPlayers(ar,LRB.E_Version.BB2016);
         int expResult = 105;
         int result = instance.getRowCount();
         assertEquals(result, expResult);
@@ -94,7 +94,7 @@ public class MjtStarPlayersNGTest {
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
         }
-        MjtStarPlayers instance = new MjtStarPlayers(ar);
+        MjtStarPlayers instance = new MjtStarPlayers(ar,LRB.E_Version.BB2016);
         String expResult = "Position";
         String result = instance.getColumnName(col);
         assertEquals(result, expResult);
@@ -114,7 +114,7 @@ public class MjtStarPlayersNGTest {
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
         }
-        MjtStarPlayers instance = new MjtStarPlayers(ar);
+        MjtStarPlayers instance = new MjtStarPlayers(ar,LRB.E_Version.BB2016);
         Object expResult = "Slave Giant";
         Object result = instance.getValueAt(row, col);
         assertEquals(result, expResult);
@@ -133,7 +133,7 @@ public class MjtStarPlayersNGTest {
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
         }
-        MjtStarPlayers instance = new MjtStarPlayers(ar);
+        MjtStarPlayers instance = new MjtStarPlayers(ar,LRB.E_Version.BB2016);
 
         Class expResult = String.class;
         Class result = instance.getColumnClass(c);
@@ -154,7 +154,7 @@ public class MjtStarPlayersNGTest {
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
         }
-        MjtStarPlayers instance = new MjtStarPlayers(ar);
+        MjtStarPlayers instance = new MjtStarPlayers(ar,LRB.E_Version.BB2016);
         boolean expResult = false;
         boolean result = instance.isCellEditable(row, col);
         assertEquals(result, expResult);
@@ -177,7 +177,7 @@ public class MjtStarPlayersNGTest {
         for (int i = 0; i < lrb.getStarPlayerCount(); i++) {
             ar.add(lrb.getStarPlayer(i));
         }
-        MjtStarPlayers instance = new MjtStarPlayers(ar);
+        MjtStarPlayers instance = new MjtStarPlayers(ar,LRB.E_Version.BB2016);
           JTable table = new JTable(instance);
         Component expResult = null;
         Component result = instance.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);

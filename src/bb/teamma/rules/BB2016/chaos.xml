@@ -13,7 +13,7 @@ and open the template in the editor.
     <apothecary>true</apothecary>
     
     <inducements>
-       <inducement name="chef" max="1" cost="300000" />
+        <inducement name="chef" max="1" cost="300000" />
         <inducement name="bribe the ref" max="3" cost="100000" />
         <inducement name="Bloodweisers' babes" max="2" cost="50000" />
         <inducement name="wizard" max="1" cost="150000" />

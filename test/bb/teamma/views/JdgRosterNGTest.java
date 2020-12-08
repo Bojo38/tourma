@@ -5,16 +5,12 @@
  */
 package bb.teamma.views;
 
-import bb.teamma.views.JdgRoster;
-import bb.teamma.views.JdgSelectPosition;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.fest.swing.core.BasicRobot;
@@ -48,6 +44,7 @@ public class JdgRosterNGTest {
     public static void setUpClass() throws Exception {
         robot = BasicRobot.robotWithNewAwtHierarchy();
         robot.settings().delayBetweenEvents(50);
+
     }
 
     @AfterClass
@@ -74,6 +71,8 @@ public class JdgRosterNGTest {
         try {
             System.out.println("hmiGeneralTest");
 
+            window.comboBox("jcbLRB").selectItem(7);
+            
             // Select tab and choose roster
             window.tabbedPane("jtpGoods").selectTab(3);
             Thread.sleep(500);

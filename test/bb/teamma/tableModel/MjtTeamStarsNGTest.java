@@ -66,7 +66,7 @@ public class MjtTeamStarsNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        MjtTeamStars instance = new MjtTeamStars(roster);
+        MjtTeamStars instance = new MjtTeamStars(roster,LRB.E_Version.BB2016);
         Assert.assertNotNull(instance);
         int result = instance.getColumnCount();
         assertEquals(result, 8);
@@ -78,7 +78,7 @@ public class MjtTeamStarsNGTest {
     @Test
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        MjtTeamStars instance = new MjtTeamStars(roster);
+        MjtTeamStars instance = new MjtTeamStars(roster,LRB.E_Version.BB2016);
         Assert.assertNotNull(instance);
         int result = instance.getRowCount();
         assertEquals(result, 2);
@@ -90,7 +90,7 @@ public class MjtTeamStarsNGTest {
     @Test
     public void testGetColumnName() {
         System.out.println("getColumnName");
-        MjtTeamStars instance = new MjtTeamStars(roster);
+        MjtTeamStars instance = new MjtTeamStars(roster,LRB.E_Version.BB2016);
         Assert.assertNotNull(instance);
         int result = instance.getColumnCount();
         for (int i = 0; i < result; i++) {
@@ -140,7 +140,7 @@ public class MjtTeamStarsNGTest {
     @Test
     public void testGetValueAt() {
         System.out.println("getValueAt");
-        MjtTeamStars instance = new MjtTeamStars(roster);
+        MjtTeamStars instance = new MjtTeamStars(roster,LRB.E_Version.BB2016);
         Assert.assertNotNull(instance);
 
         for (int i = 0; i < roster.getChampionCount(); i++) {
@@ -201,7 +201,7 @@ public class MjtTeamStarsNGTest {
     @Test
     public void testGetColumnClass() {
         System.out.println("getColumnClass");
-        MjtTeamStars instance = new MjtTeamStars(roster);
+        MjtTeamStars instance = new MjtTeamStars(roster,LRB.E_Version.BB2016);
         Assert.assertNotNull(instance);
         int result = instance.getColumnCount();
         for (int i = 0; i < result; i++) {
@@ -242,7 +242,7 @@ public class MjtTeamStarsNGTest {
     @Test
     public void testIsCellEditable() {
         System.out.println("isCellEditable");
-        MjtTeamStars instance = new MjtTeamStars(roster);
+        MjtTeamStars instance = new MjtTeamStars(roster,LRB.E_Version.BB2016);
         Assert.assertNotNull(instance);
         for (int i = 0; i < instance.getColumnCount(); i++) {
             for (int j = 0; j < instance.getRowCount(); j++) {
@@ -258,7 +258,7 @@ public class MjtTeamStarsNGTest {
     @Test
     public void testGetTableCellRendererComponent() {
         System.out.println("getTableCellRendererComponent");
-        MjtTeamStars instance = new MjtTeamStars(roster);
+        MjtTeamStars instance = new MjtTeamStars(roster,LRB.E_Version.BB2016);
         JTable jtb = new JTable(instance);
         jtb.setDefaultRenderer(Integer.class, instance);
         jtb.setDefaultRenderer(String.class, instance);

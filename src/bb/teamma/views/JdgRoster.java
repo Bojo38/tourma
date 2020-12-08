@@ -482,7 +482,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         jpnInducements.setLayout(new java.awt.GridLayout(0, 3));
         jtpGoods.addTab(bundle.getString("Inducements"), jpnInducements); // NOI18N
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle1.getString("Mercenaires et Champions"))); // NOI18N
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Mercenaires et Champions"))); // NOI18N
         jPanel4.setPreferredSize(new java.awt.Dimension(160, 150));
         jPanel4.setLayout(new java.awt.BorderLayout());
 
@@ -693,12 +693,14 @@ public final class JdgRoster extends javax.swing.JDialog {
         jpnTitle.setLayout(new java.awt.GridLayout(1, 4, 5, 5));
 
         jcbLRB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbLRB.setName("jcbLRB"); // NOI18N
         jcbLRB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbLRBActionPerformed(evt);
             }
         });
         jpnTitle.add(jcbLRB);
+        jcbLRB.getAccessibleContext().setAccessibleName("jcbLRB");
 
         jlbTeamName.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlbTeamName.setText(bundle.getString("TeamName")); // NOI18N

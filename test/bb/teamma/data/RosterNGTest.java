@@ -442,7 +442,7 @@ public class RosterNGTest {
             fail("No player type for the roster");
         }
         PlayerType pt = roster.getRoster().getPlayerType(0);
-        Player pl = new Player(pt);
+        Player pl = new Player(pt,LRB.E_Version.BB2016);
         int nb = roster.getPlayerCount();
         roster.addPlayer(pl);
         assertEquals(nb + 1, roster.getPlayerCount());
@@ -473,7 +473,7 @@ public class RosterNGTest {
             fail("No player type for the roster");
         }
         PlayerType pt = roster.getRoster().getPlayerType(0);
-        Player pl = new Player(pt);
+        Player pl = new Player(pt,LRB.E_Version.BB2016);
         int nb = roster.getPlayerCount();
         roster.addPlayer(pl);
         assertEquals(nb + 1, roster.getPlayerCount());
@@ -504,7 +504,7 @@ public class RosterNGTest {
             fail("No player type for the roster");
         }
         PlayerType pt = roster.getRoster().getPlayerType(0);
-        Player pl = new Player(pt);
+        Player pl = new Player(pt,LRB.E_Version.BB2016);
         int nb = roster.getPlayerCount();
         roster.addPlayer(pl);
         assertEquals(nb + 1, roster.getPlayerCount());

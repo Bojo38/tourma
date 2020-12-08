@@ -279,7 +279,7 @@ public final class LRB {
                 String teamfile = e_team.getValue();
                 String imagename = e_team.getAttribute(CS_Picture).getValue();
                 filename = "/bb/teamma/rules/" + path + "/" + teamfile;
-                LOG.info("Loading team: " + teamfile);
+                LOG.fine( "Loading team: " + teamfile);
                 loadTeam(getClass().getResourceAsStream("/bb/teamma/rules/" + path + "/" + teamfile), imagename);
             }
             /*
@@ -426,7 +426,7 @@ public final class LRB {
 
                 Element e_position = e_player.getChild(CS_Position);
                 PlayerType pt = new PlayerType(e_position.getValue());
-                LOG.info("Loding player: " + pt.getPosition());
+                LOG.finer("Loding player: " + pt.getPosition());
                 Element e_limit = e_player.getChild(CS_Limit);
                 pt.setLimit(Integer.parseInt(e_limit.getValue()));
                 Element e_movement = e_player.getChild(CS_Movement);
@@ -515,7 +515,7 @@ public final class LRB {
                 Element e_name = e_star.getChild(CS_Name);
                 StarPlayer sp = new StarPlayer(e_name.getValue());
 
-                LOG.info("Loading StarPlayer: " + sp.getName());
+                LOG.finer("Loading StarPlayer: " + sp.getName());
 
                 sp.setPosition(e_star.getChild(CS_Position).getValue());
                 sp.setMovement(Integer.parseInt(e_star.getChild(CS_Movement).getValue()));

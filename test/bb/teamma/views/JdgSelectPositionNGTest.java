@@ -73,7 +73,7 @@ public class JdgSelectPositionNGTest {
             ar.add(pt);
         }
 
-        jdg1 = new JdgSelectPosition(null, true, ar, ar.get(0));
+        jdg1 = new JdgSelectPosition(null, true, ar, ar.get(0),LRB.E_Version.BB2016);
 
         ArrayList<StarPlayer> ar2 = new ArrayList<>();
         for (int i = 0; i < roster.getRoster().getAvailableStarplayerCount(); i++) {
@@ -81,7 +81,7 @@ public class JdgSelectPositionNGTest {
             ar2.add(pt);
         }
 
-        jdg2 = new JdgSelectPosition(null, true, ar2, ar2.get(0));
+        jdg2 = new JdgSelectPosition(null, true, ar2, ar2.get(0),LRB.E_Version.BB2016);
     }
 
     @AfterMethod

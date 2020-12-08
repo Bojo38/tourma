@@ -1,4 +1,4 @@
-<Composition LRB="NAF2017" Roster="Necromantiques" Apothecary="false" Assistants="2" Cheerleaders="3" FanFactor="8" Rerolls="1">
+<Composition LRB="BB2016" Roster="Horreurs nécromantiques" Apothecary="false" Assistants="2" Cheerleaders="3" FanFactor="8" Rerolls="1">
   <Inducements>
     <Inducement Nb="1" Type="bribe the ref" />
     <Inducement Nb="1" Type="wizard" />

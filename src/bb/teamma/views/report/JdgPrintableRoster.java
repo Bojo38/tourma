@@ -393,11 +393,11 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
 
             final Map<String, Object> root = new HashMap<>();
             
-            if (getmCoach() != null) {
-                if (getmCoach().getTeam() != null) {
-                    root.put(CS_title, StringEscapeUtils.escapeHtml4(getmCoach().getTeam()));
+            if (getCoach() != null) {
+                if (getCoach().getTeam() != null) {
+                    root.put(CS_title, StringEscapeUtils.escapeHtml4(getCoach().getTeam()));
                 } else {
-                    root.put(CS_title, StringEscapeUtils.escapeHtml4(getmCoach().getName()));
+                    root.put(CS_title, StringEscapeUtils.escapeHtml4(getCoach().getName()));
                 }
             } else {
                 root.put(CS_title, "?");
@@ -405,8 +405,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
 
             ArrayList<HashMap<String, Object>> players = new ArrayList<>();
 
-            for (int i = 0; i < getmRoster().getPlayerCount(); i++) {
-                Player p = getmRoster().getPlayer(i);
+            for (int i = 0; i < getRoster().getPlayerCount(); i++) {
+                Player p = getRoster().getPlayer(i);
                 final HashMap<String, Object> player = new HashMap<>();
                 player.put(CS_numero, i + 1);
                 player.put(CS_name,  StringEscapeUtils.escapeHtml4(Translate.translate(p.getName())));
@@ -451,8 +451,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 players.add(player);
             }
 
-            for (int cpt = 0; cpt < getmRoster().getChampionCount(); cpt++) {
-                StarPlayer p = getmRoster().getChampion(cpt);
+            for (int cpt = 0; cpt < getRoster().getChampionCount(); cpt++) {
+                StarPlayer p = getRoster().getChampion(cpt);
                 final HashMap<String, Object> player = new HashMap<>();
                 player.put(CS_numero, players.size() + 1);
                 player.put(CS_name,  StringEscapeUtils.escapeHtml4(Translate.translate(p.getName())));
@@ -484,45 +484,45 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             root.put(CS_players, players);
 
             root.put(CS_teamname, CS_NBSP);
-            if (getmRoster().isApothecary()) {
+            if (getRoster().isApothecary()) {
                 root.put(CS_apothecary, 1);
             } else {
                 root.put(CS_apothecary, 0);
             }
             root.put(CS_apo_price, RosterType.getApothecary_cost());
-            if (getmRoster().isApothecary()) {
+            if (getRoster().isApothecary()) {
                 root.put(CS_apo_cost, RosterType.getApothecary_cost());
             } else {
                 root.put(CS_apo_cost, 0);
             }
 
             root.put(CS_coachname, CS_NBSP);
-            root.put(CS_assists, getmRoster().getAssistants());
+            root.put(CS_assists, getRoster().getAssistants());
             root.put(CS_ass_price, RosterType.getAssistant_cost());
-            root.put(CS_ass_cost, getmRoster().getAssistants() * RosterType.getAssistant_cost());
+            root.put(CS_ass_cost, getRoster().getAssistants() * RosterType.getAssistant_cost());
 
-            if (getmRoster().getRoster() != null) {
-                root.put(CS_race, getmRoster().getRoster().getName());
+            if (getRoster().getRoster() != null) {
+                root.put(CS_race, StringEscapeUtils.escapeHtml4(getRoster().getRoster().getName()));
             } else {
                 root.put(CS_race, CS_NBSP);
             }
-            root.put(CS_cheer, getmRoster().getCheerleaders());
+            root.put(CS_cheer, getRoster().getCheerleaders());
 
             root.put(CS_cheer_price, RosterType.getCheerleader_cost());
-            root.put(CS_cheer_cost, getmRoster().getCheerleaders() * RosterType.getCheerleader_cost());
+            root.put(CS_cheer_cost, getRoster().getCheerleaders() * RosterType.getCheerleader_cost());
 
-            root.put(CS_rank, getmRoster().getValue(isWithSkill()) / 10000);
-            root.put(CS_reroll, getmRoster().getRerolls());
-            if (getmRoster().getRoster() != null) {
-                root.put(CS_reroll_price, getmRoster().getRoster().getReroll_cost());
+            root.put(CS_rank, getRoster().getValue(isWithSkill()) / 10000);
+            root.put(CS_reroll, getRoster().getRerolls());
+            if (getRoster().getRoster() != null) {
+                root.put(CS_reroll_price, getRoster().getRoster().getReroll_cost());
             } else {
                 root.put(CS_reroll_price, 0);
             }
-            root.put(CS_reroll_cost, getmRoster().getRerolls() * RosterType.getCheerleader_cost());
+            root.put(CS_reroll_cost, getRoster().getRerolls() * RosterType.getCheerleader_cost());
 
-            root.put(CS_pop, getmRoster().getRerolls());
+            root.put(CS_pop, getRoster().getRerolls());
             root.put(CS_pop_price, RosterType.getFan_factor_cost());
-            root.put(CS_pop_cost, getmRoster().getFanfactor() * RosterType.getFan_factor_cost());
+            root.put(CS_pop_cost, getRoster().getFanfactor() * RosterType.getFan_factor_cost());
 
             ArrayList<HashMap<String, Object>> inducements = new ArrayList<>();
              for (int i = 0; i < this.mRoster.getInducementsSize(); i++) {
@@ -539,8 +539,8 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
              
             root.put(CS_inducements,inducements);
 
-            root.put(CS_total, getmRoster().getValue(isWithSkill()));
-            root.put(CS_rank, getmRoster().getValue(isWithSkill()) / 10000);
+            root.put(CS_total, getRoster().getValue(isWithSkill()));
+            root.put(CS_rank, getRoster().getValue(isWithSkill()) / 10000);
 
             // Pure translation
             root.put("RosterTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RosterTitle")));
@@ -610,14 +610,14 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
     /**
      * @return the mRoster
      */
-    private Roster getmRoster() {
+    private Roster getRoster() {
         return mRoster;
     }
 
     /**
      * @return the mCoach
      */
-    private Coach getmCoach() {
+    private Coach getCoach() {
         return mCoach;
     }
 
