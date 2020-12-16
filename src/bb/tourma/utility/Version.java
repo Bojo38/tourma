@@ -35,7 +35,7 @@ public class Version {
     }
     private Properties mData;
 
-    private final static String CS_VERSION_RESOURCES="tourma/version";
+    private final static String CS_VERSION_RESOURCES="bb/tourma/version";
     private final static String CS_VERSION_KEY="/TOURMA/VERSION.PROPERTIES";
     
     private Version() {

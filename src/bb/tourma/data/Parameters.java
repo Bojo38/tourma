@@ -146,6 +146,7 @@ public class Parameters implements IXMLExport, Serializable {
         this.mPointsTeamVictory = params.mPointsTeamVictory;
         this.mPointsTeamVictoryBonus = params.mPointsTeamVictoryBonus;
         this.mPortugal = params.mPortugal;
+        this.mSpartak = params.mSpartak;
 
         this.mRankingIndiv1 = params.mRankingIndiv1;
         this.mRankingIndiv2 = params.mRankingIndiv2;
@@ -340,6 +341,7 @@ public class Parameters implements IXMLExport, Serializable {
      *
      */
     private boolean mPortugal = false;
+    private boolean mSpartak = false;
 
     /**
      *
@@ -758,6 +760,7 @@ public class Parameters implements IXMLExport, Serializable {
         params.setAttribute(StringConstants.CS_TEAMBALANCED, Boolean.toString(this.isIndivPairingTeamBalanced()));
 
         params.setAttribute(StringConstants.CS_PORTUGAL, Boolean.toString(this.isPortugal()));
+        params.setAttribute(StringConstants.CS_SPARTAK, Boolean.toString(this.isSpartak()));
         params.setAttribute(StringConstants.CS_COLOR, Boolean.toString(this.isUseColor()));
         params.setAttribute(StringConstants.CS_BYPAGES, Boolean.toString(this.isDisplayByPages()));
         params.setAttribute(StringConstants.CS_PAGE_SIZE, Integer.toString(this.getPageSize()));
@@ -895,8 +898,6 @@ public class Parameters implements IXMLExport, Serializable {
                     this.setDate(format.parse(params.getAttribute(StringConstants.CS_DATE).getValue()));
                 } catch (ParseException | NullPointerException pe) {
                 }
-                
-
 
             } catch (NullPointerException ne) {
                 this.setGapLargeVictory(3);
@@ -928,6 +929,7 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setSubstitutes(params.getAttribute(StringConstants.CS_SUBSTITUTES).getBooleanValue());
                 this.setMultiRoster(params.getAttribute(StringConstants.CS_MULTIROSTER).getBooleanValue());
                 this.setPortugal(params.getAttribute(StringConstants.CS_PORTUGAL).getBooleanValue());
+                this.setSpartak(params.getAttribute(StringConstants.CS_SPARTAK).getBooleanValue());
                 this.setUseColor(params.getAttribute(StringConstants.CS_COLOR).getBooleanValue());
                 this.setUseImage(params.getAttribute(StringConstants.CS_USE_IMAGE).getBooleanValue());
                 this.setUseLargeVictory(params.getAttribute(StringConstants.CS_USE_LARGE_VICTORY).getBooleanValue());
@@ -1366,11 +1368,16 @@ public class Parameters implements IXMLExport, Serializable {
         return mPortugal;
     }
 
-    /**
-     * @param mPortugal the mPortugal to set
-     */
     public void setPortugal(boolean mPortugal) {
         this.mPortugal = mPortugal;
+    }
+
+    public boolean isSpartak() {
+        return mSpartak;
+    }
+
+    public void setSpartak(boolean mSpartak) {
+        this.mSpartak = mSpartak;
     }
 
     /**
@@ -1528,6 +1535,7 @@ public class Parameters implements IXMLExport, Serializable {
             return getRankingIndiv2();
         }
     }
+
     public int getRankingClan3() {
         if (isTeamTournament()) {
             return getRankingTeam3();
@@ -1535,6 +1543,7 @@ public class Parameters implements IXMLExport, Serializable {
             return getRankingIndiv3();
         }
     }
+
     public int getRankingClan4() {
         if (isTeamTournament()) {
             return getRankingTeam4();
@@ -1542,6 +1551,7 @@ public class Parameters implements IXMLExport, Serializable {
             return getRankingIndiv4();
         }
     }
+
     public int getRankingClan5() {
         if (isTeamTournament()) {
             return getRankingTeam5();
@@ -1549,6 +1559,7 @@ public class Parameters implements IXMLExport, Serializable {
             return getRankingIndiv5();
         }
     }
+
     /**
      * @return the mRankingIndiv1
      */
@@ -2087,7 +2098,7 @@ public class Parameters implements IXMLExport, Serializable {
         boolean result;
         result = false;
         if (obj instanceof Parameters) {
-            result=true;
+            result = true;
             Parameters params = (Parameters) obj;
 
             result &= params.mBestResultsIndiv == this.mBestResultsIndiv;
@@ -2149,7 +2160,7 @@ public class Parameters implements IXMLExport, Serializable {
             result &= params.mUseLargeVictory == this.mUseLargeVictory;
             result &= params.mUseLittleLoss == this.mUseLittleLoss;
 
-            result &= params.mCrossPoolMatch== this.mCrossPoolMatch;
+            result &= params.mCrossPoolMatch == this.mCrossPoolMatch;
 
             result &= params.mTeamPairing == this.mTeamPairing;
             result &= params.mTeamIndivPairing == this.mTeamIndivPairing;

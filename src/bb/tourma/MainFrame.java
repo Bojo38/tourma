@@ -287,6 +287,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiGenerateFirstRound.setEnabled(!isClient);
         jcxmiAsServer.setEnabled(!isClient);
         jcxPatchPortugal.setEnabled(!isClient);
+         jcxPatchSpartak.setEnabled(!isClient);
         jcxDisplayRosters.setEnabled(true);
         jcxDisplayRosters.setSelected(Tournament.getTournament().getParams().isDisplayRoster());
         jmiEditColors.setEnabled(!isClient);
@@ -311,6 +312,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         updateMenus();
 
         jcxPatchPortugal.setSelected(mTournament.getParams().isPortugal());
+        jcxPatchSpartak.setSelected(mTournament.getParams().isSpartak());
 
         this.revalidate();
         this.repaint();
@@ -344,7 +346,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiSaveAs = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JSeparator();
         jmiExport = new javax.swing.JMenuItem();
-        jmiExportFbb = new javax.swing.JMenuItem();
         jmiExportFbb1 = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JSeparator();
         jmiExit = new javax.swing.JMenuItem();
@@ -356,6 +357,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiNafLoad = new javax.swing.JMenuItem();
         jcxIgnoreCaps = new javax.swing.JCheckBoxMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
+        jcxPatchSpartak = new javax.swing.JCheckBoxMenuItem();
         jcxPatchPortugal = new javax.swing.JCheckBoxMenuItem();
         jSeparator13 = new javax.swing.JPopupMenu.Separator();
         jcxUseColor = new javax.swing.JCheckBoxMenuItem();
@@ -506,18 +508,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnFile.add(jmiExport);
 
-        jmiExportFbb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Html.png"))); // NOI18N
-        jmiExportFbb.setText(bundle.getString("ExportFBBResultXML")); // NOI18N
-        jmiExportFbb.setActionCommand(bundle.getString("FBBExport")); // NOI18N
-        jmiExportFbb.setEnabled(false);
-        jmiExportFbb.setLabel(bundle.getString("FBBExport")); // NOI18N
-        jmiExportFbb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jmiExportFbbActionPerformed(evt);
-            }
-        });
-        jmnFile.add(jmiExportFbb);
-
         jmiExportFbb1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Html.png"))); // NOI18N
         jmiExportFbb1.setEnabled(false);
         jmiExportFbb1.setLabel(bundle.getString("FBBFullExport")); // NOI18N
@@ -578,6 +568,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         });
         jmnTools.add(jcxIgnoreCaps);
         jmnTools.add(jSeparator11);
+
+        jcxPatchSpartak.setText(bundle.getString("SpartakPatch")); // NOI18N
+        jcxPatchSpartak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxPatchSpartakActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxPatchSpartak);
 
         jcxPatchPortugal.setText(bundle.getString("PortugalPatch")); // NOI18N
         jcxPatchPortugal.addActionListener(new java.awt.event.ActionListener() {
@@ -1282,25 +1280,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private final static String CS_FBBCSVFile = "FBB CSV FILE";
     private final static String CS_FBBXMLFile = "FBB XML FILE";
 
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jmiExportFbbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbbActionPerformed
-        final JFileChooser jfc = new JFileChooser();
-        jfc.setCurrentDirectory(new File(currentPath));
-        final FileFilter filter1 = new ExtensionFileFilter(
-                Translate.translate(CS_FBBCSVFile),
-                new String[]{"CSV",
-                    "CSV"});
-        jfc.setFileFilter(filter1);
-
-        if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            if (mTournament instanceof Tournament) {
-                ((Tournament) mTournament).exportFBB(jfc.getSelectedFile());
-            }
-            currentPath = jfc.getSelectedFile().getAbsolutePath();
-        }
-
-    }//GEN-LAST:event_jmiExportFbbActionPerformed
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+   @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportFbb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbb1ActionPerformed
         final JFileChooser jfc = new JFileChooser();
         jfc.setCurrentDirectory(new File(currentPath));
@@ -3096,6 +3076,12 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jcxDisplayByPagesActionPerformed
 
+    private void jcxPatchSpartakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxPatchSpartakActionPerformed
+         mTournament.getParams().setSpartak(jcxPatchSpartak.isSelected());
+         this.update();
+
+    }//GEN-LAST:event_jcxPatchSpartakActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3564,6 +3550,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JCheckBoxMenuItem jcxDisplayRosters;
     private javax.swing.JCheckBoxMenuItem jcxIgnoreCaps;
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;
+    private javax.swing.JCheckBoxMenuItem jcxPatchSpartak;
     private javax.swing.JCheckBoxMenuItem jcxUseColor;
     private javax.swing.JCheckBoxMenuItem jcxUseImage;
     public javax.swing.JCheckBoxMenuItem jcxmiAsServer;
@@ -3587,7 +3574,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiEditWebPort;
     private javax.swing.JMenuItem jmiExit;
     private javax.swing.JMenuItem jmiExport;
-    private javax.swing.JMenuItem jmiExportFbb;
     private javax.swing.JMenuItem jmiExportFbb1;
     private javax.swing.JMenuItem jmiExportWebServerAsZIP;
     private javax.swing.JMenuItem jmiExportWebServerToSite;

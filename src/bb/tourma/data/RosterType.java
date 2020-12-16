@@ -130,7 +130,9 @@ public class RosterType implements IXMLExport, Serializable {
         mRostersNames.add(translate("SlannKey"));
         mRostersNames.add(translate("VampireKey"));
         mRostersNames.add(translate("SnotlingKey"));
-        mRostersNames.add(translate("OldWorldAllianceKey"));
+        mRostersNames.add(translate("OldWorldAllianceKey"));       
+        mRostersNames.add(translate("BlackOrcKey"));
+        mRostersNames.add(translate("ImperialNobilityKey"));
 
         mRosterTypes.clear();
         mRosterTypes.put(translate("AmazonKey"), new RosterType(translate("AmazonKey")));
@@ -161,7 +163,8 @@ public class RosterType implements IXMLExport, Serializable {
         mRosterTypes.put(translate("VampireKey"), new RosterType(translate("VampireKey")));
         mRosterTypes.put(translate("SnotlingKey"), new RosterType(translate("SnotlingKey")));
         mRosterTypes.put(translate("OldWorldAllianceKey"), new RosterType(translate("OldWorldAllianceKey")));
-
+        mRosterTypes.put(translate("BlackOrcKey"), new RosterType(translate("BlackOrcKey")));
+        mRosterTypes.put(translate("ImperialNobilityKey"), new RosterType(translate("ImperialNobilityKey")));
     }
 
     /**
@@ -494,6 +497,15 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("OldWorldAllianceKey"))) {
             result = translate("Old World Alliance");
         }
+        if (source.equals(translate("ImperialNobilityKey"))) {
+            result = translate("Imperial Nobility");
+        }
+        if (source.equals(translate("Black OrcKey"))) {
+            result = translate("Black Orc");
+        }
+        
+        
+                
         return result;
     }
 

@@ -179,6 +179,7 @@ public interface StringConstants {
     public static final String CS_DATE = "Date";
     public static final String CS_PLACE = "Place";
     public static final String CS_PORTUGAL = "Portugal";
+    public static final String CS_SPARTAK="Spartak";
     public static final String CS_VICTORY_TEAM = "Victory_Team";
     public static final String CS_DRAW_TEAM = "Draw_Team";
     public static final String CS_HUGE_LOST_TEAM = "Huge_Lost_Team";

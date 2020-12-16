@@ -494,15 +494,16 @@ public class Rankings implements IXMLExport {
                             mCategoryTeamRanking = new HashMap<>();
                         }
                         Category c = Tournament.getTournament().getCategory(child.getAttributeValue(StringConstants.CS_CATEGORY));
-                        TeamRanking r = new TeamRanking(child);
+                        TeamRanking r = new TeamRanking(child.getChild(StringConstants.CS_TEAM_RANKING));
                         mCategoryTeamRanking.put(c, r);
                     }
+                    break;
                     case StringConstants.CS_CATEGORY_INDIV_RANKING: {
                         if (mCategoryIndivRanking == null) {
                             mCategoryIndivRanking = new HashMap<>();
                         }
                         Category c = Tournament.getTournament().getCategory(child.getAttributeValue(StringConstants.CS_CATEGORY));
-                        IndivRanking r = new IndivRanking(child);
+                        IndivRanking r = new IndivRanking(child.getChild(StringConstants.CS_INDIV_RANKING));
                         mCategoryIndivRanking.put(c, r);
                     }
                     break;

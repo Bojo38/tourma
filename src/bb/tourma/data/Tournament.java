@@ -4,23 +4,13 @@
  */
 package bb.tourma.data;
 
-import com.google.zxing.WriterException;
-import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
-import com.google.zxing.qrcode.encoder.Encoder;
-import com.google.zxing.qrcode.encoder.QRCode;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Serializable;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +19,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -37,12 +26,6 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import bb.tourma.MainFrame;
-import bb.tourma.data.ranking.AnnexClanRanking;
-import bb.tourma.data.ranking.AnnexIndivRanking;
-import bb.tourma.data.ranking.AnnexTeamRanking;
-import bb.tourma.data.ranking.ClanRanking;
-import bb.tourma.data.ranking.IndivRanking;
-import bb.tourma.data.ranking.TeamRanking;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
 import bb.tourma.utils.NAF;
@@ -788,7 +771,7 @@ public class Tournament implements IContainCoachs, Serializable {
             mRounds.get(i).setRoundIndex(this, i);
             final Element round = mRounds.get(i).getXMLElement();
 
-            if (withRanking) {
+            /*if (withRanking) {
                 // Build list of rankings
                 final ArrayList<RankingForExport> rankings = new ArrayList<>();
                 final boolean forPool = (mPools.size() > 0) && (!mRounds.get(i).isCup());
@@ -1065,7 +1048,7 @@ public class Tournament implements IContainCoachs, Serializable {
                     final Element rank = ranking.getXMLElement();
                     round.addContent(rank);
                 }
-            }
+            }*/
 
             document.addContent(round);
         }
@@ -1128,134 +1111,7 @@ public class Tournament implements IContainCoachs, Serializable {
         }
         return rankingTypes;
     }
-
-    /**
-     *
-     * @param round
-     * @param withRoster
-     * @param withNaf
-     * @return
-     */
-    protected String generateCSVRanking(final int round, final boolean withRoster, final boolean withNaf) {
-        final StringBuilder a = new StringBuilder(this.mParams.getTournamentName());
-        a.append(";");
-        a.append(this.mParams.getStringDate(new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault())));
-        a.append(";");
-        a.append(this.mParams.isTeamTournament());
-        a.append("\n");
-        a.append(";\n");
-
-        if (this.mParams.isTeamTournament()) {
-            TeamRanking rt = null;
-
-            if (mParams.isTeamVictoryOnly()) {
-                rt = new TeamRanking(
-                        mParams.isTeamVictoryOnly(), round,
-                        mParams.getRankingTeam1(), mParams.getRankingTeam2(),
-                        mParams.getRankingTeam3(), mParams.getRankingTeam4(), mParams.getRankingTeam5(),
-                        mTeams, true);
-            } else {
-                rt = new TeamRanking(
-                        mParams.isTeamVictoryOnly(), round,
-                        mParams.getRankingIndiv1(), mParams.getRankingIndiv2(),
-                        mParams.getRankingIndiv3(), mParams.getRankingIndiv4(), mParams.getRankingIndiv5(),
-                        mTeams, true);
-            }
-
-            for (int i = 0; i < rt.getRowCount(); i++) {
-                final String team = (String) ((Team) rt.getSortedObject(i).getObject()).getName();
-                a.append(Integer.toString(i + 1));
-                a.append(";");
-                a.append(team);
-                for (Team mTeam : mTeams) {
-                    if (mTeam.getName().equals(team)) {
-                        for (int k = 0; k < mTeam.getCoachsCount(); k++) {
-                            a.append(";");
-                            a.append(mTeam.getCoach(k).getName());
-                        }
-                    }
-                }
-                a.append("\n");
-            }
-
-            a.append(";\n");
-        }
-
-        final boolean forPool = (mPools.size() > 0) && (!mRounds.get(round).isCup());
-        final boolean forCup = mRounds.get(round).isCup();
-        final IndivRanking ri = new IndivRanking(
-                round,
-                mParams.getRankingIndiv1(), mParams.getRankingIndiv2(), mParams.getRankingIndiv3(), mParams.getRankingIndiv4(), mParams.getRankingIndiv5(),
-                mCoachs, false, false, forPool, forCup);
-
-        for (int i = 0; i < ri.getRowCount(); i++) {
-            final String coach = (String) ((Coach) ri.getSortedObject(i).getObject()).getName();
-            a.append(Integer.toString(i + 1));
-            a.append(";");
-            a.append(coach);
-            for (Coach mCoach : mCoachs) {
-                if (mCoach.getName().equals(coach)) {
-                    if (withNaf) {
-                        a.append(";");
-                        a.append(Integer.toString(mCoach.getNaf()));
-                    }
-                    if (withRoster) {
-                        a.append(";");
-                        a.append(mCoach.getRoster().getName());
-                    }
-                }
-            }
-            a.append("\n");
-        }
-        return a.toString();
-    }
-
-    /**
-     *
-     * @param round
-     * @return
-     */
-    public RenderedImage generateRankingQRCode(final int round) {
-        RenderedImage image;
-        final String s = generateCSVRanking(round, false, false);
-        QRCode qrcode;
-        try {
-            qrcode = Encoder.encode(s, ErrorCorrectionLevel.H);
-
-            final int magnify = 10; //The resolution of the QRCode 
-            final byte[][] matrix = qrcode.getMatrix().getArray();
-            final int size = qrcode.getMatrix().getWidth() * magnify;
-
-            //Make the BufferedImage that are to hold the QRCode 
-            final BufferedImage im = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-            im.createGraphics();
-            final Graphics2D g = (Graphics2D) im.getGraphics();
-            g.setColor(Color.WHITE);
-            g.fillRect(0, 0, size * magnify, size * magnify);
-
-            //paint the image using the ByteMatrik 
-            for (int h = 0; h < qrcode.getMatrix().getHeight(); h++) {
-                for (int w = 0; w < qrcode.getMatrix().getWidth(); w++) {
-                    //Find the colour of the dot 
-                    if (matrix[h][w] == 0) {
-                        g.setColor(Color.WHITE);
-                    } else {
-                        g.setColor(Color.BLACK);
-                    }
-
-                    //Paint the dot 
-                    g.fillRect(h * magnify, w * magnify, magnify, magnify);
-                }
-            }
-            image = im;
-
-        } catch (WriterException e) {
-
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
-            image = null;
-        }
-        return image;
-    }
+  
 
     /**
      *
@@ -1265,58 +1121,7 @@ public class Tournament implements IContainCoachs, Serializable {
         this.saveXML(file, true);
     }
 
-    /**
-     *
-     * @param file
-     */
-    public void exportFBB(final java.io.File file) {
-        PrintWriter writer = null;
-        BufferedWriter bw = null;
-        OutputStreamWriter fw = null;
-        try {
-            fw = new OutputStreamWriter(new FileOutputStream(file), Charset.defaultCharset());
-            bw = new BufferedWriter(fw);
-            writer = new PrintWriter(bw);
-            final String s = generateCSVRanking(mRounds.size() - 1, true, true);
-            String s_tmp = s;
-            while (s_tmp.length() > 0) {
-                writer.print(s_tmp.substring(0, Math.min(255, s_tmp.length() - 1)));
-                s_tmp = s_tmp.substring(Math.min(256, s_tmp.length()));
-            }
-
-            final RenderedImage im = generateRankingQRCode(mRounds.size() - 1);
-
-            try {
-                ImageIO.write(im, "PNG", new File(file.getAbsoluteFile() + ".PNG"));
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
-            }
-            writer.close();
-
-        } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(MainFrame.getMainFrame(), e.getMessage());
-        } finally {
-            if (writer != null) {
-                writer.close();
-            }
-            if (bw != null) {
-                try {
-                    bw.close();
-
-                } catch (IOException e) {
-                    LOG.log(Level.FINE, e.getLocalizedMessage());
-                }
-            }
-            if (fw != null) {
-                try {
-                    fw.close();
-                } catch (IOException e) {
-                    LOG.log(Level.FINE, e.getLocalizedMessage());
-                }
-            }
-
-        }
-    }
+    
 
     /**
      *
@@ -1403,7 +1208,7 @@ public class Tournament implements IContainCoachs, Serializable {
                                 "Chaos Pact", "Dark Elves", "Dwarves", "Goblins", "Halflings",
                                 "High Elves", "Humans", "Khemri", "Khorne", "Lizardmen", "Necromantic",
                                 "Norse", "Nurgle's Rotters", "Ogres", "Orc", "Elves", "Slann", "Skaven",
-                                "Undead", "Underworld", "Vampires", "Wood Elves"};
+                                "Undead", "Underworld", "Vampires", "Wood Elves", "Black Orcs", "Old World Alliance", "Snotlings","Imperial Nobility"};
 
                             Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(),
                                     "Roster not recognized fo coach " + mCoach.getName() + "(" + mCoach.getRoster().getName() + "). \nlease choose the right one:",

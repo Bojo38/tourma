@@ -504,7 +504,6 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
     public Component getTableCellRendererComponent(
             final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
         final JTextField jlb = new JTextField();
-
         jlb.setEditable(false);
 
         boolean useColor = false;
@@ -859,6 +858,82 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         jlb.setForeground(frg);
 
         jlb.setHorizontalAlignment(JTextField.CENTER);
+
+        if (Tournament.getTournament().getParams().isSpartak()) {
+
+            boolean toEnable = false;
+            boolean bStarfish = false;
+            boolean bSpartak = false;
+
+            String starfish[] = {"Tulkas", "jojo", "jojo_starfish", "Barta"};
+            String spartak[] = {"bibi", "BiBi","magikmoon", "buldogr", "shogun","Shogun", "shogunfrance", "quizz", "gally", "elyoukey", "sebco","Sebco", "SebCo"};
+
+            for (String nom : starfish) {
+                if (value instanceof String) {
+                    if (((String) value).startsWith(nom)) {
+                        toEnable = true;
+                        bStarfish = true;
+                        break;
+                    }
+                }
+            }
+
+            for (String nom : spartak) {
+                if (value instanceof String) {
+                    if (((String) value).startsWith(nom)) {
+                        toEnable = true;
+                        bSpartak = true;
+                        break;
+                    }
+                }
+            }
+
+            if (toEnable) {
+                if (Tournament.getTournament().getParams().isTeamTournament()) {
+                    if (column == 2 || column == 5) {
+                        JLabel obj = new JLabel();
+                        
+                        ImageIcon snow;
+                        if (bSpartak)
+                        {
+                            snow=new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan spartak.png"));
+                        }
+                        else
+                        {
+                             snow=new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan starfish.png"));
+                        }
+                        ImageIcon icon = ImageTreatment.resize(snow, 30, 30);
+                        obj.setIcon(icon);
+                        obj.setText((String) value);
+                        obj.setOpaque(true);
+                        obj.setBackground(bkg);
+                        obj.setHorizontalAlignment(JLabel.CENTER);
+                        return obj;
+                    }
+                } else {
+                    if (column == 1 || column == 4) {
+                        JLabel obj = new JLabel();
+
+                       ImageIcon snow;
+                        if (bSpartak)
+                        {
+                            snow=new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan spartak.png"));
+                        }
+                        else
+                        {
+                             snow=new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan starfish.png"));
+                        }
+                        ImageIcon icon = ImageTreatment.resize(snow, 30, 30);
+                        obj.setIcon(icon);
+                        obj.setText((String) value);
+                        obj.setOpaque(true);
+                        obj.setBackground(bkg);
+                         obj.setHorizontalAlignment(JLabel.CENTER);
+                        return obj;
+                    }
+                }
+            }
+        }
 
         if (Tournament.getTournament()
                 .getParams().isUseImage()) {
