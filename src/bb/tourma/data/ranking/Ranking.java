@@ -285,7 +285,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
         return value;
     }
 
-    protected static  void removeMinValue(ArrayList<Integer> aValue) {
+    protected static void removeMinValue(ArrayList<Integer> aValue) {
         int min = Integer.MAX_VALUE;
         int index = 0;
         if (aValue.size() > 0) {
@@ -458,11 +458,10 @@ abstract public class Ranking implements IRanked, IXMLExport {
         return e;
     }
 
-    public void setRoundIndex(int i)
-    {
-        mRound=i;
+    public void setRoundIndex(int i) {
+        mRound = i;
     }
-    
+
     @Override
     public void setXMLElement(Element e) {
 
@@ -485,7 +484,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
             final List<Element> positions = e.getChildren(StringConstants.CS_POSITION);
             final Iterator<Element> k = positions.iterator();
             mDatas.clear();
-            mObjects=new ArrayList();
+            mObjects = new ArrayList();
             while (k.hasNext()) {
                 Element pos = k.next();
                 Comparable<Object> obj = null;
@@ -495,29 +494,31 @@ abstract public class Ranking implements IRanked, IXMLExport {
                     String name = att.getValue();
                     Coach c = Tournament.getTournament().getCoach(name);
                     obj = c;
-                }
-                att = pos.getAttribute(StringConstants.CS_TEAM);
-                if (att != null) {
-                    String name = att.getValue();
-                    Team t = Tournament.getTournament().getTeam(name);
-                    obj = t;
-                }
-                att = pos.getAttribute(StringConstants.CS_CLAN);
-                if (att != null) {
-                    String name = att.getValue();
-                    Clan c = Tournament.getTournament().getClan(name);
-                    obj = c;
+                } else {
+                    att = pos.getAttribute(StringConstants.CS_TEAM);
+                    if (att != null) {
+                        String name = att.getValue();
+                        Team t = Tournament.getTournament().getTeam(name);
+                        obj = t;
+                    } else {
+                        att = pos.getAttribute(StringConstants.CS_CLAN);
+                        if (att != null) {
+                            String name = att.getValue();
+                            Clan c = Tournament.getTournament().getClan(name);
+                            obj = c;
+                        }
+                    }
                 }
 
                 if (obj != null) {
-                    
-                    int val1=pos.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
-                    int val2=pos.getAttribute(StringConstants.CS_RANK + 2).getIntValue();
-                    int val3=pos.getAttribute(StringConstants.CS_RANK + 3).getIntValue();
-                    int val4=pos.getAttribute(StringConstants.CS_RANK + 4).getIntValue();
-                    int val5=pos.getAttribute(StringConstants.CS_RANK + 5).getIntValue();
-                    
-                    ObjectRanking or = new ObjectRanking(obj,val1,val2,val3,val4,val5);
+
+                    int val1 = pos.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
+                    int val2 = pos.getAttribute(StringConstants.CS_RANK + 2).getIntValue();
+                    int val3 = pos.getAttribute(StringConstants.CS_RANK + 3).getIntValue();
+                    int val4 = pos.getAttribute(StringConstants.CS_RANK + 4).getIntValue();
+                    int val5 = pos.getAttribute(StringConstants.CS_RANK + 5).getIntValue();
+
+                    ObjectRanking or = new ObjectRanking(obj, val1, val2, val3, val4, val5);
                     mDatas.add(or);
                     mObjects.add(obj);
                 }
@@ -525,8 +526,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
 
         } catch (DataConversionException dce) {
             dce.printStackTrace();;
-        }
-        catch (NullPointerException dce) {
+        } catch (NullPointerException dce) {
             dce.printStackTrace();;
         }
     }

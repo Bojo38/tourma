@@ -9,7 +9,12 @@ import bb.tourma.data.ranking.IndivRanking;
 import bb.tourma.data.ranking.Ranking;
 import bb.tourma.utility.StringConstants;
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -137,12 +142,65 @@ public class RankingForExportNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        RankingForExport instance = null;
-        Element expResult = null;
-        Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Element expResult = instance.getXMLElement();
+        assertNotNull(expResult);
+        
+        instance.setXMLElement(expResult);
+
+        Element expResult2 = instance.getXMLElement();
+
+        Document doc1 = new Document(expResult);
+        Document doc2 = new Document(expResult2);
+
+        XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+        OutputStream output1 = new OutputStream() {
+            private StringBuilder string = new StringBuilder();
+
+            @Override
+            public void write(int b) throws IOException {
+                this.string.append((char) b);
+            }
+
+            //Netbeans IDE automatically overrides this toString()
+            public String toString() {
+                return this.string.toString();
+            }
+        };
+        OutputStream output2 = new OutputStream() {
+            private StringBuilder string = new StringBuilder();
+
+            @Override
+            public void write(int b) throws IOException {
+                this.string.append((char) b);
+            }
+
+            //Netbeans IDE automatically overrides this toString()
+            public String toString() {
+                return this.string.toString();
+            }
+        };
+        try {
+            sortie.output(doc1, output1);
+        } catch (IOException ioe) {
+            fail("Exception while comparing string");
+        }
+        String s1 = output1.toString();
+
+        try {
+            sortie.output(doc2, output2);
+        } catch (IOException ioe) {
+            fail("Exception while comparing string");
+        }
+        String s2 = output2.toString();
+
+        System.out.println("S1 ---");
+        System.out.println(s1);
+        System.out.println("S2 ---");
+        System.out.println(s2);
+        assertEquals(s1, s2);
+        
+        
     }
 
     /**
@@ -151,11 +209,62 @@ public class RankingForExportNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        RankingForExport instance = null;
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       Element expResult = instance.getXMLElement();
+        assertNotNull(expResult);
+        
+        instance.setXMLElement(expResult);
+
+        Element expResult2 = instance.getXMLElement();
+
+        Document doc1 = new Document(expResult);
+        Document doc2 = new Document(expResult2);
+
+        XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+        OutputStream output1 = new OutputStream() {
+            private StringBuilder string = new StringBuilder();
+
+            @Override
+            public void write(int b) throws IOException {
+                this.string.append((char) b);
+            }
+
+            //Netbeans IDE automatically overrides this toString()
+            public String toString() {
+                return this.string.toString();
+            }
+        };
+        OutputStream output2 = new OutputStream() {
+            private StringBuilder string = new StringBuilder();
+
+            @Override
+            public void write(int b) throws IOException {
+                this.string.append((char) b);
+            }
+
+            //Netbeans IDE automatically overrides this toString()
+            public String toString() {
+                return this.string.toString();
+            }
+        };
+        try {
+            sortie.output(doc1, output1);
+        } catch (IOException ioe) {
+            fail("Exception while comparing string");
+        }
+        String s1 = output1.toString();
+
+        try {
+            sortie.output(doc2, output2);
+        } catch (IOException ioe) {
+            fail("Exception while comparing string");
+        }
+        String s2 = output2.toString();
+
+        System.out.println("S1 ---");
+        System.out.println(s1);
+        System.out.println("S2 ---");
+        System.out.println(s2);
+        assertEquals(s1, s2);
     }
 
     /**
@@ -164,12 +273,10 @@ public class RankingForExportNGTest {
     @Test
     public void testGetRankingNumber() {
         System.out.println("getRankingNumber");
-        RankingForExport instance = null;
-        int expResult = 0;
+      
+        int expResult = 2;
         int result = instance.getRankingNumber();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -234,12 +341,10 @@ public class RankingForExportNGTest {
     @Test
     public void testGetType() {
         System.out.println("getType");
-        RankingForExport instance = null;
-        String expResult = "";
+       
+        String expResult = "General";
         String result = instance.getType();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -248,11 +353,14 @@ public class RankingForExportNGTest {
     @Test
     public void testSetType() {
         System.out.println("setType");
-        String mType = "";
-        RankingForExport instance = null;
-        instance.setType(mType);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "General";
+        String result = instance.getType();
+        assertEquals(result, expResult);
+        
+        instance.setType("Toto");
+        
+        result = instance.getType();
+        assertEquals(result, "Toto");
     }
 
     /**
@@ -261,12 +369,10 @@ public class RankingForExportNGTest {
     @Test
     public void testGetValueType() {
         System.out.println("getValueType");
-        RankingForExport instance = null;
+       
         String expResult = "";
         String result = instance.getValueType();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -275,11 +381,14 @@ public class RankingForExportNGTest {
     @Test
     public void testSetValueType() {
         System.out.println("setValueType");
-        String mValueType = "";
-        RankingForExport instance = null;
-        instance.setValueType(mValueType);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String expResult = "toto";
+        String result = instance.getValueType();
+        assertEquals(result, "");
+        
+        instance.setValueType("toto");
+        
+        result = instance.getValueType();
+        assertEquals(result, expResult);
     }
 
     /**
@@ -300,12 +409,10 @@ public class RankingForExportNGTest {
     public void testGetSortedObject() {
         System.out.println("getSortedObject");
         int i = 0;
-        RankingForExport instance = null;
+      
         ObjectRanking expResult = null;
         ObjectRanking result = instance.getSortedObject(i);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -316,12 +423,10 @@ public class RankingForExportNGTest {
         System.out.println("getSortedValue");
         int i = 0;
         int valIndex = 0;
-        RankingForExport instance = null;
+      
         int expResult = 0;
         int result = instance.getSortedValue(i, valIndex);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**

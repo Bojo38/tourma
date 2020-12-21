@@ -217,7 +217,7 @@ public final class RankingForExport implements IXMLExport, IRanked, Serializable
             while (a != null) {
                 this.mRankings.add(Ranking.getRankingFromString(a.getValue(), mCriterias));
                 i++;
-                a = e.getAttribute("" + i);
+                a = e.getAttribute("R" + i);
             }
 
             List<Element> objs = e.getChildren();

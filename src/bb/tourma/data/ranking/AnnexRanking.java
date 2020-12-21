@@ -148,7 +148,6 @@ abstract public class AnnexRanking extends Ranking {
         }
         e.setAttribute(StringConstants.CS_TYPE, mType);
 
-        
         return e;
     }
 
@@ -193,22 +192,23 @@ abstract public class AnnexRanking extends Ranking {
                 Attribute att = pos.getAttribute(StringConstants.CS_COACH);
                 if (att != null) {
                     String name = att.getValue();
-                    Coach c = Tournament.getTournament().getCoach(name);
-                    obj = c;
+                    Coach coach = Tournament.getTournament().getCoach(name);
+                    obj = coach;
+                } else {
+                    att = pos.getAttribute(StringConstants.CS_TEAM);
+                    if (att != null) {
+                        String name = att.getValue();
+                        Team t = Tournament.getTournament().getTeam(name);
+                        obj = t;
+                    } else {
+                        att = pos.getAttribute(StringConstants.CS_CLAN);
+                        if (att != null) {
+                            String name = att.getValue();
+                            Clan clan = Tournament.getTournament().getClan(name);
+                            obj = clan;
+                        }
+                    }
                 }
-                att = pos.getAttribute(StringConstants.CS_TEAM);
-                if (att != null) {
-                    String name = att.getValue();
-                    Team t = Tournament.getTournament().getTeam(name);
-                    obj = t;
-                }
-                att = pos.getAttribute(StringConstants.CS_CLAN);
-                if (att != null) {
-                    String name = att.getValue();
-                    Clan c = Tournament.getTournament().getClan(name);
-                    obj = c;
-                }
-
                 if (obj != null) {
 
                     int val1 = e.getAttribute(StringConstants.CS_RANK + 1).getIntValue();
