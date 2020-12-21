@@ -198,7 +198,7 @@ public class CupNGTest {
         Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
         Cup instance = Tournament.getTournament().getCup();
 
-        int expResult = 3;
+        int expResult = 2;
         int result = instance.getRoundsCount();
         assertEquals(result, expResult);
 
@@ -213,7 +213,7 @@ public class CupNGTest {
         Tournament.getTournament().loadXML(new File("./test/cup_with_looser.xml"));
         Cup instance = Tournament.getTournament().getCup();
 
-        int expResult = 3;
+        int expResult = 2;
         int result = instance.getRoundsCount();
         assertEquals(result, expResult);
 

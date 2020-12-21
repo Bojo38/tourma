@@ -758,30 +758,7 @@ public class TournamentNGTest {
         }
     }
 
-    /**
-     * Test of exportFBB method, of class Tournament.
-     */
-    @Test
-    public void testExportFBB() {
-        System.out.println("exportFBB");
-        Tournament.getTournament().loadXML(new File("./test/tournaments/melting2015.xml"));
-        Tournament instance = Tournament.getTournament();
-        File f = new File("./testExportFBB.csv");
-        File f2 = new File("./testExportFBB.csv.PNG");
-        instance.exportFBB(f);
-        try {
-            assertTrue(compareTwoFiles("./test/tournamentExportFBB.csv", "./testExportFBB.csv"));
-        } catch (IOException ioe) {
-            fail("exception catched");
-        }
-        try {
-            Files.delete(f.toPath());
-             Files.delete(f2.toPath());
-            
-        } catch (IOException ex) {
-            Logger.getLogger(TournamentNGTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 
     /**
      * Test of exportNAF method, of class Tournament.
@@ -1431,37 +1408,8 @@ public class TournamentNGTest {
         fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of generateCSVRanking method, of class Tournament.
-     */
-    @Test
-    public void testGenerateCSVRanking() {
-        System.out.println("generateCSVRanking");
-        int round = 0;
-        boolean withRoster = false;
-        boolean withNaf = false;
-        Tournament instance = null;
-        String expResult = "";
-        String result = instance.generateCSVRanking(round, withRoster, withNaf);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of generateRankingQRCode method, of class Tournament.
-     */
-    @Test
-    public void testGenerateRankingQRCode() {
-        System.out.println("generateRankingQRCode");
-        int round = 0;
-        Tournament instance = null;
-        RenderedImage expResult = null;
-        RenderedImage result = instance.generateRankingQRCode(round);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    
+   
 
     /**
      * Test of getDescription method, of class Tournament.

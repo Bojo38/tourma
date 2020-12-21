@@ -38,8 +38,7 @@ public class TeamRankingsSetNGTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        
-        Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
+
     }
 
     @AfterClass
@@ -49,6 +48,7 @@ public class TeamRankingsSetNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
     }
 
     @AfterMethod
@@ -86,6 +86,7 @@ public class TeamRankingsSetNGTest {
         System.out.println("getmRankingForPool");
 
         Tournament tour = Tournament.getTournament();
+
         TeamRankingsSet instance = tour.getRound(0).getRankings(false).getTeamRankingSet();
 
         TeamRanking result = instance.getRanking();

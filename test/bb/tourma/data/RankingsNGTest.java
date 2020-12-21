@@ -10,8 +10,15 @@ import bb.tourma.data.ranking.IndivRanking;
 import bb.tourma.data.ranking.IndivRankingsSet;
 import bb.tourma.data.ranking.TeamRanking;
 import bb.tourma.data.ranking.TeamRankingsSet;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
+import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -24,12 +31,13 @@ import org.testng.annotations.Test;
  * @author WFMJ7631
  */
 public class RankingsNGTest {
-    
+
     public RankingsNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+
     }
 
     @AfterClass
@@ -38,6 +46,7 @@ public class RankingsNGTest {
 
     @BeforeMethod
     public void setUpMethod() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
     }
 
     @AfterMethod
@@ -51,10 +60,9 @@ public class RankingsNGTest {
     public void testSetRoundOnly() {
         System.out.println("setRoundOnly");
         boolean roundOnly = false;
-        Rankings instance = null;
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(roundOnly);
+
         instance.setRoundOnly(roundOnly);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -63,12 +71,12 @@ public class RankingsNGTest {
     @Test
     public void testGetTeamRankingSet() {
         System.out.println("getTeamRankingSet");
-        Rankings instance = null;
-        TeamRankingsSet expResult = null;
+        Tournament.getTournament().loadXML(new File("./test/team.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+
         TeamRankingsSet result = instance.getTeamRankingSet();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result instanceof TeamRankingsSet);
+
     }
 
     /**
@@ -77,11 +85,16 @@ public class RankingsNGTest {
     @Test
     public void testSetTeamRankingSet() {
         System.out.println("setTeamRankingSet");
-        TeamRankingsSet mTeamRankingSet = null;
-        Rankings instance = null;
-        instance.setTeamRankingSet(mTeamRankingSet);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        Tournament.getTournament().loadXML(new File("./test/team.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+
+        TeamRankingsSet result = instance.getTeamRankingSet();
+        assertTrue(result instanceof TeamRankingsSet);
+
+        instance.setTeamRankingSet(null);
+        result = instance.getTeamRankingSet();
+        assertNull(result);
     }
 
     /**
@@ -90,12 +103,11 @@ public class RankingsNGTest {
     @Test
     public void testGetClanRankingSet() {
         System.out.println("getClanRankingSet");
-        Rankings instance = null;
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
         ClanRankingsSet expResult = null;
         ClanRankingsSet result = instance.getClanRankingSet();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result instanceof ClanRankingsSet);
+
     }
 
     /**
@@ -104,11 +116,14 @@ public class RankingsNGTest {
     @Test
     public void testSetClanRankingSet() {
         System.out.println("setClanRankingSet");
-        ClanRankingsSet mClanRankingSet = null;
-        Rankings instance = null;
-        instance.setClanRankingSet(mClanRankingSet);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+
+        ClanRankingsSet result = instance.getClanRankingSet();
+        assertTrue(result instanceof ClanRankingsSet);
+
+        instance.setClanRankingSet(null);
+        result = instance.getClanRankingSet();
+        assertNull(result);
     }
 
     /**
@@ -117,12 +132,12 @@ public class RankingsNGTest {
     @Test
     public void testGetGroupRanking() {
         System.out.println("getGroupRanking");
-        Rankings instance = null;
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
         HashMap expResult = null;
         HashMap result = instance.getGroupRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result instanceof HashMap);
+
     }
 
     /**
@@ -132,10 +147,15 @@ public class RankingsNGTest {
     public void testSetGroupRanking() {
         System.out.println("setGroupRanking");
         HashMap<Group, IndivRanking> mGroupRanking = null;
-        Rankings instance = null;
-        instance.setGroupRanking(mGroupRanking);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+        HashMap expResult = null;
+        HashMap result = instance.getGroupRanking();
+        assertTrue(result instanceof HashMap);
+
+        instance.setGroupRanking(null);
+        result = instance.getGroupRanking();
+        assertNull(result);
     }
 
     /**
@@ -144,12 +164,11 @@ public class RankingsNGTest {
     @Test
     public void testGetCategoryIndivRanking() {
         System.out.println("getCategoryIndivRanking");
-        Rankings instance = null;
+        Tournament.getTournament().loadXML(new File("./test/category.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
         HashMap expResult = null;
         HashMap result = instance.getCategoryIndivRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNotNull(result);
     }
 
     /**
@@ -158,11 +177,14 @@ public class RankingsNGTest {
     @Test
     public void testSetCategoryIndivRanking() {
         System.out.println("setCategoryIndivRanking");
-        HashMap<Category, IndivRanking> mCategoryIndivRanking = null;
-        Rankings instance = null;
-        instance.setCategoryIndivRanking(mCategoryIndivRanking);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/category.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+        HashMap expResult = null;
+        HashMap result = instance.getCategoryIndivRanking();
+        assertNotNull(result);
+        instance.setCategoryIndivRanking(expResult);
+        result = instance.getCategoryIndivRanking();
+        assertNull(result);
     }
 
     /**
@@ -171,12 +193,17 @@ public class RankingsNGTest {
     @Test
     public void testGetCategoryTeamRanking() {
         System.out.println("getCategoryTeamRanking");
-        Rankings instance = null;
-        HashMap expResult = null;
+
+        HashMap<Group, IndivRanking> mGroupRanking = null;
+        Tournament.getTournament().loadXML(new File("./test/category.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+
         HashMap result = instance.getCategoryTeamRanking();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result instanceof HashMap);
+
+        instance.setGroupRanking(null);
+        result = instance.getGroupRanking();
+        assertNull(result);
     }
 
     /**
@@ -185,11 +212,18 @@ public class RankingsNGTest {
     @Test
     public void testSetCategoryTeamRanking() {
         System.out.println("setCategoryTeamRanking");
-        HashMap<Category, TeamRanking> mCategoryTeamRanking = null;
-        Rankings instance = null;
-        instance.setCategoryTeamRanking(mCategoryTeamRanking);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        HashMap<Group, IndivRanking> mGroupRanking = null;
+        Tournament.getTournament().loadXML(new File("./test/category.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+
+        HashMap result = instance.getCategoryTeamRanking();
+        assertTrue(result instanceof HashMap);
+
+        instance.setGroupRanking(null);
+        result = instance.getGroupRanking();
+        assertNull(result);
+
     }
 
     /**
@@ -198,12 +232,16 @@ public class RankingsNGTest {
     @Test
     public void testGetPoolIndivRankings() {
         System.out.println("getPoolIndivRankings");
-        Rankings instance = null;
-        HashMap expResult = null;
+
+        Tournament.getTournament().loadXML(new File("./test/pools.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+
         HashMap result = instance.getPoolIndivRankings();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result instanceof HashMap);
+
+        instance.setPoolIndivRankings(null);
+        result = instance.getPoolIndivRankings();
+        assertNull(result);
     }
 
     /**
@@ -212,11 +250,15 @@ public class RankingsNGTest {
     @Test
     public void testSetPoolIndivRankings() {
         System.out.println("setPoolIndivRankings");
-        HashMap<Pool, IndivRankingsSet> mPoolIndivRankings = null;
-        Rankings instance = null;
-        instance.setPoolIndivRankings(mPoolIndivRankings);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/pools.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+
+        HashMap result = instance.getPoolIndivRankings();
+        assertTrue(result instanceof HashMap);
+
+        instance.setPoolIndivRankings(null);
+        result = instance.getPoolIndivRankings();
+        assertNull(result);
     }
 
     /**
@@ -225,12 +267,15 @@ public class RankingsNGTest {
     @Test
     public void testGetPoolTeamRankings() {
         System.out.println("getPoolTeamRankings");
-        Rankings instance = null;
-        HashMap expResult = null;
+        Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+
         HashMap result = instance.getPoolTeamRankings();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertTrue(result instanceof HashMap);
+
+        instance.setPoolTeamRankings(null);
+        result = instance.getPoolTeamRankings();
+        assertNull(result);
     }
 
     /**
@@ -239,11 +284,15 @@ public class RankingsNGTest {
     @Test
     public void testSetPoolTeamRankings() {
         System.out.println("setPoolTeamRankings");
-        HashMap<Pool, TeamRankingsSet> mPoolTeamRankings = null;
-        Rankings instance = null;
-        instance.setPoolTeamRankings(mPoolTeamRankings);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
+        Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
+
+        HashMap result = instance.getPoolTeamRankings();
+        assertTrue(result instanceof HashMap);
+
+        instance.setPoolTeamRankings(null);
+        result = instance.getPoolTeamRankings();
+        assertNull(result);
     }
 
     /**
@@ -252,10 +301,48 @@ public class RankingsNGTest {
     @Test
     public void testUpdate() {
         System.out.println("update");
-        Rankings instance = null;
+        Round r = Tournament.getTournament().getRound(0);
+        Rankings instance = r.getRankings(false);
         instance.update();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Element el = instance.getXMLElement();
+
+        Document doc1 = new Document(el);
+
+        XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+        OutputStream output = new OutputStream() {
+            private StringBuilder string = new StringBuilder();
+
+            @Override
+            public void write(int b) throws IOException {
+                this.string.append((char) b);
+            }
+
+            //Netbeans IDE automatically overrides this toString()
+            public String toString() {
+                return this.string.toString();
+            }
+        };
+        try {
+            sortie.output(doc1, output);
+        } catch (IOException ioe) {
+            fail("Exception while comparing string");
+        }
+        String s1 = output.toString();
+
+        CoachMatch cm = (CoachMatch) Tournament.getTournament().getRound(0).getMatch(0);
+        Criterion c = Tournament.getTournament().getParams().getCriterion(0);
+        cm.getValues().get(c).setValue1(10);
+        instance.update();
+        Element el2 = instance.getXMLElement();
+
+        Document doc2 = new Document(el2);
+        try {
+            sortie.output(doc2, output);
+        } catch (IOException ioe) {
+            fail("Exception while comparing string");
+        }
+        String s2 = output.toString();
+        assertNotEquals(s1, s2);
     }
 
     /**
@@ -265,11 +352,10 @@ public class RankingsNGTest {
     public void testCreateRankings() {
         System.out.println("createRankings");
         int rNumber = 0;
-        Tournament tour = null;
-        Rankings instance = null;
+        Tournament tour = Tournament.getTournament();
+        Rankings instance = tour.getRound(rNumber).getRankings(false);
         instance.createRankings(rNumber, tour);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
     /**
@@ -278,12 +364,13 @@ public class RankingsNGTest {
     @Test
     public void testGetIndivRankingSet() {
         System.out.println("getIndivRankingSet");
-        Rankings instance = null;
-        IndivRankingsSet expResult = null;
+        int rNumber = 0;
+        Tournament tour = Tournament.getTournament();
+        Rankings instance = tour.getRound(rNumber).getRankings(false);
+
         IndivRankingsSet result = instance.getIndivRankingSet();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertTrue(result instanceof IndivRankingsSet);
     }
 
     /**
@@ -293,10 +380,14 @@ public class RankingsNGTest {
     public void testSetIndivRankingSet() {
         System.out.println("setIndivRankingSet");
         IndivRankingsSet mIndivRankingSet = null;
-        Rankings instance = null;
+
+        Tournament tour = Tournament.getTournament();
+        Rankings instance = tour.getRound(0).getRankings(false);
+        IndivRankingsSet result = instance.getIndivRankingSet();
+        assertTrue(result instanceof IndivRankingsSet);
+
         instance.setIndivRankingSet(mIndivRankingSet);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertNull(instance.getIndivRankingSet());
     }
 
     /**
@@ -305,12 +396,19 @@ public class RankingsNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        Rankings instance = null;
-        Element expResult = null;
-        Element result = instance.getXMLElement();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int rNumber = 0;
+        Tournament tour = Tournament.getTournament();
+
+        Rankings instance = tour.getRound(rNumber).getRankings(false);
+
+        Element expResult = instance.getXMLElement();
+
+        assertNotNull(expResult);
+
+        instance.setXMLElement(expResult);
+
+        Element expResult2 = instance.getXMLElement();
+        assertEquals(expResult.toString(), expResult2.toString());
     }
 
     /**
@@ -319,11 +417,69 @@ public class RankingsNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        Element e = null;
-        Rankings instance = null;
-        instance.setXMLElement(e);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Tournament tour = Tournament.getTournament();
+
+        Rankings instance = tour.getRound(0).getRankings(false);
+        instance.update();
+
+        Element expResult = instance.getXMLElement();
+
+        assertNotNull(expResult);
+
+        instance.setXMLElement(expResult);
+        instance.update();
+
+        Element expResult2 = instance.getXMLElement();
+
+        Document doc1 = new Document(expResult);
+        Document doc2 = new Document(expResult2);
+
+        XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+        OutputStream output1 = new OutputStream() {
+            private StringBuilder string = new StringBuilder();
+
+            @Override
+            public void write(int b) throws IOException {
+                this.string.append((char) b);
+            }
+
+            //Netbeans IDE automatically overrides this toString()
+            public String toString() {
+                return this.string.toString();
+            }
+        };
+        OutputStream output2 = new OutputStream() {
+            private StringBuilder string = new StringBuilder();
+
+            @Override
+            public void write(int b) throws IOException {
+                this.string.append((char) b);
+            }
+
+            //Netbeans IDE automatically overrides this toString()
+            public String toString() {
+                return this.string.toString();
+            }
+        };
+        try {
+            sortie.output(doc1, output1);
+        } catch (IOException ioe) {
+            fail("Exception while comparing string");
+        }
+        String s1 = output1.toString();
+
+        try {
+            sortie.output(doc2, output2);
+        } catch (IOException ioe) {
+            fail("Exception while comparing string");
+        }
+        String s2 = output2.toString();
+
+        System.out.println("S1 ---");
+        System.out.println(s1);
+        System.out.println("S2 ---");
+        System.out.println(s2);
+        assertEquals(s1, s2);
     }
-    
+
 }

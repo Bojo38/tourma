@@ -461,7 +461,7 @@ public class TeamMatchNGTest {
 
                 assertEquals(cm1.getCompetitor1(), cm2.getCompetitor1());
                 assertEquals(cm1.getCompetitor2(), cm2.getCompetitor2());
-                
+
             } else {
                 fail("Different number of coachmatch");
                 break;
@@ -500,7 +500,7 @@ public class TeamMatchNGTest {
 
                 assertEquals(cm1.getCompetitor1(), cm2.getCompetitor1());
                 assertEquals(cm1.getCompetitor2(), cm2.getCompetitor2());
-                
+
             } else {
                 fail("Different number of coachmatch");
                 break;
@@ -768,7 +768,7 @@ public class TeamMatchNGTest {
     @Test
     public void testGetValue_3args_1() {
         System.out.println("getValue");
-        
+
         int rankingType = 0;
         boolean teamVictory = true;
         TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
@@ -883,14 +883,14 @@ public class TeamMatchNGTest {
     @Test
     public void testGetValue_Formula_Competitor() {
         System.out.println("getValue");
-        Formula form = null;
-        Competitor c = null;
-        TeamMatch instance = null;
-        int expResult = 0;
+        Formula form = Tournament.getTournament().getParams().getFormula(0);
+
+        TeamMatch instance = (TeamMatch) Tournament.getTournament().getRound(0).getMatch(0);
+        Competitor c = instance.getCompetitor2();
+        int expResult = 4;
         int result = instance.getValue(form, c);
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
     }
 
 }

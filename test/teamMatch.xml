@@ -362,7 +362,7 @@
         <Value Name="Sorties" Value1="1" Value2="6" />
         <Value Name="Double crânes" Value1="2" Value2="8" />
         <Value Name="Aggressions" Value1="4" Value2="0" />
-        <Value Name="Formule 0" Value1="0" Value2="0" />
+        <Value Name="Formule 0" Value1="0" Value2="4" />
       </Match>
       <Match Coach1="lauth81" Coach2="Phifoe" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
         <Value Name="Touchdowns" Value1="1" Value2="2" />

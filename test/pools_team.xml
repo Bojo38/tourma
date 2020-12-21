@@ -2488,7 +2488,7 @@
           <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="15" />
           <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="16" />
         </TeamRanking>
-        <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+        <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
           <Position Team="Scotland" Rank1="12" Rank2="0" Rank3="1000000" Rank4="1128" Rank5="872" Rank="1" />
           <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
           <Position Team="Austria" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
@@ -2503,8 +2503,8 @@
           <Position Team="Sweden" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="12" />
           <Position Team="Wales" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="13" />
           <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="14" />
-        </TeamRankingSetForCup>
-        <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+        </TeamRankingForCup>
+        <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
           <Position Team="Scotland" Rank1="12" Rank2="0" Rank3="1000000" Rank4="1128" Rank5="872" Rank="1" />
           <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
           <Position Team="Sweden" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
@@ -2521,7 +2521,7 @@
           <Position Team="Switzerland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="14" />
           <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="15" />
           <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="16" />
-        </TeamRankingSetForPool>
+        </TeamRankingForPool>
         <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
           <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Criteria="Double crânes" Subtype="0" Type="">
             <Position Team="Scotland" Rank1="1002012" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
@@ -2893,18 +2893,18 @@
             <Position Team="Austria" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
           </TeamRanking>
-          <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
             <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Germany" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Austria" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForCup>
-          <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          </TeamRankingForCup>
+          <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
             <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Germany" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Austria" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForPool>
+          </TeamRankingForPool>
           <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
             <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Criteria="Double crânes" Subtype="0" Type="">
               <Position Team="NONE" Rank1="15" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
@@ -3019,18 +3019,18 @@
             <Position Team="Denmark" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="4" />
           </TeamRanking>
-          <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
             <Position Team="Scotland" Rank1="12" Rank2="0" Rank3="1000000" Rank4="1128" Rank5="872" Rank="1" />
             <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Denmark" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="4" />
-          </TeamRankingSetForCup>
-          <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          </TeamRankingForCup>
+          <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
             <Position Team="Scotland" Rank1="12" Rank2="0" Rank3="1000000" Rank4="1128" Rank5="872" Rank="1" />
             <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Denmark" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="4" />
-          </TeamRankingSetForPool>
+          </TeamRankingForPool>
           <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
             <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Criteria="Double crânes" Subtype="0" Type="">
               <Position Team="Scotland" Rank1="1002012" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
@@ -3145,18 +3145,18 @@
             <Position Team="Spain" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Switzerland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
           </TeamRanking>
-          <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
             <Position Team="Italy" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Belgium" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Spain" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Switzerland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForCup>
-          <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          </TeamRankingForCup>
+          <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
             <Position Team="Italy" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Belgium" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Spain" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Switzerland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForPool>
+          </TeamRankingForPool>
           <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
             <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Criteria="Double crânes" Subtype="0" Type="">
               <Position Team="Italy" Rank1="10" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
@@ -3271,18 +3271,18 @@
             <Position Team="Wales" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Netherlands" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
           </TeamRanking>
-          <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
             <Position Team="Sweden" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Finland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Wales" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Netherlands" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForCup>
-          <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          </TeamRankingForCup>
+          <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Victory_Team="false">
             <Position Team="Sweden" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Finland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Wales" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Netherlands" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForPool>
+          </TeamRankingForPool>
           <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
             <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="false" Details="" Criteria="Double crânes" Subtype="0" Type="">
               <Position Team="Sweden" Rank1="10" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
@@ -5034,7 +5034,7 @@
           <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="15" />
           <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="16" />
         </TeamRanking>
-        <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+        <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
           <Position Team="Scotland" Rank1="12" Rank2="0" Rank3="1000000" Rank4="1128" Rank5="872" Rank="1" />
           <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
           <Position Team="Austria" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
@@ -5049,8 +5049,8 @@
           <Position Team="Sweden" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="12" />
           <Position Team="Wales" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="13" />
           <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="14" />
-        </TeamRankingSetForCup>
-        <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+        </TeamRankingForCup>
+        <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
           <Position Team="Scotland" Rank1="12" Rank2="0" Rank3="1000000" Rank4="1128" Rank5="872" Rank="1" />
           <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
           <Position Team="Sweden" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
@@ -5067,7 +5067,7 @@
           <Position Team="Switzerland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="14" />
           <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="15" />
           <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="16" />
-        </TeamRankingSetForPool>
+        </TeamRankingForPool>
         <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
           <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Criteria="Double crânes" Subtype="0" Type="">
             <Position Team="Scotland" Rank1="1002012" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
@@ -5439,18 +5439,18 @@
             <Position Team="Austria" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
           </TeamRanking>
-          <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
             <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Germany" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Austria" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForCup>
-          <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          </TeamRankingForCup>
+          <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
             <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Germany" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Austria" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="France" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForPool>
+          </TeamRankingForPool>
           <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
             <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Criteria="Double crânes" Subtype="0" Type="">
               <Position Team="NONE" Rank1="15" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
@@ -5565,18 +5565,18 @@
             <Position Team="Denmark" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="4" />
           </TeamRanking>
-          <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
             <Position Team="Scotland" Rank1="12" Rank2="0" Rank3="1000000" Rank4="1128" Rank5="872" Rank="1" />
             <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Denmark" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="4" />
-          </TeamRankingSetForCup>
-          <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          </TeamRankingForCup>
+          <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
             <Position Team="Scotland" Rank1="12" Rank2="0" Rank3="1000000" Rank4="1128" Rank5="872" Rank="1" />
             <Position Team="NONE" Rank1="10" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Denmark" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="England" Rank1="0" Rank2="12" Rank3="1" Rank4="872" Rank5="1128" Rank="4" />
-          </TeamRankingSetForPool>
+          </TeamRankingForPool>
           <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
             <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Criteria="Double crânes" Subtype="0" Type="">
               <Position Team="Scotland" Rank1="1002012" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
@@ -5691,18 +5691,18 @@
             <Position Team="Spain" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Switzerland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
           </TeamRanking>
-          <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
             <Position Team="Italy" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Belgium" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Spain" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Switzerland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForCup>
-          <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          </TeamRankingForCup>
+          <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
             <Position Team="Italy" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Belgium" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Spain" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Switzerland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForPool>
+          </TeamRankingForPool>
           <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
             <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Criteria="Double crânes" Subtype="0" Type="">
               <Position Team="Italy" Rank1="10" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
@@ -5817,18 +5817,18 @@
             <Position Team="Wales" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Netherlands" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
           </TeamRanking>
-          <TeamRankingSetForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          <TeamRankingForCup Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
             <Position Team="Sweden" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Finland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Wales" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Netherlands" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForCup>
-          <TeamRankingSetForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          </TeamRankingForCup>
+          <TeamRankingForPool Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Victory_Team="false">
             <Position Team="Sweden" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
             <Position Team="Finland" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
             <Position Team="Wales" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
             <Position Team="Netherlands" Rank1="5" Rank2="5" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
-          </TeamRankingSetForPool>
+          </TeamRankingForPool>
           <TeamAnnexRanking Criteria="Double crânes" Subtype="Pos">
             <AnnexTeamRanking Rank1="1" Rank2="2" Rank3="3" Rank4="4" Rank5="5" Round="0" RoundOnly="true" Details="" Criteria="Double crânes" Subtype="0" Type="">
               <Position Team="Sweden" Rank1="10" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />

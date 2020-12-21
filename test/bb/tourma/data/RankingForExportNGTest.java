@@ -5,7 +5,10 @@
  */
 package bb.tourma.data;
 
+import bb.tourma.data.ranking.IndivRanking;
 import bb.tourma.data.ranking.Ranking;
+import bb.tourma.utility.StringConstants;
+import java.io.File;
 import org.jdom.Element;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
@@ -20,21 +23,31 @@ import org.testng.annotations.Test;
  */
 public class RankingForExportNGTest {
     
+    static Tournament tour;
+    static Round round;
+    static RankingForExport instance;
+    
     public RankingForExportNGTest() {
     }
-
+    
     @BeforeClass
     public static void setUpClass() throws Exception {
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+        tour = Tournament.getTournament();
+        round = tour.getRound(0);
+        instance = new RankingForExport(RankingForExport.CS_Individual,
+                RankingForExport.CS_General,
+                StringConstants.CS_NULL, round.getRankings(false).getIndivRankingSet().getRanking(), tour.getRankingTypes(false));
     }
-
+    
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-
+    
     @BeforeMethod
     public void setUpMethod() throws Exception {
     }
-
+    
     @AfterMethod
     public void tearDownMethod() throws Exception {
     }
@@ -45,12 +58,9 @@ public class RankingForExportNGTest {
     @Test
     public void testGetUID() {
         System.out.println("getUID");
-        RankingForExport instance = null;
-        int expResult = 0;
+        
         int result = instance.getUID();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, 1);
     }
 
     /**
@@ -59,11 +69,12 @@ public class RankingForExportNGTest {
     @Test
     public void testSetUID() {
         System.out.println("setUID");
-        int UID = 0;
-        RankingForExport instance = null;
-        instance.setUID(UID);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        int result = instance.getUID();
+        assertEquals(result, 1);
+        
+        instance.setUID(17);
+        result = instance.getUID();
+        assertEquals(result, 17);
     }
 
     /**
@@ -72,12 +83,10 @@ public class RankingForExportNGTest {
     @Test
     public void testGetCriterion() {
         System.out.println("getCriterion");
-        RankingForExport instance = null;
-        Criterion expResult = null;
+        
         Criterion result = instance.getCriterion();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result.getAccronym(), "???");
+        
     }
 
     /**
@@ -86,11 +95,13 @@ public class RankingForExportNGTest {
     @Test
     public void testSetCriterion() {
         System.out.println("setCriterion");
-        Criterion c = null;
-        RankingForExport instance = null;
-        instance.setCriterion(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Criterion result = instance.getCriterion();
+        assertEquals(result.getAccronym(), "???");
+        
+        Criterion crit = new Criterion("toto");
+        instance.setCriterion(crit);
+        result = instance.getCriterion();
+        assertEquals(result.getAccronym(), "toto");
     }
 
     /**
@@ -99,12 +110,9 @@ public class RankingForExportNGTest {
     @Test
     public void testGetFormula() {
         System.out.println("getFormula");
-        RankingForExport instance = null;
-        Formula expResult = null;
+        
         Formula result = instance.getFormula();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result.getName(), "???");
     }
 
     /**
@@ -113,11 +121,14 @@ public class RankingForExportNGTest {
     @Test
     public void testSetFormula() {
         System.out.println("setFormula");
-        Formula c = null;
-        RankingForExport instance = null;
-        instance.setFormula(c);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Formula result = instance.getFormula();
+        assertEquals(result.getName(), "???");
+        
+        Formula f = new Formula("Toto");
+        instance.setFormula(f);
+        
+        result = instance.getFormula();
+        assertEquals(result, f);
     }
 
     /**
@@ -167,12 +178,10 @@ public class RankingForExportNGTest {
     @Test
     public void testGetRank() {
         System.out.println("getRank");
-        RankingForExport instance = null;
-        Ranking expResult = null;
-        Ranking result = instance.getRank();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        Ranking r = instance.getRank();
+        
+        assertNotNull(r);
     }
 
     /**
@@ -181,11 +190,16 @@ public class RankingForExportNGTest {
     @Test
     public void testSetRank() {
         System.out.println("setRank");
-        Ranking mRank = null;
-        RankingForExport instance = null;
-        instance.setRank(mRank);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Ranking r = instance.getRank();
+        
+        assertNotNull(r);
+        
+        Ranking r2 = round.getRankings(true).getIndivRankingSet().getRanking();
+        instance.setRank(r2);
+        assertEquals(instance.getRank(), r2);
+        
+        instance.setRank(round.getRankings(false).getIndivRankingSet().getRanking());
+        
     }
 
     /**
@@ -194,12 +208,9 @@ public class RankingForExportNGTest {
     @Test
     public void testGetName() {
         System.out.println("getName");
-        RankingForExport instance = null;
-        String expResult = "";
+        
         String result = instance.getName();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, "INDIVIDUAL");
     }
 
     /**
@@ -208,11 +219,13 @@ public class RankingForExportNGTest {
     @Test
     public void testSetName() {
         System.out.println("setName");
-        String mName = "";
-        RankingForExport instance = null;
-        instance.setName(mName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String result = instance.getName();
+        assertEquals(result, "INDIVIDUAL");
+        
+        instance.setName("Name");
+        
+        result = instance.getName();
+        assertEquals(result, "Name");
     }
 
     /**
@@ -275,12 +288,9 @@ public class RankingForExportNGTest {
     @Test
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        RankingForExport instance = null;
-        int expResult = 0;
+       
         int result = instance.getRowCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, 0);
     }
 
     /**
@@ -320,12 +330,9 @@ public class RankingForExportNGTest {
     @Test
     public void testGetDetail() {
         System.out.println("getDetail");
-        RankingForExport instance = null;
-        String expResult = "";
+        
         String result = instance.getDetail();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(result, "");
     }
 
     /**
@@ -334,11 +341,14 @@ public class RankingForExportNGTest {
     @Test
     public void testSetDetail() {
         System.out.println("setDetail");
-        String d = "";
-        RankingForExport instance = null;
-        instance.setDetail(d);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        String result = instance.getDetail();
+        assertEquals(result, "");
+        
+        instance.setDetail("Toto");
+        
+        result = instance.getDetail();
+        assertEquals(result, "Toto");
     }
     
 }
