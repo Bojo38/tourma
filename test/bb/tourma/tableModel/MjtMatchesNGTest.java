@@ -267,7 +267,7 @@ public class MjtMatchesNGTest {
         boolean expResult = false;
         for (int row = 0; row < instance.getRowCount(); row++) {
             for (int col = 0; col < instance.getColumnCount(); col++) {
-                if ((col == 0) || (col == 1) || (col == 4) || (col > (3 + tour.getParams().getCriteriaCount() * 2))) {
+                if ((col == 0) || (col == 1) || (col == 4) || (col >= (3 + tour.getParams().getCriteriaCount() * 2))) {
                     expResult = false;
                 } else {
                     expResult = true;

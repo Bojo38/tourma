@@ -49,6 +49,8 @@ import bb.tourma.views.JPNCup;
 import bb.tourma.views.report.JdgGlobal;
 import bb.tourma.views.report.JdgRanking;
 import bb.tourma.views.report.JdgRound;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 /**
  *
@@ -351,6 +353,13 @@ public final class JPNRound extends javax.swing.JPanel {
         } else {
             model = new MjtMatches(mRound.getCoachMatchs(), locked, mTournament.getParams().isTeamTournament(), true, mNafOnly);
         }
+        
+        model.addTableModelListener(new TableModelListener() {
+            @Override
+            public void tableChanged(TableModelEvent e) {
+                MainFrame.getMainFrame().updateMenus();
+            }
+        });
 
         jtbMatches.setModel(model);
         jtbMatches

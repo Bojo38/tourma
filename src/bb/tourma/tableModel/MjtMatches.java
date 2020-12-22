@@ -426,14 +426,17 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                         }
                         break;
                     default:
-                        final int index = (col - 3) / 2;
-                        val = m.getValue(Tournament.getTournament().getParams().getCriterion(index));
-                        if ((col - 3) % 2 == 0) {
-                            val.setValue1(Integer.parseInt(tmp));
-                            updateFormulasValues(row + mMin, 1);
-                        } else {
-                            val.setValue2(Integer.parseInt(tmp));
-                            updateFormulasValues(row + mMin, 2);
+                        if ((col >= 5)
+                                && (col < (3 + Tournament.getTournament().getParams().getCriteriaCount() * 2))) {
+                            final int index = (col - 3) / 2;
+                            val = m.getValue(Tournament.getTournament().getParams().getCriterion(index));
+                            if ((col - 3) % 2 == 0) {
+                                val.setValue1(Integer.parseInt(tmp));
+                                updateFormulasValues(row + mMin, 1);
+                            } else {
+                                val.setValue2(Integer.parseInt(tmp));
+                                updateFormulasValues(row + mMin, 2);
+                            }
                         }
                 }
             }
@@ -463,7 +466,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         }
 
         fireTableDataChanged();
-        MainFrame.getMainFrame().updateMenus();
+        //MainFrame.getMainFrame().updateMenus();
 
         Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).setRankingsToUpdate();
 
@@ -483,16 +486,17 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
 
+       
         boolean result = true;
         if (mLocked) {
             result = false;
         } else {
             if (mTeamTournament) {
-                if ((col == 1) || (col == 2) || (col == 5) || (col == 6) || (col == 0) || (col > 5 + Tournament.getTournament().getParams().getCriteriaCount() * 2)) {
+                if ((col == 1) || (col == 2) || (col == 5) || (col == 6) || (col == 0) || (col >= 5 + Tournament.getTournament().getParams().getCriteriaCount() * 2)) {
                     result = false;
                 }
             } else {
-                if ((col == 1) || (col == 4) || (col == 0) || (col > 3 + Tournament.getTournament().getParams().getCriteriaCount() * 2)) {
+                if ((col == 1) || (col == 4) || (col == 0) || (col >= 3 + Tournament.getTournament().getParams().getCriteriaCount() * 2)) {
                     result = false;
                 }
             }
@@ -866,7 +870,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             boolean bSpartak = false;
 
             String starfish[] = {"Tulkas", "jojo", "jojo_starfish", "Barta"};
-            String spartak[] = {"bibi", "BiBi","magikmoon", "buldogr", "shogun","Shogun", "shogunfrance", "quizz", "gally", "elyoukey", "sebco","Sebco", "SebCo"};
+            String spartak[] = {"bibi", "BiBi", "magikmoon", "buldogr", "shogun", "Shogun", "shogunfrance", "quizz", "gally", "elyoukey", "sebco", "Sebco", "SebCo"};
 
             for (String nom : starfish) {
                 if (value instanceof String) {
@@ -892,15 +896,12 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                 if (Tournament.getTournament().getParams().isTeamTournament()) {
                     if (column == 2 || column == 5) {
                         JLabel obj = new JLabel();
-                        
+
                         ImageIcon snow;
-                        if (bSpartak)
-                        {
-                            snow=new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan spartak.png"));
-                        }
-                        else
-                        {
-                             snow=new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan starfish.png"));
+                        if (bSpartak) {
+                            snow = new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan spartak.png"));
+                        } else {
+                            snow = new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan starfish.png"));
                         }
                         ImageIcon icon = ImageTreatment.resize(snow, 30, 30);
                         obj.setIcon(icon);
@@ -914,21 +915,18 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                     if (column == 1 || column == 4) {
                         JLabel obj = new JLabel();
 
-                       ImageIcon snow;
-                        if (bSpartak)
-                        {
-                            snow=new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan spartak.png"));
-                        }
-                        else
-                        {
-                             snow=new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan starfish.png"));
+                        ImageIcon snow;
+                        if (bSpartak) {
+                            snow = new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan spartak.png"));
+                        } else {
+                            snow = new ImageIcon(this.getClass().getResource("/bb/tourma/images/flags/Clan starfish.png"));
                         }
                         ImageIcon icon = ImageTreatment.resize(snow, 30, 30);
                         obj.setIcon(icon);
                         obj.setText((String) value);
                         obj.setOpaque(true);
                         obj.setBackground(bkg);
-                         obj.setHorizontalAlignment(JLabel.CENTER);
+                        obj.setHorizontalAlignment(JLabel.CENTER);
                         return obj;
                     }
                 }
