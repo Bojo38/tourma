@@ -251,7 +251,7 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
         if (getObject() instanceof Clan) {
             final Clan t = (Clan) getObject();
             ic.setAttribute(new Attribute(StringConstants.CS_CLAN, t.getName()));
-            if (Tournament.getTournament().getParams().isTeamTournament()) {
+            /*if (Tournament.getTournament().getParams().isTeamTournament()) {
                 for (int k = 0; k < Tournament.getTournament().getTeamsCount(); k++) {
                     if (Tournament.getTournament().getTeam(k).getClan() == t) {
                         final Element m = new Element(StringConstants.CS_MEMBER);
@@ -267,7 +267,7 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
                         ic.addContent(m);
                     }
                 }
-            }
+            }*/
             if ((Tournament.getTournament().getParams().isUseImage()) && (t.getPicture() != null)) {
                 Element image = new Element(StringConstants.CS_PICTURE);
                 if (t.getPicture() != null) {

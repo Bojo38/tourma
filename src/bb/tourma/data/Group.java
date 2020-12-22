@@ -15,12 +15,13 @@ import java.util.logging.Logger;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
+import java.util.TreeMap;
 
 /**
  *
  * @author Administrateur
  */
-public class Group implements IXMLExport, Serializable {
+public class Group implements Comparable,IXMLExport, Serializable {
 
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
@@ -58,7 +59,7 @@ public class Group implements IXMLExport, Serializable {
     /**
      *
      */
-    private final HashMap<Group, GroupPoints> opponentModificationPoints = new HashMap<>();
+    private final TreeMap<Group, GroupPoints> opponentModificationPoints = new TreeMap<>();
 
     public void pull(Group group) {
         this.UID = group.UID;
@@ -323,6 +324,17 @@ public class Group implements IXMLExport, Serializable {
      */
     public boolean containsRoster(RosterType rt) {
         return mRosters.contains(rt);
+    }
+
+    @Override
+    public int compareTo(final Object obj) {
+        int result;
+        result = this.getName().compareTo("");
+        if (obj instanceof Group) {
+            Group g=(Group) obj;
+            result=this.getName().compareTo(g.getName());
+        } 
+        return result;
     }
 
 }

@@ -13,6 +13,7 @@ import bb.tourma.data.Tournament;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 import org.jdom.Element;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
@@ -123,7 +124,7 @@ public class IndivRankingsSetNGTest {
         Tournament tour = Tournament.getTournament();
         IndivRankingsSet instance = tour.getRound(0).getRankings(false).getIndivRankingSet();
 
-        HashMap<Criterion, AnnexIndivRanking> result = instance.getAnnexPosRanking();
+        TreeMap<Criterion, AnnexIndivRanking> result = instance.getAnnexPosRanking();
         AnnexIndivRanking res = result.get(tour.getParams().getCriterion(0));
         assertNotNull(res);
     }
@@ -137,7 +138,7 @@ public class IndivRankingsSetNGTest {
         Tournament tour = Tournament.getTournament();
         IndivRankingsSet instance = tour.getRound(0).getRankings(false).getIndivRankingSet();
 
-        HashMap<Criterion, AnnexIndivRanking> result = instance.getAnnexNegRanking();
+        TreeMap<Criterion, AnnexIndivRanking> result = instance.getAnnexNegRanking();
         AnnexIndivRanking res = result.get(tour.getParams().getCriterion(0));
         assertNotNull(res);
     }
@@ -151,7 +152,7 @@ public class IndivRankingsSetNGTest {
         Tournament tour = Tournament.getTournament();
         IndivRankingsSet instance = tour.getRound(0).getRankings(false).getIndivRankingSet();
 
-        HashMap<Criterion, AnnexIndivRanking> result = instance.getAnnexDifRanking();
+        TreeMap<Criterion, AnnexIndivRanking> result = instance.getAnnexDifRanking();
         AnnexIndivRanking res = result.get(tour.getParams().getCriterion(0));
         assertNotNull(res);
     }
@@ -165,7 +166,7 @@ public class IndivRankingsSetNGTest {
         Tournament tour = Tournament.getTournament();
         IndivRankingsSet instance = tour.getRound(0).getRankings(false).getIndivRankingSet();
 
-        HashMap<Formula, AnnexIndivRanking> result = instance.getAnnexFormRanking();
+        TreeMap<Formula, AnnexIndivRanking> result = instance.getAnnexFormRanking();
         AnnexIndivRanking res = result.get(tour.getParams().getFormula(0));
         assertNotNull(res);
     }

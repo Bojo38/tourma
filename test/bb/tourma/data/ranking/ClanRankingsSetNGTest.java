@@ -12,6 +12,7 @@ import bb.tourma.data.Criterion;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 import org.jdom.Element;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
@@ -97,7 +98,7 @@ public class ClanRankingsSetNGTest {
         Tournament tour = Tournament.getTournament();
         ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
 
-        HashMap<Criterion, AnnexClanRanking> result = instance.getAnnexPosRanking();
+        TreeMap<Criterion, AnnexClanRanking> result = instance.getAnnexPosRanking();
         AnnexClanRanking res = result.get(tour.getParams().getCriterion(0));
         assertNotNull(res);
     }
@@ -111,7 +112,7 @@ public class ClanRankingsSetNGTest {
         Tournament tour = Tournament.getTournament();
         ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
 
-        HashMap<Criterion, AnnexClanRanking> result = instance.getAnnexNegRanking();
+        TreeMap<Criterion, AnnexClanRanking> result = instance.getAnnexNegRanking();
         AnnexClanRanking res = result.get(tour.getParams().getCriterion(0));
         assertNotNull(res);
     }
@@ -125,7 +126,7 @@ public class ClanRankingsSetNGTest {
         Tournament tour = Tournament.getTournament();
         ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
 
-        HashMap<Criterion, AnnexClanRanking> result = instance.getAnnexPosRanking();
+        TreeMap<Criterion, AnnexClanRanking> result = instance.getAnnexPosRanking();
         AnnexClanRanking res = result.get(tour.getParams().getCriterion(0));
         assertNotNull(res);
     }
@@ -139,7 +140,7 @@ public class ClanRankingsSetNGTest {
         Tournament tour = Tournament.getTournament();
         ClanRankingsSet instance = tour.getRound(0).getRankings(false).getClanRankingSet();
 
-        HashMap<Formula, AnnexClanRanking> result = instance.getAnnexFormRanking();
+        TreeMap<Formula, AnnexClanRanking> result = instance.getAnnexFormRanking();
         AnnexClanRanking res = result.get(tour.getParams().getFormula(0));
         assertNotNull(res);
     }

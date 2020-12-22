@@ -6,7 +6,7 @@
 package bb.tourma.data.ranking;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -135,28 +135,28 @@ public class TeamRankingsSet implements IXMLExport {
     }
 
     TeamRanking mRankingForCup;
-    HashMap<Criterion, AnnexTeamRanking> mAnnexPosRanking;
-    HashMap<Criterion, AnnexTeamRanking> mAnnexNegRanking;
-    HashMap<Criterion, AnnexTeamRanking> mAnnexDifRanking;
-    HashMap<Formula, AnnexTeamRanking> mAnnexFormRanking;
+    TreeMap<Criterion, AnnexTeamRanking> mAnnexPosRanking;
+    TreeMap<Criterion, AnnexTeamRanking> mAnnexNegRanking;
+    TreeMap<Criterion, AnnexTeamRanking> mAnnexDifRanking;
+    TreeMap<Formula, AnnexTeamRanking> mAnnexFormRanking;
 
     public TeamRanking getRanking() {
         return mRanking;
     }
 
-    public HashMap<Criterion, AnnexTeamRanking> getAnnexPosRanking() {
+    public TreeMap<Criterion, AnnexTeamRanking> getAnnexPosRanking() {
         return mAnnexPosRanking;
     }
 
-    public HashMap<Criterion, AnnexTeamRanking> getAnnexNegRanking() {
+    public TreeMap<Criterion, AnnexTeamRanking> getAnnexNegRanking() {
         return mAnnexNegRanking;
     }
 
-    public HashMap<Criterion, AnnexTeamRanking> getAnnexDifRanking() {
+    public TreeMap<Criterion, AnnexTeamRanking> getAnnexDifRanking() {
         return mAnnexDifRanking;
     }
 
-    public HashMap<Formula, AnnexTeamRanking> getAnnexFormRanking() {
+    public TreeMap<Formula, AnnexTeamRanking> getAnnexFormRanking() {
         return mAnnexFormRanking;
     }
 
@@ -170,9 +170,9 @@ public class TeamRankingsSet implements IXMLExport {
         mRankingForCup = new TeamRanking(tour.getParams().isTeamVictoryOnly(), rNumber, tour.getParams(), teams, roundOnly, true, false);
         mRankingForPool = new TeamRanking(tour.getParams().isTeamVictoryOnly(), rNumber, tour.getParams(), teams, roundOnly, false, true);
 
-        mAnnexPosRanking = new HashMap<>();
-        mAnnexNegRanking = new HashMap<>();
-        mAnnexDifRanking = new HashMap<>();
+        mAnnexPosRanking = new TreeMap<>();
+        mAnnexNegRanking = new TreeMap<>();
+        mAnnexDifRanking = new TreeMap<>();
 
         for (int i = 0; i < tour.getParams().getCriteriaCount(); i++) {
             Criterion crit = tour.getParams().getCriterion(i);
@@ -191,7 +191,7 @@ public class TeamRankingsSet implements IXMLExport {
             mAnnexDifRanking.put(crit, annexDif);
         }
 
-        mAnnexFormRanking = new HashMap<>();
+        mAnnexFormRanking = new TreeMap<>();
 
         for (int i = 0; i < tour.getParams().getFormulaCount(); i++) {
             Formula form = tour.getParams().getFormula(i);
@@ -286,7 +286,7 @@ public class TeamRankingsSet implements IXMLExport {
                 switch (subtype) {
                     case "Pos": {
                         if (mAnnexPosRanking == null) {
-                            mAnnexPosRanking = new HashMap<>();
+                            mAnnexPosRanking = new TreeMap<>();
                         }
                         AnnexTeamRanking ranking = new AnnexTeamRanking(child.getChild(StringConstants.CS_ANNEX_TEAM_RANKING));
                         ranking.setCriterion(crit);
@@ -296,7 +296,7 @@ public class TeamRankingsSet implements IXMLExport {
                     break;
                     case "Neg": {
                         if (mAnnexNegRanking == null) {
-                            mAnnexNegRanking = new HashMap<>();
+                            mAnnexNegRanking = new TreeMap<>();
                         }
                         AnnexTeamRanking ranking = new AnnexTeamRanking(child.getChild(StringConstants.CS_ANNEX_TEAM_RANKING));
                         ranking.setCriterion(crit);
@@ -306,7 +306,7 @@ public class TeamRankingsSet implements IXMLExport {
                     break;
                     case "Dif": {
                         if (mAnnexDifRanking == null) {
-                            mAnnexDifRanking = new HashMap<>();
+                            mAnnexDifRanking = new TreeMap<>();
                         }
                         AnnexTeamRanking ranking = new AnnexTeamRanking(child.getChild(StringConstants.CS_ANNEX_TEAM_RANKING));
                         ranking.setCriterion(crit);
@@ -321,7 +321,7 @@ public class TeamRankingsSet implements IXMLExport {
             if (formula_name != null) {
                 Formula form = Tournament.getTournament().getParams().getFormula(formula_name);
                 if (mAnnexFormRanking == null) {
-                    mAnnexFormRanking = new HashMap<>();
+                    mAnnexFormRanking = new TreeMap<>();
                 }
                 AnnexTeamRanking ranking = new AnnexTeamRanking(child.getChild(StringConstants.CS_ANNEX_TEAM_RANKING));
                 ranking.setFormula(form);

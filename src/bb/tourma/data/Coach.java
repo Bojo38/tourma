@@ -50,6 +50,18 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
         return UID;
     }
 
+    protected String mNafRoster;
+    
+    public void setNafRoster(String naf)
+    {
+        mNafRoster=naf;
+    }
+    
+    public String getNafRoster()
+    {
+        return mNafRoster;
+    }
+    
     /**
      * Unique ID Setter
      *

@@ -34,6 +34,7 @@ import org.jdom.input.SAXBuilder;
 import bb.tourma.MainFrame;
 import bb.tourma.data.Coach;
 import bb.tourma.data.RosterType;
+import static bb.tourma.data.RosterType.translate;
 
 /**
  *
@@ -560,5 +561,108 @@ public final class NAF {
         // our last action in the above loop was to switch d and p, so p now
         // actually has the most recent cost counts
         return 1.0f - ((float) p[n] / Math.max(other.length(), sa.length));
+    }
+    
+     /**
+     *
+     * @param source
+     * @return
+     */
+    public static String getNAFRoster(final String source) {
+        String result = translate("UNKNOWN");
+        if (source.equals(translate("AmazonKey"))) {
+            result = "Amazons";
+        }
+        if (translate("UnderworldKey").equals(source)) {
+            result = "Underworld";
+        }
+        if (translate("BretonianKey").equals(source)) {
+            result = "Bretonnians";
+        }
+        if (translate("ChaosKey").equals(source)) {
+            result = "Chaos";
+        }
+        if (source.equals(translate("ElfKey"))) {
+            result = "Elves";
+        }
+        if ((source.equals(translate("WoodElfKey"))) || (source.equals(translate("WoodElfKey2")))) {
+            result = "Wood Elves";
+        }
+        if ((source.equals(translate("DarkElfKey"))) || (source.equals(translate("DarkElfKey2")))) {
+            result = "Dark Elves";
+        }
+        if (source.equals(translate("GoblinKey"))) {
+            result = "Goblins";
+        }
+        if (source.equals(translate("HalflingKey"))) {
+            result = "Halflings";
+        }
+        if (source.equals(translate("HighElfKey"))) {
+            result = "High Elves";
+        }
+        if ((source.equals(translate("LizardmenKey"))) || (source.equals(translate("LizardmenKey2")))) {
+            result = "Lizardmen";
+        }
+        if (source.equals(translate("HumanKey"))) {
+            result = "Humans";
+        }
+        if (source.equals(translate("KhemriKey"))) {
+            result = "Khemri";
+        }
+        if (source.equals(translate("UndeadKey"))) {
+            result = "Undead";
+        }
+        if (source.equals(translate("DwarfKey"))) {
+            result = "Dwarves";
+        }
+        if ((source.equals(translate("ChaosDwarfKey"))) || (source.equals(translate("ChaosDwarfKey2"))) || (source.equals("Nain du Chaos"))) {
+            result = "Chaos Dwarves";
+        }
+        if ((source.equals(translate("NecromanticKey"))) || (source.equals("Necromantiques"))) {
+            result = "Necromantic";
+        }
+        if ((source.equals(translate("NorseKey"))) || (source.equals("Nordiques"))) {
+            result = "Norse";
+        }
+        if (source.equals(translate("NurgleKey"))) {
+            result = "Nurgle's Rotters";
+        }
+        if (source.equals(translate("OgreKey"))) {
+            result = "Ogres";
+        }
+
+        String tmp = translate("OrcKey");
+        if (source.equals(translate("OrcKey"))) {
+            result = "Orc";
+        }
+        if (source.equals(translate("ChaosPactKey"))) {
+            result = "Chaos Pact";
+        }
+        if (source.equals(translate("SkavenKey"))) {
+            result = "Skaven";
+        }
+        if (source.equals(translate("SlannKey"))) {
+            result = "Slann";
+        }
+        if (source.equals(translate("VampireKey"))) {
+            result = "Vampires";
+        }
+        if (source.equals(translate("KhorneKey")) || source.equals(translate("KhornesDaemonsKey"))) {
+            result = "Khorne";
+        }
+        if (source.equals(translate("SnotlingKey"))) {
+            result = "Snotlings";
+        }
+        if (source.equals(translate("OldWorldAllianceKey"))) {
+            result = "Old World Alliance";
+        }
+        if (source.equals(translate("ImperialNobilityKey"))) {
+            result = "Imperial Nobility";
+        }
+        if (source.equals(translate("Black OrcKey"))) {
+            result = "Black Orc";
+        }
+                
+        return result;
     }
 }

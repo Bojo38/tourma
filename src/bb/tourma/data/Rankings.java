@@ -18,6 +18,7 @@ import org.jdom.Element;
 import bb.tourma.data.ranking.IndivRanking;
 import bb.tourma.data.ranking.TeamRanking;
 import bb.tourma.utility.StringConstants;
+import java.util.TreeMap;
 
 /**
  *
@@ -43,29 +44,28 @@ public class Rankings implements IXMLExport {
         }
 
         if (mCategoryIndivRanking != null) {
-            for (Category g : mCategoryIndivRanking.keySet()) {
-                mCategoryIndivRanking.get(g).setRoundOnly(roundOnly);
+            for (Category c : mCategoryIndivRanking.keySet()) {
+                mCategoryIndivRanking.get(c).setRoundOnly(roundOnly);
             }
         }
 
         if (mCategoryTeamRanking != null) {
-            for (Category g : mCategoryTeamRanking.keySet()) {
-                mCategoryTeamRanking.get(g).setRoundOnly(roundOnly);
+            for (Category c : mCategoryTeamRanking.keySet()) {
+                mCategoryTeamRanking.get(c).setRoundOnly(roundOnly);
             }
         }
 
         if (mPoolIndivRankings != null) {
-            for (Pool g : mPoolIndivRankings.keySet()) {
-                mPoolIndivRankings.get(g).setRoundOnly(roundOnly);
+            for (Pool p : mPoolIndivRankings.keySet()) {
+                mPoolIndivRankings.get(p).setRoundOnly(roundOnly);
             }
         }
 
         if (mPoolTeamRankings != null) {
-            for (Pool g : mPoolTeamRankings.keySet()) {
-                mPoolTeamRankings.get(g).setRoundOnly(roundOnly);
+            for (Pool p : mPoolTeamRankings.keySet()) {
+                mPoolTeamRankings.get(p).setRoundOnly(roundOnly);
             }
         }
-
     }
 
     public TeamRankingsSet getTeamRankingSet() {
@@ -84,43 +84,43 @@ public class Rankings implements IXMLExport {
         this.mClanRankingSet = mClanRankingSet;
     }
 
-    public HashMap<Group, IndivRanking> getGroupRanking() {
+    public TreeMap<Group, IndivRanking> getGroupRanking() {
         return mGroupRanking;
     }
 
-    public void setGroupRanking(HashMap<Group, IndivRanking> mGroupRanking) {
+    public void setGroupRanking(TreeMap<Group, IndivRanking> mGroupRanking) {
         this.mGroupRanking = mGroupRanking;
     }
 
-    public HashMap<Category, IndivRanking> getCategoryIndivRanking() {
+    public TreeMap<Category, IndivRanking> getCategoryIndivRanking() {
         return mCategoryIndivRanking;
     }
 
-    public void setCategoryIndivRanking(HashMap<Category, IndivRanking> mCategoryIndivRanking) {
+    public void setCategoryIndivRanking(TreeMap<Category, IndivRanking> mCategoryIndivRanking) {
         this.mCategoryIndivRanking = mCategoryIndivRanking;
     }
 
-    public HashMap<Category, TeamRanking> getCategoryTeamRanking() {
+    public TreeMap<Category, TeamRanking> getCategoryTeamRanking() {
         return mCategoryTeamRanking;
     }
 
-    public void setCategoryTeamRanking(HashMap<Category, TeamRanking> mCategoryTeamRanking) {
+    public void setCategoryTeamRanking(TreeMap<Category, TeamRanking> mCategoryTeamRanking) {
         this.mCategoryTeamRanking = mCategoryTeamRanking;
     }
 
-    public HashMap<Pool, IndivRankingsSet> getPoolIndivRankings() {
+    public TreeMap<Pool, IndivRankingsSet> getPoolIndivRankings() {
         return mPoolIndivRankings;
     }
 
-    public void setPoolIndivRankings(HashMap<Pool, IndivRankingsSet> mPoolIndivRankings) {
+    public void setPoolIndivRankings(TreeMap<Pool, IndivRankingsSet> mPoolIndivRankings) {
         this.mPoolIndivRankings = mPoolIndivRankings;
     }
 
-    public HashMap<Pool, TeamRankingsSet> getPoolTeamRankings() {
+    public TreeMap<Pool, TeamRankingsSet> getPoolTeamRankings() {
         return mPoolTeamRankings;
     }
 
-    public void setPoolTeamRankings(HashMap<Pool, TeamRankingsSet> mPoolTeamRankings) {
+    public void setPoolTeamRankings(TreeMap<Pool, TeamRankingsSet> mPoolTeamRankings) {
         this.mPoolTeamRankings = mPoolTeamRankings;
     }
 
@@ -188,7 +188,7 @@ public class Rankings implements IXMLExport {
 
         if (tour.getGroupsCount() > 1) {
             if (mGroupRanking == null) {
-                mGroupRanking = new HashMap<>();
+                mGroupRanking = new TreeMap<>();
             }
             for (int i = 0; i < tour.getGroupsCount(); i++) {
 
@@ -199,11 +199,11 @@ public class Rankings implements IXMLExport {
 
         if (tour.getCategoriesCount() > 1) {
             if (mCategoryIndivRanking == null) {
-                mCategoryIndivRanking = new HashMap<>();
+                mCategoryIndivRanking = new TreeMap<>();
             }
 
             if (mCategoryTeamRanking == null) {
-                mCategoryTeamRanking = new HashMap<>();
+                mCategoryTeamRanking = new TreeMap<>();
             }
             for (int i = 0; i < tour.getCategoriesCount(); i++) {
                 Category cat = tour.getCategory(i);
@@ -212,10 +212,10 @@ public class Rankings implements IXMLExport {
             }
         }
         if (mPoolIndivRankings == null) {
-            mPoolIndivRankings = new HashMap<>();
+            mPoolIndivRankings = new TreeMap<>();
         }
         if (mPoolTeamRankings == null) {
-            mPoolTeamRankings = new HashMap<>();
+            mPoolTeamRankings = new TreeMap<>();
         }
         for (int i = 0; i < tour.getPoolCount(); i++) {
             Pool p = tour.getPool(i);
@@ -261,7 +261,7 @@ public class Rankings implements IXMLExport {
 
         if (tour.getGroupsCount() > 1) {
             if (mGroupRanking == null) {
-                mGroupRanking = new HashMap<>();
+                mGroupRanking = new TreeMap<>();
             }
             for (int i = 0; i < tour.getGroupsCount(); i++) {
 
@@ -280,11 +280,11 @@ public class Rankings implements IXMLExport {
 
         if (tour.getCategoriesCount() > 1) {
             if (mCategoryIndivRanking == null) {
-                mCategoryIndivRanking = new HashMap<>();
+                mCategoryIndivRanking = new TreeMap<>();
             }
 
             if (mCategoryTeamRanking == null) {
-                mCategoryTeamRanking = new HashMap<>();
+                mCategoryTeamRanking = new TreeMap<>();
             }
             for (int i = 0; i < tour.getCategoriesCount(); i++) {
                 ArrayList<Coach> listeC = new ArrayList<>();
@@ -312,10 +312,10 @@ public class Rankings implements IXMLExport {
             }
         }
         if (mPoolIndivRankings == null) {
-            mPoolIndivRankings = new HashMap<>();
+            mPoolIndivRankings = new TreeMap<>();
         }
         if (mPoolTeamRankings == null) {
-            mPoolTeamRankings = new HashMap<>();
+            mPoolTeamRankings = new TreeMap<>();
         }
         for (int i = 0; i < tour.getPoolCount(); i++) {
             Pool p = tour.getPool(i);
@@ -358,12 +358,12 @@ public class Rankings implements IXMLExport {
     TeamRankingsSet mTeamRankingSet = null;
     ClanRankingsSet mClanRankingSet = null;
 
-    HashMap<Group, IndivRanking> mGroupRanking = null;
-    HashMap<Category, IndivRanking> mCategoryIndivRanking = null;
-    HashMap<Category, TeamRanking> mCategoryTeamRanking = null;
+    TreeMap<Group, IndivRanking> mGroupRanking = null;
+    TreeMap<Category, IndivRanking> mCategoryIndivRanking = null;
+    TreeMap<Category, TeamRanking> mCategoryTeamRanking = null;
 
-    HashMap<Pool, IndivRankingsSet> mPoolIndivRankings = null;
-    HashMap<Pool, TeamRankingsSet> mPoolTeamRankings = null;
+    TreeMap<Pool, IndivRankingsSet> mPoolIndivRankings = null;
+    TreeMap<Pool, TeamRankingsSet> mPoolTeamRankings = null;
 
     @Override
     public Element getXMLElement() {
@@ -463,7 +463,7 @@ public class Rankings implements IXMLExport {
                 switch (name) {
                     case StringConstants.CS_POOL_TEAM_RANKING: {
                         if (mPoolTeamRankings == null) {
-                            mPoolTeamRankings = new HashMap<>();
+                            mPoolTeamRankings = new TreeMap<>();
                         }
                         try {
                             int pIndex = child.getAttribute(StringConstants.CS_POOL).getIntValue()-1;
@@ -478,7 +478,7 @@ public class Rankings implements IXMLExport {
                     case StringConstants.CS_POOL_INDIV_RANKING: {
                         try {
                             if (mPoolIndivRankings == null) {
-                                mPoolIndivRankings = new HashMap<>();
+                                mPoolIndivRankings = new TreeMap<>();
                             }
                             int pIndex = child.getAttribute(StringConstants.CS_POOL).getIntValue()-1;
                             Pool p = Tournament.getTournament().getPool(pIndex);
@@ -491,7 +491,7 @@ public class Rankings implements IXMLExport {
                     break;
                     case StringConstants.CS_CATEGORY_TEAM_RANKING: {
                         if (mCategoryTeamRanking == null) {
-                            mCategoryTeamRanking = new HashMap<>();
+                            mCategoryTeamRanking = new TreeMap<>();
                         }
                         Category c = Tournament.getTournament().getCategory(child.getAttributeValue(StringConstants.CS_CATEGORY));
                         TeamRanking r = new TeamRanking(child.getChild(StringConstants.CS_TEAM_RANKING));
@@ -500,7 +500,7 @@ public class Rankings implements IXMLExport {
                     break;
                     case StringConstants.CS_CATEGORY_INDIV_RANKING: {
                         if (mCategoryIndivRanking == null) {
-                            mCategoryIndivRanking = new HashMap<>();
+                            mCategoryIndivRanking = new TreeMap<>();
                         }
                         Category c = Tournament.getTournament().getCategory(child.getAttributeValue(StringConstants.CS_CATEGORY));
                         IndivRanking r = new IndivRanking(child.getChild(StringConstants.CS_INDIV_RANKING));
@@ -509,7 +509,7 @@ public class Rankings implements IXMLExport {
                     break;
                     case StringConstants.CS_GROUP_RANKING: {
                         if (mGroupRanking == null) {
-                            mGroupRanking = new HashMap<>();
+                            mGroupRanking = new TreeMap<>();
                         }
                         Group g = Tournament.getTournament().getGroup(child.getAttributeValue(StringConstants.CS_GROUP));
                         IndivRanking r = new IndivRanking(child.getChild(StringConstants.CS_INDIV_RANKING));

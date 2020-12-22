@@ -503,8 +503,6 @@ public class RosterType implements IXMLExport, Serializable {
         if (source.equals(translate("Black OrcKey"))) {
             result = translate("Black Orc");
         }
-        
-        
                 
         return result;
     }

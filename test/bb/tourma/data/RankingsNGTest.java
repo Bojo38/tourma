@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.TreeMap;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.Format;
@@ -135,8 +136,8 @@ public class RankingsNGTest {
         Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
         HashMap expResult = null;
-        HashMap result = instance.getGroupRanking();
-        assertTrue(result instanceof HashMap);
+        TreeMap result = instance.getGroupRanking();
+        assertTrue(result instanceof TreeMap);
 
     }
 
@@ -150,8 +151,8 @@ public class RankingsNGTest {
         Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
         HashMap expResult = null;
-        HashMap result = instance.getGroupRanking();
-        assertTrue(result instanceof HashMap);
+        TreeMap result = instance.getGroupRanking();
+        assertTrue(result instanceof TreeMap);
 
         instance.setGroupRanking(null);
         result = instance.getGroupRanking();
@@ -167,7 +168,7 @@ public class RankingsNGTest {
         Tournament.getTournament().loadXML(new File("./test/category.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
         HashMap expResult = null;
-        HashMap result = instance.getCategoryIndivRanking();
+        TreeMap result = instance.getCategoryIndivRanking();
         assertNotNull(result);
     }
 
@@ -179,8 +180,8 @@ public class RankingsNGTest {
         System.out.println("setCategoryIndivRanking");
         Tournament.getTournament().loadXML(new File("./test/category.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
-        HashMap expResult = null;
-        HashMap result = instance.getCategoryIndivRanking();
+        TreeMap expResult = null;
+        TreeMap result = instance.getCategoryIndivRanking();
         assertNotNull(result);
         instance.setCategoryIndivRanking(expResult);
         result = instance.getCategoryIndivRanking();
@@ -198,8 +199,8 @@ public class RankingsNGTest {
         Tournament.getTournament().loadXML(new File("./test/category.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
 
-        HashMap result = instance.getCategoryTeamRanking();
-        assertTrue(result instanceof HashMap);
+        TreeMap result = instance.getCategoryTeamRanking();
+        assertTrue(result instanceof TreeMap);
 
         instance.setGroupRanking(null);
         result = instance.getGroupRanking();
@@ -217,8 +218,8 @@ public class RankingsNGTest {
         Tournament.getTournament().loadXML(new File("./test/category.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
 
-        HashMap result = instance.getCategoryTeamRanking();
-        assertTrue(result instanceof HashMap);
+        TreeMap result = instance.getCategoryTeamRanking();
+        assertTrue(result instanceof TreeMap);
 
         instance.setGroupRanking(null);
         result = instance.getGroupRanking();
@@ -236,8 +237,8 @@ public class RankingsNGTest {
         Tournament.getTournament().loadXML(new File("./test/pools.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
 
-        HashMap result = instance.getPoolIndivRankings();
-        assertTrue(result instanceof HashMap);
+        TreeMap result = instance.getPoolIndivRankings();
+        assertTrue(result instanceof TreeMap);
 
         instance.setPoolIndivRankings(null);
         result = instance.getPoolIndivRankings();
@@ -253,8 +254,8 @@ public class RankingsNGTest {
         Tournament.getTournament().loadXML(new File("./test/pools.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
 
-        HashMap result = instance.getPoolIndivRankings();
-        assertTrue(result instanceof HashMap);
+        TreeMap result = instance.getPoolIndivRankings();
+        assertTrue(result instanceof TreeMap);
 
         instance.setPoolIndivRankings(null);
         result = instance.getPoolIndivRankings();
@@ -270,8 +271,8 @@ public class RankingsNGTest {
         Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
 
-        HashMap result = instance.getPoolTeamRankings();
-        assertTrue(result instanceof HashMap);
+        TreeMap result = instance.getPoolTeamRankings();
+        assertTrue(result instanceof TreeMap);
 
         instance.setPoolTeamRankings(null);
         result = instance.getPoolTeamRankings();
@@ -287,8 +288,8 @@ public class RankingsNGTest {
         Tournament.getTournament().loadXML(new File("./test/pools_team.xml"));
         Rankings instance = Tournament.getTournament().getRound(0).getRankings(false);
 
-        HashMap result = instance.getPoolTeamRankings();
-        assertTrue(result instanceof HashMap);
+        TreeMap result = instance.getPoolTeamRankings();
+        assertTrue(result instanceof TreeMap);
 
         instance.setPoolTeamRankings(null);
         result = instance.getPoolTeamRankings();

@@ -287,7 +287,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiGenerateFirstRound.setEnabled(!isClient);
         jcxmiAsServer.setEnabled(!isClient);
         jcxPatchPortugal.setEnabled(!isClient);
-         jcxPatchSpartak.setEnabled(!isClient);
+        jcxPatchSpartak.setEnabled(!isClient);
         jcxDisplayRosters.setEnabled(true);
         jcxDisplayRosters.setSelected(Tournament.getTournament().getParams().isDisplayRoster());
         jmiEditColors.setEnabled(!isClient);
@@ -1192,6 +1192,77 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jfc.setFileFilter(filter1);
         if (jfc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
             if (mTournament instanceof Tournament) {
+
+                ArrayList<Coach> nonNaf = ((Tournament) mTournament).getNonNAFCoachs();
+
+                for (Coach coach : nonNaf) {
+                    int option = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.text.MessageFormat.format(Translate.translate("NotNaf, confirm"), new Object[]{coach.getName()}), "NAF", JOptionPane.YES_NO_OPTION);
+                    if (option == JOptionPane.NO_OPTION) {
+                        boolean valid = false;
+                        while (!valid) {
+                            String name = coach.getName();
+                            Object obj = JOptionPane.showInputDialog(Translate.translate("Confirm the name"), (Object) name);
+                            if (obj instanceof String) {
+
+                                coach.setName((String) obj);
+
+                                Object[] choices = {Translate.translate("Enter NAF number manually"),
+                                    Translate.translate("Download NAF Number"),
+                                    Translate.translate("Cancel")};
+
+                                Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(),
+                                        Translate.translate("How to get NAF number"),
+                                        "NAF", JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
+
+                                if (choice == choices[0]) {
+                                    Object obj2 = JOptionPane.showInputDialog(Translate.translate("NAF Number"), (Object) "0");
+                                    if (obj2 instanceof String) {
+                                        int naf = Integer.parseInt((String) obj2);
+                                        if (naf > 0) {
+                                            coach.setNaf(naf);
+                                        } else {
+                                            JOptionPane.showMessageDialog(null, Translate.translate("Invalid NAF number"), "NAF", JOptionPane.ERROR_MESSAGE);
+                                            valid = false;
+                                        }
+                                    }
+                                }
+                                if (choice == choices[1]) {
+                                    NAF.updateCoachID(coach);
+                                    if (coach.getNaf() == 0) {
+                                        JOptionPane.showMessageDialog(null, Translate.translate("Coach Not found, probably bad name"), "NAF", JOptionPane.ERROR_MESSAGE);
+                                        valid = false;
+                                    } else {
+                                        valid = true;
+                                    }
+                                }
+                                if (choice == choices[2]) {
+                                    valid = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                ArrayList<Coach> badRoster = ((Tournament) mTournament).getBadRosterCoachs();
+                for (Coach coach : badRoster) {
+                    if (coach.getNaf() > 0) {
+                        Object[] rosters = {"None", "Amazons", "Bretonnians", "Chaos", "Chaos Dwarves",
+                            "Chaos Pact", "Dark Elves", "Dwarves", "Goblins", "Halflings",
+                            "High Elves", "Humans", "Khemri", "Khorne", "Lizardmen", "Necromantic",
+                            "Norse", "Nurgle's Rotters", "Ogres", "Orc", "Elves", "Slann", "Skaven",
+                            "Undead", "Underworld", "Vampires", "Wood Elves", "Black Orcs", "Old World Alliance", "Snotlings", "Imperial Nobility"};
+
+                        Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(),
+                                "Roster not recognized fo coach " + coach.getName() + "(" + coach.getRoster().getName() + "). \nlease choose the right one:",
+                                "Roster Choice", JOptionPane.WARNING_MESSAGE, null, rosters, rosters[0]);
+
+                        String naf_roster = (String) choice;
+                        
+                        coach.setNafRoster(naf_roster);
+                        
+                    }
+                }
+
                 ((Tournament) mTournament).exportNAF(jfc.getSelectedFile());
             }
 
@@ -1280,7 +1351,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private final static String CS_FBBCSVFile = "FBB CSV FILE";
     private final static String CS_FBBXMLFile = "FBB XML FILE";
 
-   @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
+    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jmiExportFbb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExportFbb1ActionPerformed
         final JFileChooser jfc = new JFileChooser();
         jfc.setCurrentDirectory(new File(currentPath));
@@ -3077,8 +3148,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jcxDisplayByPagesActionPerformed
 
     private void jcxPatchSpartakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxPatchSpartakActionPerformed
-         mTournament.getParams().setSpartak(jcxPatchSpartak.isSelected());
-         this.update();
+        mTournament.getParams().setSpartak(jcxPatchSpartak.isSelected());
+        this.update();
 
     }//GEN-LAST:event_jcxPatchSpartakActionPerformed
 

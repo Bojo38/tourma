@@ -19,7 +19,7 @@ import bb.tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public class Formula implements IXMLExport, Serializable {
+public class Formula implements Comparable, IXMLExport, Serializable {
 
     String _formula = "";
     String _name = "";
@@ -323,6 +323,17 @@ public class Formula implements IXMLExport, Serializable {
 
     public static boolean isNum(char c) {
         return c - '0' >= 0 && c - '0' <= 9;
+    }
+
+    @Override
+    public int compareTo(Object obj) {
+        int result;
+        result = this.getName().compareTo("");
+        if (obj instanceof Formula) {
+            Formula crit=(Formula) obj;
+            result=this.getName().compareTo(crit.getName());
+        } 
+        return result;
     }
 
 }

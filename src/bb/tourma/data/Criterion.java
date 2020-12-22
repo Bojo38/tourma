@@ -17,7 +17,7 @@ import bb.tourma.utility.StringConstants;
  *
  * @author Administrateur
  */
-public class Criterion implements IXMLExport, Serializable {
+public class Criterion implements Comparable, IXMLExport, Serializable {
 
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
@@ -517,6 +517,17 @@ public class Criterion implements IXMLExport, Serializable {
 
     public void setOffensiveBonusesForTeam(int mOffensiveBonusesForTeam) {
         this.mOffensiveBonusesForTeam = mOffensiveBonusesForTeam;
+    }
+
+    @Override
+    public int compareTo(Object obj) {
+        int result;
+        result = this.getName().compareTo("");
+        if (obj instanceof Criterion) {
+            Criterion crit=(Criterion) obj;
+            result=this.getName().compareTo(crit.getName());
+        } 
+        return result;
     }
 
 }

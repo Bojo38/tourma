@@ -26,7 +26,6 @@ import bb.tourma.utility.StringConstants;
  */
 public class CoachMatch extends Match implements Serializable {
 
-   
     /**
      * UID Seed
      */
@@ -892,28 +891,32 @@ public class CoachMatch extends Match implements Serializable {
                     if (m.getCompetitor1() == c) {
 
                         Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor2());
-                        GroupPoints gp = g.getOpponentModificationPoints(go);
-                        if ((go != null) && (gp != null)) {
-                            if (v.getValue1() > v.getValue2()) {
-                                value = gp.getVictoryPoints();
-                            } else if (v.getValue1() == v.getValue2()) {
-                                value = gp.getDrawPoints();
-                            } else {
-                                value = gp.getLossPoints();
+                        if (go != null) {
+                            GroupPoints gp = g.getOpponentModificationPoints(go);
+                            if ((go != null) && (gp != null)) {
+                                if (v.getValue1() > v.getValue2()) {
+                                    value = gp.getVictoryPoints();
+                                } else if (v.getValue1() == v.getValue2()) {
+                                    value = gp.getDrawPoints();
+                                } else {
+                                    value = gp.getLossPoints();
+                                }
                             }
                         }
 
                     }
                     if (m.getCompetitor2() == c) {
                         Group go = Tournament.getTournament().getGroup((Coach) m.getCompetitor1());
-                        GroupPoints gp = g.getOpponentModificationPoints(go);
-                        if ((go != null) && (gp != null)) {
-                            if (v.getValue1() < v.getValue2()) {
-                                value = gp.getVictoryPoints();
-                            } else if (v.getValue1() == v.getValue2()) {
-                                value = gp.getDrawPoints();
-                            } else {
-                                value = gp.getLossPoints();
+                        if (go != null) {
+                            GroupPoints gp = g.getOpponentModificationPoints(go);
+                            if ((go != null) && (gp != null)) {
+                                if (v.getValue1() < v.getValue2()) {
+                                    value = gp.getVictoryPoints();
+                                } else if (v.getValue1() == v.getValue2()) {
+                                    value = gp.getDrawPoints();
+                                } else {
+                                    value = gp.getLossPoints();
+                                }
                             }
                         }
                     }
@@ -1071,17 +1074,22 @@ public class CoachMatch extends Match implements Serializable {
      * Recalculate the values fot this match
      */
     public void recomputeValues() {
-        this.c1value1 = recomputeValue(1, mCompetitor1);
-        this.c2value1 = recomputeValue(1, mCompetitor2);
-        this.c1value2 = recomputeValue(2, mCompetitor1);
-        this.c2value2 = recomputeValue(2, mCompetitor2);
-        this.c1value3 = recomputeValue(3, mCompetitor1);
-        this.c2value3 = recomputeValue(3, mCompetitor2);
-        this.c1value4 = recomputeValue(4, mCompetitor1);
-        this.c2value4 = recomputeValue(4, mCompetitor2);
-        this.c1value5 = recomputeValue(5, mCompetitor1);
-        this.c2value5 = recomputeValue(5, mCompetitor2);
-        this.values_computed = true;
+        try {
+            this.c1value1 = recomputeValue(1, mCompetitor1);
+            this.c2value1 = recomputeValue(1, mCompetitor2);
+            this.c1value2 = recomputeValue(2, mCompetitor1);
+            this.c2value2 = recomputeValue(2, mCompetitor2);
+            this.c1value3 = recomputeValue(3, mCompetitor1);
+            this.c2value3 = recomputeValue(3, mCompetitor2);
+            this.c1value4 = recomputeValue(4, mCompetitor1);
+            this.c2value4 = recomputeValue(4, mCompetitor2);
+            this.c1value5 = recomputeValue(5, mCompetitor1);
+            this.c2value5 = recomputeValue(5, mCompetitor2);
+            this.values_computed = true;
+        } catch (NullPointerException npe) {
+            System.out.println(npe.getMessage());
+            npe.printStackTrace();
+        }
         updated = true;
     }
 

@@ -337,7 +337,7 @@ public class Roster implements IXMLExport, Serializable {
             if (slrb.equals("CRP1")) {
                 version = LRB.E_Version.CRP1;
             }
-            if (slrb.equals("BB2016")) {
+            if (slrb.equals("BB2016")||slrb.equals("NAF2017")) {
                 version = LRB.E_Version.BB2016;
             }
             if (slrb.equals("BB2020")) {

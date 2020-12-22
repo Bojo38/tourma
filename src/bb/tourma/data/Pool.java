@@ -17,7 +17,7 @@ import bb.tourma.utility.StringConstants;
  *
  * @author WFMJ7631
  */
-public class Pool implements IXMLExport, Serializable {
+public class Pool implements Comparable, IXMLExport, Serializable {
 
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
@@ -154,6 +154,17 @@ public class Pool implements IXMLExport, Serializable {
                 result &= p.getCompetitors().contains(c);
             }
         }
+        return result;
+    }
+
+    @Override
+    public int compareTo(Object obj) {
+       int result;
+        result = this.getName().compareTo("");
+        if (obj instanceof Pool) {
+            Pool p=(Pool) obj;
+            result=this.getName().compareTo(p.getName());
+        } 
         return result;
     }
 }

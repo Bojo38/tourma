@@ -1049,7 +1049,6 @@ public class Tournament implements IContainCoachs, Serializable {
                     round.addContent(rank);
                 }
             }*/
-
             document.addContent(round);
         }
         FileOutputStream os = null;
@@ -1111,7 +1110,6 @@ public class Tournament implements IContainCoachs, Serializable {
         }
         return rankingTypes;
     }
-  
 
     /**
      *
@@ -1121,7 +1119,38 @@ public class Tournament implements IContainCoachs, Serializable {
         this.saveXML(file, true);
     }
 
-    
+    public ArrayList<Coach> getBadRosterCoachs() {
+        ArrayList<Coach> badRoster = new ArrayList<>();
+        for (Coach mCoach : mCoachs) {
+            if (mCoach.getNaf() > 0) {
+                String naf = Integer.toString(mCoach.getNaf());
+
+                String naf_roster = NAF.getNAFRoster(mCoach.getRoster().getName());
+                if (naf_roster.equals(RosterType.translate("UNKNOWN"))) {
+
+                    badRoster.add(mCoach);
+
+                } else {
+                    mCoach.setNafRoster(naf_roster);
+                }
+            }
+        }
+
+        return badRoster;
+    }
+
+    public ArrayList<Coach> getNonNAFCoachs() {
+
+        ArrayList<Coach> nonNaf = new ArrayList<>();
+        for (Coach mCoach : mCoachs) {
+
+            if (mCoach.getNaf() == 0) {
+                nonNaf.add(mCoach);
+
+            }
+        }
+        return nonNaf;
+    }
 
     /**
      *
@@ -1151,71 +1180,12 @@ public class Tournament implements IContainCoachs, Serializable {
                 writer.println(("<coaches>"));
                 for (Coach mCoach : mCoachs) {
 
-                    if (mCoach.getNaf() == 0) {
-                        int option = JOptionPane.showConfirmDialog(MainFrame.getMainFrame(), java.text.MessageFormat.format(Translate.translate("NotNaf, confirm"), new Object[]{mCoach.getName()}), "NAF", JOptionPane.YES_NO_OPTION);
-                        if (option == JOptionPane.NO_OPTION) {
-                            boolean valid = false;
-                            while (!valid) {
-                                String name = mCoach.getName();
-                                Object obj = JOptionPane.showInputDialog(Translate.translate("Confirm the name"), (Object) name);
-                                if (obj instanceof String) {
-
-                                    mCoach.setName((String) obj);
-
-                                    Object[] choices = {Translate.translate("Enter NAF number manually"),
-                                        Translate.translate("Download NAF Number"),
-                                        Translate.translate("Cancel")};
-
-                                    Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(),
-                                            Translate.translate("How to get NAF number"),
-                                            "NAF", JOptionPane.QUESTION_MESSAGE, null, choices, choices[0]);
-
-                                    if (choice == choices[0]) {
-                                        Object obj2 = JOptionPane.showInputDialog(Translate.translate("NAF Number"), (Object) "0");
-                                        if (obj2 instanceof String) {
-                                            int naf = Integer.parseInt((String) obj2);
-                                            if (naf > 0) {
-                                                mCoach.setNaf(naf);
-                                            } else {
-                                                JOptionPane.showMessageDialog(null, Translate.translate("Invalid NAF number"), "NAF", JOptionPane.ERROR_MESSAGE);
-                                                valid = false;
-                                            }
-                                        }
-                                    }
-                                    if (choice == choices[1]) {
-                                        NAF.updateCoachID(mCoach);
-                                        if (mCoach.getNaf() == 0) {
-                                            JOptionPane.showMessageDialog(null, Translate.translate("Coach Not found, probably bad name"), "NAF", JOptionPane.ERROR_MESSAGE);
-                                            valid = false;
-                                        } else {
-                                            valid = true;
-                                        }
-                                    }
-                                    if (choice == choices[2]) {
-                                        valid = true;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     if (mCoach.getNaf() > 0) {
                         String naf = Integer.toString(mCoach.getNaf());
 
-                        String naf_roster = RosterType.getRosterTranslation(mCoach.getRoster().getName());
+                        String naf_roster = NAF.getNAFRoster(mCoach.getRoster().getName());
                         if (naf_roster.equals(RosterType.translate("UNKNOWN"))) {
-                            Object[] rosters = {"None", "Amazons", "Bretonnians", "Chaos", "Chaos Dwarves",
-                                "Chaos Pact", "Dark Elves", "Dwarves", "Goblins", "Halflings",
-                                "High Elves", "Humans", "Khemri", "Khorne", "Lizardmen", "Necromantic",
-                                "Norse", "Nurgle's Rotters", "Ogres", "Orc", "Elves", "Slann", "Skaven",
-                                "Undead", "Underworld", "Vampires", "Wood Elves", "Black Orcs", "Old World Alliance", "Snotlings","Imperial Nobility"};
-
-                            Object choice = JOptionPane.showInputDialog(MainFrame.getMainFrame(),
-                                    "Roster not recognized fo coach " + mCoach.getName() + "(" + mCoach.getRoster().getName() + "). \nlease choose the right one:",
-                                    "Roster Choice", JOptionPane.WARNING_MESSAGE, null, rosters, rosters[0]);
-
-                            naf_roster = (String) choice;
-
+                            naf_roster = mCoach.getNafRoster();
                         }
                         if (!naf_roster.equals("None")) {
                             writer.println(("<coach>"));
@@ -1310,6 +1280,7 @@ public class Tournament implements IContainCoachs, Serializable {
      * @param racine
      */
     private void loadXMLv3(final Element racine) {
+
         try {
             setRoundRobin(Boolean.parseBoolean(racine.getAttributeValue(StringConstants.CS_ROUNDROBIN)));
         } catch (Exception e) {
@@ -1975,11 +1946,16 @@ public class Tournament implements IContainCoachs, Serializable {
     }
 
     public String[] getTeamsNames() {
-        ArrayList<String> names = new ArrayList<>();
+        /* ArrayList<String> names = new ArrayList<>();
         for (Team t : mTeams) {
             names.add(t.getName());
+        }*/
+
+        String[] str = new String[mTeams.size()];
+        for (int i = 0; i < mTeams.size(); i++) {
+            str[i] = mTeams.get(i).getName();
         }
-        return (String[]) names.toArray();
+        return str;
     }
 
     public int getActiveCompetitorsCount() {
