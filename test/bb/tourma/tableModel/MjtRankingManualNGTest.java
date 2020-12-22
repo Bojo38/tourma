@@ -22,6 +22,7 @@ import org.testng.annotations.Test;
 import bb.tourma.data.Coach;
 import bb.tourma.data.Competitor;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.ManualRanking;
 
 /**
  *
@@ -43,6 +44,10 @@ public class MjtRankingManualNGTest {
             coachs.add(Tournament.getTournament().getCoach(i));
         }
         //crit=Tournament.getTournament().getParams().getCriterion(0);
+        ManualRanking ranking=new ManualRanking(0, 1, 2,3, 4, 5, coachs, true);
+        instance=new MjtRankingManual(ranking, 0, coachs.size());
+                
+        
         /*instance = new MjtRankingManual(Tournament.getTournament().getRoundsCount() - 1,
                 Tournament.getTournament().getParams().getRankingIndiv1(),
                 Tournament.getTournament().getParams().getRankingIndiv2(),
@@ -65,53 +70,7 @@ public class MjtRankingManualNGTest {
     public void tearDownMethod() throws Exception {
     }
 
-    /**
-     * Test of sortDatas method, of class MjtRankingManual.
-     */
-    @Test
-    public void testSortDatas() {
-        System.out.println("sortDatas");
-        assertEquals(instance.getRowCount(), coachs.size());
-        //instance.sortDatas();
-    }
-
-    /**
-     * Test of addData method, of class MjtRankingManual.
-     */
-    @Test
-    public void testAddData() {
-        System.out.println("addData");
-        Competitor obj = new Coach("toto");
-        int nb = instance.getRowCount();
-        /*instance.addData(obj);
-        assertEquals(nb + 1, instance.getRowCount());
-
-        instance.delData(obj);
-        assertEquals(nb, instance.getRowCount());*/
-
-    }
-
-    /**
-     * Test of addDatas method, of class MjtRankingManual.
-     */
-    @Test
-    public void testAddDatas() {
-        System.out.println("addDatas");
-        ArrayList<Competitor> objs = new ArrayList<>();
-        for (Coach c:coachs)
-        {
-            objs.add((Competitor)(new Coach(c.getName()+"1")));
-        }
-        int nb=instance.getRowCount();
-        /*instance.addDatas(objs);
-        int nbtot=coachs.size();
-        assertEquals(nbtot,instance.getRowCount());
-        for (Competitor c:objs)
-        {
-            instance.delData(c);
-        }
-        assertEquals(nb, instance.getRowCount());*/
-    }
+  
 
     /**
      * Test of getColumnCount method, of class MjtRankingManual.
@@ -163,17 +122,6 @@ public class MjtRankingManualNGTest {
         }
     }
 
-    /**
-     * Test of delData method, of class MjtRankingManual.
-     */
-    @Test
-    public void testDelData() {
-        System.out.println("delData");
-        Competitor obj = null;
-        MjtRankingManual instance = null;
-       // instance.delData(obj);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+   
 
 }

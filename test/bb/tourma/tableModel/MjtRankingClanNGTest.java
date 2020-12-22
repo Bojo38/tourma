@@ -20,7 +20,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import bb.tourma.data.Clan;
+import bb.tourma.data.Round;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.ClanRanking;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
 
@@ -44,9 +46,12 @@ public class MjtRankingClanNGTest {
             clans.add(Tournament.getTournament().getClan(i));
         }
         //crit=Tournament.getTournament().getParams().getCriteria(0);
-       /* instance = new MjtRankingClan(Tournament.getTournament().getRoundsCount() - 1,
-                clans,
-                false);*/
+        Round round=Tournament.getTournament().getRound(0);
+        ClanRanking cr=round.getRankings(false).getClanRankingSet().getRanking();
+        
+        instance=new MjtRankingClan(cr);
+        
+       
     }
 
     @AfterClass

@@ -43,7 +43,7 @@ public class RMITournamentNGTest {
     /**
      * Test of getInstance method, of class RMITournament.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetInstance() {
         System.out.println("getInstance");
         RMITournament expResult = null;
@@ -56,7 +56,7 @@ public class RMITournamentNGTest {
     /**
      * Test of getTournament method, of class RMITournament.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetTournament() throws Exception {
         System.out.println("getTournament");
         RMITournament instance = new RMITournament();
@@ -70,7 +70,7 @@ public class RMITournamentNGTest {
     /**
      * Test of setTournament method, of class RMITournament.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetTournament() throws Exception {
         System.out.println("setTournament");
         Tournament object = null;
@@ -83,7 +83,7 @@ public class RMITournamentNGTest {
     /**
      * Test of getRosterTypes method, of class RMITournament.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetRosterTypes() throws Exception {
         System.out.println("getRosterTypes");
         RMITournament instance = new RMITournament();

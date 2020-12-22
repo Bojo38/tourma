@@ -25,7 +25,9 @@ import bb.tourma.data.Criterion;
 import bb.tourma.data.ObjectRanking;
 import bb.tourma.data.Parameters;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.ManualRanking;
 import bb.tourma.languages.Translate;
+import static bb.tourma.tableModel.MjtRankingManualNGTest.coachs;
 import bb.tourma.utility.StringConstants;
 
 /**
@@ -58,6 +60,8 @@ public class MjtRankingNGTest {
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coachs.add(Tournament.getTournament().getCoach(i));
         }
+         ManualRanking ranking=new ManualRanking(0, 1, 2,3, 4, 5, coachs, true);
+        instance=new MjtRankingManual(ranking, 0, coachs.size());
        /* instance = new MjtRankingIndiv(Tournament.getTournament().getRoundsCount() - 1,
                 coachs,
                 false, false);*/

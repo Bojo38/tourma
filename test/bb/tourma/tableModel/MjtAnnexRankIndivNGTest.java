@@ -19,7 +19,9 @@ import org.testng.annotations.Test;
 import bb.tourma.data.Coach;
 import bb.tourma.data.Criterion;
 import bb.tourma.data.ObjectAnnexRanking;
+import bb.tourma.data.Round;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.AnnexIndivRanking;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
 
@@ -44,15 +46,14 @@ public class MjtAnnexRankIndivNGTest {
             coachs.add(Tournament.getTournament().getCoach(i));
         }
         crit = Tournament.getTournament().getParams().getCriterion(0);
-        /*instance = new MjtAnnexRankIndiv(Tournament.getTournament().getRoundsCount() - 1,
-                crit,
-                0, coachs, true,
-                Tournament.getTournament().getParams().getRankingIndiv1(),
-                Tournament.getTournament().getParams().getRankingIndiv2(),
-                Tournament.getTournament().getParams().getRankingIndiv3(),
-                Tournament.getTournament().getParams().getRankingIndiv4(),
-                Tournament.getTournament().getParams().getRankingIndiv5(),
-                false, false);*/
+       
+        
+       
+        
+        crit=Tournament.getTournament().getParams().getCriterion(0);
+        Round r=Tournament.getTournament().getRound(0);
+        AnnexIndivRanking air=r.getRankings(false).getIndivRankingSet().getAnnexPosRanking().get(crit);
+        instance = new MjtAnnexRankIndiv(air,true,0,air.getCount());
     }
 
     @AfterClass
@@ -129,20 +130,5 @@ public class MjtAnnexRankIndivNGTest {
         }
     }
 
-    /**
-     * Test of updateHeadByHeadValue method, of class MjtAnnexRankIndiv.
-     */
-    @Test
-    public void testUpdateHeadByHeadValue() {
-        System.out.println("updateHeadByHeadValue");
-        int round_index = 0;
-        int valueIndex = 0;
-        ObjectAnnexRanking or1 = null;
-        ObjectAnnexRanking or2 = null;
-        MjtAnnexRankIndiv instance = null;
-        //instance.updateHeadByHeadValue(round_index, valueIndex, or1, or2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
+    
 }

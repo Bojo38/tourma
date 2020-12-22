@@ -21,8 +21,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import bb.tourma.data.Criterion;
 import bb.tourma.data.ObjectAnnexRanking;
+import bb.tourma.data.Round;
 import bb.tourma.data.Team;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.AnnexTeamRanking;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
 
@@ -47,15 +49,9 @@ public class MjtAnnexRankTeamNGTest {
             teams.add(Tournament.getTournament().getTeam(i));
         }
         crit = Tournament.getTournament().getParams().getCriterion(0);
-        /*instance = new MjtAnnexRankTeam(Tournament.getTournament().getRoundsCount() - 1,
-                crit,
-                0, teams,true,
-                Tournament.getTournament().getParams().getRankingTeam1(),
-                Tournament.getTournament().getParams().getRankingTeam2(),
-                Tournament.getTournament().getParams().getRankingTeam3(),
-                Tournament.getTournament().getParams().getRankingTeam4(),
-                Tournament.getTournament().getParams().getRankingTeam5(),
-                 false);*/
+        Round r=Tournament.getTournament().getRound(0);
+        AnnexTeamRanking atr=r.getRankings(false).getTeamRankingSet().getAnnexPosRanking().get(crit);
+        instance=new MjtAnnexRankTeam(atr, true);
     }
 
     @AfterClass
@@ -154,22 +150,6 @@ public class MjtAnnexRankTeamNGTest {
                 Assert.assertTrue(result instanceof JLabel);
             }
         }
-    }
-
-    /**
-     * Test of updateHeadByHeadValue method, of class MjtAnnexRankTeam.
-     */
-    @Test
-    public void testUpdateHeadByHeadValue() {
-        System.out.println("updateHeadByHeadValue");
-        int round_index = 0;
-        int valueIndex = 0;
-        ObjectAnnexRanking or1 = null;
-        ObjectAnnexRanking or2 = null;
-        MjtAnnexRankTeam instance = null;
-        //instance.updateHeadByHeadValue(round_index, valueIndex, or1, or2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
 }

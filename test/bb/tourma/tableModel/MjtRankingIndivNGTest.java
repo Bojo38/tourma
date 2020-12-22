@@ -22,7 +22,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import bb.tourma.data.Coach;
 import bb.tourma.data.ObjectRanking;
+import bb.tourma.data.Round;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.ClanRanking;
+import bb.tourma.data.ranking.IndivRanking;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
 /**
@@ -44,6 +47,12 @@ public class MjtRankingIndivNGTest {
         for (int i = 0; i < Tournament.getTournament().getCoachsCount(); i++) {
             coachs.add(Tournament.getTournament().getCoach(i));
         }
+        
+        Round round=Tournament.getTournament().getRound(0);
+        IndivRanking ir=round.getRankings(false).getIndivRankingSet().getRanking();
+        
+        instance = new MjtRankingIndiv(ir);
+                
         /*instance = new MjtRankingIndiv(Tournament.getTournament().getRoundsCount() - 1,
                 coachs,
                 false,false);*/
@@ -148,20 +157,5 @@ public class MjtRankingIndivNGTest {
         }
     }
 
-    /**
-     * Test of updateHeadByHeadValue method, of class MjtRankingIndiv.
-     */
-    @Test
-    public void testUpdateHeadByHeadValue() {
-        System.out.println("updateHeadByHeadValue");
-        int round_index = 0;
-        int valueIndex = 0;
-        ObjectRanking or1 = null;
-        ObjectRanking or2 = null;
-        MjtRankingIndiv instance = null;
-        //instance.updateHeadByHeadValue(round_index, valueIndex, or1, or2);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
+       
 }

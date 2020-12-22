@@ -5,8 +5,18 @@
  */
 package bb.tourma.tableModel;
 
+import bb.tourma.data.Criterion;
+import bb.tourma.data.Formula;
+import bb.tourma.data.Tournament;
+import bb.tourma.languages.Translate;
+import static bb.tourma.tableModel.MjtCriteriasNGTest.crits;
+import static bb.tourma.tableModel.MjtCriteriasNGTest.instance;
 import java.awt.Component;
+import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import org.testng.Assert;
 import static org.testng.Assert.*;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -20,11 +30,20 @@ import org.testng.annotations.Test;
  */
 public class MjtFormulasNGTest {
     
+    static ArrayList<Formula> forms = new ArrayList<>();
+    static MjtFormulas instance;
+    
     public MjtFormulasNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
+         Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+
+        for (int i = 0; i < Tournament.getTournament().getParams().getFormulaCount(); i++) {
+            forms.add(Tournament.getTournament().getParams().getFormula(i));
+        }
+        instance = new MjtFormulas(Tournament.getTournament());
     }
 
     @AfterClass
@@ -45,12 +64,9 @@ public class MjtFormulasNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        MjtFormulas instance = null;
-        int expResult = 0;
+        int expResult = Tournament.getTournament().getParams().isTeamTournament() ? 4 : 2;
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -59,13 +75,9 @@ public class MjtFormulasNGTest {
     @Test
     public void testGetRowCount() {
         System.out.println("getRowCount");
-        MjtFormulas instance = null;
-        int expResult = 0;
+         int expResult = forms.size();
         int result = instance.getRowCount();
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        assertEquals(result, expResult);    }
 
     /**
      * Test of getColumnName method, of class MjtFormulas.
@@ -73,13 +85,20 @@ public class MjtFormulasNGTest {
     @Test
     public void testGetColumnName() {
         System.out.println("getColumnName");
-        int col = 0;
-        MjtFormulas instance = null;
-        String expResult = "";
-        String result = instance.getColumnName(col);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+         for (int i = 0; i < instance.getColumnCount(); i++) {
+            String expResult = "";
+            switch (i) {
+                case 0:
+                    expResult = Translate.translate(Translate.CS_Formula_Name);
+                    break;
+                case 1:
+                    expResult = Translate.translate(Translate.CS_Formula_Formula);
+                    break;
+                default:
+            }
+            String result = instance.getColumnName(i);
+            assertEquals(result, expResult);
+        }
     }
 
     /**
@@ -88,14 +107,24 @@ public class MjtFormulasNGTest {
     @Test
     public void testGetValueAt() {
         System.out.println("getValueAt");
-        int row = 0;
-        int col = 0;
-        MjtFormulas instance = null;
-        Object expResult = null;
-        Object result = instance.getValueAt(row, col);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Object expResult = "";
+        for (int i = 0; i < forms.size(); i++) {
+            Formula c = forms.get(i);
+            for (int col = 0; col < 2; col++) {
+
+                switch (col) {
+                    case 0:
+                        expResult = c.getName();
+                        break;
+                    case 1:
+                        expResult = c.getFormula();
+                        break;
+                    default:
+                }
+                Object result = instance.getValueAt(i, col);
+                assertEquals(result, expResult);
+            }
+        }
     }
 
     /**
@@ -104,13 +133,32 @@ public class MjtFormulasNGTest {
     @Test
     public void testSetValueAt() {
         System.out.println("setValueAt");
-        Object value = null;
-        int row = 0;
-        int col = 0;
-        MjtFormulas instance = null;
-        instance.setValueAt(value, row, col);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Object expResult=null;
+        Object newResult=null;
+       for (int i = 0; i < forms.size(); i++) {
+            Formula c = forms.get(i);
+            for (int col = 0; col < 2; col++) {
+
+                switch (col) {
+                    case 0:
+                        expResult = c.getName();
+                        newResult="Test";
+                        break;
+                    case 1:
+                        expResult = c.getFormula();
+                        newResult="Tds1";
+                        break;
+                    
+                    default:
+                }                
+                Object result = instance.getValueAt(i, col);                
+                instance.setValueAt(newResult, i, col);
+                
+                assertEquals(newResult, instance.getValueAt(i, col));
+                
+                instance.setValueAt(result, i, col);
+            }
+        }
     }
 
     /**
@@ -119,13 +167,16 @@ public class MjtFormulasNGTest {
     @Test
     public void testGetColumnClass() {
         System.out.println("getColumnClass");
-        int c = 0;
-        MjtFormulas instance = null;
-        Class expResult = null;
-        Class result = instance.getColumnClass(c);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int i = 0; i < instance.getColumnCount(); i++) {
+            Class expResult = null;
+            if ((i == 0)||(i==1)) {
+                expResult = String.class;
+            } else {
+                expResult = Integer.class;
+            }
+            Class result = instance.getColumnClass(i);
+            assertEquals(result, expResult);
+        }
     }
 
     /**
@@ -134,14 +185,16 @@ public class MjtFormulasNGTest {
     @Test
     public void testIsCellEditable() {
         System.out.println("isCellEditable");
-        int row = 0;
-        int col = 0;
-        MjtFormulas instance = null;
-        boolean expResult = false;
-        boolean result = instance.isCellEditable(row, col);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        for (int row = 0; row<instance.getRowCount(); row++) {
+            for (int col = 0; col<instance.getColumnCount(); col++) {
+                
+                boolean expResult = true;
+                
+                boolean result = instance.isCellEditable(row, col);
+                
+                assertEquals(result,expResult);
+            }
+        }
     }
 
     /**
@@ -150,18 +203,14 @@ public class MjtFormulasNGTest {
     @Test
     public void testGetTableCellRendererComponent() {
         System.out.println("getTableCellRendererComponent");
-        JTable table = null;
-        Object value = null;
-        boolean isSelected = false;
-        boolean hasFocus = false;
-        int row = 0;
-        int column = 0;
-        MjtFormulas instance = null;
-        Component expResult = null;
-        Component result = instance.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        assertEquals(result, expResult);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        JTable table = new JTable();
+        table.setModel(instance);
+        for (int i = 0; i < instance.getColumnCount(); i++) {
+            for (int j = 0; j < instance.getRowCount(); j++) {
+                Component result = instance.getTableCellRendererComponent(table, instance.getValueAt(j, i), false, false, j, i);
+                Assert.assertTrue(result instanceof JTextField);
+            }
+        }
     }
     
 }

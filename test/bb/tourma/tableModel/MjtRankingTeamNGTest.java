@@ -21,19 +21,24 @@ import org.testng.annotations.BeforeMethod;
 import static org.testng.Assert.fail;
 import org.testng.annotations.Test;
 import bb.tourma.data.ObjectRanking;
+import bb.tourma.data.Round;
 import bb.tourma.data.Team;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.IndivRanking;
+import bb.tourma.data.ranking.TeamRanking;
 import bb.tourma.languages.Translate;
+import static bb.tourma.tableModel.MjtRankingIndivNGTest.instance;
 import bb.tourma.utility.StringConstants;
+
 /**
  *
  * @author WFMJ7631
  */
 public class MjtRankingTeamNGTest {
-    
+
     static ArrayList<Team> teams = new ArrayList<>();
     static MjtRankingTeam instance;
-    
+
     public MjtRankingTeamNGTest() {
     }
 
@@ -44,7 +49,13 @@ public class MjtRankingTeamNGTest {
         for (int i = 0; i < Tournament.getTournament().getTeamsCount(); i++) {
             teams.add(Tournament.getTournament().getTeam(i));
         }
+
         //crit=Tournament.getTournament().getParams().getCriterion(0);
+        Round round = Tournament.getTournament().getRound(0);
+        TeamRanking ir = round.getRankings(false).getTeamRankingSet().getRanking();
+
+        instance = new MjtRankingTeam(ir);
+
         /*instance = new MjtRankingTeam(
                 Tournament.getTournament().getParams().isTeamVictoryOnly(),
                 Tournament.getTournament().getRoundsCount() - 1,
@@ -63,9 +74,6 @@ public class MjtRankingTeamNGTest {
     @AfterMethod
     public void tearDownMethod() throws Exception {
     }
-
-    
-
 
     /**
      * Test of getColumnCount method, of class MjtRankingTeam.
@@ -106,7 +114,7 @@ public class MjtRankingTeamNGTest {
         for (int i = 0; i < instance.getColumnCount(); i++) {
             for (int j = 0; j < instance.getRowCount(); j++) {
                 Object obj = instance.getValueAt(j, i);
-                if (i == 1) {
+                if ((i == 1)||(i==4)) {
                     Assert.assertTrue(obj instanceof String);
                 } else {
                     Assert.assertTrue(obj instanceof Integer);
@@ -131,5 +139,4 @@ public class MjtRankingTeamNGTest {
         }
     }
 
-    
 }

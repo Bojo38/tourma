@@ -1257,9 +1257,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
                                 "Roster Choice", JOptionPane.WARNING_MESSAGE, null, rosters, rosters[0]);
 
                         String naf_roster = (String) choice;
-                        
+
                         coach.setNafRoster(naf_roster);
-                        
+
                     }
                 }
 
@@ -3413,139 +3413,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                         MainFrame window = MainFrame.getMainFrame(res);
                         window.setVisible(true);
-
-
-                        /*try {
-                            
-                            Socket socket = null;
-                            try {
-                                socket = new Socket(address, 2017);
-                            } catch (ConnectException e) {
-                                JOptionPane.showMessageDialog(null, Translate.translate(CS_ConnectionImpossibleTo)
-                                        + " " + address + ". "
-                                        + Translate.translate(CS_Exiting));
-                                System.exit(1);
-                            }
-
-                            ArrayList<String> labels = new ArrayList<>();
-
-                            // Index 0: Individual Ranking
-                            labels.add(Translate.translate(CS_IndividualRanking));
-                            // Index 1: Individual Annex ranks
-                            labels.add(Translate.translate(CS_IndividualAnnexRanking));
-                            // Index 2: Team Ranking
-                            labels.add(Translate.translate(CS_TeamRanking));
-                            // Index 3: Team Annex
-                            labels.add(Translate.translate(CS_TeamAnnexRanking));
-                            // Index 4: Clan Ranking
-                            labels.add(Translate.translate(CS_ClanRanking));
-                            // Index 5: Clan Annex
-                            labels.add(Translate.translate(CS_ClanAnnexRanking));
-                            // Index 6:Matchs
-                            labels.add(Translate.translate(CS_Matchs));
-                            // Index 7: Clash Match
-                            labels.add(Translate.translate(CS_MatchsClash));
-                            // Index 8: Categories
-                            labels.add(Translate.translate(CS_CategoryRanking));
-                            // Index 9: Categories
-                            labels.add(Translate.translate(CS_CategoryAnnexRanking));
-                            // Index 10: Group
-                            labels.add(Translate.translate(CS_GroupeRanking));
-                            // Index 11: Categories
-                            labels.add(Translate.translate(CS_GroupeAnnexRanking));
-                            // Index 12: Indiv Pool
-                            labels.add(Translate.translate(CS_IndividualPoolRanking));
-                            // Index 13: Indiv Pool Annex
-                            labels.add(Translate.translate(CS_IndividualPoolAnnexRanking));
-                            // Index 14: Team Pool
-                            labels.add(Translate.translate(CS_TeamPoolRanking));
-                            // Index 15: Categories
-                            labels.add(Translate.translate(CS_TeamPoolAnnexRanking));
-
-                            final JPanel jpn = new JPanel(new BorderLayout());
-                            final JComboBox jcb = new JComboBox(labels.toArray());
-                            jpn.add(jcb, BorderLayout.CENTER);
-                            final JLabel jlb = new JLabel(
-                                    Translate.translate(CS_ChooseFullScreen)
-                            );
-                            jpn.add(jlb, BorderLayout.NORTH);
-
-                            JOptionPane.showMessageDialog(null, jpn,
-                                    Translate.translate(CS_Generation),
-                                    JOptionPane.QUESTION_MESSAGE);
-
-                            final int index = jcb.getSelectedIndex();
-
-                            switch (index) {
-                                case 0:
-                                    JFullScreenIndivRank indiv = new JFullScreenIndivRank(socket);
-                                    indiv.setVisible(true);
-                                    break;
-                                case 1:
-                                    JFullScreenIndivAnnex indivAnnex = new JFullScreenIndivAnnex(socket);
-                                    indivAnnex.setVisible(true);
-                                    break;
-                                case 2:
-                                    JFullScreenTeamRank team = new JFullScreenTeamRank(socket);
-                                    team.setVisible(true);
-                                    break;
-                                case 3:
-                                    JFullScreenClanTeamAnnex teamAnnex = new JFullScreenClanTeamAnnex(socket, true);
-                                    teamAnnex.setVisible(true);
-                                    break;
-                                case 4:
-                                    JFullScreenClanRank clan = new JFullScreenClanRank(socket);
-                                    clan.setVisible(true);
-                                    break;
-                                case 5:
-                                    JFullScreenClanTeamAnnex clanAnnex = new JFullScreenClanTeamAnnex(socket, false);
-                                    clanAnnex.setVisible(true);
-                                    break;
-                                case 6:
-                                    JFullScreenMatchs matchs = new JFullScreenMatchs(socket);
-                                    matchs.setVisible(true);
-                                    break;
-                                case 7:
-                                    JFullScreenMatchs matchsC = new JFullScreenMatchs(socket, true);
-                                    matchsC.setVisible(true);
-                                    break;
-                                case 8:
-                                    JFullScreenIndivRank category = new JFullScreenIndivRank(socket, JFullScreenIndivRank.C_CATEGORY);
-                                    category.setVisible(true);
-                                    break;
-                                case 9:
-                                    JFullScreenIndivAnnex categoryAnnex = new JFullScreenIndivAnnex(socket, JFullScreenIndivRank.C_CATEGORY);
-                                    categoryAnnex.setVisible(true);
-                                    break;
-                                case 10:
-                                    JFullScreenIndivRank group = new JFullScreenIndivRank(socket, JFullScreenIndivRank.C_GROUP);
-                                    group.setVisible(true);
-                                    break;
-                                case 11:
-                                    JFullScreenIndivAnnex groupAnnex = new JFullScreenIndivAnnex(socket, JFullScreenIndivRank.C_GROUP);
-                                    groupAnnex.setVisible(true);
-                                    break;
-                                case 12:
-                                    JFullScreenIndivRank indivPool = new JFullScreenIndivRank(socket, JFullScreenIndivRank.C_POOL);
-                                    indivPool.setVisible(true);
-                                    break;
-                                case 13:
-                                    JFullScreenIndivAnnex indivPoolAnnex = new JFullScreenIndivAnnex(socket, JFullScreenIndivRank.C_POOL);
-                                    indivPoolAnnex.setVisible(true);
-                                    break;
-                                case 14:
-                                    JFullScreenTeamRank teamPool = new JFullScreenTeamRank(socket, true);
-                                    teamPool.setVisible(true);
-                                    break;
-                                case 15:
-                                    JFullScreenClanTeamAnnex teamPoolAnnex = new JFullScreenClanTeamAnnex(socket, false, true);
-                                    teamPoolAnnex.setVisible(true);
-                                    break;
-
-                            }
-                        } catch (IOException e) {
-                            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, e);
-                        }*/
                     }
                 }
             }

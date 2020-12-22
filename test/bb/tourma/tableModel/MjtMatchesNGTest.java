@@ -21,6 +21,7 @@ import org.testng.annotations.Test;
 import bb.tourma.data.Coach;
 import bb.tourma.data.CoachMatch;
 import bb.tourma.data.Criterion;
+import bb.tourma.data.Formula;
 import bb.tourma.data.Tournament;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
@@ -33,15 +34,16 @@ public class MjtMatchesNGTest {
 
     static ArrayList<CoachMatch> matchs = new ArrayList<>();
     static MjtMatches instance;
+    static Tournament tour;
 
     public MjtMatchesNGTest() {
     }
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        Tournament.getTournament().loadXML(new File("./test/coach.xml"));
-
-        matchs = Tournament.getTournament().getRound(Tournament.getTournament().getRoundsCount() - 1).getCoachMatchs();
+        Tournament.getTournament().loadXML(new File("./test/tournament.xml"));
+        tour = Tournament.getTournament();
+        matchs = tour.getRound(Tournament.getTournament().getRoundsCount() - 1).getCoachMatchs();
 
         instance = new MjtMatches(matchs, false, false, true, false);
     }
@@ -65,7 +67,7 @@ public class MjtMatchesNGTest {
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
         int expResult
-                = Tournament.getTournament().getParams().getCriteriaCount() * 2 + 3;
+                = tour.getParams().getCriteriaCount() * 2 + 5;
 
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
@@ -107,11 +109,21 @@ public class MjtMatchesNGTest {
                     expResult = Translate.translate(Translate.CS_Coach) + " 2";
                     break;
                 default:
-                    final Criterion crit = Tournament.getTournament().getParams().getCriterion((col - 3) / 2);
-                    if ((col - 3) % 2 > 0) {
-                        expResult = crit.getName() + " 2";
+                    if ((col >= 5)
+                            && (col < (3 + tour.getParams().getCriteriaCount() * 2))) {
+                        final Criterion crit = tour.getParams().getCriterion((col - 3) / 2);
+                        if ((col - 3) % 2 > 0) {
+                            expResult = crit.getName() + " 2";
+                        } else {
+                            expResult = crit.getName() + " 1";
+                        }
                     } else {
-                        expResult = crit.getName() + " 1";
+                        final Formula form = Tournament.getTournament().getParams().getFormula((col - 3 - tour.getParams().getCriteriaCount() * 2) / 2);
+                        if ((col - 3) % 2 > 0) {
+                            expResult = form.getName() + " 2";
+                        } else {
+                            expResult = form.getName() + " 1";
+                        }
                     }
             }
 
@@ -148,11 +160,22 @@ public class MjtMatchesNGTest {
                         expResult = cm.getCompetitor2().getName() + StringConstants.CS_THICK + ((Coach) cm.getCompetitor2()).getStringRoster();
                         break;
                     default:
-                        crit = Tournament.getTournament().getParams().getCriterion((col - 3) / 2);
-                        if ((col - 3) % 2 > 0) {
-                            expResult = cm.getValue(crit).getValue2();
+                        if ((col >= 5)
+                                && (col < (3 + tour.getParams().getCriteriaCount() * 2))) {
+                            crit = tour.getParams().getCriterion((col - 3) / 2);
+                            if ((col - 3) % 2 > 0) {
+                                expResult = cm.getValue(crit).getValue2();
+                            } else {
+                                expResult = cm.getValue(crit).getValue1();
+                            }
                         } else {
-                            expResult = cm.getValue(crit).getValue1();
+                            Formula form = null;
+                            form = tour.getParams().getFormula((col - 3 - tour.getParams().getCriteriaCount() * 2) / 2);
+                            if ((col - 3) % 2 > 0) {
+                                expResult = cm.getValue(form).getValue2();
+                            } else {
+                                expResult = cm.getValue(form).getValue1();
+                            }
                         }
                 }
 
@@ -190,20 +213,24 @@ public class MjtMatchesNGTest {
                         save = cm.getValue(Tournament.getTournament().getParams().getCriterion(0)).getValue2();
                         break;
                     default:
-                        crit = Tournament.getTournament().getParams().getCriterion((col - 3) / 2);
-                        if ((col - 3) % 2 > 0) {
-                            save = cm.getValue(crit).getValue2();
-                            expResult = col;
-                        } else {
-                            save = cm.getValue(crit).getValue1();
-                            expResult = col;
+                        if ((col >= 5)
+                                && (col < (3 + tour.getParams().getCriteriaCount() * 2))) {
+                            crit = Tournament.getTournament().getParams().getCriterion((col - 3) / 2);
+                            if ((col - 3) % 2 > 0) {
+                                save = cm.getValue(crit).getValue2();
+                                expResult = col;
+                            } else {
+                                save = cm.getValue(crit).getValue1();
+                                expResult = col;
+                            }
                         }
                 }
-
-                instance.setValueAt(expResult, row, col);
-                Object result = instance.getValueAt(row, col);
-                assertEquals(result, expResult);
-                instance.setValueAt(save, row, col);
+                if (instance.isCellEditable(row, col)) {
+                    instance.setValueAt(expResult, row, col);
+                    Object result = instance.getValueAt(row, col);
+                    assertEquals(result, expResult);
+                    instance.setValueAt(save, row, col);
+                }
             }
         }
     }
@@ -214,9 +241,9 @@ public class MjtMatchesNGTest {
     @Test
     public void testGetColumnClass() {
         System.out.println("getColumnClass");
-        
-       for (int col = 0; col < instance.getColumnCount(); col++) {
-           Class expResult=null;
+
+        for (int col = 0; col < instance.getColumnCount(); col++) {
+            Class expResult = null;
             switch (col) {
                 case 1:
                 case 4:
@@ -240,7 +267,7 @@ public class MjtMatchesNGTest {
         boolean expResult = false;
         for (int row = 0; row < instance.getRowCount(); row++) {
             for (int col = 0; col < instance.getColumnCount(); col++) {
-                if ((col == 0) || (col == 1) || (col == 4)) {
+                if ((col == 0) || (col == 1) || (col == 4) || (col > (3 + tour.getParams().getCriteriaCount() * 2))) {
                     expResult = false;
                 } else {
                     expResult = true;

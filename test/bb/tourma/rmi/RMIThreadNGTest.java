@@ -41,7 +41,7 @@ public class RMIThreadNGTest {
     /**
      * Test of stop method, of class RMIThread.
      */
-    @Test
+    @Test(enabled=false)
     public void testStop() {
         System.out.println("stop");
         RMIThread.stop();
@@ -52,7 +52,7 @@ public class RMIThreadNGTest {
     /**
      * Test of run method, of class RMIThread.
      */
-    @Test
+    @Test(enabled=false)
     public void testRun() {
         System.out.println("run");
         RMIThread instance = null;

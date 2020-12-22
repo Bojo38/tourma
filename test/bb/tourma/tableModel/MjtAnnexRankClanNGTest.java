@@ -20,7 +20,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import bb.tourma.data.Clan;
 import bb.tourma.data.Criterion;
+import bb.tourma.data.Round;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.AnnexClanRanking;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
 /**
@@ -46,11 +48,11 @@ public class MjtAnnexRankClanNGTest {
         {
             clans.add(Tournament.getTournament().getClan(i));
         }
+        
         crit=Tournament.getTournament().getParams().getCriterion(0);
-/*         instance = new MjtAnnexRankClan(Tournament.getTournament().getRoundsCount()-1,
-                crit,
-                0, true,
-                clans, false);*/
+        Round r=Tournament.getTournament().getRound(0);
+        AnnexClanRanking acr=r.getRankings(false).getClanRankingSet().getAnnexPosRanking().get(crit);
+        instance = new MjtAnnexRankClan(acr,true,0,acr.getCount());
     }
 
     @AfterClass
@@ -72,8 +74,7 @@ public class MjtAnnexRankClanNGTest {
     @Test
     public void testSortDatas() {
         System.out.println("sortDatas");        
-        assertEquals(instance.getRowCount(),clans.size());
-        //instance.sortDatas();        
+        assertEquals(instance.getRowCount(),clans.size());  
     }
     
 

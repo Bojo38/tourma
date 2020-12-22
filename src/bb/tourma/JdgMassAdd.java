@@ -40,7 +40,7 @@ import bb.tourma.data.RosterType;
 import bb.tourma.data.Team;
 import bb.tourma.data.Tournament;
 import bb.tourma.languages.Translate;
-import bb.tourma.tableModel.mjtTeamsAndCoaches;
+import bb.tourma.tableModel.MjtTeamsAndCoaches;
 import bb.tourma.utility.ExtensionFileFilter;
 import bb.tourma.utils.NafTask;
 
@@ -629,7 +629,7 @@ public final class JdgMassAdd extends JDialog implements PropertyChangeListener 
      * Update Panel
      */
     protected void update() {
-        mjtTeamsAndCoaches model = new mjtTeamsAndCoaches(Tournament.getTournament().getParams().isTeamTournament());
+        MjtTeamsAndCoaches model = new MjtTeamsAndCoaches(Tournament.getTournament().getParams().isTeamTournament());
         jtTeamsAndCoaches.setModel(model);
         jtTeamsAndCoaches.setDefaultRenderer(Integer.class, model);
         jtTeamsAndCoaches.setDefaultRenderer(String.class, model);

@@ -62,7 +62,7 @@ public class MjtCriteriasNGTest {
     @Test
     public void testGetColumnCount() {
         System.out.println("getColumnCount");
-        int expResult = Tournament.getTournament().getParams().isTeamTournament() ? 5 : 3;
+        int expResult = Tournament.getTournament().getParams().isTeamTournament() ? 6 : 3;
         int result = instance.getColumnCount();
         assertEquals(result, expResult);
     }
@@ -92,15 +92,18 @@ public class MjtCriteriasNGTest {
                     expResult = Translate.translate(Translate.CS_Critera_Name);
                     break;
                 case 1:
-                    expResult = Translate.translate(Translate.CS_Points_Plus);
+                    expResult = Translate.translate(Translate.CS_Critera_Accronym);
                     break;
                 case 2:
-                    expResult = Translate.translate(Translate.CS_Points_Minus);
+                    expResult = Translate.translate(Translate.CS_Points_Plus);
                     break;
                 case 3:
-                    expResult = Translate.translate(Translate.CS_Points_Team_Plus);
+                    expResult = Translate.translate(Translate.CS_Points_Minus);
                     break;
                 case 4:
+                    expResult = Translate.translate(Translate.CS_Points_Team_Plus);
+                    break;
+                case 5:
                     expResult = Translate.translate(Translate.CS_Points_Team_Minus);
                     break;
                 default:
@@ -127,15 +130,18 @@ public class MjtCriteriasNGTest {
                         expResult = c.getName();
                         break;
                     case 1:
-                        expResult = c.getPointsFor();
+                        expResult = c.getAccronym();
                         break;
                     case 2:
-                        expResult = c.getPointsAgainst();
+                        expResult = c.getPointsFor();
                         break;
                     case 3:
-                        expResult = c.getPointsTeamFor();
+                        expResult = c.getPointsAgainst();
                         break;
                     case 4:
+                        expResult = c.getPointsTeamFor();
+                        break;
+                    case 5:
                         expResult = c.getPointsTeamAgainst();
                         break;
                     default:
@@ -153,7 +159,7 @@ public class MjtCriteriasNGTest {
     public void testSetValueAt() {
         System.out.println("setValueAt");
         Object expResult=null;
-         Object newResult=null;
+        Object newResult=null;
        for (int i = 0; i < crits.size(); i++) {
             Criterion c = crits.get(i);
             for (int col = 0; col < 5; col++) {
@@ -164,18 +170,22 @@ public class MjtCriteriasNGTest {
                         newResult="Test";
                         break;
                     case 1:
+                        expResult = c.getAccronym();
+                        newResult="Test";
+                        break;
+                    case 2:
                         expResult = c.getPointsFor();
                         newResult=1;
                         break;
-                    case 2:
+                    case 3:
                         expResult = c.getPointsAgainst();
                         newResult=2;
                         break;
-                    case 3:
+                    case 4:
                         expResult = c.getPointsTeamFor();
                         newResult=3;
                         break;
-                    case 4:
+                    case 5:
                         expResult = c.getPointsTeamAgainst();
                         newResult=4;
                         break;
@@ -183,7 +193,9 @@ public class MjtCriteriasNGTest {
                 }                
                 Object result = instance.getValueAt(i, col);                
                 instance.setValueAt(newResult, i, col);
+                
                 assertEquals(newResult, instance.getValueAt(i, col));
+                
                 instance.setValueAt(result, i, col);
             }
         }
@@ -197,7 +209,7 @@ public class MjtCriteriasNGTest {
         System.out.println("getColumnClass");
         for (int i = 0; i < instance.getColumnCount(); i++) {
             Class expResult = null;
-            if (i == 0) {
+            if ((i == 0)||(i==1)) {
                 expResult = String.class;
             } else {
                 expResult = Integer.class;
@@ -215,8 +227,11 @@ public class MjtCriteriasNGTest {
         System.out.println("isCellEditable");
         for (int row = 0; row<instance.getRowCount(); row++) {
             for (int col = 0; col<instance.getColumnCount(); col++) {
-                boolean expResult = Tournament.getTournament().getRoundsCount() <= 0;
+                
+                boolean expResult = true;
+                
                 boolean result = instance.isCellEditable(row, col);
+                
                 assertEquals(result,expResult);
             }
         }
