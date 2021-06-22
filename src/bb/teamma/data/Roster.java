@@ -347,6 +347,7 @@ public class Roster implements IXMLExport, Serializable {
 
         }
 
+        this._version=version;
         LRB lrb = LRB.getLRB(version);
 
         this.setRoster(lrb.getRosterType(rosterType, false));
@@ -391,7 +392,8 @@ public class Roster implements IXMLExport, Serializable {
                 final Iterator<Element> is = skills.iterator();
                 while (is.hasNext()) {
                     final Element s = is.next();
-                    final bb.teamma.data.Skill sl = new Skill(LRB.getLRB(version).getSkill(s.getAttributeValue(CS_Name), false));
+                    String skill_name=s.getAttributeValue(CS_Name);
+                    final bb.teamma.data.Skill sl = lrb.getSkill(skill_name, false);
                     String sColor = s.getAttributeValue(CS_Color);
                     Color col = Color.decode(sColor);
                     sl.setmColor(col);

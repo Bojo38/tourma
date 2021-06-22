@@ -226,6 +226,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
     private void jbtColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtColorActionPerformed
         Color c=JColorChooser.showDialog(this,"Choose",Color.CYAN);
         this._color=c;
+        jbtColor.setBackground(c);
     }//GEN-LAST:event_jbtColorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

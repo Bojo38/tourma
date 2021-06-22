@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-/*
+ /*
  * jdgRoundReport.java
  *
  * Created on 28 juin 2010, 10:52:47
@@ -43,6 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import org.apache.commons.lang3.StringEscapeUtils;
 import bb.teamma.data.Inducement;
+import bb.teamma.data.LRB;
 import bb.teamma.data.Player;
 import bb.teamma.data.Roster;
 import bb.teamma.data.RosterType;
@@ -67,6 +68,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
     private Coach mCoach;
     private File mFilename = null;
     private boolean mWithSkill = false;
+    private LRB.E_Version _lrb;
 
     /**
      * Creates new form jdgRoundReport
@@ -77,9 +79,10 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
      * @param withSkill
      * @param coach
      */
-    public JdgPrintableRoster(final java.awt.Frame parent, final boolean modal, final Roster roster, final Coach coach, boolean withSkill) {
+    public JdgPrintableRoster(final java.awt.Frame parent, final boolean modal, final Roster roster, final Coach coach, boolean withSkill, LRB.E_Version lrb) {
         super(parent, modal);
         initComponents();
+        _lrb = lrb;
         mRoster = roster;
         mCoach = coach;
         mWithSkill = withSkill;
@@ -266,18 +269,18 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 in = new InputStreamReader(new FileInputStream(mFilename), Charset.defaultCharset());
                 {
                     //out = new OutputStreamWriter(new FileOutputStream(export), Charset.defaultCharset());
-                    StringBuilder sb=new StringBuilder();
+                    StringBuilder sb = new StringBuilder();
                     int c = in.read();
                     while (c != -1) {
-                        sb.append((char)c);
+                        sb.append((char) c);
                         c = in.read();
                     }
 
-                    String s=sb.toString();
+                    String s = sb.toString();
 
-                    s=s.substring(s.indexOf("<html>"));
+                    s = s.substring(s.indexOf("<html>"));
 
-                    HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, this.getName(),PageSize.A4.rotate());
+                    HTMLtoPDF.exportToPDF(new FileOutputStream(export), s, this.getName(), PageSize.A4.rotate());
                 }
 
             } catch (IOException e) {
@@ -322,6 +325,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
     private static final String CS_movement = "movement";
     private static final String CS_strength = "strength";
     private static final String CS_agility = "agility";
+    private static final String CS_pass = "pass";
     private static final String CS_armor = "armor";
     private static final String CS_skills = "skills";
     private static final String CS_cost = "cost";
@@ -373,11 +377,11 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
     private static final String CS_chef_cost = "chef_cost";
     private static final String CS_cards = "cards";
     private static final String CS_total = "total";
-    private static final String CS_inducements="inducements";
-   
+    private static final String CS_inducements = "inducements";
+
     private File createReport() {
         File address = null;
-        HtmlEscape html=new HtmlEscape();
+        HtmlEscape html = new HtmlEscape();
         OutputStreamWriter out = null;
         FileOutputStream fos = null;
         try {
@@ -392,7 +396,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             final Template temp = cfg.getTemplate("roster.html");
 
             final Map<String, Object> root = new HashMap<>();
-            
+
             if (getCoach() != null) {
                 if (getCoach().getTeam() != null) {
                     root.put(CS_title, StringEscapeUtils.escapeHtml4(getCoach().getTeam()));
@@ -402,6 +406,11 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             } else {
                 root.put(CS_title, "?");
             }
+            if (_lrb == LRB.E_Version.BB2020) {
+                root.put("CPEnable", 1);
+            } else {
+                root.put("CPEnable", 0);
+            }
 
             ArrayList<HashMap<String, Object>> players = new ArrayList<>();
 
@@ -409,10 +418,13 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 Player p = getRoster().getPlayer(i);
                 final HashMap<String, Object> player = new HashMap<>();
                 player.put(CS_numero, i + 1);
-                player.put(CS_name,  StringEscapeUtils.escapeHtml4(Translate.translate(p.getName())));
+                player.put(CS_name, StringEscapeUtils.escapeHtml4(Translate.translate(p.getName())));
                 player.put(CS_position, StringEscapeUtils.escapeHtml4(Translate.translate(p.getPlayertype().getPosition())));
                 player.put(CS_movement, p.getPlayertype().getMovement());
                 player.put(CS_strength, p.getPlayertype().getStrength());
+                if (_lrb == LRB.E_Version.BB2020) {
+                    player.put(CS_pass, p.getPlayertype().getPass());
+                }
                 player.put(CS_agility, p.getPlayertype().getAgility());
                 player.put(CS_armor, p.getPlayertype().getArmor());
 
@@ -429,7 +441,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                     ctmp = ctmp + c.getRed() + ",";
                     ctmp = ctmp + c.getGreen() + ",";
                     ctmp = ctmp + c.getBlue() + ")";
-                    skills.add("<div style=\"color:" + ctmp + ";\">" + StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())) + "</div>");
+                    skills.add("<span style=\"color:" + ctmp + ";\">" + StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())) + "</span>");
                 }
                 player.put(CS_skills, skills);
                 player.put(CS_cost, p.getValue(isWithSkill()));
@@ -455,17 +467,18 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 StarPlayer p = getRoster().getChampion(cpt);
                 final HashMap<String, Object> player = new HashMap<>();
                 player.put(CS_numero, players.size() + 1);
-                player.put(CS_name,  StringEscapeUtils.escapeHtml4(Translate.translate(p.getName())));
-                player.put(CS_position, StringEscapeUtils.escapeHtml4(Translate.translate( p.getPosition())));
+                player.put(CS_name, StringEscapeUtils.escapeHtml4(Translate.translate(p.getName())));
+                player.put(CS_position, StringEscapeUtils.escapeHtml4(Translate.translate(p.getPosition())));
                 player.put(CS_movement, p.getMovement());
                 player.put(CS_strength, p.getStrength());
                 player.put(CS_agility, p.getAgility());
                 player.put(CS_armor, p.getArmor());
+                player.put(CS_pass, p.getPass());
 
                 ArrayList<String> skills = new ArrayList<>();
                 for (int cpt2 = 0; cpt2 < p.getSkillCount(); cpt2++) {
                     Skill _skill = p.getSkill(cpt2);
-                    skills.add( StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())));
+                    skills.add(StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())));
                 }
                 player.put(CS_skills, skills);
                 player.put(CS_cost, p.getCost());
@@ -525,55 +538,58 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
             root.put(CS_pop_cost, getRoster().getFanfactor() * RosterType.getFan_factor_cost());
 
             ArrayList<HashMap<String, Object>> inducements = new ArrayList<>();
-             for (int i = 0; i < this.mRoster.getInducementsSize(); i++) {
-                 Inducement induc=mRoster.getInducement(i);
-                 HashMap<String, Object> inducement=new HashMap<>();
-                 
-                 inducement.put(CS_name, StringEscapeUtils.escapeHtml4(Translate.translate(induc.getType().getName())));
-                 inducement.put(CS_nb, induc.getNb());
-                 inducement.put(CS_cost, induc.getType().getCost());
-                 inducement.put(CS_total, induc.getType().getCost()*induc.getNb());
-                 
-                 inducements.add(inducement);
-             }
-             
-            root.put(CS_inducements,inducements);
+            for (int i = 0; i < this.mRoster.getInducementsSize(); i++) {
+                Inducement induc = mRoster.getInducement(i);
+
+                if (induc.getNb() > 0) {
+                    HashMap<String, Object> inducement = new HashMap<>();
+
+                    inducement.put(CS_name, StringEscapeUtils.escapeHtml4(Translate.translate(induc.getType().getName())));
+                    inducement.put(CS_nb, induc.getNb());
+                    inducement.put(CS_cost, induc.getType().getCost());
+                    inducement.put(CS_total, induc.getType().getCost() * induc.getNb());
+
+                    inducements.add(inducement);
+                }
+            }
+
+            root.put(CS_inducements, inducements);
 
             root.put(CS_total, getRoster().getValue(isWithSkill()));
             root.put(CS_rank, getRoster().getValue(isWithSkill()) / 10000);
 
             // Pure translation
-            root.put("RosterTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RosterTitle")));
-            root.put("NameTitle",StringEscapeUtils.escapeHtml4(Translate.translate("NameTitle")));
-            root.put("PositionTitle",StringEscapeUtils.escapeHtml4(Translate.translate("PositionTitle")));
-            root.put("MTitle",StringEscapeUtils.escapeHtml4(Translate.translate("MTitle")));
-            root.put("STitle",StringEscapeUtils.escapeHtml4(Translate.translate("STitle")));
-            root.put("AgTitle",StringEscapeUtils.escapeHtml4(Translate.translate("AgTitle")));
-            root.put("ArTitle",StringEscapeUtils.escapeHtml4(Translate.translate("ArTitle")));
-            root.put("SkillsTitle",StringEscapeUtils.escapeHtml4(Translate.translate("SkillsTitle")));
-            root.put("CostTitle",StringEscapeUtils.escapeHtml4(Translate.translate("CostTitle")));
-            root.put("SRTitle",StringEscapeUtils.escapeHtml4(Translate.translate("SRTitle")));
-            root.put("DRTitle",StringEscapeUtils.escapeHtml4(Translate.translate("DRTitle")));
-            root.put("TeamNameTitle",StringEscapeUtils.escapeHtml4(Translate.translate("TeamNameTitle")));
-            root.put("ApothecaryTitle",StringEscapeUtils.escapeHtml4(Translate.translate("ApothecaryTitle")));
-            root.put("CoachNameTitle",StringEscapeUtils.escapeHtml4(Translate.translate("CoachNameTitle")));
-            root.put("AssistTitle",StringEscapeUtils.escapeHtml4(Translate.translate("AssistTitle")));
-            root.put("RaceTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RaceTitle")));
-            root.put("CheerleadersTitle",StringEscapeUtils.escapeHtml4(Translate.translate("CheerleadersTitle")));
-            root.put("FanFactorTitle",StringEscapeUtils.escapeHtml4(Translate.translate("FanFactorTitle")));
-            root.put("ExtraRerollTitle",StringEscapeUtils.escapeHtml4(Translate.translate("ExtraRerollTitle")));
-            root.put("LocalApothecaryTitle",StringEscapeUtils.escapeHtml4(Translate.translate("LocalApothecaryTitle")));
-            root.put("IgorTitle",StringEscapeUtils.escapeHtml4(Translate.translate("IgorTitle")));
-            root.put("BribeTitle",StringEscapeUtils.escapeHtml4(Translate.translate("BribeTitle")));
-            root.put("WizardTitle",StringEscapeUtils.escapeHtml4(Translate.translate("WizardTitle")));
-            root.put("BabesTitle",StringEscapeUtils.escapeHtml4(Translate.translate("BabesTitle")));
-            root.put("ChefTitle",StringEscapeUtils.escapeHtml4(Translate.translate("ChefTitle")));
-            root.put("CardsTitle",StringEscapeUtils.escapeHtml4(Translate.translate("CardsTitle")));
-            root.put("TotalTitle",StringEscapeUtils.escapeHtml4(Translate.translate("TotalTitle")));
-            root.put("RerollTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RerollTitle")));
-            root.put("RankTitle",StringEscapeUtils.escapeHtml4(Translate.translate("RankTitle")));
-            
-                       
+            root.put("RosterTitle", StringEscapeUtils.escapeHtml4(Translate.translate("RosterTitle")));
+            root.put("NameTitle", StringEscapeUtils.escapeHtml4(Translate.translate("NameTitle")));
+            root.put("PositionTitle", StringEscapeUtils.escapeHtml4(Translate.translate("PositionTitle")));
+            root.put("MTitle", StringEscapeUtils.escapeHtml4(Translate.translate("MTitle")));
+            root.put("STitle", StringEscapeUtils.escapeHtml4(Translate.translate("STitle")));
+            root.put("AgTitle", StringEscapeUtils.escapeHtml4(Translate.translate("AgTitle")));
+            root.put("CpTitle", StringEscapeUtils.escapeHtml4(Translate.translate("CpTitle")));
+            root.put("ArTitle", StringEscapeUtils.escapeHtml4(Translate.translate("ArTitle")));
+            root.put("SkillsTitle", StringEscapeUtils.escapeHtml4(Translate.translate("SkillsTitle")));
+            root.put("CostTitle", StringEscapeUtils.escapeHtml4(Translate.translate("CostTitle")));
+            root.put("SRTitle", StringEscapeUtils.escapeHtml4(Translate.translate("SRTitle")));
+            root.put("DRTitle", StringEscapeUtils.escapeHtml4(Translate.translate("DRTitle")));
+            root.put("TeamNameTitle", StringEscapeUtils.escapeHtml4(Translate.translate("TeamNameTitle")));
+            root.put("ApothecaryTitle", StringEscapeUtils.escapeHtml4(Translate.translate("ApothecaryTitle")));
+            root.put("CoachNameTitle", StringEscapeUtils.escapeHtml4(Translate.translate("CoachNameTitle")));
+            root.put("AssistTitle", StringEscapeUtils.escapeHtml4(Translate.translate("AssistTitle")));
+            root.put("RaceTitle", StringEscapeUtils.escapeHtml4(Translate.translate("RaceTitle")));
+            root.put("CheerleadersTitle", StringEscapeUtils.escapeHtml4(Translate.translate("CheerleadersTitle")));
+            root.put("FanFactorTitle", StringEscapeUtils.escapeHtml4(Translate.translate("FanFactorTitle")));
+            root.put("ExtraRerollTitle", StringEscapeUtils.escapeHtml4(Translate.translate("ExtraRerollTitle")));
+            root.put("LocalApothecaryTitle", StringEscapeUtils.escapeHtml4(Translate.translate("LocalApothecaryTitle")));
+            root.put("IgorTitle", StringEscapeUtils.escapeHtml4(Translate.translate("IgorTitle")));
+            root.put("BribeTitle", StringEscapeUtils.escapeHtml4(Translate.translate("BribeTitle")));
+            root.put("WizardTitle", StringEscapeUtils.escapeHtml4(Translate.translate("WizardTitle")));
+            root.put("BabesTitle", StringEscapeUtils.escapeHtml4(Translate.translate("BabesTitle")));
+            root.put("ChefTitle", StringEscapeUtils.escapeHtml4(Translate.translate("ChefTitle")));
+            root.put("CardsTitle", StringEscapeUtils.escapeHtml4(Translate.translate("CardsTitle")));
+            root.put("TotalTitle", StringEscapeUtils.escapeHtml4(Translate.translate("TotalTitle")));
+            root.put("RerollTitle", StringEscapeUtils.escapeHtml4(Translate.translate("RerollTitle")));
+            root.put("RankTitle", StringEscapeUtils.escapeHtml4(Translate.translate("RankTitle")));
+
             final SimpleDateFormat format = new SimpleDateFormat("EEEEEEE dd MMMMMMMMMMM yyyy", Locale.getDefault());
             final SimpleDateFormat formatShort = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
             root.put(ReportKeys.CS_DateGeneration, formatShort.format(new Date()));
@@ -621,7 +637,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
         return mCoach;
     }
 
-        /**
+    /**
      * @return the mFilename
      */
     private File getmFilename() {

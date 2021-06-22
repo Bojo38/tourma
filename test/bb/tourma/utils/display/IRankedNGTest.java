@@ -43,7 +43,7 @@ public class IRankedNGTest {
     /**
      * Test of getRowCount method, of class IRanked.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetRowCount() throws Exception {
         System.out.println("getRowCount");
         IRanked instance = new IRankedImpl();
@@ -57,7 +57,7 @@ public class IRankedNGTest {
     /**
      * Test of getSortedObject method, of class IRanked.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetSortedObject() throws Exception {
         System.out.println("getSortedObject");
         int i = 0;
@@ -72,7 +72,7 @@ public class IRankedNGTest {
     /**
      * Test of getSortedValue method, of class IRanked.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetSortedValue() throws Exception {
         System.out.println("getSortedValue");
         int i = 0;
@@ -88,7 +88,7 @@ public class IRankedNGTest {
     /**
      * Test of getDetail method, of class IRanked.
      */
-    @Test
+    @Test(enabled=false)
     public void testGetDetail() throws Exception {
         System.out.println("getDetail");
         IRanked instance = new IRankedImpl();
@@ -102,7 +102,7 @@ public class IRankedNGTest {
     /**
      * Test of setDetail method, of class IRanked.
      */
-    @Test
+    @Test(enabled=false)
     public void testSetDetail() throws Exception {
         System.out.println("setDetail");
         String s = "";

@@ -215,6 +215,7 @@ public final class JPNRound extends javax.swing.JPanel {
                     locked = true;
                 }
             }
+            
             if (mTournament.isRoundRobin()) {
                 locked = false;
             }

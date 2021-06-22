@@ -21,7 +21,7 @@
     <body>
         <#setting locale="fr_FR">
         <#setting number_format="0.##">
-
+${CPEnable}
         <div id="titre">${RosterTitle}</div>
         <br>
         <table
@@ -35,6 +35,9 @@
                     <td >${MTitle}</td>
                     <td >${STitle}</td>
                     <td >${AgTitle}</td>
+                    <#if (CPEnable == 1) >
+                     <td >${CpTitle}</td>
+                     </#if>
                     <td >${ArTitle}</td>
                     <td colspan="3">${SkillsTitle}</td>
                     <td >${CostTitle}</td>
@@ -56,8 +59,11 @@
                     <td >${player.position}</td>
                     <td >${player.movement}</td>
                     <td >${player.strength}</td>
-                    <td >${player.agility}</td>
-                    <td >${player.armor}</td>
+                    <td >${player.agility}<#if (CPEnable == 1) >+</#if></td>
+                    <#if (CPEnable == 1) >
+                    <td >${player.pass}+</td>
+                    </#if>
+                    <td >${player.armor}<#if (CPEnable == 1) >+</#if></td>
                     <td colspan="3">
                         <#list player.skills as skill>
                         ${skill} 
@@ -78,7 +84,11 @@
                     <td colspan="2" style="text-align:right;">
                         ${TeamNameTitle}
                     </td>
+                    <#if (CPEnable == 1) > 
+                    <td colspan="6" style="text-align:center;">${teamname}</td> 
+                    <#else>
                     <td colspan="5" style="text-align:center;">${teamname}</td>
+                    </#if>
                     <td style="text-align:right;">${ApothecaryTitle} </td>
                     <td style="text-align:center;">${apothecary} </td>
                     <td style="text-align:center;">X</td>
@@ -95,7 +105,12 @@
                     <td colspan="2" style="text-align:right;">
                         ${CoachNameTitle}
                     </td>
+                    <#if (CPEnable == 1) > 
+                    <td colspan="6" style="text-align:center;">${coachname}</td>
+                    <#else>
                     <td colspan="5" style="text-align:center;">${coachname}</td>
+                    </#if>
+                    
                     <td style="text-align:right;">${AssistTitle}</td>
                     <td style="text-align:center;">${assists}</td>
                     <td style="text-align:center;">X</td>
@@ -112,7 +127,14 @@
                     <td colspan="2" style="text-align:right;">
                         ${RaceTitle}
                     </td>
+                    
+                    <#if (CPEnable == 1) > 
+                    <td colspan="6" style="text-align:center;">${race}</td>
+                    <#else>
                     <td colspan="5" style="text-align:center;">${race}</td>
+                    </#if>
+                    
+                    
                     <td style="text-align:right;">${CheerleadersTitle} </td>
                     <td style="text-align:center;">${cheer}</td>
                     <td style="text-align:center;">X</td>
@@ -130,7 +152,14 @@
                     <td colspan="2" style="text-align:right;">
                         ${RankTitle}
                     </td>
+                    
+                    <#if (CPEnable == 1) > 
+                    <td colspan="6" style="text-align:center;">${rank}</td>
+                    <#else>
                     <td colspan="5" style="text-align:center;">${rank}</td>
+                    </#if>
+                    
+                    
                     
                     <td style="text-align:right;">${FanFactorTitle}</td>
                     <td style="text-align:center;">${pop}</td>
@@ -146,9 +175,12 @@
                 <#assign background="background-color:#eeeeee">
                 </#if>
                 <tr style="${background};">
-                    <td colspan="7">
-                        &nbsp;
-                    </td>
+                    
+                     <#if (CPEnable == 1) > 
+                    <td colspan="8" style="text-align:center;">${race}</td>
+                    <#else>
+                    <td colspan="7" style="text-align:center;">${race}</td>
+                    </#if>
 
                     <td style="text-align:right;">${RerollTitle} </td>
                     <td style="text-align:center;">${reroll}</td>
@@ -158,11 +190,20 @@
                 </tr>
 
                 <#list inducements as inducement>
-                <tr style="font-size:14px;text-align:center;">
-                    <tr style="${background};">
+                
+                    <tr style="${background};font-size:14px;text-align:center;">
+                    
+                        <#if (CPEnable == 1) > 
+                    <td colspan="8">
+                        &nbsp;
+                    </td>
+                    <#else>
                     <td colspan="7">
                         &nbsp;
                     </td>
+                    </#if>
+                    
+                    
 
                     <td style="text-align:right;">${inducement.name}</td>
                     <td style="text-align:center;">${inducement.nb}</td>
@@ -170,13 +211,19 @@
                     <td style="text-align:center;">${inducement.cost}</td>
                     <td colspan="2" style="text-align:center;">${inducement.total}</td>
                     </tr>
-                </tr>
+
                 </#list>
                  
                 <tr style="${background};">
+                     <#if (CPEnable == 1) > 
+                    <td colspan="8">
+                        &nbsp;
+                    </td>
+                    <#else>
                     <td colspan="7">
                         &nbsp;
                     </td>
+                    </#if>
 
                     <td colspan="4" style="text-align:right;font-size:20px;">${TotalTitle} </td>
                     <td colspan="2" style="text-align:center;font-size:20px;">${total}</td>

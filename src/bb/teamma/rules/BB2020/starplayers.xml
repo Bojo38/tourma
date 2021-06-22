@@ -10,6 +10,62 @@ and open the template in the editor.
     xsi:noNamespaceSchemaLocation='roster.xsd'>
 
     <starplayer>
+        <name>Akhorne, the Squirrel</name>
+        <sources>
+            <source>Spike!</source>
+        </sources>
+        <position>Squirrel</position>
+        <movement>7</movement>
+        <strength>1</strength>
+        <agility>2</agility>
+        <pass>0</pass>
+        <armor>6</armor>
+        <skills>
+            <skill>Claws</skill>
+            <skill>Dauntless</skill>
+            <skill>Dodge</skill>
+            <skill>Loner (4+)</skill>
+            <skill>Side Step</skill>
+            <skill>Frenzy</skill>
+            <skill>Jump Up</skill>
+            <skill>Stunty</skill>
+            <skill>Titchy</skill>
+        </skills>
+        <special>Can reroll dauntless roll.</special>
+        <cost>80000</cost>
+       <team>AmazonKey</team>
+        <team>ChaosChosenKey</team>
+        <team>ChaosDwarfKey</team>
+        <team>ChaosRenegadesKey</team>
+        <team>DarkElfKey</team>
+        <team>DwarfKey</team>
+        <team>ElfUnionKey</team>
+        <team>GoblinKey</team>
+        <team>HalflingKey</team>
+        <team>HighElfKey</team>
+        <team>HumanKey</team>
+        <team>LizardmenKey</team>
+        <team>NorseKey</team>
+        <team>NurgleKey</team>
+        <team>OgreKey</team>
+        <team>OrcKey</team>
+        <team>SkavenKey</team>
+        <team>SlannKey</team>
+        <team>UnderworldDenizenKey</team>
+        <team>VampireKey</team>
+        <team>WoodElfKey</team>
+        <team>KhornesDaemonsKey</team>
+        <team>ImperialNobilityKey</team>
+        <team>SnotlingKey</team>
+        <team>OldWorldAllianceKey</team>
+        <team>BlackOrcKey</team>
+         <team>VampireKey</team> <!-- Spot de Sylvanie-->
+        <team>KhemriTombKingsKey</team> <!-- Spot de Sylvanie-->
+        <team>NecromanticHorrorKey</team> <!-- Spot de Sylvanie-->
+        <team>ShamblingUndeadKey</team> <!-- Spot de Sylvanie-->
+    </starplayer>
+    
+    <starplayer>
         <name>The Black Gobbo</name>
         <sources>
             <source>BB2020</source>
@@ -42,6 +98,7 @@ and open the template in the editor.
         <team>SkavenKey</team> <!-- Défi des basfonds -->
         <team>UnderworldDenizenKey</team> <!-- Défi des basfonds -->
     </starplayer>
+    
     
     <starplayer>
         <name>Deeproot Strongbranch</name>

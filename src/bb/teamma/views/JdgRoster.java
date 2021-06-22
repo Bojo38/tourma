@@ -1069,7 +1069,7 @@ public final class JdgRoster extends javax.swing.JDialog {
     }//GEN-LAST:event_jtbStarsMouseClicked
 
     private void jbtHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtHTMLActionPerformed
-        JdgPrintableRoster jdg = new JdgPrintableRoster(null, true, this._data, this._coach, jcbWithSkills.isSelected());
+        JdgPrintableRoster jdg = new JdgPrintableRoster(null, true, this._data, this._coach, jcbWithSkills.isSelected(),lrbversion);
         jdg.setVisible(true);
     }//GEN-LAST:event_jbtHTMLActionPerformed
 
@@ -1184,6 +1184,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         }
         _lrb = LRB.getLRB(newversion);
         lrbversion = newversion;
+        _data.setVersion(newversion);
         update();
     }//GEN-LAST:event_jcbLRBActionPerformed
 
