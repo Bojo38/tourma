@@ -175,7 +175,7 @@ public class MjtTeamStarsNGTest {
             for (int j = 0; j < roster.getChampion(i).getSkillCount(); j++) {
                 Skill s = roster.getChampion(i).getSkill(j);
 
-                skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                skills.add("<FONT color=\"000000\">" + Translate.translate(s.getName()) + "</FONT>");
             }
 
             for (int j = 0; j < skills.size(); j++) {

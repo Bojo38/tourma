@@ -13,6 +13,7 @@ public interface StringConstants {
     /**
      *
      */
+    public static final String CS_LRB = "LRB";
     public static final String CS_ROSTER = "Roster";
     public static final String CS_WEB_COLOR1 = "WebColor1";
     public static final String CS_WEB_COLOR2 = "WebColor";
@@ -280,4 +281,6 @@ public interface StringConstants {
     public static final String CS_CUP_ROUND = "Round";
     public static final String CS_CUP_MATCHS = "Matchs";
     public static final String CS_CUP_MATCH = "Match";
+    
+    public static final String CS_RANDOMSKILLDISPLAY = "RandomSkillDisplay";
 }

@@ -10,7 +10,7 @@ and open the template in the editor.
         <name>General</name>
         <accronym>G</accronym>
         <special>false</special>
-        <skill>Random General Skill</skill>
+        <skill random="true">Random General Skill</skill>
         <skill>Strip Ball</skill>
         <skill>Block</skill>
         <skill>Kick</skill>
@@ -18,7 +18,7 @@ and open the template in the editor.
         <skill>Dauntless</skill>
         <skill>Dirty Player (+1)</skill>
         <skill>Wrestle</skill>
-        <skill>Fend</skill>
+        <skill forbidden="Grab">Fend</skill>
         <skill>Shadowing</skill>
         <skill>Sure Hands</skill>
         <skill>Pro</skill>
@@ -28,7 +28,7 @@ and open the template in the editor.
         <name>Pass</name>
         <accronym>P</accronym>
         <special>false</special>
-        <skill>Random Pass Skill</skill>
+        <skill random="true">Random Pass Skill</skill>
         <skill>Cannoneer</skill>
         <skill>Leader</skill>
         <skill>Dump-Off</skill>
@@ -46,7 +46,7 @@ and open the template in the editor.
         <name>Strength</name>
         <accronym>S</accronym>
         <special>false</special>
-        <skill>Random Strength Skill</skill>
+        <skill random="true">Random Strength Skill</skill>
         <skill>Brawler</skill>
         <skill>Multiple Block</skill>
         <skill>Strong Arm</skill>
@@ -57,14 +57,14 @@ and open the template in the editor.
         <skill>Guard</skill>
         <skill>Juggernaut</skill>
         <skill>Pile Driver</skill>
-        <skill>Grab</skill>
+        <skill forbidden="Frenzy">Grab</skill>
         <skill>Stand Firm</skill>
     </category>
     <category>
         <name>Mutation</name>
         <accronym>M</accronym>
         <special>false</special>
-        <skill>Random Mutation</skill>
+        <skill random="true">Random Mutation</skill>
         <skill>Extra Arms</skill>
         <skill>Horns</skill>
         <skill>Two Heads</skill>
@@ -82,7 +82,7 @@ and open the template in the editor.
         <name>Agility</name>
         <accronym>A</accronym>
         <special>false</special>
-        <skill>Random Agility Skill</skill>
+        <skill random="true">Random Agility Skill</skill>
         <skill>Defensive</skill>
         <skill>Sure Feet</skill>
         <skill>Dodge</skill>
@@ -91,7 +91,7 @@ and open the template in the editor.
         <skill>Catch</skill>
         <skill>Diving Catch</skill>
         <skill>Jump Up</skill>
-        <skill>Leap</skill>
+        <skill forbidden="Pogo Stick">Leap</skill>
         <skill>Sneaky Git</skill>
         <skill>Sprint</skill>
         <skill>Diving Tackle</skill>
@@ -110,11 +110,11 @@ and open the template in the editor.
         <skill>Bombardier</skill>
         <skill>Kick Team-Mate</skill>
         <skill>Bone Head</skill>
-        <skill>Ball And Chain</skill>
+        <skill forbidden="Frenzy,Grab,Leap,Multiple Block,Diving Tackle,On The Ball,Shadowing">Ball And Chain</skill>
         <skill>Plague Ridden</skill>
         <skill>Decay</skill>
         <skill>Swarming</skill>
-        <skill>Pogo Stick</skill>
+        <skill forbidden="Leap">Pogo Stick</skill>
         <skill>Unchannelled Fury</skill>
         <skill>Projectile Vomit</skill>
         <skill>Really Stupid</skill>

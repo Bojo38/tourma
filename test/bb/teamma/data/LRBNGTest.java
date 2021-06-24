@@ -74,10 +74,10 @@ public class LRBNGTest {
                 Skill sk = sp.getSkill(j);
                 Assert.assertNotNull(sk);
 
-                Skill sk2 = instance.getSkill(sk.getmName(), false);
+                Skill sk2 = instance.getSkill(sk.getName(), false);
                 assertEquals(sk, sk2);
 
-                Skill sk3 = instance.getSkill(Translate.translate(sk.getmName()), true);
+                Skill sk3 = instance.getSkill(Translate.translate(sk.getName()), true);
                 assertEquals(sk, sk3);
 
             }

@@ -291,7 +291,7 @@ public class Roster implements IXMLExport, Serializable {
                     Skill _skill = pl.getSkill(i);
                     final Element s = new Element(CS_Skill);
                     final bb.teamma.data.Skill sk = _skill;
-                    s.setAttribute(CS_Name, sk.getmName());
+                    s.setAttribute(CS_Name, sk.getName());
                     int rgb = sk.getmColor().getRGB();
                     s.setAttribute(CS_Color, Integer.toString(rgb));
                     p.addContent(s);

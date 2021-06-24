@@ -4,6 +4,10 @@
  */
 package bb.tourma.data;
 
+import bb.teamma.data.LRB;
+import bb.teamma.data.Player;
+import bb.teamma.data.Skill;
+import bb.teamma.data.SkillType;
 import bb.tourma.data.ranking.Ranking;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +23,7 @@ import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
+import java.util.Collections;
 
 /**
  *
@@ -1877,6 +1882,70 @@ public class CoachMatch extends Match implements Serializable {
             val.setValue1(val.getValue2());
             val.setValue2(value_tmp);
         }
+    }
 
+    HashMap<bb.teamma.data.Player, Skill> skills1;
+    HashMap<bb.teamma.data.Player, Skill> skills2;
+
+    public void updateRandomSkills() {
+        updateRandomSkills(mCompetitor1);
+        updateRandomSkills(mCompetitor2);
+    }
+
+    void updateRandomSkills(Competitor c) {
+        // In Case of Random Skill for the first roster
+        for (int i = 0; i < ((Coach) c).getCompositionCount(); i++) {
+            bb.teamma.data.Roster roster = ((Coach) c).getComposition(i);
+
+            for (int j = 0; j < roster.getPlayerCount(); j++) {
+                Player player = roster.getPlayer(j);
+                for (int k = 0; k < player.getSkillCount(); k++) {
+                    Skill skill = player.getSkill(k);
+
+                    if (skill.isRandom()) {
+                        SkillType skillType = skill.getmCategory();
+
+                        ArrayList<Skill> skills = new ArrayList<>();
+                        for (int l = 0; l < skillType.getSkillCount(); l++) {
+                            skills.add(skillType.getSkill(l));
+                        }
+
+                        // Remove Skills if already exists for the player
+                        for (int l = 0; l < player.getSkillCount(); l++) {
+                            Skill s = player.getSkill(l);
+                            skills.remove(s);
+                            // Remove incompatible skills
+
+                            for (int m = 0; m < s.getForbiddenCount(); m++) {
+                                skills.remove(s.getForbidden(m));
+                            }
+                        }
+
+                        // Remove Skills if already exists for the playerType
+                        for (int l = 0; l < player.getPlayertype().getSkillCount(); l++) {
+                            Skill s = player.getPlayertype().getSkill(l);
+                            skills.remove(s);
+                            // Remove incompatible skills
+
+                            for (int m = 0; m < s.getForbiddenCount(); m++) {
+                                skills.remove(s.getForbidden(m));
+                            }
+                        }
+
+                        if (skills.size() > 0) {
+                            Collections.shuffle(skills);
+
+                            skills.remove(skill);
+
+                            Skill newSkill = skills.get(0);
+
+                            newSkill.setRandom(true);
+                            player.removeSkill(skill);
+                            player.addSkill(newSkill);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

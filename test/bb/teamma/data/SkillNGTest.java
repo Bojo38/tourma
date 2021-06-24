@@ -44,7 +44,7 @@ public class SkillNGTest {
     }
 
     /**
-     * Test of getmName method, of class Skill.
+     * Test of getName method, of class Skill.
      */
     @Test
     public void testGetmName() {
@@ -65,7 +65,7 @@ public class SkillNGTest {
                 for (int j = 0; j < instance.getSkillCount(); j++) {
                     Skill sk = instance.getSkill(j);
                     Assert.assertNotNull(sk);
-                    String result = sk.getmName();
+                    String result = sk.getName();
                     Assert.assertNotNull(result);
                 }
             } else {
@@ -75,7 +75,7 @@ public class SkillNGTest {
     }
 
     /**
-     * Test of setmName method, of class Skill.
+     * Test of setName method, of class Skill.
      */
     @Test
     public void testSetmName() {
@@ -96,11 +96,11 @@ public class SkillNGTest {
                 for (int j = 0; j < instance.getSkillCount(); j++) {
                     Skill sk = instance.getSkill(j);
                     Assert.assertNotNull(sk);
-                    String save=sk.getmName();
-                    sk.setmName("Alpha");
-                    String result = sk.getmName();
+                    String save=sk.getName();
+                    sk.setName("Alpha");
+                    String result = sk.getName();
                     Assert.assertEquals(result, "Alpha");
-                    sk.setmName(save);
+                    sk.setName(save);
                 }
             } else {
                 fail("Null skill type");

@@ -187,7 +187,7 @@ public class MjtPlayerTypes extends AbstractTableModel implements TableCellRende
                         ArrayList<String> skills = new ArrayList<>();
                         for (i = 0; i < pt.getSkillCount(); i++) {
                             Skill s = pt.getSkill(i);
-                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getName()) + "</FONT>");
                         }
 
                         for (i = 0; i < skills.size(); i++) {
@@ -207,7 +207,7 @@ public class MjtPlayerTypes extends AbstractTableModel implements TableCellRende
                         ArrayList<String> skills = new ArrayList<>();
                         for (i = 0; i < pt.getSkillCount(); i++) {
                             Skill s = pt.getSkill(i);
-                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getName()) + "</FONT>");
                         }
 
                         for (i = 0; i < skills.size(); i++) {

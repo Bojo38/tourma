@@ -357,13 +357,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmiNafLoad = new javax.swing.JMenuItem();
         jcxIgnoreCaps = new javax.swing.JCheckBoxMenuItem();
         jSeparator11 = new javax.swing.JPopupMenu.Separator();
-        jcxPatchSpartak = new javax.swing.JCheckBoxMenuItem();
         jcxPatchPortugal = new javax.swing.JCheckBoxMenuItem();
+        jcxPatchSpartak = new javax.swing.JCheckBoxMenuItem();
         jSeparator13 = new javax.swing.JPopupMenu.Separator();
         jcxUseColor = new javax.swing.JCheckBoxMenuItem();
         jcxUseImage = new javax.swing.JCheckBoxMenuItem();
         jcxDisplayRosters = new javax.swing.JCheckBoxMenuItem();
         jcxDisplayByPages = new javax.swing.JCheckBoxMenuItem();
+        jcxDisplayRandomSkills = new javax.swing.JCheckBoxMenuItem();
         jmnParameters = new javax.swing.JMenu();
         jmiGenerateFirstRound = new javax.swing.JMenuItem();
         jSeparator21 = new javax.swing.JPopupMenu.Separator();
@@ -438,7 +439,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
         setTitle(bundle.getString("SoftwareTitle")); // NOI18N
-        setIconImage((Toolkit.getDefaultToolkit().getImage(MainFrame.class.getResource(java.util.ResourceBundle.getBundle("bb/tourma/languages/language").getString("IMAGES/ICONE.PNG")))));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -569,14 +569,6 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jmnTools.add(jcxIgnoreCaps);
         jmnTools.add(jSeparator11);
 
-        jcxPatchSpartak.setText(bundle.getString("SpartakPatch")); // NOI18N
-        jcxPatchSpartak.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcxPatchSpartakActionPerformed(evt);
-            }
-        });
-        jmnTools.add(jcxPatchSpartak);
-
         jcxPatchPortugal.setText(bundle.getString("PortugalPatch")); // NOI18N
         jcxPatchPortugal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -584,6 +576,9 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnTools.add(jcxPatchPortugal);
+
+        jcxPatchSpartak.setText(bundle.getString("SpartakPatch")); // NOI18N
+        jmnTools.add(jcxPatchSpartak);
         jmnTools.add(jSeparator13);
 
         jcxUseColor.setSelected(true);
@@ -619,6 +614,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnTools.add(jcxDisplayByPages);
+
+        jcxDisplayRandomSkills.setSelected(true);
+        jcxDisplayRandomSkills.setText(bundle.getString("DisplayRandomSkills")); // NOI18N
+        jcxDisplayRandomSkills.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcxDisplayRandomSkillsActionPerformed(evt);
+            }
+        });
+        jmnTools.add(jcxDisplayRandomSkills);
 
         jMenuBar1.add(jmnTools);
 
@@ -2056,6 +2060,16 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
                 Generation.nextRound(round, Options.get(index), round_number);
 
+                if (mTournament.getParams().isRandomSkillDisplay()) {
+                    ArrayList<CoachMatch> cms=round.getCoachMatchs();
+                    
+                    for (CoachMatch cm:cms)
+                    {
+                        cm.updateRandomSkills();
+                    }
+                }
+                
+                
                 if (mTournament.getParams().isTableBonusPerRound()) {
                     editRoundCoef(mTournament.getRound(mTournament.getRoundsCount() - 1));
                 }
@@ -3147,11 +3161,14 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         }
     }//GEN-LAST:event_jcxDisplayByPagesActionPerformed
 
-    private void jcxPatchSpartakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxPatchSpartakActionPerformed
-        mTournament.getParams().setSpartak(jcxPatchSpartak.isSelected());
+    private void jcxDisplayRandomSkillsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxDisplayRandomSkillsActionPerformed
+       mTournament.getParams().setRandomSkillDisplay(jcxDisplayRandomSkills.isSelected());
         this.update();
+    }//GEN-LAST:event_jcxDisplayRandomSkillsActionPerformed
 
-    }//GEN-LAST:event_jcxPatchSpartakActionPerformed
+    private void jcxPatchSpartakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcxPatchPortugal1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcxPatchPortugal1ActionPerformed
 
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
@@ -3485,6 +3502,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JCheckBoxMenuItem jckmiRoundOnly;
     private javax.swing.JCheckBoxMenuItem jcxAllowSpecialSkill;
     private javax.swing.JCheckBoxMenuItem jcxDisplayByPages;
+    private javax.swing.JCheckBoxMenuItem jcxDisplayRandomSkills;
     private javax.swing.JCheckBoxMenuItem jcxDisplayRosters;
     private javax.swing.JCheckBoxMenuItem jcxIgnoreCaps;
     private javax.swing.JCheckBoxMenuItem jcxPatchPortugal;

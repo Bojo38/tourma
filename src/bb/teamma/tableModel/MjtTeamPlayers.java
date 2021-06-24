@@ -200,13 +200,13 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                         ArrayList<String> skills = new ArrayList<>();
                         for (i = 0; i < player.getPlayertype().getSkillCount(); i++) {
                             Skill s = player.getPlayertype().getSkill(i);
-                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getName()) + "</FONT>");
                         }
                         for (i = 0; i < player.getSkillCount(); i++) {
                             Skill s = player.getSkill(i);
                             //int rgb=s.mColor.getRGB();
                             int rgb = s.getmColor().getRed() * 65536 + s.getmColor().getGreen() * 256 + s.getmColor().getBlue();
-                            skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getmName()) + "</I></FONT>");
+                            skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getName()) + "</I></FONT>");
                         }
 
                         for (i = 0; i < skills.size(); i++) {
@@ -226,13 +226,13 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                         ArrayList<String> skills = new ArrayList<>();
                         for (i = 0; i < player.getPlayertype().getSkillCount(); i++) {
                             Skill s = player.getPlayertype().getSkill(i);
-                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getName()) + "</FONT>");
                         }
                         for (i = 0; i < player.getSkillCount(); i++) {
                             Skill s = player.getSkill(i);
                             //int rgb=s.mColor.getRGB();
                             int rgb = s.getmColor().getRed() * 65536 + s.getmColor().getGreen() * 256 + s.getmColor().getBlue();
-                            skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getmName()) + "</I></FONT>");
+                            skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getName()) + "</I></FONT>");
                         }
 
                         for (i = 0; i < skills.size(); i++) {
@@ -329,16 +329,16 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                              */
                             if (st.equals(LRB.getLRB(_roster.getRoster().getVersion()).getSkillType(CS_Characteristics))) {
                                 Skill s = player.getSkill(i);
-                                if (s.getmName().equals(Player.CS_Plus1Movement)) {
+                                if (s.getName().equals(Player.CS_Plus1Movement)) {
                                     skillCost += 30000;
                                 }
-                                if (s.getmName().equals(Player.CS_Plus1Armor)) {
+                                if (s.getName().equals(Player.CS_Plus1Armor)) {
                                     skillCost += 30000;
                                 }
-                                if (s.getmName().equals(Player.CS_Plus1Agility)) {
+                                if (s.getName().equals(Player.CS_Plus1Agility)) {
                                     skillCost += 40000;
                                 }
-                                if (s.getmName().equals(Player.CS_Plus1Strength)) {
+                                if (s.getName().equals(Player.CS_Plus1Strength)) {
                                     skillCost += 50000;
                                 }
                             }
@@ -376,16 +376,16 @@ public class MjtTeamPlayers extends AbstractTableModel implements TableCellRende
                          */
                         if (st.equals(LRB.getLRB(_roster.getRoster().getVersion()).getSkillType(CS_Characteristics))) {
                             Skill s = player.getSkill(i);
-                            if (s.getmName().equals(Player.CS_Plus1Movement)) {
+                            if (s.getName().equals(Player.CS_Plus1Movement)) {
                                 skillCost += 30000;
                             }
-                            if (s.getmName().equals(Player.CS_Plus1Armor)) {
+                            if (s.getName().equals(Player.CS_Plus1Armor)) {
                                 skillCost += 30000;
                             }
-                            if (s.getmName().equals(Player.CS_Plus1Agility)) {
+                            if (s.getName().equals(Player.CS_Plus1Agility)) {
                                 skillCost += 40000;
                             }
-                            if (s.getmName().equals(Player.CS_Plus1Strength)) {
+                            if (s.getName().equals(Player.CS_Plus1Strength)) {
                                 skillCost += 50000;
                             }
                         }

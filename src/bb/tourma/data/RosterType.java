@@ -4,6 +4,7 @@
  */
 package bb.tourma.data;
 
+import bb.teamma.data.LRB;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,8 +102,18 @@ public class RosterType implements IXMLExport, Serializable {
     /**
      * Initializes collection
      */
-    public static void initCollection() {
+    public static void initCollection(LRB lrb) {
         mRostersNames.clear();
+         mRosterTypes.clear();
+        mRosterTypes.put(translate("AmazonKey"), new RosterType(translate("AmazonKey")));
+        for (int i=0; i< lrb.getRosterTypeCount(); i++)
+        {
+            mRostersNames.add(lrb.getRosterType(i).getName());
+            mRosterTypes.put(lrb.getRosterType(i).getName(), new RosterType(lrb.getRosterType(i).getName()));
+        }
+        
+        
+        /*
         mRostersNames.add(translate("AmazonKey"));
         mRostersNames.add(translate("UnderworldKey"));
         mRostersNames.add(translate("BretonianKey"));
@@ -165,18 +176,7 @@ public class RosterType implements IXMLExport, Serializable {
         mRosterTypes.put(translate("OldWorldAllianceKey"), new RosterType(translate("OldWorldAllianceKey")));
         mRosterTypes.put(translate("BlackOrcKey"), new RosterType(translate("BlackOrcKey")));
         mRosterTypes.put(translate("ImperialNobilityKey"), new RosterType(translate("ImperialNobilityKey")));
-    }
-
-    /**
-     *
-     * @param game
-     */
-    public static void initCollection(final int game) {
-
-        mRostersNames.clear();
-
-        initCollection();
-
+        */
     }
 
     /**

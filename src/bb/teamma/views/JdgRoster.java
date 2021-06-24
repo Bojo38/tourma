@@ -895,14 +895,14 @@ public final class JdgRoster extends javax.swing.JDialog {
                 int i;
                 for (i = 0; i < p.getSkillCount(); i++) {
                     Skill s = p.getSkill(i);
-                    skills.add(Translate.translate(s.getmName()));
+                    skills.add(Translate.translate(s.getName()));
                 }
 
                 Object choice = JOptionPane.showInputDialog(null, Translate.translate(CS_SelectSkillToRemove), Translate.translate(CS_Skill), JOptionPane.INFORMATION_MESSAGE, null, skills.toArray(), null);
                 if (choice != null) {
 
                     for (i = 0; i < p.getSkillCount(); i++) {
-                        if (Translate.translate(p.getSkill(i).getmName()).equals(choice)) {
+                        if (Translate.translate(p.getSkill(i).getName()).equals(choice)) {
                             p.removeSkill(i);
                             break;
                         }
@@ -968,7 +968,7 @@ public final class JdgRoster extends javax.swing.JDialog {
                     boolean isABigGuy = false;
                     for (j = 0; j < pt.getSkillCount(); j++) {
                         Skill s = pt.getSkill(j);
-                        if (s.getmName().equals(CS_Big_Guy)) {
+                        if (s.getName().equals(CS_Big_Guy)) {
                             isABigGuy = true;
                             break;
                         }
@@ -980,7 +980,7 @@ public final class JdgRoster extends javax.swing.JDialog {
                             Player p = _data.getPlayer(j);
                             for (int k = 0; k < p.getPlayertype().getSkillCount(); k++) {
                                 Skill s = p.getPlayertype().getSkill(k);
-                                if (s.getmName().equals(CS_Big_Guy)) {
+                                if (s.getName().equals(CS_Big_Guy)) {
                                     nbBigGuys++;
                                     break;
                                 }

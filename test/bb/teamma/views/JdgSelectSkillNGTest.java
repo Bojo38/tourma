@@ -99,7 +99,7 @@ public class JdgSelectSkillNGTest {
             Thread.sleep(200);
             window.button("ok").click();
             Assert.assertEquals(nb + 1, player.getSkillCount());
-            Assert.assertEquals(lrb.getSkillType("General").getSkill(0).getmName(), player.getSkill(nb).getmName());
+            Assert.assertEquals(lrb.getSkillType("General").getSkill(0).getName(), player.getSkill(nb).getName());
             player.removeSkill(nb);
             Assert.assertEquals(nb, player.getSkillCount());
         } catch (InterruptedException ex) {

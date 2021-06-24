@@ -162,7 +162,7 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
                         for (i = 0; i < player.getSkillCount(); i++) {
                             Skill s = player.getSkill(i);
 
-                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getName()) + "</FONT>");
                         }
 
                         for (i = 0; i < skills.size(); i++) {
@@ -183,7 +183,7 @@ public class MjtTeamStars extends AbstractTableModel implements TableCellRendere
                         for (i = 0; i < player.getSkillCount(); i++) {
                             Skill s = player.getSkill(i);
 
-                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                            skills.add("<FONT color=\"000000\">" + Translate.translate(s.getName()) + "</FONT>");
                         }
 
                         for (i = 0; i < skills.size(); i++) {

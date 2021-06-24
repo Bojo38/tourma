@@ -279,7 +279,7 @@ public final class LRB {
                 String teamfile = e_team.getValue();
                 String imagename = e_team.getAttribute(CS_Picture).getValue();
                 filename = "/bb/teamma/rules/" + path + "/" + teamfile;
-                LOG.fine( "Loading team: " + teamfile);
+                LOG.fine("Loading team: " + teamfile);
                 loadTeam(getClass().getResourceAsStream("/bb/teamma/rules/" + path + "/" + teamfile), imagename);
             }
             /*
@@ -333,9 +333,34 @@ public final class LRB {
                 while (i.hasNext()) {
                     Element e_skill = i.next();
                     Skill s = new Skill(e_skill.getValue(), st);
+                    if (e_skill.getAttribute("random") != null) {
+                        s.setRandom(e_skill.getAttribute("random").getBooleanValue());
+                    }
+
+                    if (e_skill.getAttribute("forbidden") != null) {
+                        s.setForbiddenText(e_skill.getAttribute("forbidden").getValue());
+                    }
+
                     st.addSkill(s);
                 }
                 addSkillType(st);
+            }
+
+            for (SkillType st : _skillTypes) {
+                for (int i = 0; i < st.getSkillCount(); i++) {
+                    Skill s = st.getSkill(i);
+                    String text = s.getForbiddenText();
+                    if (!text.equals("")) {
+                        String[] separated = text.split(",");
+
+                        for (String sep : separated) {
+                            Skill f = this.getSkill(sep);
+                            if (f != null) {
+                                s.addForbiddenSkill(f);
+                            }
+                        }
+                    }
+                }
             }
 
         } catch (JDOMException | IOException jdomexception) {
@@ -369,6 +394,20 @@ public final class LRB {
     private final static String CS_SkillTypeNotFound = "SkillTypeNotFound";
     private final static String CS_RosterTypeNotFound = "RosterTypeNotFound";
     private final static String CS_forThePlayer = "forThePlayer";
+
+    protected Skill getSkill(String text) {
+
+        for (SkillType st : _skillTypes) {
+            for (int i = 0; i < st.getSkillCount(); i++) {
+                Skill s = st.getSkill(i);
+
+                if (s.getName().equals(text)) {
+                    return s;
+                }
+            }
+        }
+        return null;
+    }
 
     /**
      *
@@ -599,11 +638,11 @@ public final class LRB {
             for (j = 0; j < st.getSkillCount(); j++) {
                 Skill s = st.getSkill(j);
                 if (!translate) {
-                    if (name.equals(s.getmName())) {
+                    if (name.equals(s.getName())) {
                         return s;
                     }
                 } else {
-                    if (name.equals(Translate.translate(s.getmName()))) {
+                    if (name.equals(Translate.translate(s.getName()))) {
                         return s;
                     }
                 }

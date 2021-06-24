@@ -783,7 +783,7 @@ public final class JdgCoach extends javax.swing.JDialog {
                 JOptionPane.INFORMATION_MESSAGE,
                 null, RosterType.getRostersNames(), RosterType.getRostersNames()[0]);
 
-        LRB.E_Version version=LRB.E_Version.BB2016;
+        LRB.E_Version version=LRB.E_Version.BB2020;
         bb.teamma.data.RosterType rt = bb.teamma.data.LRB.getLRB(version).getRosterType(input, false);
 
         if (rt != null) {

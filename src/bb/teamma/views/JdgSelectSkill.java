@@ -61,7 +61,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
             ArrayList<String> sa = new ArrayList<>();
             sa.add("");
             for (j = 0; j < st.getSkillCount(); j++) {
-                sa.add(Translate.translate(st.getSkill(j).getmName()));
+                sa.add(Translate.translate(st.getSkill(j).getName()));
             }
             JComboBox jcb = new JComboBox(sa.toArray());
             jcb.setEnabled(true);
@@ -212,7 +212,7 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         }
 
         if (s != null) {
-            Skill s2 = new Skill(s.getmName(), s.getmCategory());
+            Skill s2 = new Skill(s.getName(), s.getmCategory());
             s2.setmColor(getColor());
             getPlayer().addSkill(s2);
             

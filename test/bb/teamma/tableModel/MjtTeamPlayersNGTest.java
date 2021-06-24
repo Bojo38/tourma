@@ -197,12 +197,12 @@ public class MjtTeamPlayersNGTest {
             for (int j = 0; j < player.getPlayertype().getSkillCount(); j++) {
                 Skill s = player.getPlayertype().getSkill(j);
                 
-                skills.add("<FONT color=\"000000\">" + Translate.translate(s.getmName()) + "</FONT>");
+                skills.add("<FONT color=\"000000\">" + Translate.translate(s.getName()) + "</FONT>");
             }
             for (int j = 0; j < player.getSkillCount(); j++) {
                 Skill s = player.getSkill(j);
                 int rgb = s.getmColor().getRed() * 65536 + s.getmColor().getGreen() * 256 + s.getmColor().getBlue();
-                skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getmName()) + "</I></FONT>");
+                skills.add("<FONT color=\"" + Integer.toHexString(rgb) + "\"><I>" + Translate.translate(s.getName()) + "</I></FONT>");
             }
             
             for (int j = 0; j < skills.size(); j++) {

@@ -431,7 +431,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 ArrayList<String> skills = new ArrayList<>();
                 for (int cpt = 0; cpt < p.getPlayertype().getSkillCount(); cpt++) {
                     Skill _skill = p.getPlayertype().getSkill(cpt);
-                    skills.add(StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())));
+                    skills.add(StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getName())));
                 }
                 for (int cpt = 0; cpt < p.getSkillCount(); cpt++) {
                     Skill _skill = p.getSkill(cpt);
@@ -441,7 +441,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                     ctmp = ctmp + c.getRed() + ",";
                     ctmp = ctmp + c.getGreen() + ",";
                     ctmp = ctmp + c.getBlue() + ")";
-                    skills.add("<span style=\"color:" + ctmp + ";\">" + StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())) + "</span>");
+                    skills.add("<span style=\"color:" + ctmp + ";\">" + StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getName())) + "</span>");
                 }
                 player.put(CS_skills, skills);
                 player.put(CS_cost, p.getValue(isWithSkill()));
@@ -478,7 +478,7 @@ public final class JdgPrintableRoster extends javax.swing.JDialog {
                 ArrayList<String> skills = new ArrayList<>();
                 for (int cpt2 = 0; cpt2 < p.getSkillCount(); cpt2++) {
                     Skill _skill = p.getSkill(cpt2);
-                    skills.add(StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getmName())));
+                    skills.add(StringEscapeUtils.escapeHtml4(Translate.translate(_skill.getName())));
                 }
                 player.put(CS_skills, skills);
                 player.put(CS_cost, p.getCost());

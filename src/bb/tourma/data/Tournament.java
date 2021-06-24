@@ -4,6 +4,7 @@
  */
 package bb.tourma.data;
 
+import bb.teamma.data.LRB;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -150,7 +151,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     private Tournament() {
 
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         getRosterType();
 
         mParams = new Parameters();
@@ -1250,7 +1251,40 @@ public class Tournament implements IContainCoachs, Serializable {
     }
 
     public void loadRosters(Element racine) {
+        LRB lrb = LRB.getLRB(LRB.E_Version.BB2020);
         try {
+
+            String lrb_version = racine.getAttributeValue(StringConstants.CS_LRB);
+            if (lrb_version != null) {
+                if (lrb_version.equals("BB2020")) {
+                    lrb = LRB.getLRB(LRB.E_Version.BB2020);
+                }
+                if (lrb_version.equals("BB2016")) {
+                    lrb = LRB.getLRB(LRB.E_Version.BB2016);
+                }
+                if (lrb_version.equals("CRP1")) {
+                    lrb = LRB.getLRB(LRB.E_Version.CRP1);
+                }
+                if (lrb_version.equals("LRB6")) {
+                    lrb = LRB.getLRB(LRB.E_Version.LRB6);
+                }
+                if (lrb_version.equals("LRB5")) {
+                    lrb = LRB.getLRB(LRB.E_Version.LRB5);
+                }
+                if (lrb_version.equals("LRB4")) {
+                    lrb = LRB.getLRB(LRB.E_Version.LRB4);
+                }
+                if (lrb_version.equals("LRB3")) {
+                    lrb = LRB.getLRB(LRB.E_Version.LRB3);
+                }
+                if (lrb_version.equals("LRB2")) {
+                    lrb = LRB.getLRB(LRB.E_Version.LRB2);
+                }
+                if (lrb_version.equals("LRB1")) {
+                    lrb = LRB.getLRB(LRB.E_Version.LRB1);
+                }
+            }
+
             final List<Element> ros = racine.getChildren(StringConstants.CS_ROSTER);
             if (ros != null) {
                 if (ros.size() > 0) {
@@ -1265,13 +1299,13 @@ public class Tournament implements IContainCoachs, Serializable {
                         RosterType.putRosterType(name, new RosterType(name));
                     }
                 } else {
-                    RosterType.initCollection();
+                    RosterType.initCollection(lrb);
                 }
             } else {
-                RosterType.initCollection();
+                RosterType.initCollection(lrb);
             }
         } catch (NullPointerException ne) {
-            RosterType.initCollection();
+            RosterType.initCollection(lrb);
         }
     }
 
