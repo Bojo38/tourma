@@ -13,6 +13,7 @@ and open the template in the editor.
     <name>DwarfKey</name>
     <reroll>40000</reroll>
     <max_big_guy>1</max_big_guy>
+     <apothecary>true</apothecary>
     <playertypes>               
         <playerType>
             <limit>2</limit>

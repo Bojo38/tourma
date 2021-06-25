@@ -40,7 +40,7 @@
             <Container class="javax.swing.JTabbedPane" name="jtpTeams">
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="tourma/languages/language.properties" key="Ranking" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="bb/tourma/languages/language.properties" key="Ranking" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </AccessibilityProperties>
               <Constraints>
@@ -56,7 +56,7 @@
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                       <JTabbedPaneConstraints tabName="Ranking">
                         <Property name="tabTitle" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                          <ResourceString bundle="tourma/languages/language.properties" key="Ranking" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                          <ResourceString bundle="bb/tourma/languages/language.properties" key="Ranking" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                         </Property>
                       </JTabbedPaneConstraints>
                     </Constraint>
@@ -69,7 +69,7 @@
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                             <TitledBorder title="General">
-                              <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="GeneralRankingKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              <ResourceString PropertyName="titleX" bundle="bb/tourma/languages/language.properties" key="GeneralRankingKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </TitledBorder>
                           </Border>
                         </Property>
@@ -117,10 +117,10 @@
                         <Component class="javax.swing.JButton" name="jbtGeneralTeam">
                           <Properties>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/tourma/images/Document.png"/>
+                              <Image iconType="3" name="/bb/tourma/images/Document.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                              <ResourceString bundle="tourma/languages/language.properties" key="GeneralRankingKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              <ResourceString bundle="bb/tourma/languages/language.properties" key="GeneralRankingKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -130,10 +130,10 @@
                         <Component class="javax.swing.JButton" name="jbtGlobal">
                           <Properties>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/tourma/images/Document.png"/>
+                              <Image iconType="3" name="/bb/tourma/images/Document.png"/>
                             </Property>
                             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                              <ResourceString bundle="tourma/languages/language.properties" key="GlobalRankingKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                              <ResourceString bundle="bb/tourma/languages/language.properties" key="GlobalRankingKey" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -143,7 +143,7 @@
                         <Component class="javax.swing.JButton" name="jbtBack">
                           <Properties>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/tourma/images/Backward.png"/>
+                              <Image iconType="3" name="/bb/tourma/images/Backward.png"/>
                             </Property>
                           </Properties>
                           <Events>
@@ -159,7 +159,7 @@
                         <Component class="javax.swing.JButton" name="jbtNext">
                           <Properties>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/tourma/images/Forward.png"/>
+                              <Image iconType="3" name="/bb/tourma/images/Forward.png"/>
                             </Property>
                           </Properties>
                           <Events>

@@ -177,7 +177,10 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         jLabel1.setText(bundle.getString("SelectColor")); // NOI18N
         jPanel1.add(jLabel1);
 
-        jbtColor.setText(" ");
+        jbtColor.setBackground(new java.awt.Color(0, 0, 0));
+        jbtColor.setText("Skill");
+        jbtColor.setBorderPainted(false);
+        jbtColor.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jbtColor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbtColorActionPerformed(evt);
@@ -227,6 +230,8 @@ public class JdgSelectSkill extends javax.swing.JDialog {
         Color c=JColorChooser.showDialog(this,"Choose",Color.CYAN);
         this._color=c;
         jbtColor.setBackground(c);
+        jbtColor.setOpaque(true);
+        
     }//GEN-LAST:event_jbtColorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

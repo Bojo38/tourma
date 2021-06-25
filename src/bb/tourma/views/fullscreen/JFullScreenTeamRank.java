@@ -70,7 +70,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
         semStart.acquire();
         try {
 
-            Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/bb/tourma/languages/calibri.ttf"));
 
             int width = mSelectedGD.getDisplayMode().getWidth();
             int height = mSelectedGD.getDisplayMode().getHeight();
@@ -178,7 +178,7 @@ public final class JFullScreenTeamRank extends JFullScreen {
 
         try {
             //            Criteria td = Tournament.getTournament().getParams().getCriterion(0);
-            font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
+            font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/bb/tourma/languages/calibri.ttf"));
         } catch (IOException ex) {
             Logger.getLogger(JFullScreenTeamRank.class.getName()).log(Level.SEVERE, null, ex);
         } finally {

@@ -70,10 +70,10 @@
             <Component class="javax.swing.JButton" name="jbtPositive">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/tourma/images/Document.png"/>
+                  <Image iconType="3" name="/bb/tourma/images/Document.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="tourma/languages/language.properties" key="Positive" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="bb/tourma/languages/language.properties" key="Positive" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -83,7 +83,7 @@
             <Component class="javax.swing.JButton" name="jbtBackPos">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/tourma/images/Backward.png"/>
+                  <Image iconType="3" name="/bb/tourma/images/Backward.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -99,7 +99,7 @@
             <Component class="javax.swing.JButton" name="jbtNextPos">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/tourma/images/Forward.png"/>
+                  <Image iconType="3" name="/bb/tourma/images/Forward.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -152,10 +152,10 @@
             <Component class="javax.swing.JButton" name="jbtNegative">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/tourma/images/Document.png"/>
+                  <Image iconType="3" name="/bb/tourma/images/Document.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-                  <ResourceString bundle="tourma/languages/language.properties" key="Negative" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString bundle="bb/tourma/languages/language.properties" key="Negative" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </Property>
               </Properties>
               <Events>
@@ -165,7 +165,7 @@
             <Component class="javax.swing.JButton" name="jbtBackNeg">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/tourma/images/Backward.png"/>
+                  <Image iconType="3" name="/bb/tourma/images/Backward.png"/>
                 </Property>
               </Properties>
               <Events>
@@ -181,7 +181,7 @@
             <Component class="javax.swing.JButton" name="jbtNextNeg">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/tourma/images/Forward.png"/>
+                  <Image iconType="3" name="/bb/tourma/images/Forward.png"/>
                 </Property>
               </Properties>
               <Events>

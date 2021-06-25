@@ -1170,7 +1170,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         mTournament = Tournament.getTournament();
 
-        RosterType.initCollection();
+        RosterType.initCollection(mTournament.getLRB());
 
         mTournament.clearGroups();
         final Group group = new Group(Translate.translate(CS_None));

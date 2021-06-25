@@ -32,10 +32,10 @@
         <Component class="javax.swing.JButton" name="jbtOK">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/tourma/images/Select.png"/>
+              <Image iconType="3" name="/bb/tourma/images/Select.png"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="OK" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="bb/tourma/languages/language.properties" key="OK" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
             <Property name="name" type="java.lang.String" value="ok" noResource="true"/>
           </Properties>
@@ -46,10 +46,10 @@
         <Component class="javax.swing.JButton" name="jbtCancel">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/tourma/images/Halt.png"/>
+              <Image iconType="3" name="/bb/tourma/images/Halt.png"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="tourma/languages/language.properties" key="ANNULER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+              <ResourceString bundle="bb/tourma/languages/language.properties" key="ANNULER" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
             </Property>
           </Properties>
           <Events>
@@ -75,7 +75,7 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="&lt;Team&amp;Coaches&gt;">
-                  <ResourceString PropertyName="titleX" bundle="tourma/languages/language.properties" key="Team&amp;Coaches" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
+                  <ResourceString PropertyName="titleX" bundle="bb/tourma/languages/language.properties" key="Team&amp;Coaches" replaceFormat="java.util.ResourceBundle.getBundle(&quot;{bundleNameSlashes}&quot;).getString(&quot;{key}&quot;)"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -128,7 +128,7 @@
         <Component class="javax.swing.JButton" name="jbtAdd">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/tourma/images/Add.png"/>
+              <Image iconType="3" name="/bb/tourma/images/Add.png"/>
             </Property>
           </Properties>
           <Events>
@@ -138,7 +138,7 @@
         <Component class="javax.swing.JButton" name="jbtMinus">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/tourma/images/Close.png"/>
+              <Image iconType="3" name="/bb/tourma/images/Close.png"/>
             </Property>
           </Properties>
           <Events>
@@ -148,7 +148,7 @@
         <Component class="javax.swing.JButton" name="jbtNAF">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/tourma/images/naf.png"/>
+              <Image iconType="3" name="/bb/tourma/images/naf.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Update NAF number"/>
           </Properties>
@@ -159,7 +159,7 @@
         <Component class="javax.swing.JButton" name="jbtImportExcel">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/tourma/images/excel.png"/>
+              <Image iconType="3" name="/bb/tourma/images/excel.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Import Excel File"/>
           </Properties>

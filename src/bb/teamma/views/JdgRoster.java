@@ -93,8 +93,13 @@ public final class JdgRoster extends javax.swing.JDialog {
             _coach = new Coach();
             _data = new Roster();
         }
+
         initComponents();
 
+        if ((_coach == null)||(roster!=null)) {
+            jcbLRB.setEnabled(false);
+        }
+        
         this.setPreferredSize(new Dimension(1024, 768));
         pack();
 
@@ -1069,7 +1074,7 @@ public final class JdgRoster extends javax.swing.JDialog {
     }//GEN-LAST:event_jtbStarsMouseClicked
 
     private void jbtHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtHTMLActionPerformed
-        JdgPrintableRoster jdg = new JdgPrintableRoster(null, true, this._data, this._coach, jcbWithSkills.isSelected(),lrbversion);
+        JdgPrintableRoster jdg = new JdgPrintableRoster(null, true, this._data, this._coach, jcbWithSkills.isSelected(), lrbversion);
         jdg.setVisible(true);
     }//GEN-LAST:event_jbtHTMLActionPerformed
 
@@ -1210,7 +1215,7 @@ public final class JdgRoster extends javax.swing.JDialog {
         _max_champions = 2 + count_paired_stars;
 
         if (lrbversion == null) {
-            lrbversion = LRB.E_Version.BB2016;
+            lrbversion = LRB.E_Version.BB2020;
         }
         switch (lrbversion) {
             case LRB1:
@@ -1236,6 +1241,9 @@ public final class JdgRoster extends javax.swing.JDialog {
                 break;
             case BB2016:
                 jcbLRB.setSelectedIndex(7);
+                break;
+            case BB2020:
+                jcbLRB.setSelectedIndex(8);
                 break;
         }
 
@@ -1290,8 +1298,6 @@ public final class JdgRoster extends javax.swing.JDialog {
         jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
         jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
         jtbPlayers.getColumnModel().getColumn(columnIndex++).setMinWidth(10);
-        
-        
 
         /**
          * Star players

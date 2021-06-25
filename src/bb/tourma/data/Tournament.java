@@ -50,6 +50,18 @@ public class Tournament implements IContainCoachs, Serializable {
         return isClient;
     }
 
+    LRB lrb=LRB.getLRB(LRB.E_Version.BB2020);
+    
+    public LRB getLRB()
+    {
+        return lrb;
+    }
+    
+    public void setLRB(LRB rules)
+    {
+        lrb=rules;
+    }
+    
     public void setIsClient(boolean isClient) {
         this.isClient = isClient;
     }

@@ -809,7 +809,7 @@ public final class JdgCoach extends javax.swing.JDialog {
 
     private void jbtAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAvatarActionPerformed
         try {
-            List<ImageIcon> listOfFiles = getImagesResources("/tourma/images/avatar");
+            List<ImageIcon> listOfFiles = getImagesResources("/bb//tourma/images/avatar");
 
             Object[] objects = new Object[listOfFiles.size() + 1];
             for (int i = 0; i < listOfFiles.size(); i++) {

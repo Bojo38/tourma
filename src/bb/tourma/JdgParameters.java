@@ -4,13 +4,16 @@
  */
 package bb.tourma;
 
+import bb.teamma.data.LRB;
 import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import bb.tourma.data.EIndivPairing;
 import bb.tourma.data.ETeamPairing;
 import bb.tourma.data.Parameters;
+import bb.tourma.data.RosterType;
 import bb.tourma.data.Tournament;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -77,6 +80,14 @@ public final class JdgParameters extends javax.swing.JDialog {
         jspCoachNumber.setValue(mParams.getTeamMatesNumber());
         jckSubstitutes.setEnabled(mParams.isSubstitutes());
 
+        
+         String[] lrbs = {"LRB1", "LRB2", "LRB3", "LRB4", "LRB5", "LRB6", "CRP1", "BB2016", "BB2020"};
+
+        DefaultComboBoxModel jcbModel = new DefaultComboBoxModel(lrbs);
+        jcbRules.setModel(jcbModel);
+
+        jcbRules.setSelectedIndex(jcbModel.getSize()-1);
+        
         update();
     }
 
@@ -108,6 +119,9 @@ public final class JdgParameters extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jpnMisc = new javax.swing.JPanel();
         jcxMultipleRoster = new javax.swing.JCheckBox();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jcbRules = new javax.swing.JComboBox<>();
         jpnIndivTeamRanking = new javax.swing.JPanel();
         jrbIndivPairingByRanking = new javax.swing.JRadioButton();
         jrbIndivPairingRandom = new javax.swing.JRadioButton();
@@ -183,7 +197,7 @@ public final class JdgParameters extends javax.swing.JDialog {
         jPanel3.add(jpnNbCoachs, java.awt.BorderLayout.NORTH);
 
         jpnMisc.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("Miscellaneous"))); // NOI18N
-        jpnMisc.setLayout(new java.awt.GridLayout(1, 1));
+        jpnMisc.setLayout(new java.awt.GridLayout(2, 1));
 
         jcxMultipleRoster.setText(bundle.getString("UseSeveralRosters")); // NOI18N
         jcxMultipleRoster.addActionListener(new java.awt.event.ActionListener() {
@@ -192,6 +206,19 @@ public final class JdgParameters extends javax.swing.JDialog {
             }
         });
         jpnMisc.add(jcxMultipleRoster);
+
+        jLabel1.setText(bundle.getString("RosterRules")); // NOI18N
+        jPanel1.add(jLabel1);
+
+        jcbRules.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbRules.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbRulesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jcbRules);
+
+        jpnMisc.add(jPanel1);
 
         jPanel3.add(jpnMisc, java.awt.BorderLayout.SOUTH);
 
@@ -403,17 +430,62 @@ public final class JdgParameters extends javax.swing.JDialog {
         mParams.setMultiRoster(jcxMultipleRoster.isSelected());
     }//GEN-LAST:event_jcxMultipleRosterActionPerformed
 
+     private LRB.E_Version lrbversion = LRB.E_Version.BB2020;
+     
+    
+    private void jcbRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbRulesActionPerformed
+       int index = jcbRules.getSelectedIndex();
+        LRB.E_Version newversion = LRB.E_Version.BB2020;
+        switch (index) {
+            case 0:
+                newversion = LRB.E_Version.LRB1;
+                break;
+            case 1:
+                newversion = LRB.E_Version.LRB2;
+                break;
+            case 2:
+                newversion = LRB.E_Version.LRB3;
+                break;
+            case 3:
+                newversion = LRB.E_Version.LRB4;
+                break;
+            case 4:
+                newversion = LRB.E_Version.LRB5;
+                break;
+            case 5:
+                newversion = LRB.E_Version.LRB6;
+                break;
+            case 6:
+                newversion = LRB.E_Version.CRP1;
+                break;
+            case 7:
+                newversion = LRB.E_Version.BB2016;
+                break;
+            case 8:
+                newversion = LRB.E_Version.BB2020;
+                break;
+        }
+        
+        Tournament.getTournament().setLRB(LRB.getLRB(newversion));
+        RosterType.initCollection( Tournament.getTournament().getLRB());
+       
+        update();
+    }//GEN-LAST:event_jcbRulesActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btgGame;
     private javax.swing.ButtonGroup btgIndivTeamPairing;
     private javax.swing.ButtonGroup btgTeam;
     private javax.swing.ButtonGroup btgTeamPairing;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JButton jbtOK;
     private javax.swing.JCheckBox jcbMultiroster;
+    private javax.swing.JComboBox<String> jcbRules;
     private javax.swing.JCheckBox jckSubstitutes;
     private javax.swing.JCheckBox jcxMultipleRoster;
     private javax.swing.JLabel jlbNbCoachs;

@@ -469,7 +469,7 @@ public final class JdgTeam extends javax.swing.JDialog {
 
     private void jbtAvatarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAvatarActionPerformed
         try {
-            List<ImageIcon> listOfFiles = getImagesResources("/tourma/images/flags");
+            List<ImageIcon> listOfFiles = getImagesResources("/bb/tourma/images/flags");
 
             Object[] objects = new Object[listOfFiles.size() + 1];
             for (int i = 0; i < listOfFiles.size(); i++) {
