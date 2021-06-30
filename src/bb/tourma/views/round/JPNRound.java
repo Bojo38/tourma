@@ -49,8 +49,12 @@ import bb.tourma.views.JPNCup;
 import bb.tourma.views.report.JdgGlobal;
 import bb.tourma.views.report.JdgRanking;
 import bb.tourma.views.report.JdgRound;
+import java.awt.Component;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -371,11 +375,29 @@ public final class JPNRound extends javax.swing.JPanel {
                         model);
         jtbMatches.setRowHeight(30);
 
+        
+        resizeColumnWidth(jtbMatches);
+        
         jtbRankingIndiv.setRowHeight(30);
 
         //TableFormat.setColumnSize(jtbMatches);
     }
 
+    
+    public void resizeColumnWidth(JTable table) {
+    final TableColumnModel columnModel = table.getColumnModel();
+    for (int column = 0; column < table.getColumnCount(); column++) {
+        int width = 15; // Min width
+        for (int row = 0; row < table.getRowCount(); row++) {
+            TableCellRenderer renderer = table.getCellRenderer(row, column);
+            Component comp = table.prepareRenderer(renderer, row, column);
+            width = Math.max(comp.getPreferredSize().width +1 , width);
+        }
+        if(width > 300)
+            width=300;
+        columnModel.getColumn(column).setPreferredWidth(width);
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

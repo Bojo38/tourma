@@ -24,6 +24,7 @@ import org.jdom.DataConversionException;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
 import java.util.Collections;
+import java.util.Map;
 
 /**
  *
@@ -517,6 +518,47 @@ public class CoachMatch extends Match implements Serializable {
         if (getSubstitute2() != null) {
             match.addContent(getSubstitute2().getXMLElement());
         }
+
+        // Random Skills
+        for (Map.Entry<bb.teamma.data.Player, Skill> entry : skills1.entrySet()) {
+            Element s1 = new Element(StringConstants.CS_SKILLS1);
+            s1.setText(entry.getValue().getName());
+
+            // Find Team & player Index
+            for (int i = 0; i < ((Coach) this.getCompetitor1()).getCompositionCount(); i++) {
+                bb.teamma.data.Roster compo = ((Coach) this.getCompetitor1()).getComposition(i);
+                for (int j = 0; j < compo.getPlayerCount(); j++) {
+                    Player p = compo.getPlayer(j);
+                    if (p == entry.getKey()) {
+                        s1.setAttribute(StringConstants.CS_TEAMINDEX, Integer.toString(i));
+                        s1.setAttribute(StringConstants.CS_PLAYERINDEX, Integer.toString(j));
+                        break;
+                    }
+                }
+            }
+
+            match.addContent(s1);
+        }
+
+        for (Map.Entry<bb.teamma.data.Player, Skill> entry : skills2.entrySet()) {
+            Element s2 = new Element(StringConstants.CS_SKILLS2);
+            s2.setText(entry.getValue().getName());
+
+            // Find Team & player Index
+            for (int i = 0; i < ((Coach) this.getCompetitor2()).getCompositionCount(); i++) {
+                bb.teamma.data.Roster compo = ((Coach) this.getCompetitor2()).getComposition(i);
+                for (int j = 0; j < compo.getPlayerCount(); j++) {
+                    Player p = compo.getPlayer(j);
+                    if (p == entry.getKey()) {
+                        s2.setAttribute(StringConstants.CS_TEAMINDEX, Integer.toString(i));
+                        s2.setAttribute(StringConstants.CS_PLAYERINDEX, Integer.toString(j));
+                        break;
+                    }
+                }
+            }
+            match.addContent(s2);
+        }
+
         return match;
     }
 
@@ -634,6 +676,31 @@ public class CoachMatch extends Match implements Serializable {
                 if (s.getTitular() == getCompetitor2()) {
                     this.setSubstitute2(s);
                 }
+            }
+
+            // Random Skills
+            final List<Element> e_s1 = match.getChildren(StringConstants.CS_SKILLS1);
+            final Iterator<Element> its1 = e_s1.iterator();
+            while (its1.hasNext()) {
+                final Element sub = its1.next();
+                Skill s = Tournament.getTournament().getLRB().getSkill(sub.getValue(), true);
+                int team_index = sub.getAttribute(StringConstants.CS_TEAMINDEX).getIntValue();
+                int player_index = sub.getAttribute(StringConstants.CS_PLAYERINDEX).getIntValue();
+
+                skills1.clear();
+                skills1.put(((Coach) this.getCompetitor1()).getComposition(team_index).getPlayer(player_index), s);
+            }
+
+            final List<Element> e_s2 = match.getChildren(StringConstants.CS_SKILLS2);
+            final Iterator<Element> its2 = e_s1.iterator();
+            while (its2.hasNext()) {
+                final Element sub = its2.next();
+                Skill s = Tournament.getTournament().getLRB().getSkill(sub.getValue(), true);
+                int team_index = sub.getAttribute(StringConstants.CS_TEAMINDEX).getIntValue();
+                int player_index = sub.getAttribute(StringConstants.CS_PLAYERINDEX).getIntValue();
+
+                skills2.clear();
+                skills2.put(((Coach) this.getCompetitor2()).getComposition(team_index).getPlayer(player_index), s);
             }
 
         } catch (DataConversionException dce) {
@@ -1624,7 +1691,7 @@ public class CoachMatch extends Match implements Serializable {
 
                             for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
                                 final Criterion cri = Tournament.getTournament().getParams().getCriterion(j);
-                                final Value va = m.getValue(cri);
+                                final Value va  = m.getValue(cri);
 
                                 int value1 = va.getValue1();
                                 int value2 = va.getValue2();
@@ -1701,7 +1768,7 @@ public class CoachMatch extends Match implements Serializable {
                             for (int j = 0; j < Tournament.getTournament().getParams().getCriteriaCount(); j++) {
 
                                 final Criterion cri = Tournament.getTournament().getParams().getCriterion(j);
-                                final Value va = m.getValue(cri);
+                                final Value va  = m.getValue(cri);
                                 int value1 = va.getValue1();
                                 int value2 = va.getValue2();
                                 if ((j == 0) && (value1 == -1)) {
@@ -1884,15 +1951,49 @@ public class CoachMatch extends Match implements Serializable {
         }
     }
 
-    HashMap<bb.teamma.data.Player, Skill> skills1;
-    HashMap<bb.teamma.data.Player, Skill> skills2;
+    HashMap<bb.teamma.data.Player, Skill> skills1 = new HashMap<bb.teamma.data.Player, Skill>();
+    HashMap<bb.teamma.data.Player, Skill> skills2 = new HashMap<bb.teamma.data.Player, Skill>();
 
     public void updateRandomSkills() {
         updateRandomSkills(mCompetitor1);
         updateRandomSkills(mCompetitor2);
     }
 
+    public String getSkills1ForDisplay() {
+        return getSkillsForDisplay((Coach) getCompetitor1(), skills1);
+    }
+
+    public String getSkills2ForDisplay() {
+        return getSkillsForDisplay((Coach) getCompetitor2(), skills2);
+    }
+
+    String getSkillsForDisplay(Coach coach, HashMap<bb.teamma.data.Player, Skill> skillsMap) {
+        String tmp = "";
+
+        for (Map.Entry<bb.teamma.data.Player, Skill> entry:skillsMap.entrySet())
+        {
+            if (!tmp.equals(""))
+            {
+                tmp+="/";
+            }
+            tmp+= entry.getKey().getPlayertype().getPosition()+": "+entry.getValue().getName();
+        }
+        
+        return tmp;
+    }
+
     void updateRandomSkills(Competitor c) {
+
+        HashMap<bb.teamma.data.Player, Skill> skillsMap = new HashMap<>();
+        if (c == this.getCompetitor1()) {
+            skillsMap = skills1;
+        }
+        if (c == this.getCompetitor2()) {
+            skillsMap = skills2;
+        }
+
+        skillsMap.clear();
+
         // In Case of Random Skill for the first roster
         for (int i = 0; i < ((Coach) c).getCompositionCount(); i++) {
             bb.teamma.data.Roster roster = ((Coach) c).getComposition(i);
@@ -1940,8 +2041,8 @@ public class CoachMatch extends Match implements Serializable {
                             Skill newSkill = skills.get(0);
 
                             newSkill.setRandom(true);
-                            player.removeSkill(skill);
-                            player.addSkill(newSkill);
+
+                            skillsMap.put(player, newSkill);
                         }
                     }
                 }

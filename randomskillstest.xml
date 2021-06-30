@@ -74,7 +74,7 @@
       <Inducements />
       <Player Name="" Position="Ogre" />
       <Player Name="" Position="Bodyguard">
-        <Skill Name="Guard" Color="-16737946" />
+        <Skill Name="Guard" Color="-16737895" />
       </Player>
       <Player Name="" Position="Bodyguard">
         <Skill Name="Guard" Color="-16737895" />
@@ -86,11 +86,11 @@
         <Skill Name="Guard" Color="-16737895" />
       </Player>
       <Player Name="" Position="Noble Blitzer">
-        <Skill Name="Random General Skill" Color="-65536" />
+        <Skill Name="Random General Skill" Color="-6750157" />
       </Player>
       <Player Name="" Position="Noble Blitzer" />
       <Player Name="" Position="Imperial Thrower">
-        <Skill Name="Leader" Color="-13434676" />
+        <Skill Name="Leader" Color="-16777012" />
       </Player>
       <Player Name="" Position="Imperial Retainer Lineman" />
       <Player Name="" Position="Imperial Retainer Lineman" />
@@ -105,21 +105,21 @@
         <StarPlayer Name="Eldril Sidewinder" />
       </Inducements>
       <Player Name="" Position="Blitzer">
-        <Skill Name="Dodge" Color="-6711040" />
+        <Skill Name="Dodge" Color="-3407821" />
       </Player>
       <Player Name="" Position="Blitzer">
-        <Skill Name="Dodge" Color="-6711040" />
+        <Skill Name="Dodge" Color="-3407821" />
       </Player>
       <Player Name="" Position="Thrower">
-        <Skill Name="Leader" Color="-16763905" />
+        <Skill Name="Leader" Color="-16777012" />
       </Player>
       <Player Name="" Position="Catcher" />
       <Player Name="" Position="Catcher" />
       <Player Name="" Position="Lineman">
-        <Skill Name="Random General Skill" Color="-6750055" />
+        <Skill Name="Random General Skill" Color="-6750157" />
       </Player>
       <Player Name="" Position="Lineman">
-        <Skill Name="Random General Skill" Color="-10092442" />
+        <Skill Name="Random General Skill" Color="-6750157" />
       </Player>
       <Player Name="" Position="Lineman" />
       <Player Name="" Position="Lineman" />
@@ -142,16 +142,16 @@
         <Skill Name="Leader" Color="-16777012" />
       </Player>
       <Player Name="" Position="Skaven Clanrat">
-        <Skill Name="Random General Skill" Color="-3407821" />
+        <Skill Name="Random General Skill" Color="-6750157" />
       </Player>
       <Player Name="" Position="Skaven Clanrat">
-        <Skill Name="Random General Skill" Color="-65536" />
+        <Skill Name="Random General Skill" Color="-6750157" />
       </Player>
       <Player Name="" Position="Skaven Clanrat">
-        <Skill Name="Wrestle" Color="-16751053" />
+        <Skill Name="Wrestle" Color="-16777012" />
       </Player>
       <Player Name="" Position="Skaven Blitzer">
-        <Skill Name="Mighty Blow (+1)" Color="-16777063" />
+        <Skill Name="Mighty Blow (+1)" Color="-6750055" />
       </Player>
       <Player Name="" Position="Gutter Runner" />
       <Player Name="" Position="Underworld Goblin Lineman" />
@@ -189,10 +189,10 @@
         <Skill Name="Mighty Blow (+1)" Color="-6750055" />
       </Player>
       <Player Name="" Position="Goblin">
-        <Skill Name="Random Agility Skill" Color="-16751002" />
+        <Skill Name="Random Agility Skill" Color="-6750055" />
       </Player>
       <Player Name="" Position="Goblin">
-        <Skill Name="Random Agility Skill" Color="-16737895" />
+        <Skill Name="Random Agility Skill" Color="-6750055" />
       </Player>
       <Player Name="" Position="Goblin" />
       <Player Name="" Position="Goblin" />
@@ -213,10 +213,10 @@
         <Skill Name="Random General Skill" Color="-6750157" />
       </Player>
       <Player Name="" Position="Catcher">
-        <Skill Name="Random Agility Skill" Color="-16751053" />
+        <Skill Name="Random Agility Skill" Color="-6750055" />
       </Player>
       <Player Name="" Position="Catcher">
-        <Skill Name="Random Agility Skill" Color="-16751053" />
+        <Skill Name="Random Agility Skill" Color="-6750055" />
       </Player>
       <Player Name="" Position="Kroxigor">
         <Skill Name="Random Strength Skill" Color="-6711040" />
@@ -246,7 +246,7 @@
         <Skill Name="Dodge" Color="-3407821" />
       </Player>
       <Player Name="" Position="Witch Elf">
-        <Skill Name="Block" Color="-16737997" />
+        <Skill Name="Block" Color="-6750208" />
       </Player>
       <Player Name="" Position="Witch Elf">
         <Skill Name="Wrestle" Color="-16777012" />
@@ -263,22 +263,22 @@
     <Composition LRB="BB2020" Roster="Lizardman" Apothecary="true" Assistants="0" Cheerleaders="0" FanFactor="0" Rerolls="2">
       <Inducements />
       <Player Name="" Position="Saurus Blocker">
-        <Skill Name="Block" Color="-16737997" />
+        <Skill Name="Block" Color="-6750208" />
       </Player>
       <Player Name="" Position="Saurus Blocker">
-        <Skill Name="Block" Color="-16751053" />
+        <Skill Name="Block" Color="-6750208" />
       </Player>
       <Player Name="" Position="Saurus Blocker">
-        <Skill Name="Block" Color="-16737997" />
+        <Skill Name="Block" Color="-6750208" />
       </Player>
       <Player Name="" Position="Saurus Blocker">
-        <Skill Name="Block" Color="-16751053" />
+        <Skill Name="Block" Color="-6750208" />
       </Player>
       <Player Name="" Position="Saurus Blocker">
-        <Skill Name="Block" Color="-16751053" />
+        <Skill Name="Block" Color="-6750208" />
       </Player>
       <Player Name="" Position="Saurus Blocker">
-        <Skill Name="Block" Color="-16737946" />
+        <Skill Name="Block" Color="-6750208" />
       </Player>
       <Player Name="" Position="Kroxigor" />
       <Player Name="" Position="Chameleon Skink" />
@@ -298,7 +298,7 @@
         <StarPlayer Name="Karla Von Kill" />
       </Inducements>
       <Player Name="" Position="Altern Forest Treeman">
-        <Skill Name="Block" Color="-3407872" />
+        <Skill Name="Block" Color="-6750208" />
       </Player>
       <Player Name="" Position="Altern Forest Treeman">
         <Skill Name="Block" Color="-6750208" />
@@ -306,13 +306,13 @@
       <Player Name="" Position="Halfling Hefty" />
       <Player Name="" Position="Halfling Hefty" />
       <Player Name="" Position="Halfling Catcher">
-        <Skill Name="Sure Feet" Color="-16751053" />
+        <Skill Name="Sure Feet" Color="-16737997" />
       </Player>
       <Player Name="" Position="Halfling Catcher">
         <Skill Name="Sure Feet" Color="-16737997" />
       </Player>
       <Player Name="" Position="Halfling Hopeful Linemen">
-        <Skill Name="Random Agility Skill" Color="-3407668" />
+        <Skill Name="Random Agility Skill" Color="-6750055" />
       </Player>
       <Player Name="" Position="Halfling Hopeful Linemen">
         <Skill Name="Random Agility Skill" Color="-6750055" />
@@ -340,4 +340,516 @@
     <Coach Name="Astypal" />
     <Picture>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</Picture>
   </Team>
+  <Round Date="25/06/2021 16:21:45" Cup="false" Tour="0" MaxTour="0" mincoef="1.0" maxcoef="1.0">
+    <Match Team1="LGBT" Team2="Petit Est">
+      <Match Coach1="lord_bojo" Coach2="GetYaya" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="1" Value2="0" />
+        <Value Name="Injuries" Value1="0" Value2="0" />
+        <Skills1 TeamIndex="0" PlayerIndex="5">Dauntless</Skills1>
+      </Match>
+      <Match Coach1="Obsidian" Coach2="Thot" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Injuries" Value1="0" Value2="0" />
+        <Skills1 TeamIndex="0" PlayerIndex="5">Block</Skills1>
+        <Skills1 TeamIndex="0" PlayerIndex="6">Kick</Skills1>
+        <Skills2 TeamIndex="0" PlayerIndex="1">Dirty Player (+1)</Skills2>
+        <Skills2 TeamIndex="0" PlayerIndex="2">Sprint</Skills2>
+        <Skills2 TeamIndex="0" PlayerIndex="4">Grab</Skills2>
+        <Skills2 TeamIndex="0" PlayerIndex="0">Wrestle</Skills2>
+        <Skills2 TeamIndex="0" PlayerIndex="3">Sneaky Git</Skills2>
+      </Match>
+      <Match Coach1="Helborg" Coach2="Galanthil" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Injuries" Value1="0" Value2="0" />
+        <Skills1 TeamIndex="0" PlayerIndex="4">Dauntless</Skills1>
+        <Skills1 TeamIndex="0" PlayerIndex="8">Defensive</Skills1>
+        <Skills1 TeamIndex="0" PlayerIndex="2">Shadowing</Skills1>
+        <Skills1 TeamIndex="0" PlayerIndex="3">Kick</Skills1>
+        <Skills2 TeamIndex="0" PlayerIndex="4">Random General Skill</Skills2>
+        <Skills2 TeamIndex="0" PlayerIndex="5">Dauntless</Skills2>
+      </Match>
+      <Match Coach1="Clement0" Coach2="Astypal" RefusedBy1="false" RefusedBy2="false" ConcedeedBy1="false" ConcedeedBy2="false">
+        <Value Name="Touchdowns" Value1="-1" Value2="-1" />
+        <Value Name="Injuries" Value1="0" Value2="0" />
+        <Skills1 TeamIndex="0" PlayerIndex="7">Diving Catch</Skills1>
+        <Skills1 TeamIndex="0" PlayerIndex="8">Jump Up</Skills1>
+        <Skills2 TeamIndex="0" PlayerIndex="1">Kick</Skills2>
+        <Skills2 TeamIndex="0" PlayerIndex="7">Jump Up</Skills2>
+        <Skills2 TeamIndex="0" PlayerIndex="0">Fend</Skills2>
+        <Skills2 TeamIndex="0" PlayerIndex="6">Diving Tackle</Skills2>
+      </Match>
+    </Match>
+    <Rankings RoundOnly="false">
+      <IndivRankingSet>
+        <IndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" ByTeam="true" pool="false" Cup="false">
+          <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
+          <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
+          <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
+          <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
+          <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="5" />
+          <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="6" />
+          <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="7" />
+          <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="8" />
+        </IndivRanking>
+        <IndivRankingForCup Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" ByTeam="true" pool="false" Cup="true">
+          <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
+          <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
+          <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
+          <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
+          <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="5" />
+          <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="6" />
+          <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="7" />
+          <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="8" />
+        </IndivRankingForCup>
+        <IndivAnnexRanking Criteria="Injuries" Subtype="Pos">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Injuries" Subtype="0" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Touchdowns" Subtype="Pos">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Touchdowns" Subtype="0" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Injuries" Subtype="Neg">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Injuries" Subtype="1" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Touchdowns" Subtype="Neg">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Touchdowns" Subtype="1" Type="">
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1" />
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="6" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="7" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Injuries" Subtype="Dif">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Injuries" Subtype="2" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Touchdowns" Subtype="Dif">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Touchdowns" Subtype="2" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+      </IndivRankingSet>
+      <TeamRankingSet>
+        <TeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1">
+            <Member Name="lord_bojo" />
+            <Member Name="Obsidian" />
+            <Member Name="Helborg" />
+            <Member Name="Clement0" />
+          </Position>
+          <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2">
+            <Member Name="Thot" />
+            <Member Name="Galanthil" />
+            <Member Name="GetYaya" />
+            <Member Name="Astypal" />
+          </Position>
+        </TeamRanking>
+        <TeamRankingForCup Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1">
+            <Member Name="lord_bojo" />
+            <Member Name="Obsidian" />
+            <Member Name="Helborg" />
+            <Member Name="Clement0" />
+          </Position>
+          <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2">
+            <Member Name="Thot" />
+            <Member Name="Galanthil" />
+            <Member Name="GetYaya" />
+            <Member Name="Astypal" />
+          </Position>
+        </TeamRankingForCup>
+        <TeamRankingForPool Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Victory_Team="false">
+          <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1">
+            <Member Name="lord_bojo" />
+            <Member Name="Obsidian" />
+            <Member Name="Helborg" />
+            <Member Name="Clement0" />
+          </Position>
+          <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2">
+            <Member Name="Thot" />
+            <Member Name="Galanthil" />
+            <Member Name="GetYaya" />
+            <Member Name="Astypal" />
+          </Position>
+        </TeamRankingForPool>
+        <TeamAnnexRanking Criteria="Injuries" Subtype="Pos">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Injuries" Subtype="0" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Touchdowns" Subtype="Pos">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Touchdowns" Subtype="0" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Injuries" Subtype="Neg">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Injuries" Subtype="1" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Touchdowns" Subtype="Neg">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Touchdowns" Subtype="1" Type="">
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-3" Rank="2">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Injuries" Subtype="Dif">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Injuries" Subtype="2" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Touchdowns" Subtype="Dif">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="false" Details="" Criteria="Touchdowns" Subtype="2" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+      </TeamRankingSet>
+    </Rankings>
+    <RankingsRoundOnly RoundOnly="true">
+      <IndivRankingSet>
+        <IndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" ByTeam="true" pool="false" Cup="false">
+          <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
+          <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
+          <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
+          <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
+          <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="5" />
+          <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="6" />
+          <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="7" />
+          <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="8" />
+        </IndivRanking>
+        <IndivRankingForCup Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" ByTeam="true" pool="false" Cup="true">
+          <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1" />
+          <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2" />
+          <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="3" />
+          <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="4" />
+          <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="5" />
+          <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="6" />
+          <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="7" />
+          <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="8" />
+        </IndivRankingForCup>
+        <IndivAnnexRanking Criteria="Injuries" Subtype="Pos">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Injuries" Subtype="0" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Touchdowns" Subtype="Pos">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Touchdowns" Subtype="0" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Injuries" Subtype="Neg">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Injuries" Subtype="1" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Touchdowns" Subtype="Neg">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Touchdowns" Subtype="1" Type="">
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1" />
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="6" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="7" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Injuries" Subtype="Dif">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Injuries" Subtype="2" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+        <IndivAnnexRanking Criteria="Touchdowns" Subtype="Dif">
+          <AnnexIndivRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Touchdowns" Subtype="2" Type="">
+            <Position Coach="lord_bojo" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Imperial Nobility" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1" />
+            <Position Coach="Obsidian" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Elf Union" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2" />
+            <Position Coach="Helborg" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Underworld Denizens" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="3" />
+            <Position Coach="Clement0" Team="LGBT" TeamMates="LGBT" Clan="None" Roster="Gobelin" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="4" />
+            <Position Coach="Thot" Team="Calinous" TeamMates="Petit Est" Clan="None" Roster="Slann" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="5" />
+            <Position Coach="Galanthil" Team="Double Impact" TeamMates="Petit Est" Clan="None" Roster="Dark Elf" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="6" />
+            <Position Coach="Astypal" Team="Astypay" TeamMates="Petit Est" Clan="None" Roster="Halfling" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="7" />
+            <Position Coach="GetYaya" Team="Finger in the nose" TeamMates="Petit Est" Clan="None" Roster="Lizardman" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="8" />
+          </AnnexIndivRanking>
+        </IndivAnnexRanking>
+      </IndivRankingSet>
+      <TeamRankingSet>
+        <TeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1">
+            <Member Name="lord_bojo" />
+            <Member Name="Obsidian" />
+            <Member Name="Helborg" />
+            <Member Name="Clement0" />
+          </Position>
+          <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2">
+            <Member Name="Thot" />
+            <Member Name="Galanthil" />
+            <Member Name="GetYaya" />
+            <Member Name="Astypal" />
+          </Position>
+        </TeamRanking>
+        <TeamRankingForCup Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1">
+            <Member Name="lord_bojo" />
+            <Member Name="Obsidian" />
+            <Member Name="Helborg" />
+            <Member Name="Clement0" />
+          </Position>
+          <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2">
+            <Member Name="Thot" />
+            <Member Name="Galanthil" />
+            <Member Name="GetYaya" />
+            <Member Name="Astypal" />
+          </Position>
+        </TeamRankingForCup>
+        <TeamRankingForPool Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Victory_Team="false">
+          <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="1">
+            <Member Name="lord_bojo" />
+            <Member Name="Obsidian" />
+            <Member Name="Helborg" />
+            <Member Name="Clement0" />
+          </Position>
+          <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Rank="2">
+            <Member Name="Thot" />
+            <Member Name="Galanthil" />
+            <Member Name="GetYaya" />
+            <Member Name="Astypal" />
+          </Position>
+        </TeamRankingForPool>
+        <TeamAnnexRanking Criteria="Injuries" Subtype="Pos">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Injuries" Subtype="0" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Touchdowns" Subtype="Pos">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Touchdowns" Subtype="0" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Injuries" Subtype="Neg">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Injuries" Subtype="1" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Touchdowns" Subtype="Neg">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Touchdowns" Subtype="1" Type="">
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-3" Rank="2">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Injuries" Subtype="Dif">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Injuries" Subtype="2" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="0" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+        <TeamAnnexRanking Criteria="Touchdowns" Subtype="Dif">
+          <AnnexTeamRanking Rank1="1" Rank2="7" Rank3="0" Rank4="0" Rank5="0" Round="0" RoundOnly="true" Details="" Criteria="Touchdowns" Subtype="2" Type="">
+            <Position Team="LGBT" Rank1="1002" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="1" Rank="1">
+              <Member Name="lord_bojo" />
+              <Member Name="Obsidian" />
+              <Member Name="Helborg" />
+              <Member Name="Clement0" />
+            </Position>
+            <Position Team="Petit Est" Rank1="0" Rank2="0" Rank3="0" Rank4="0" Rank5="0" Value="-1" Rank="2">
+              <Member Name="Thot" />
+              <Member Name="Galanthil" />
+              <Member Name="GetYaya" />
+              <Member Name="Astypal" />
+            </Position>
+          </AnnexTeamRanking>
+        </TeamAnnexRanking>
+      </TeamRankingSet>
+    </RankingsRoundOnly>
+  </Round>
 </Tournament>

@@ -51,6 +51,7 @@ import bb.tourma.utility.StringConstants;
 import bb.tourma.utility.Suspendable;
 import bb.tourma.utils.ImageTreatment;
 import bb.tourma.utils.display.TourmaProtocol;
+import java.awt.GridLayout;
 
 /**
  *
@@ -84,7 +85,7 @@ public final class JFullScreenMatchs extends JFullScreen {
         semStart.acquire();
         try {
 
-            Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
+            Font font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/bb/tourma/languages/calibri.ttf"));
 
             GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[screen];
             _screenIndex = screen;
@@ -132,7 +133,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 ((Tournament) tour).getParams().setXMLElement(element);
                                 element = doc.getRootElement().getChild(StringConstants.CS_ROUND);
 
-                                r = new Round(tour.getRoundsCount(),tour);
+                                r = new Round(tour.getRoundsCount(), tour);
                                 r.setXMLElementForDisplay(element);
 
                                 if (clash) {
@@ -201,7 +202,7 @@ public final class JFullScreenMatchs extends JFullScreen {
             jpn.setLayout(gbl);
 
             try {
-                font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
+                font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/bb/tourma/languages/calibri.ttf"));
             } catch (FontFormatException | IOException ex) {
                 Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
@@ -221,6 +222,8 @@ public final class JFullScreenMatchs extends JFullScreen {
             Font f1Draw = font.deriveFont(Font.ITALIC, size);
             Font f1Looser = font.deriveFont(Font.PLAIN, size);
             Font fBig = font.deriveFont(Font.BOLD, (float) height / 20);
+
+            Font smallItalic = font.deriveFont(Font.ITALIC, (int) (size / 1.5));
 
             int computed_height = height / 10;
             int nbCols = 3;
@@ -272,8 +275,34 @@ public final class JFullScreenMatchs extends JFullScreen {
                     CoachIcon1.setHorizontalAlignment(JLabel.CENTER);
                     CoachIcon2.setHorizontalAlignment(JLabel.CENTER);
 
-                    jpn.add(CoachIcon1, getGridbBagConstraints(colIndex, i * (rowspan + 1), rowspan, 1));
-                    jpn.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * (rowspan + 1), rowspan, 1));
+                    if (Tournament.getTournament().getParams().isRandomSkillDisplay()) {
+                        String txt1 = cm.getSkills1ForDisplay();
+                        String txt2 = cm.getSkills2ForDisplay();
+
+                        JLabel skills1 = new JLabel(txt1);
+                        JLabel skills2 = new JLabel(txt2);
+
+                        skills1.setFont(smallItalic);
+                        skills2.setFont(smallItalic);
+
+                        skills1.setHorizontalAlignment(JLabel.CENTER);
+                        skills2.setHorizontalAlignment(JLabel.CENTER);
+
+                        JPanel jpnC1 = new JPanel(new GridLayout(2, 1));
+                        jpnC1.add(CoachIcon1);
+                        jpnC1.add(skills1);
+
+                        JPanel jpnC2 = new JPanel(new GridLayout(2, 1));
+                        jpnC2.add(CoachIcon2);
+                        jpnC2.add(skills2);
+
+                        jpn.add(jpnC1, getGridbBagConstraints(colIndex, i * (rowspan + 1), rowspan, 1));
+                        jpn.add(jpnC2, getGridbBagConstraints(nbCols - colIndex - 1, i * (rowspan + 1), rowspan, 1));
+
+                    } else {
+                        jpn.add(CoachIcon1, getGridbBagConstraints(colIndex, i * (rowspan + 1), rowspan, 1));
+                        jpn.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * (rowspan + 1), rowspan, 1));
+                    }
 
                     int value1 = cm.getValue(td).getValue1();
                     int value2 = cm.getValue(td).getValue2();
@@ -391,8 +420,34 @@ public final class JFullScreenMatchs extends JFullScreen {
                         CoachIcon1.setHorizontalAlignment(JLabel.CENTER);
                         CoachIcon2.setHorizontalAlignment(JLabel.CENTER);
 
-                        jpn.add(CoachIcon1, getGridbBagConstraints(colIndex, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
-                        jpn.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
+                        if (Tournament.getTournament().getParams().isRandomSkillDisplay()) {
+                            String txt1 = cm.getSkills1ForDisplay();
+                            String txt2 = cm.getSkills2ForDisplay();
+
+                            JLabel skills1 = new JLabel(txt1);
+                            JLabel skills2 = new JLabel(txt2);
+
+                            skills1.setFont(smallItalic);
+                            skills2.setFont(smallItalic);
+
+                            skills1.setHorizontalAlignment(JLabel.CENTER);
+                            skills2.setHorizontalAlignment(JLabel.CENTER);
+
+                            JPanel jpnC1 = new JPanel(new GridLayout(2, 1));
+                            jpnC1.add(CoachIcon1);
+                            jpnC1.add(skills1);
+
+                            JPanel jpnC2 = new JPanel(new GridLayout(2, 1));
+                            jpnC2.add(CoachIcon2);
+                            jpnC2.add(skills2);
+
+                            jpn.add(jpnC1, getGridbBagConstraints(colIndex, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
+                            jpn.add(jpnC2, getGridbBagConstraints(nbCols - colIndex - 1, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
+
+                        } else {
+                            jpn.add(CoachIcon1, getGridbBagConstraints(colIndex, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
+                            jpn.add(CoachIcon2, getGridbBagConstraints(nbCols - colIndex - 1, i * NbLinesPerTeamMatch + 1 + j * NbLinesPerCoachMatch, nbValues, 1));
+                        }
 
                         int value1 = cm.getValue(td).getValue1();
                         int value2 = cm.getValue(td).getValue2();
@@ -456,14 +511,12 @@ public final class JFullScreenMatchs extends JFullScreen {
             this.repaint();
             fontRatio = fontRatio * 11 / 10;
 
- /*           System.out.println(fontRatio);
+            /*           System.out.println(fontRatio);
             System.out.println(jscrp.getComponent(0).getWidth());
             System.out.println(mSelectedGD.getDisplayMode().getWidth());
             System.out.println(jscrp.getPreferredSize().width);
             System.out.println(jscrp.getViewport().getExtentSize().width);
-*/
-            
-            
+             */
         } while (jscrp.getPreferredSize().width > mSelectedGD.getDisplayMode().getWidth());
     }
 
@@ -815,7 +868,7 @@ public final class JFullScreenMatchs extends JFullScreen {
     private Font getOptimalFont(int width, int height, String s) {
         Font font;
         try {
-            font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/tourma/languages/calibri.ttf"));
+            font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/bb/tourma/languages/calibri.ttf"));
         } catch (FontFormatException | IOException ex) {
             Logger.getLogger(JFullScreenIndivRank.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -969,7 +1022,7 @@ public final class JFullScreenMatchs extends JFullScreen {
         private boolean suspended = false;
 
         private long nanos = 1000000000;
-        private int step=1;
+        private int step = 1;
 
         synchronized void incrementSync() {
             nanos = nanos - nanos * 10 / 100;
@@ -981,9 +1034,8 @@ public final class JFullScreenMatchs extends JFullScreen {
             nanos = nanos + nanos * 10 / 100;
             System.out.println(nanos);
             step--;
-            if (step<0)
-            {
-                step=0;
+            if (step < 0) {
+                step = 0;
             }
         }
 
@@ -1097,10 +1149,10 @@ public final class JFullScreenMatchs extends JFullScreen {
                                 // Draw vs
                                 // Set JPN1 & JPN2 position
 
-                                jpn1X = 0 - size1.width + (j < width / 2 ? j+step : width / 2);
-                                jpn2X = width - (j > width / 2 ? j - width / 2-step : 0);
+                                jpn1X = 0 - size1.width + (j < width / 2 ? j + step : width / 2);
+                                jpn2X = width - (j > width / 2 ? j - width / 2 - step : 0);
 
-                                j+=step;
+                                j += step;
                                 synchronized (this) {
                                     suspended = true;
                                     long timer = nanos / (width / 2);
@@ -1141,7 +1193,7 @@ public final class JFullScreenMatchs extends JFullScreen {
                     semAnimate.release();
                     synchronized (this) {
                         suspended = true;
-                        spleeping.sleep((2 * nanos) / 1000000, (int) (2 * nanos) % 1000000);                        
+                        spleeping.sleep((2 * nanos) / 1000000, (int) (2 * nanos) % 1000000);
                         while (suspended && animationStarted) {
                             try {
                                 wait();

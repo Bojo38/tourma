@@ -283,4 +283,12 @@ public interface StringConstants {
     public static final String CS_CUP_MATCH = "Match";
     
     public static final String CS_RANDOMSKILLDISPLAY = "RandomSkillDisplay";
+     public static final String CS_RANDOMSKILLGENERATE= "GenerateRandomSkill";
+    
+    public static final String CS_TEAMINDEX="TeamIndex";
+    public static final String CS_PLAYERINDEX="PlayerIndex";
+    
+    public static final String CS_SKILLS1="Skills1";
+    public static final String CS_SKILLS2="Skills2";
+    
 }

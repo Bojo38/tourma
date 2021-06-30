@@ -777,6 +777,7 @@ public class Parameters implements IXMLExport, Serializable {
         params.setAttribute(StringConstants.CS_TABLEBONUSPERROUND, Boolean.toString(this.isTableBonusPerRound()));
         
         params.setAttribute(StringConstants.CS_RANDOMSKILLDISPLAY, Boolean.toString(this.isRandomSkillDisplay()));
+        params.setAttribute(StringConstants.CS_RANDOMSKILLGENERATE, Boolean.toString(this.isGenerateRandomSkill()));
         
         
         params.setAttribute(StringConstants.CS_TABLEBONUSCOEF, Double.toString(this.getTableBonusCoef()));
@@ -972,6 +973,7 @@ public class Parameters implements IXMLExport, Serializable {
                 this.setTableBonusPerRound(params.getAttribute(StringConstants.CS_TABLEBONUSPERROUND).getBooleanValue());
                 this.setTableBonusCoef(params.getAttribute(StringConstants.CS_TABLEBONUSCOEF).getDoubleValue());
                 this.setRandomSkillDisplay(params.getAttribute(StringConstants.CS_RANDOMSKILLDISPLAY).getBooleanValue());
+                this.setGenerateRandomSkill(params.getAttribute(StringConstants.CS_RANDOMSKILLGENERATE).getBooleanValue());
 
             } catch (NullPointerException ne4) {
                 //JOptionPane.showMessageDialog(null, ne4.getLocalizedMessage());
@@ -1665,16 +1667,27 @@ public class Parameters implements IXMLExport, Serializable {
     }
 
     protected boolean mRandomSkillDisplay=false;
+     protected boolean mGenerateRandomSkill=false;
     
     public boolean isRandomSkillDisplay()
     {
         return mRandomSkillDisplay;
     }
     
+    public boolean isGenerateRandomSkill()
+    {
+        return mGenerateRandomSkill;
+    }
+    
     
     public void setRandomSkillDisplay(boolean rsd)
     {
         mRandomSkillDisplay=rsd;
+    }
+    
+    public void setGenerateRandomSkill(boolean rsd)
+    {
+        mGenerateRandomSkill=rsd;
     }
     
     public double getTableBonusCoef() {

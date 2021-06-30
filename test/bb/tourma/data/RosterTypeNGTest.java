@@ -5,6 +5,7 @@
  */
 package bb.tourma.data;
 
+import bb.teamma.data.LRB;
 import bb.tourma.data.RosterType;
 import java.util.HashMap;
 import javax.swing.DefaultComboBoxModel;
@@ -49,7 +50,7 @@ public class RosterTypeNGTest {
     @Test
     public void testInitCollection_0args() {
         System.out.println("initCollection");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         Assert.assertTrue(RosterType.getRostersNamesCount() > 0);
     }
 
@@ -60,10 +61,10 @@ public class RosterTypeNGTest {
     public void testInitCollection_int() {
         System.out.println("initCollection");
         int game = 0;
-        RosterType.initCollection(game);
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         Assert.assertTrue(RosterType.getRostersNamesCount() > 0);
         game = 1;
-        RosterType.initCollection(game);
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         Assert.assertTrue(RosterType.getRostersNamesCount() > 0);
     }
 
@@ -73,7 +74,7 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRosterName() {
         System.out.println("getRosterName");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         String name = "Amazone";
         String expResult = "Amazones";
         String result = RosterType.getRosterName(name);
@@ -86,7 +87,7 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRosterType_String() {
         System.out.println("getRosterType");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         String r = "Amazones";
         RosterType expResult = RosterType.getRosterType(0);
         RosterType result = RosterType.getRosterType(r);
@@ -99,7 +100,7 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRosterType_int() {
         System.out.println("getRosterType");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         String r = "Amazones";
         RosterType expResult = RosterType.getRosterType(0);
         RosterType result = RosterType.getRosterType(r);
@@ -112,7 +113,7 @@ public class RosterTypeNGTest {
     @Test
     public void testPutRosterType() {
         System.out.println("putRosterType");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         String n = "Test";
         RosterType r = new RosterType("Test");
         RosterType.putRosterType(n, r);
@@ -126,7 +127,7 @@ public class RosterTypeNGTest {
     @Test
     public void testAddRosterName() {
         System.out.println("addRosterName");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         String n = "Name";
         int nb = RosterType.getRostersNamesCount();
         RosterType.addRosterName(n);
@@ -139,7 +140,7 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRostersNamesCount() {
         System.out.println("getRostersNamesCount");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         String n = "Name";
         int nb = RosterType.getRostersNamesCount();
         RosterType.addRosterName(n);
@@ -152,7 +153,7 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRostersName() {
         System.out.println("getRostersName");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
             String name = RosterType.getRostersName(i);
             RosterType rt = RosterType.getRosterType(i);
@@ -167,7 +168,7 @@ public class RosterTypeNGTest {
     @Test
     public void testNewRostersNames() {
         System.out.println("newRostersNames");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         RosterType.newRostersNames();
         Assert.assertTrue(RosterType.getRostersNamesCount() == 0);
     }
@@ -178,7 +179,7 @@ public class RosterTypeNGTest {
     @Test
     public void testNewRostersTypes() {
         System.out.println("newRostersTypes");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         RosterType.newRostersTypes();
         Assert.assertTrue(RosterType.getRosterType(0) == null);
     }
@@ -189,7 +190,7 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRostersNamesModel() {
         System.out.println("getRostersNamesModel");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         DefaultComboBoxModel<String> result = RosterType.getRostersNamesModel();
         String[] arr = RosterType.getRostersNames();
         for (int i = 0; i < arr.length; i++) {
@@ -203,7 +204,7 @@ public class RosterTypeNGTest {
     @Test
     public void testGetRostersNames() {
         System.out.println("getRostersNames");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
         String[] result = RosterType.getRostersNames();
         for (int i = 0; i < result.length; i++) {
             assertEquals(result[i], RosterType.getRostersName(i));
@@ -216,7 +217,7 @@ public class RosterTypeNGTest {
     @Test
     public void testGetXMLElement() {
         System.out.println("getXMLElement");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
 
         for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
             RosterType instance = RosterType.getRosterType(i);
@@ -233,7 +234,7 @@ public class RosterTypeNGTest {
     @Test
     public void testSetXMLElement() {
         System.out.println("setXMLElement");
-        RosterType.initCollection();
+        RosterType.initCollection(LRB.getLRB(LRB.E_Version.BB2020));
 
         for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
             RosterType instance = RosterType.getRosterType(i);

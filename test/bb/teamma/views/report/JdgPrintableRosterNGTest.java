@@ -5,6 +5,7 @@
  */
 package bb.teamma.views.report;
 
+import bb.teamma.data.LRB;
 import bb.teamma.views.report.JdgPrintableRoster;
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,7 +64,7 @@ public class JdgPrintableRosterNGTest {
 
 
         jdg = new JdgPrintableRoster(null, true,
-                roster, null, true);
+                roster, null, true,LRB.E_Version.BB2020);
         window = new DialogFixture(robot, jdg);
         window.show();
 
