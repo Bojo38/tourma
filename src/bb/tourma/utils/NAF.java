@@ -102,7 +102,7 @@ public final class NAF {
                         OutputStream out;
                         // Was the resource found?
                         try ( // Read the file we're looking for
-                                InputStream fileStream = _singleton.getClass().getResourceAsStream("/tourma/naf/naf_id" + i + ".xml")) {
+                                InputStream fileStream = _singleton.getClass().getResourceAsStream("/bb/tourma/naf/naf_id" + i + ".xml")) {
                             // Was the resource found?
                             if (fileStream == null) {
                                 stop = true;
@@ -572,63 +572,81 @@ public final class NAF {
         String result = translate("UNKNOWN");
         if (source.equals(translate("AmazonKey"))) {
             result = "Amazons";
+            result = "Amazon";
         }
         if (translate("UnderworldKey").equals(source)) {
             result = "Underworld";
+            result = "Underworld Denizens";
         }
         if (translate("BretonianKey").equals(source)) {
             result = "Bretonnians";
+            result = "Bretonnian";
         }
         if (translate("ChaosKey").equals(source)) {
             result = "Chaos";
+            result = "Chaos Chosen";
         }
         if (source.equals(translate("ElfKey"))) {
             result = "Elves";
+            result = "Elf Union";
         }
         if ((source.equals(translate("WoodElfKey"))) || (source.equals(translate("WoodElfKey2")))) {
             result = "Wood Elves";
+            result = "Wood Elf";
         }
         if ((source.equals(translate("DarkElfKey"))) || (source.equals(translate("DarkElfKey2")))) {
             result = "Dark Elves";
+            result = "Dark Elf";
         }
         if (source.equals(translate("GoblinKey"))) {
             result = "Goblins";
+             result = "Goblin";
         }
         if (source.equals(translate("HalflingKey"))) {
             result = "Halflings";
+            result = "Halfling";
         }
         if (source.equals(translate("HighElfKey"))) {
             result = "High Elves";
+            result = "High Elf";
         }
         if ((source.equals(translate("LizardmenKey"))) || (source.equals(translate("LizardmenKey2")))) {
             result = "Lizardmen";
         }
         if (source.equals(translate("HumanKey"))) {
             result = "Humans";
+            result = "Human";
         }
         if (source.equals(translate("KhemriKey"))) {
             result = "Khemri";
+            result = "Tomb Kings";
         }
         if (source.equals(translate("UndeadKey"))) {
             result = "Undead";
+            result = "Shambling Undead";
         }
         if (source.equals(translate("DwarfKey"))) {
             result = "Dwarves";
+            result = "Dwarf";
         }
         if ((source.equals(translate("ChaosDwarfKey"))) || (source.equals(translate("ChaosDwarfKey2"))) || (source.equals("Nain du Chaos"))) {
             result = "Chaos Dwarves";
+            result = "Chaos Dwarf";
         }
         if ((source.equals(translate("NecromanticKey"))) || (source.equals("Necromantiques"))) {
             result = "Necromantic";
+             result = "Necromantic Horror";
         }
         if ((source.equals(translate("NorseKey"))) || (source.equals("Nordiques"))) {
             result = "Norse";
         }
         if (source.equals(translate("NurgleKey"))) {
             result = "Nurgle's Rotters";
+            result = "Nurgle";
         }
         if (source.equals(translate("OgreKey"))) {
             result = "Ogres";
+            result = "Ogre";
         }
 
         String tmp = translate("OrcKey");
@@ -637,6 +655,7 @@ public final class NAF {
         }
         if (source.equals(translate("ChaosPactKey"))) {
             result = "Chaos Pact";
+            result = "Chaos Renegade";
         }
         if (source.equals(translate("SkavenKey"))) {
             result = "Skaven";
@@ -646,12 +665,15 @@ public final class NAF {
         }
         if (source.equals(translate("VampireKey"))) {
             result = "Vampires";
+            result = "Vampire";
         }
         if (source.equals(translate("KhorneKey")) || source.equals(translate("KhornesDaemonsKey"))) {
             result = "Khorne";
+            result = "Daemons of Khorne";
         }
         if (source.equals(translate("SnotlingKey"))) {
             result = "Snotlings";
+            result = "Snotling";
         }
         if (source.equals(translate("OldWorldAllianceKey"))) {
             result = "Old World Alliance";

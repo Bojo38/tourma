@@ -350,7 +350,13 @@ public class Roster implements IXMLExport, Serializable {
         this._version=version;
         LRB lrb = LRB.getLRB(version);
 
-        this.setRoster(lrb.getRosterType(rosterType, false));
+        RosterType rt=lrb.getRosterType(rosterType, false);
+        if (rt==null)
+        {
+            rt=lrb.getRosterType(rosterType, true);
+        }
+        
+        this.setRoster(rt);
         this.setApothecary(Boolean.parseBoolean(e.getAttributeValue(CS_Apothecary)));
         this.setAssistants(Integer.parseInt(e.getAttributeValue(CS_Assistants)));
         this.setCheerleaders(Integer.parseInt(e.getAttributeValue(CS_Cheerleaders)));
@@ -385,7 +391,8 @@ public class Roster implements IXMLExport, Serializable {
         while (ip.hasNext()) {
             final Element p = ip.next();
             if (this.getRoster() != null) {
-                final bb.teamma.data.Player pl = new Player(this.getRoster().getPlayerType(p.getAttributeValue(CS_Position), false), lrb.getVersion());
+                String playerType=p.getAttributeValue(CS_Position);
+                final bb.teamma.data.Player pl = new Player(this.getRoster().getPlayerType(playerType, false), lrb.getVersion());
                 pl.setName(p.getAttributeValue(CS_Name));
 
                 final List<Element> skills = p.getChildren(CS_Skill);

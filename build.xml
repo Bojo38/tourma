@@ -158,7 +158,7 @@
         <property name="libs.dir" value="libs"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
         <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
-        <delete file="${store.dir}/*.jar"/>
+        <delete file="${store.dir}/${store.jar.name}.jar"/>
         <mkdir dir="${store.dir}"/>
         <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
             <zipgroupfileset dir="dist" includes="*.jar"/>
