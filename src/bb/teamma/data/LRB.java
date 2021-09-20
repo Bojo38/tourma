@@ -681,12 +681,16 @@ public final class LRB {
             if (rt != null) {
                 if (rt.getName() != null) {
                     if (translate) {
-                        String tr = Translate.translate(rt.getName());
+                        String tr = Translate.translate(name);
+                        if (rt.getName().equals(tr)) {
+                            return rt;
+                        }
+                        tr = Translate.translate(rt.getName());
                         if (name.equals(tr)) {
                             return rt;
                         }
                     } else {
-                        if (name.equals(rt.getName())) {
+                        if (rt.getName().equals(name)) {
                             return rt;
                         }
                     }

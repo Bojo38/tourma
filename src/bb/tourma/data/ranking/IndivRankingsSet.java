@@ -139,6 +139,7 @@ public class IndivRankingsSet implements IXMLExport {
                 tour.getParams().getRankingIndiv4(),
                 tour.getParams().getRankingIndiv5(),
                 coachs, tour.getParams().isTeamTournament(), roundOnly, false, false);
+        mRanking.sortDatas();
 
         mRankingForCup = new IndivRanking(rNumber,
                 tour.getParams().getRankingIndiv1(),
@@ -147,6 +148,7 @@ public class IndivRankingsSet implements IXMLExport {
                 tour.getParams().getRankingIndiv4(),
                 tour.getParams().getRankingIndiv5(),
                 coachs, tour.getParams().isTeamTournament(), roundOnly, false, true);
+        mRankingForCup.sortDatas();
 
         if (tour.getPoolCount() > 0) {
             /**
@@ -159,6 +161,7 @@ public class IndivRankingsSet implements IXMLExport {
                     tour.getParams().getRankingIndiv4(),
                     tour.getParams().getRankingIndiv5(),
                     coachs, tour.getParams().isTeamTournament(), roundOnly, false, false);
+            mRankingForPool.sortDatas();
         }
 
         mAnnexPosRanking = new TreeMap<>();

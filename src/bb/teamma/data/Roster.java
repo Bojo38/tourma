@@ -371,7 +371,7 @@ public class Roster implements IXMLExport, Serializable {
             while (i_induc.hasNext()) {
                 final Element e_induc = i_induc.next();
                 final String it_name = e_induc.getAttributeValue(CS_Type);
-                InducementType it = this.getRoster().getInducementType(it_name);
+                InducementType it = rt.getInducementType(it_name);
                 this.setInducement(it, Integer.parseInt(e_induc.getAttributeValue(CS_Nb)));
             }
 
@@ -392,7 +392,8 @@ public class Roster implements IXMLExport, Serializable {
             final Element p = ip.next();
             if (this.getRoster() != null) {
                 String playerType=p.getAttributeValue(CS_Position);
-                final bb.teamma.data.Player pl = new Player(this.getRoster().getPlayerType(playerType, false), lrb.getVersion());
+                bb.teamma.data.PlayerType pt=this.getRoster().getPlayerType(playerType, false);
+                final bb.teamma.data.Player pl = new Player(pt, lrb.getVersion());
                 pl.setName(p.getAttributeValue(CS_Name));
 
                 final List<Element> skills = p.getChildren(CS_Skill);

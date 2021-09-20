@@ -42,8 +42,10 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
         this.mAccronym = crit.mAccronym;
 
         this.mCriticalValueThreshold = crit.mCriticalValueThreshold;
+        
         this.mOffensiveDiffThreshold = crit.mOffensiveDiffThreshold;
         this.mDefensiveDiffThreshold = crit.mDefensiveDiffThreshold;
+        
         this.mOffensiveDiffBonuses = crit.mOffensiveDiffBonuses;
         this.mDefensiveDiffBonuses = crit.mDefensiveDiffBonuses;
         this.mOffensiveThreshold = crit.mOffensiveThreshold;

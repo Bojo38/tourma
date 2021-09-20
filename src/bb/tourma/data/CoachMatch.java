@@ -683,7 +683,8 @@ public class CoachMatch extends Match implements Serializable {
             final Iterator<Element> its1 = e_s1.iterator();
             while (its1.hasNext()) {
                 final Element sub = its1.next();
-                Skill s = Tournament.getTournament().getLRB().getSkill(sub.getValue(), true);
+                String text=sub.getValue();
+                Skill s = Tournament.getTournament().getLRB().getSkill(text, false);
                 int team_index = sub.getAttribute(StringConstants.CS_TEAMINDEX).getIntValue();
                 int player_index = sub.getAttribute(StringConstants.CS_PLAYERINDEX).getIntValue();
 
@@ -692,7 +693,7 @@ public class CoachMatch extends Match implements Serializable {
             }
 
             final List<Element> e_s2 = match.getChildren(StringConstants.CS_SKILLS2);
-            final Iterator<Element> its2 = e_s1.iterator();
+            final Iterator<Element> its2 = e_s2.iterator();
             while (its2.hasNext()) {
                 final Element sub = its2.next();
                 Skill s = Tournament.getTournament().getLRB().getSkill(sub.getValue(), true);

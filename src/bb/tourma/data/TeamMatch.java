@@ -1239,14 +1239,15 @@ public class TeamMatch extends Match implements Serializable {
                     value = getTeammatesVND(t);
                     break;
                 default:
+                    Parameters params=Tournament.getTournament().getParams();
                     if (rankingType > Parameters.C_MAX_RANKING) {
-                        if (rankingType<Parameters.C_MAX_RANKING+Tournament.getTournament().getParams().getCriteriaCount()*3)
+                        if (rankingType<=Parameters.C_MAX_RANKING+params.getCriteriaCount()*3)
                         {
                             value += getValue(Ranking.getCriterionByValue(rankingType), Ranking.getSubtypeByValue(rankingType), t);
                         }
                         else
                         {
-                            int f=rankingType-Parameters.C_MAX_RANKING-Tournament.getTournament().getParams().getCriteriaCount()*3-1;
+                            int f=rankingType-Parameters.C_MAX_RANKING-params.getCriteriaCount()*3-1;
                             value+=getValue(Tournament.getTournament().getParams().getFormula(f),t);
                         }
                     }
