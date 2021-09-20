@@ -681,6 +681,7 @@ public class CoachMatch extends Match implements Serializable {
             // Random Skills
             final List<Element> e_s1 = match.getChildren(StringConstants.CS_SKILLS1);
             final Iterator<Element> its1 = e_s1.iterator();
+            skills1.clear();
             while (its1.hasNext()) {
                 final Element sub = its1.next();
                 String text=sub.getValue();
@@ -688,19 +689,31 @@ public class CoachMatch extends Match implements Serializable {
                 int team_index = sub.getAttribute(StringConstants.CS_TEAMINDEX).getIntValue();
                 int player_index = sub.getAttribute(StringConstants.CS_PLAYERINDEX).getIntValue();
 
-                skills1.clear();
+                
                 skills1.put(((Coach) this.getCompetitor1()).getComposition(team_index).getPlayer(player_index), s);
             }
 
             final List<Element> e_s2 = match.getChildren(StringConstants.CS_SKILLS2);
             final Iterator<Element> its2 = e_s2.iterator();
+            skills2.clear();
             while (its2.hasNext()) {
                 final Element sub = its2.next();
                 Skill s = Tournament.getTournament().getLRB().getSkill(sub.getValue(), true);
+                if (s==null)
+                {
+                    s = Tournament.getTournament().getLRB().getSkill(sub.getValue(), false);
+                }
                 int team_index = sub.getAttribute(StringConstants.CS_TEAMINDEX).getIntValue();
                 int player_index = sub.getAttribute(StringConstants.CS_PLAYERINDEX).getIntValue();
 
-                skills2.clear();
+                if (s==null)
+                {
+                    SkillType st=new SkillType("","");
+                    Skill s2=new Skill(sub.getValue(),st );
+                    s=s2;
+                }
+                
+                
                 skills2.put(((Coach) this.getCompetitor2()).getComposition(team_index).getPlayer(player_index), s);
             }
 
@@ -1968,18 +1981,29 @@ public class CoachMatch extends Match implements Serializable {
         return getSkillsForDisplay((Coach) getCompetitor2(), skills2);
     }
 
+    public HashMap<bb.teamma.data.Player, Skill> getSkills1()
+    {
+        return skills1;
+    }
+    
+    public HashMap<bb.teamma.data.Player, Skill> getSkills2()
+    {
+        return skills2;
+    }
     String getSkillsForDisplay(Coach coach, HashMap<bb.teamma.data.Player, Skill> skillsMap) {
-        String tmp = "";
+        String tmp = "<html>";
 
+         
         for (Map.Entry<bb.teamma.data.Player, Skill> entry:skillsMap.entrySet())
         {
-            if (!tmp.equals(""))
+            if (!tmp.equals("<html>"))
             {
-                tmp+="/";
+                tmp+=" <br>";
             }
             tmp+= entry.getKey().getPlayertype().getPosition()+": "+entry.getValue().getName();
-        }
+         }
         
+        tmp+="</html>";
         return tmp;
     }
 

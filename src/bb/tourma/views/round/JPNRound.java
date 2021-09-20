@@ -373,7 +373,18 @@ public final class JPNRound extends javax.swing.JPanel {
         jtbMatches
                 .setDefaultRenderer(Integer.class,
                         model);
-        jtbMatches.setRowHeight(30);
+        jtbMatches.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        
+        
+        for (int i=0; i<model.getRowCount();i++)
+        {
+            CoachMatch cm=this.mRound.getCoachMatchs().get(i);
+            int max=1;
+            max=Math.max(max,cm.getSkills1().size());
+            max=Math.max(max,cm.getSkills2().size());
+            jtbMatches.setRowHeight(i,15+15*max);    
+        }
+       
 
         
         resizeColumnWidth(jtbMatches);

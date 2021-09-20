@@ -569,9 +569,15 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
     @Override
     public Component getTableCellRendererComponent(
             final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column) {
-        final JTextField jlb = new JTextField();
-        jlb.setEditable(false);
 
+        final JLabel jlb = new JLabel();
+        //jlb.setEditable(false);
+
+        /* int CritIndex = Tournament.getTournament().getParams().isTeamTournament()? (column - 5) / 2:(column - 3) / 2;
+        if (CritIndex < Tournament.getTournament().getParams().getCriteriaCount() + Tournament.getTournament().getParams().getFormulaCount())
+        {
+            jlb
+        }*/
         boolean useColor = false;
 
         useColor = Tournament.getTournament().getParams().isUseColor();
@@ -593,6 +599,7 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             Value val = null;
             CoachMatch m = mMatchs.get(row + mMin);
             val = mMatchs.get(row + mMin).getValue(Tournament.getTournament().getParams().getCriterion(0));
+
             if (mTeamTournament) {
 
                 switch (column) {
@@ -775,11 +782,10 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                             }
                         } else {
                             if (CritIndex < Tournament.getTournament().getParams().getCriteriaCount() + Tournament.getTournament().getParams().getFormulaCount()) {
-                                Formula form = Tournament.getTournament().getParams().getFormula(CritIndex-Tournament.getTournament().getParams().getCriteriaCount());
+                                Formula form = Tournament.getTournament().getParams().getFormula(CritIndex - Tournament.getTournament().getParams().getCriteriaCount());
                                 Value v = m.getValue(form);
-                                
+
                                 //In case of Formula
-                                
                                 /*if (ValIndex == 0) {
                                     if (v.getValue1() > form.getCriticalThreshold()) {
                                         if (useColor) {
@@ -802,11 +808,11 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
                                         jlb.setFont(jlb.getFont().deriveFont(Font.BOLD));
                                     }
                                 }*/
-                            } else {
+                            }/* else {
                                 // Random Skills
                                 Font font1 = new Font("SansSerif", Font.PLAIN, 8);
                                 jlb.setFont(font1);
-                            }
+                            }*/
                         }
                 }
             } else {
@@ -953,6 +959,14 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
             }
         }
 
+       /* int height = jlb.getSize().height;
+        int width = jlb.getSize().width;
+        if (Tournament.getTournament().getParams().isRandomSkillDisplay()) {
+            height *= getMaxRandomSkills();
+        }
+        jlb.setSize(width, height);*/
+
+        jlb.setOpaque(true);
         jlb.setBackground(bkg);
 
         jlb.setForeground(frg);
@@ -1061,6 +1075,15 @@ public class MjtMatches extends AbstractTableModel implements TableCellRenderer 
         }
 
         return jlb;
+    }
+
+    private int getMaxRandomSkills() {
+        int max = 0;
+        for (CoachMatch cm : mMatchs) {
+            max = Math.max(max, cm.getSkills1().size());
+            max = Math.max(max, cm.getSkills2().size());
+        }
+        return max;
     }
 
     private void updateFormulasValues(int row, int side) {
