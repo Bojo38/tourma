@@ -274,7 +274,7 @@ public final class JdgPairing extends javax.swing.JDialog {
         
         // Sort items by ranking
         ArrayList<Coach> list1=new ArrayList<>();
-                ArrayList<Coach> list2=new ArrayList<>();
+        ArrayList<Coach> list2=new ArrayList<>();
         for (String item:mItems1)
         {
             list1.add(mCoachs.get(item));
@@ -303,18 +303,19 @@ public final class JdgPairing extends javax.swing.JDialog {
                 list2,
                 Tournament.getTournament().getParams().isTeamTournament(),
                 false,false,false);
-        MjtRankingIndiv indivR1=new MjtRankingIndiv(idv1);
-        MjtRankingIndiv indivR2=new MjtRankingIndiv(idv2);
-
+        
         list1=new ArrayList<>();
         list2=new ArrayList<>();
         
-        for (int i=0; i<indivR1.getRowCount(); i++)
+        idv1.sortDatas();
+        idv2.sortDatas();
+        
+        for (int i=0; i< idv1.getCount(); i++)
         {
             list1.add((Coach)idv1.getSortedObject(i).getObject());
         }
         
-        for (int i=0; i<indivR2.getRowCount(); i++)
+        for (int i=0; i<idv2.getRowCount(); i++)
         {
             list2.add((Coach)idv2.getSortedObject(i).getObject());
         }

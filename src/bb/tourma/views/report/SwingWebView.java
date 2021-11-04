@@ -5,11 +5,11 @@
  */
 package bb.tourma.views.report;
 
+
 import com.sun.javafx.application.PlatformImpl;
 import java.awt.BorderLayout;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.JFXPanel;
+import javafx.embed.swing.*;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -18,11 +18,13 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+
 /**
  *
  * @author WFMJ7631
  */
-public class SwingWebView extends JFXPanel {
+public class SwingWebView extends JFXPanel
+{
    
     private Stage stage;  
     private WebView browser;  
@@ -106,7 +108,7 @@ public class SwingWebView extends JFXPanel {
         if (url!=null)
         {
             mUrl=url;
-            Platform.runLater(new Runnable(){
+            PlatformImpl.runLater(new Runnable(){
                 @Override
                 public void run() {
                     webEngine.load(mUrl);

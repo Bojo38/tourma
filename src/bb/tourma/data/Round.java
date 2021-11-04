@@ -344,6 +344,11 @@ public class Round implements IXMLExport, Serializable {
 
     ArrayList<CoachMatch> tmpCoachMatches = null;
 
+    public void resetTmpCoachMatches()
+    {
+        tmpCoachMatches = null;
+    }
+    
     /**
      *
      * @return
@@ -601,6 +606,11 @@ public class Round implements IXMLExport, Serializable {
 
         } catch (NullPointerException ne) {
             ne.printStackTrace();
+        }
+        
+        for (Match match:mMatchs)
+        {
+            match.recomputeValues();
         }
     }
 

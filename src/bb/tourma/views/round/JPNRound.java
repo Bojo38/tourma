@@ -339,7 +339,7 @@ public final class JPNRound extends javax.swing.JPanel {
         );
     }
 
-    private void updateMatches(boolean locked) {
+    public void updateMatches(boolean locked) {
         jbtBack.setEnabled(mTournament.getParams().isDisplayByPages());
         jbtNext.setEnabled(mTournament.getParams().isDisplayByPages());
         jlbPage.setEnabled(mTournament.getParams().isDisplayByPages());
@@ -375,6 +375,7 @@ public final class JPNRound extends javax.swing.JPanel {
                         model);
         jtbMatches.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         
+        resizeColumnWidth(jtbMatches);
         
         for (int i=0; i<model.getRowCount();i++)
         {
@@ -382,12 +383,8 @@ public final class JPNRound extends javax.swing.JPanel {
             int max=1;
             max=Math.max(max,cm.getSkills1().size());
             max=Math.max(max,cm.getSkills2().size());
-            jtbMatches.setRowHeight(i,15+15*max);    
+            jtbMatches.setRowHeight(i,30+15*max);    
         }
-       
-
-        
-        resizeColumnWidth(jtbMatches);
         
         jtbRankingIndiv.setRowHeight(30);
 
@@ -496,6 +493,7 @@ public final class JPNRound extends javax.swing.JPanel {
         ));
         jtbMatches.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jtbMatches.setColumnSelectionAllowed(true);
+        jtbMatches.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jtbMatches.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jtbMatches.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -785,6 +783,7 @@ public final class JPNRound extends javax.swing.JPanel {
         mNafOnly = nafonly;
     }
 
+    
     private void jtbMatchesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbMatchesMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON3) {
 
@@ -816,13 +815,15 @@ public final class JPNRound extends javax.swing.JPanel {
                     jpmCoach.setVisible(true);
                 }
             }
+            
 
         }
 
         if (evt.getClickCount() == 2) {
             jmiChangeRosterForThisRoundActionPerformed(null);
+            MainFrame.getMainFrame().update();
         }
-        MainFrame.getMainFrame().update();
+        
     }//GEN-LAST:event_jtbMatchesMouseClicked
 
     private void jtbMatchesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtbMatchesKeyPressed
@@ -1011,12 +1012,14 @@ public final class JPNRound extends javax.swing.JPanel {
                                 break;
                             }
                         }
-
+                        
+                        mRound.getRankings(true).update();
+                        mRound.getRankings(false).update();
                     }
                 }
             }
-
         }
+        updateMatches(false);
     }//GEN-LAST:event_jmiChangePairingActionPerformed
 
     private void jmiEditCoachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditCoachActionPerformed

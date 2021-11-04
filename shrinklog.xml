@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <yshrink version="0.1">
 <!-- parsing C:\Perso\tourma\dist\TourMa.jar -->
+<!-- WARNING:Unresolved external dependency: javafx.embed.swing.JFXPanel not found! -->
 <entrypoints>
 	<class name="com.itextpdf.tool.xml.net.package-info" />
 	<class name="com.itextpdf.tool.xml.pipeline.css.package-info" />
@@ -24,6 +25,7 @@
 	<class name="com.itextpdf.tool.xml.css.parser.package-info" />
 </entrypoints>
 
+<!-- WARNING:Unresolved external dependency: javafx.embed.swing.JFXPanel not found! -->
 <!-- writing shrinked C:\Perso\tourma\dist\TourMa.jar to C:\Perso\tourma\dist\TourMa_obf.jar. -->
 <inOutPair in="C:\Perso\tourma\dist\TourMa.jar" out="C:\Perso\tourma\dist\TourMa_obf.jar">
 	<removed-code>
@@ -1913,10 +1915,11 @@
 	</removed-code>
 	<removed-resources>
 	</removed-resources>
-<!-- 	shrinked C:\Perso\tourma\dist\TourMa.jar BY 67,55 %. -->
-<!-- 	size before: 17407 KB, size after: 5649 KB. -->
+<!-- 	shrinked C:\Perso\tourma\dist\TourMa.jar BY 67,19 %. -->
+<!-- 	size before: 17507 KB, size after: 5744 KB. -->
 <!-- 	removed 1883 classes, 0 methods, 0 fields, 0 resources. -->
 <!-- 	20 classes remaining of 1903 total. -->
 </inOutPair>
+<!-- WARNING:Not all dependencies could be resolved. Please see the logfile for details. -->
 </yshrink>
 

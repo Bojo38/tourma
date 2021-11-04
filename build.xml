@@ -184,7 +184,7 @@
         <property name="libs.dir" value="obfuscate/libs"/>
         <property name="store.jar" value="${store.dir}/${store.jar.name}_obf.jar"/>
         <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
-        <delete file="${store.dir}/*_obf.jar"/>
+        
         <mkdir dir="${store.dir}"/>
         <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
             <zipgroupfileset dir="dist" includes="*_obf.jar"/>

@@ -684,12 +684,11 @@ public class CoachMatch extends Match implements Serializable {
             skills1.clear();
             while (its1.hasNext()) {
                 final Element sub = its1.next();
-                String text=sub.getValue();
+                String text = sub.getValue();
                 Skill s = Tournament.getTournament().getLRB().getSkill(text, false);
                 int team_index = sub.getAttribute(StringConstants.CS_TEAMINDEX).getIntValue();
                 int player_index = sub.getAttribute(StringConstants.CS_PLAYERINDEX).getIntValue();
 
-                
                 skills1.put(((Coach) this.getCompetitor1()).getComposition(team_index).getPlayer(player_index), s);
             }
 
@@ -699,21 +698,18 @@ public class CoachMatch extends Match implements Serializable {
             while (its2.hasNext()) {
                 final Element sub = its2.next();
                 Skill s = Tournament.getTournament().getLRB().getSkill(sub.getValue(), true);
-                if (s==null)
-                {
+                if (s == null) {
                     s = Tournament.getTournament().getLRB().getSkill(sub.getValue(), false);
                 }
                 int team_index = sub.getAttribute(StringConstants.CS_TEAMINDEX).getIntValue();
                 int player_index = sub.getAttribute(StringConstants.CS_PLAYERINDEX).getIntValue();
 
-                if (s==null)
-                {
-                    SkillType st=new SkillType("","");
-                    Skill s2=new Skill(sub.getValue(),st );
-                    s=s2;
+                if (s == null) {
+                    SkillType st = new SkillType("", "");
+                    Skill s2 = new Skill(sub.getValue(), st);
+                    s = s2;
                 }
-                
-                
+
                 skills2.put(((Coach) this.getCompetitor2()).getComposition(team_index).getPlayer(player_index), s);
             }
 
@@ -1345,11 +1341,117 @@ public class CoachMatch extends Match implements Serializable {
      */
     public static int getOppPointsByCoach(final Coach c, final CoachMatch m, boolean includeCurrent) {
 
-        int match_index = 0;
+        List<Coach> opponents = new ArrayList<Coach>();
+
+               int value = 0;
+        
+        if (c.getName().equals("Singsorrow"))
+        {
+            value=0;
+        }
+        
+        int current_round_index = Tournament.getTournament().getRoundIndex(m.getRound());
+        if (current_round_index==-1)
+        {
+            current_round_index=Tournament.getTournament().getRoundsCount();
+        }
+        
+        // Firstly, the coachs of previous rounds for this round
+        for (int i = 0; i < c.getMatchCount(); i++) {
+            
+            CoachMatch cm = (CoachMatch) c.getMatch(i);
+            if (Tournament.getTournament().getRoundIndex(cm.getRound()) < current_round_index) {
+                if (cm.getCompetitor1().equals(c)) {
+                    opponents.add((Coach) cm.getCompetitor2());
+                }
+                if (cm.getCompetitor2().equals(c)) {
+                    opponents.add((Coach) cm.getCompetitor1());
+                }
+            }
+        }
+
+        for (Coach opponent : opponents) {
+            for (int i = 0; i < opponent.getMatchCount(); i++) {
+                CoachMatch cm = (CoachMatch) opponent.getMatch(i);
+                
+                int index=Tournament.getTournament().getRoundIndex(cm.getRound());
+                if (index==-1)
+                {
+                    index=Tournament.getTournament().getRoundsCount();
+                }
+                
+                if (index == current_round_index) {
+                    if (cm.getCompetitor1().equals(opponent)) {
+                        if (cm.getCompetitor2().equals(c)&&(includeCurrent))
+                        {
+                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        }
+                        
+                        if (!cm.getCompetitor2().equals(c))
+                        {
+                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        }
+                       
+                    }
+                    if (cm.getCompetitor2().equals(opponent)) {
+                         if (cm.getCompetitor1().equals(c)&&(includeCurrent))
+                        {
+                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        }
+              
+                         if (!cm.getCompetitor1().equals(c))
+                        {
+                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        }
+                    }
+                }
+            }
+        }
+        
+        Coach opponent;
+        if (m.getCompetitor1().equals(c))
+        {
+            opponent=(Coach)m.getCompetitor2();
+        }
+        else
+        {
+            opponent=(Coach)m.getCompetitor1();
+        }
+        // Secondly, the previous rounds of the current opponent
+        for (int i = 0; i < opponent.getMatchCount(); i++) {
+                CoachMatch cm = (CoachMatch) opponent.getMatch(i);
+                if ((Tournament.getTournament().getRoundIndex(cm.getRound()) < current_round_index)||
+                        ((Tournament.getTournament().getRoundIndex(cm.getRound()) == current_round_index)&&(includeCurrent))) {
+                    if (cm.getCompetitor1().equals(opponent)) {
+                        if (cm.getCompetitor2().equals(c)&&(includeCurrent))
+                        {
+                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        }
+                        
+                        if (!cm.getCompetitor2().equals(c))
+                        {
+                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        }
+                       
+                    }
+                    if (cm.getCompetitor2().equals(opponent)) {
+                         if (cm.getCompetitor1().equals(c)&&(includeCurrent))
+                        {
+                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        }
+              
+                         if (!cm.getCompetitor1().equals(c))
+                        {
+                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        }
+                    }
+                }
+            }
+
+        /*int match_index = 0;
         int value = 0;
         if (match_index < c.getMatchCount()) {
             CoachMatch tmp_m = (CoachMatch) c.getMatch(match_index);
-
             // Loop on opponents from the first match               
             while ((tmp_m != m) && (match_index < c.getMatchCount() - 1)) {
                 match_index++;
@@ -1358,7 +1460,6 @@ public class CoachMatch extends Match implements Serializable {
             if (tmp_m != null) {
                 //Get round
                 Round round = tmp_m.getRound();
-
                 // List previous Opponents
                 ArrayList<Competitor> opponents = new ArrayList<>();
                 for (int i = 0; i <= match_index; i++) {
@@ -1981,29 +2082,25 @@ public class CoachMatch extends Match implements Serializable {
         return getSkillsForDisplay((Coach) getCompetitor2(), skills2);
     }
 
-    public HashMap<bb.teamma.data.Player, Skill> getSkills1()
-    {
+    public HashMap<bb.teamma.data.Player, Skill> getSkills1() {
         return skills1;
     }
-    
-    public HashMap<bb.teamma.data.Player, Skill> getSkills2()
-    {
+
+    public HashMap<bb.teamma.data.Player, Skill> getSkills2() {
         return skills2;
     }
+
     String getSkillsForDisplay(Coach coach, HashMap<bb.teamma.data.Player, Skill> skillsMap) {
         String tmp = "<html>";
 
-         
-        for (Map.Entry<bb.teamma.data.Player, Skill> entry:skillsMap.entrySet())
-        {
-            if (!tmp.equals("<html>"))
-            {
-                tmp+=" <br>";
+        for (Map.Entry<bb.teamma.data.Player, Skill> entry : skillsMap.entrySet()) {
+            if (!tmp.equals("<html>")) {
+                tmp += " <br>";
             }
-            tmp+= entry.getKey().getPlayertype().getPosition()+": "+entry.getValue().getName();
-         }
-        
-        tmp+="</html>";
+            tmp += entry.getKey().getPlayertype().getPosition() + ": " + entry.getValue().getName();
+        }
+
+        tmp += "</html>";
         return tmp;
     }
 

@@ -326,6 +326,7 @@ public final class Generation {
             // Toute Ronde
             case GEN_RROBIN:
                 generateFirstRoundRobin(competitors);
+                tour.setRoundRobin(true);
                 break;
             case GEN_RANDOM:
                 generateFirstRoundOrder(competitors, true, false);
@@ -947,7 +948,6 @@ public final class Generation {
             r.setCurrentHour();
 
             for (int j = 0; j < c2part.size(); j++) {
-
                 c1part.get(j).addMatchRoundRobin(c2part.get(j), r, complete);
             }
 
@@ -959,6 +959,7 @@ public final class Generation {
             c1part.remove(c1part.size() - 1);
             c2part.add(c_tmp);
 
+ 
             tour.addRound(r);
         }
     }

@@ -23,12 +23,17 @@ import javax.swing.JOptionPane;
 import bb.tourma.data.Coach;
 import bb.tourma.data.CoachMatch;
 import bb.tourma.data.Competitor;
+import bb.tourma.data.EIndivPairing;
 import bb.tourma.data.IContainCoachs;
 import bb.tourma.data.Match;
+import bb.tourma.data.Parameters;
 import bb.tourma.data.Round;
 import bb.tourma.data.Team;
 import bb.tourma.data.TeamMatch;
+import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.IndivRanking;
 import bb.tourma.languages.Translate;
+import java.util.Collections;
 
 /**
  *
@@ -147,8 +152,8 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
                 Translate.translate(CS_DoYouConfirmNewpairing),
                 Translate.translate(CS_Confirm),
                 JOptionPane.YES_NO_OPTION);
+        
         if (result == JOptionPane.YES_OPTION) {
-
             for (int i = 0; i < mRound.getMatchsCount(); i++) {
                 Match m = mRound.getMatch(i);
 
@@ -176,14 +181,94 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
                         }
 
                         ((TeamMatch) m).clearMatchs();
-                        JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true,
-                                t1, t2, mRound, (TeamMatch) m);
-                        jdg.setVisible(true);
+                        
+                        if (Tournament.getTournament().getParams().getTeamIndivPairing()==EIndivPairing.FREE)
+                        {
+                            JdgPairing jdg = new JdgPairing(MainFrame.getMainFrame(), true,
+                                    t1, t2, mRound, (TeamMatch) m);
+                            jdg.setVisible(true);
 
+                           
+                        }
+                        else
+                        {
+                          if (Tournament.getTournament().getParams().getTeamIndivPairing()==EIndivPairing.RANKING)
+                          {
+                              Parameters p=Tournament.getTournament().getParams();
+                              
+                            int roundIndex=Tournament.getTournament().getRoundIndex(mRound);
+                            IndivRanking idv1=new IndivRanking(roundIndex,
+                                    p.getRankingIndiv1(),p.getRankingIndiv2(), p.getRankingIndiv3(),
+                                    p.getRankingIndiv4(),p.getRankingIndiv5(), list1,
+                                    Tournament.getTournament().getParams().isTeamTournament(),
+                                    false,false,false);
+                            IndivRanking idv2=new IndivRanking(roundIndex,
+                                    p.getRankingIndiv1(),p.getRankingIndiv2(),p.getRankingIndiv3(),
+                                    p.getRankingIndiv4(),p.getRankingIndiv5(),list2,
+                                    Tournament.getTournament().getParams().isTeamTournament(),
+                                    false,false,false);
+
+                            list1=new ArrayList<>();
+                            list2=new ArrayList<>();
+
+                            idv1.sortDatas();
+                            idv2.sortDatas();
+
+                            for (int k=0; k< idv1.getCount(); k++)
+                            {
+                                list1.add((Coach)idv1.getSortedObject(k).getObject());
+                            }
+
+                            for (int k=0; k<idv2.getRowCount(); k++)
+                            {
+                                list2.add((Coach)idv2.getSortedObject(k).getObject());
+                            }
+
+                            while ((list1.size() > 0) && (list2.size() > 0)) {
+
+                                final CoachMatch cm = new CoachMatch(mRound);
+                                cm.setCompetitor1(list1.get(0));
+                                cm.setCompetitor2(list2.get(0));
+                                ((TeamMatch) m).addMatch(cm);
+
+                             }
+                          }
+                          else
+                          {
+                          if (Tournament.getTournament().getParams().getTeamIndivPairing()==EIndivPairing.RANDOM)
+                          {
+                              for (int j=0; j<t1.getCoachsCount(); j++)
+                                {
+                                    list1.add(t1.getCoach(j));
+                                }
+
+                                for (int j=0; j<t2.getCoachsCount(); j++)
+                                {
+                                    list2.add(t2.getCoach(j));
+                                }
+                                
+                              Collections.shuffle(list1);
+                              Collections.shuffle(list2);
+                              
+                              while ((list1.size() > 0) && (list2.size() > 0)) {
+
+                                final CoachMatch cm = new CoachMatch(mRound);
+                                cm.setCompetitor1(list1.get(0));
+                                cm.setCompetitor2(list2.get(0));
+                                list1.remove(0);
+                                list2.remove(0);
+                                ((TeamMatch) m).addMatch(cm);
+                             }
+                          }
+                          }
+                            
+                            
+                        }
+                        
                         for (int j = 0; j < ((TeamMatch) m).getMatchCount(); j++) {
-                            CoachMatch cm = ((TeamMatch) m).getMatch(j);
-                            cm.getCompetitor1().addMatch(cm);
-                            cm.getCompetitor2().addMatch(cm);
+                                CoachMatch cm = ((TeamMatch) m).getMatch(j);
+                                cm.getCompetitor1().addMatch(cm);
+                                cm.getCompetitor2().addMatch(cm);
                         }
                     }
                 }
@@ -205,6 +290,8 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
 
             }
 
+            //mRound.update();
+            mRound.resetTmpCoachMatches();
             this.setVisible(false);
         }
     }//GEN-LAST:event_jbtOKActionPerformed
