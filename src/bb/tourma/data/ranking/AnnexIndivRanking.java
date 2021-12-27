@@ -46,7 +46,7 @@ public class AnnexIndivRanking extends AnnexRanking {
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void sortDatas() {
+    public void sortDatas() {
         mDatas.clear();
         mDatas = new ArrayList<>();
         @SuppressWarnings("unchecked")

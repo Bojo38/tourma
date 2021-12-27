@@ -24,6 +24,12 @@ import bb.tourma.languages.Translate;
 import static bb.tourma.languages.Translate.CS_Injuries;
 import static bb.tourma.languages.Translate.CS_Touchdowns;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.StringTokenizer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -33,6 +39,26 @@ public class Parameters implements IXMLExport, Serializable {
 
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
+
+    protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
 
     public int getUID() {
         return UID;
@@ -68,9 +94,120 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setDisplayRoster(boolean d) {
         mDisplayRoster = d;
+        updateDateTime = LocalDateTime.now();
+    }
+
+    public JSONObject getJSON() {
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("tournamentName", mTournamentName);
+        LocalDateTime ldt = mDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        String ldt_date = ldt.toString().replace("T", " ");
+
+        json.put("date", ldt_date);
+
+        json.put("bestResultIndiv", mBestResultsIndiv);
+        json.put("applyToAnnexTeam", mApplyToAnnexTeam);
+        json.put("bestResultTeam", mBestResultsTeam);
+        json.put("crossPoolMatch", mCrossPoolMatch);
+        json.put("groupsEnable", mGroupsEnable);
+        json.put("substitutes", mSubstitutes);
+        json.put("multiRoster", mMultiRoster);
+        json.put("place", mPlace);
+
+        json.put("exceptBestAndWorstTeam", mExceptBestAndWorstTeam);
+        json.put("exceptBestAndWorstIndiv", mExceptBestAndWorstIndiv);
+        json.put("useBestResultTeam", mUseBestResultsTeam);
+        json.put("useBestResultIndiv", mUseBestResultsIndiv);
+
+        json.put("applyToAnnexIndiv", mApplyToAnnexIndiv);
+        json.put("applyToAnnexTeam", mApplyToAnnexTeam);
+
+        json.put("teamMatesClansNumber", mTeamMatesClansNumber);
+        json.put("clansMembersNumber", mClansMembersNumber);
+
+        json.put("teamVictoryOnly", mTeamVictoryOnly);
+        json.put("indivPairingTeamBalanced", mIndivPairingTeamBalanced);
+        json.put("indivPairingIndivBalanced", mIndivPairingIndivBalanced);
+
+        json.put("avoidClansFirstMatch", mAvoidClansFirstMatch);
+        json.put("tableBonusPerRound", mTableBonusPerRound);
+
+        json.put("pointsIndivLittleLost", mPointsIndivLittleLost);
+        json.put("pointsIndivVictory", mPointsIndivVictory);
+        json.put("pointsIndivLargeVictory", mPointsIndivLargeVictory);
+        json.put("pointsTeamVictoryBonus", mPointsTeamVictoryBonus);
+        json.put("pointsTeamHugeVictory", mPointsTeamHugeVictory);
+        json.put("gapTeamLargeVictory", mGapTeamLargeVictory);
+        json.put("teamIndivPairing", mTeamIndivPairing);
+        json.put("pointsTeamDrawBonus", mPointsTeamDrawBonus);
+        json.put("gapTeamHugeVictory", mGapTeamHugeVictory);
+        json.put("pointsTeamLargeVictory", mPointsTeamLargeVictory);
+        json.put("pointsTeamVictory", mPointsTeamVictory);
+        json.put("useTeamLargeVictory", mUseTeamLargeVictory);
+        json.put("pointsTeamHugeLost", mPointsTeamHugeLost);
+        json.put("gapTeamLittleLost", mGapTeamLittleLost);
+        json.put("useTeamHugeVictory", mUseTeamHugeVictory);
+        json.put("pointsTeamLittleLost", mPointsTeamLittleLost);
+        json.put("useTeamLittleLoss", mUseTeamLittleLoss);
+        json.put("teamMatesNumber", mTeamMatesNumber);
+        json.put("gapTeamHugeLost", mGapTeamHugeLost);
+        json.put("useTeamHugeLoss", mUseTeamHugeLoss);
+
+        json.put("pointsTeamLost", mPointsTeamLost);
+        json.put("pointsTeamDraw", mPointsTeamDraw);
+        json.put("avoidClansMatch", mAvoidClansMatch);
+        json.put("enableClans", mEnableClans);
+        json.put("useLargeVictory", mUseLargeVictory);
+        json.put("gapLargeVictory", mGapLargeVictory);
+        json.put("pointsIndivDraw", mPointsIndivDraw);
+        json.put("pointsConcedeed", mPointsConcedeed);
+        json.put("pointsRefused", mPointsRefused);
+
+        json.put("pointsIndivLost", mPointsIndivLost);
+        json.put("tableBonus", mTableBonus);
+        json.put("tableBonusCoef", (double) mTableBonusCoef);
+        json.put("gapLittleLost", mGapLittleLost);
+        json.put("useLittleLoss", mUseLittleLoss);
+        json.put("pointsRefused", mPointsRefused);
+
+        json.put("rankingTeam1", mRankingTeam1);
+        json.put("rankingTeam2", mRankingTeam2);
+        json.put("rankingTeam3", mRankingTeam3);
+        json.put("rankingTeam4", mRankingTeam4);
+        json.put("rankingTeam5", mRankingTeam5);
+
+        json.put("rankingIndiv1", mRankingIndiv1);
+        json.put("rankingIndiv2", mRankingIndiv2);
+        json.put("rankingIndiv3", mRankingIndiv3);
+        json.put("rankingIndiv4", mRankingIndiv4);
+        json.put("rankingIndiv5", mRankingIndiv5);
+
+        json.put("teamPairing", mTeamPairing);
+        json.put("teamTournament", mTeamTournament);
+
+        /*JSONArray array = new JSONArray();
+        for (String orga : getTournamentOrga()) {
+            array.put(orga);
+        }
+
+        json.put("tournamentOrga", array);*/
+        return json;
     }
 
     public void pull(Parameters params) {
+
+        updateDateTime = LocalDateTime.now();
+
         this.UID = params.UID;
         this._webport = params._webport;
         this.mApplyToAnnexIndiv = params.mApplyToAnnexIndiv;
@@ -279,6 +416,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setCrossPoolMatch(boolean crossPoolMatch) {
         this.mCrossPoolMatch = crossPoolMatch;
+        updateDateTime = LocalDateTime.now();
     }
 
     private int mPointsIndivVictory = 1000;
@@ -379,7 +517,7 @@ public class Parameters implements IXMLExport, Serializable {
     /**
      *
      */
-    private String mTournamentOrga;
+    private ArrayList<String> mTournamentOrga;
 
     /**
      *
@@ -573,9 +711,12 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public Parameters() {
         mTournamentName = StringConstants.CS_NULL;
-        mTournamentOrga = StringConstants.CS_NULL;
+        mTournamentOrga = new ArrayList<>();
         mCriterias = new ArrayList<>();
         mFormulas = new ArrayList<>();
+
+        createDateTime = LocalDateTime.now();
+        updateDateTime = LocalDateTime.now();
 
         Criterion c = new Criterion(Translate.translate(CS_Touchdowns));
         c.setPointsFor(2);
@@ -591,6 +732,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setApplyToAnnexIndiv(boolean b) {
         mApplyToAnnexIndiv = b;
+        updateDateTime = LocalDateTime.now();
     }
 
     public boolean isExceptBestAndWorstIndiv() {
@@ -599,6 +741,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setExceptBestAndWorstIndiv(boolean b) {
         mExceptBestAndWorstIndiv = b;
+        updateDateTime = LocalDateTime.now();
     }
 
     public boolean isApplyToAnnexTeam() {
@@ -607,6 +750,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setApplyToAnnexTeam(boolean b) {
         mApplyToAnnexTeam = b;
+        updateDateTime = LocalDateTime.now();
     }
 
     public boolean isExceptBestAndWorstTeam() {
@@ -615,6 +759,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setExceptBestAndWorstTeam(boolean b) {
         mExceptBestAndWorstTeam = b;
+        updateDateTime = LocalDateTime.now();
     }
 
     public boolean isUseBestResultIndiv() {
@@ -627,10 +772,12 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setUseBestResultIndiv(boolean b) {
         mUseBestResultsIndiv = b;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setUseBestResultTeam(boolean b) {
         mUseBestResultsTeam = b;
+        updateDateTime = LocalDateTime.now();
     }
 
     public int getBestResultIndiv() {
@@ -643,10 +790,12 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setBestResultIndiv(int i) {
         mBestResultsIndiv = i;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setBestResultTeam(int i) {
         mBestResultsTeam = i;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -657,7 +806,11 @@ public class Parameters implements IXMLExport, Serializable {
     public Element getXMLElement() {
         final SimpleDateFormat format = new SimpleDateFormat(Translate.translate("DD/MM/YYYY HH:MM:SS"), Locale.getDefault());
         final Element params = new Element(StringConstants.CS_PARAMETERS);
-        params.setAttribute(StringConstants.CS_ORGANIZER, this.getTournamentOrga());
+        String orgas = "";
+        for (String orga : this.getTournamentOrga()) {
+            orgas = orgas + "/" + orga;
+        }
+        params.setAttribute(StringConstants.CS_ORGANIZER, orgas);
         params.setAttribute(StringConstants.CS_NAME, this.getTournamentName());
         params.setAttribute(StringConstants.CS_DATE, getStringDate(format));
         params.setAttribute(StringConstants.CS_PLACE, this.getTournamentName());
@@ -775,11 +928,10 @@ public class Parameters implements IXMLExport, Serializable {
 
         params.setAttribute(StringConstants.CS_TABLEBONUS, Boolean.toString(this.isTableBonus()));
         params.setAttribute(StringConstants.CS_TABLEBONUSPERROUND, Boolean.toString(this.isTableBonusPerRound()));
-        
+
         params.setAttribute(StringConstants.CS_RANDOMSKILLDISPLAY, Boolean.toString(this.isRandomSkillDisplay()));
         params.setAttribute(StringConstants.CS_RANDOMSKILLGENERATE, Boolean.toString(this.isGenerateRandomSkill()));
-        
-        
+
         params.setAttribute(StringConstants.CS_TABLEBONUSCOEF, Double.toString(this.getTableBonusCoef()));
 
         params.setAttribute(StringConstants.CS_USE_BEST_RESULT_INDIV, Boolean.toString(this.isUseBestResultIndiv()));
@@ -1172,6 +1324,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void clearCiterias() {
         mCriterias.clear();
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1180,6 +1333,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void addCriteria(Criterion c) {
         mCriterias.add(c);
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1188,6 +1342,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void removeCriteria(int c) {
         mCriterias.remove(c);
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1214,6 +1369,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void clearFormulas() {
         mFormulas.clear();
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1222,6 +1378,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void addFormula(Formula f) {
         mFormulas.add(f);
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1230,6 +1387,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void removeFormula(int f) {
         mFormulas.remove(f);
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1244,6 +1402,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsIndivVictory(int mPointsIndivVictory) {
         this.mPointsIndivVictory = mPointsIndivVictory;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1266,14 +1425,17 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsIndivLargeVictory(int mPointsIndivLargeVictory) {
         this.mPointsIndivLargeVictory = mPointsIndivLargeVictory;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setPointsTeamLargeVictory(int mPointsTeamLargeVictory) {
         this.mPointsTeamLargeVictory = mPointsTeamLargeVictory;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setPointsTeamHugeVictory(int points) {
         this.mPointsTeamHugeVictory = points;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1288,6 +1450,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsIndivDraw(int mPointsIndivDraw) {
         this.mPointsIndivDraw = mPointsIndivDraw;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1306,10 +1469,12 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsIndivLittleLost(int mPointsIndivLittleLost) {
         this.mPointsIndivLittleLost = mPointsIndivLittleLost;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setPointsTeamLittleLost(int mPointsTeamLittleLost) {
         this.mPointsTeamLittleLost = mPointsTeamLittleLost;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1324,6 +1489,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsIndivLost(int mPointsIndivLost) {
         this.mPointsIndivLost = mPointsIndivLost;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1338,6 +1504,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsRefused(int mPointsRefused) {
         this.mPointsRefused = mPointsRefused;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1352,6 +1519,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsConcedeed(int mPointsConcedeed) {
         this.mPointsConcedeed = mPointsConcedeed;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1366,6 +1534,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setTeamVictoryOnly(boolean mTeamVictoryOnly) {
         this.mTeamVictoryOnly = mTeamVictoryOnly;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1377,6 +1546,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setPortugal(boolean mPortugal) {
         this.mPortugal = mPortugal;
+        updateDateTime = LocalDateTime.now();
     }
 
     public boolean isSpartak() {
@@ -1385,6 +1555,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setSpartak(boolean mSpartak) {
         this.mSpartak = mSpartak;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1407,14 +1578,17 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setGapLargeVictory(int mGapLargeVictory) {
         this.mGapLargeVictory = mGapLargeVictory;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setGapTeamLargeVictory(float mGapLargeVictory) {
         this.mGapTeamLargeVictory = mGapLargeVictory;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setGapTeamHugeVictory(float mGapLargeVictory) {
         this.mGapTeamHugeVictory = mGapLargeVictory;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1445,6 +1619,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setGapTeamHugeLost(float mGapLittleLost) {
         this.mGapTeamHugeLost = mGapLittleLost;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1459,6 +1634,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setSubstitutes(boolean mSubstitutes) {
         this.mSubstitutes = mSubstitutes;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1478,15 +1654,31 @@ public class Parameters implements IXMLExport, Serializable {
     /**
      * @return the mTournamentOrga
      */
-    public String getTournamentOrga() {
+    public List<String> getTournamentOrga() {
         return mTournamentOrga;
     }
 
     /**
      * @param mTournamentOrga the mTournamentOrga to set
      */
-    public void setTournamentOrga(String mTournamentOrga) {
-        this.mTournamentOrga = mTournamentOrga;
+    public void setTournamentOrga(String orgas) {
+
+        mTournamentOrga.clear();
+        StringTokenizer tokenizer = new StringTokenizer(orgas, "/");
+        while (tokenizer.hasMoreElements()) {
+            mTournamentOrga.add(tokenizer.nextToken());
+        }
+        updateDateTime = LocalDateTime.now();
+    }
+
+    public void addTournamentOrga(String orga) {
+        mTournamentOrga.add(orga);
+        updateDateTime = LocalDateTime.now();
+    }
+
+    public void delTournamentOrga(int i) {
+        mTournamentOrga.remove(i);
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1501,6 +1693,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPlace(String mPlace) {
         this.mPlace = mPlace;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1525,6 +1718,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setDate(Date mDate) {
         this.mDate.setTime(mDate.getTime());
+        updateDateTime = LocalDateTime.now();
     }
 
     public int getRankingClan1() {
@@ -1579,6 +1773,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingIndiv1(int mRankingIndiv1) {
         this.mRankingIndiv1 = mRankingIndiv1;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1593,6 +1788,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingIndiv2(int mRankingIndiv2) {
         this.mRankingIndiv2 = mRankingIndiv2;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1607,6 +1803,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingIndiv3(int mRankingIndiv3) {
         this.mRankingIndiv3 = mRankingIndiv3;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1621,6 +1818,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingIndiv4(int mRankingIndiv4) {
         this.mRankingIndiv4 = mRankingIndiv4;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1635,6 +1833,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingIndiv5(int mRankingIndiv5) {
         this.mRankingIndiv5 = mRankingIndiv5;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1649,6 +1848,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setTeamTournament(boolean mTeamTournament) {
         this.mTeamTournament = mTeamTournament;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1666,44 +1866,44 @@ public class Parameters implements IXMLExport, Serializable {
         return mTableBonusPerRound;
     }
 
-    protected boolean mRandomSkillDisplay=false;
-     protected boolean mGenerateRandomSkill=false;
-    
-    public boolean isRandomSkillDisplay()
-    {
+    protected boolean mRandomSkillDisplay = false;
+    protected boolean mGenerateRandomSkill = false;
+
+    public boolean isRandomSkillDisplay() {
         return mRandomSkillDisplay;
     }
-    
-    public boolean isGenerateRandomSkill()
-    {
+
+    public boolean isGenerateRandomSkill() {
         return mGenerateRandomSkill;
     }
-    
-    
-    public void setRandomSkillDisplay(boolean rsd)
-    {
-        mRandomSkillDisplay=rsd;
+
+    public void setRandomSkillDisplay(boolean rsd) {
+        mRandomSkillDisplay = rsd;
+        updateDateTime = LocalDateTime.now();
     }
-    
-    public void setGenerateRandomSkill(boolean rsd)
-    {
-        mGenerateRandomSkill=rsd;
+
+    public void setGenerateRandomSkill(boolean rsd) {
+        mGenerateRandomSkill = rsd;
+        updateDateTime = LocalDateTime.now();
     }
-    
+
     public double getTableBonusCoef() {
         return mTableBonusCoef;
     }
 
     public void setTableBonus(boolean b) {
         mTableBonus = b;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setTableBonusPerRound(boolean b) {
         mTableBonusPerRound = b;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setTableBonusCoef(double val) {
         mTableBonusCoef = val;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1711,6 +1911,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setMultiRoster(boolean mMultiRoster) {
         this.mMultiRoster = mMultiRoster;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1725,6 +1926,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setTeamPairing(ETeamPairing mTeamPairing) {
         this.mTeamPairing = mTeamPairing;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1753,6 +1955,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setTeamMatesNumber(int mTeamMatesNumber) {
         this.mTeamMatesNumber = mTeamMatesNumber;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1767,6 +1970,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setClansMembersNumber(int mClansMembersNumber) {
         this.mClansMembersNumber = mClansMembersNumber;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1781,6 +1985,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setIndivPairingTeamBalanced(boolean mIndivPairingTeamBalanced) {
         this.mIndivPairingTeamBalanced = mIndivPairingTeamBalanced;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1795,6 +2000,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setIndivPairingIndivBalanced(boolean mIndivPairingIndivBalanced) {
         this.mIndivPairingIndivBalanced = mIndivPairingIndivBalanced;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1823,6 +2029,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsTeamDraw(int mPointsTeamDraw) {
         this.mPointsTeamDraw = mPointsTeamDraw;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1841,10 +2048,12 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsTeamLost(int mPointsTeamLost) {
         this.mPointsTeamLost = mPointsTeamLost;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setPointsTeamHugeLost(int mPointsTeamLost) {
         this.mPointsTeamHugeLost = mPointsTeamLost;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1871,6 +2080,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingTeam1(int mRankingTeam1) {
         this.mRankingTeam1 = mRankingTeam1;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1878,6 +2088,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingTeam2(int mRankingTeam2) {
         this.mRankingTeam2 = mRankingTeam2;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1896,6 +2107,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingTeam3(int mRankingTeam3) {
         this.mRankingTeam3 = mRankingTeam3;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1914,6 +2126,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingTeam4(int mRankingTeam4) {
         this.mRankingTeam4 = mRankingTeam4;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1932,6 +2145,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setRankingTeam5(int mRankingTeam5) {
         this.mRankingTeam5 = mRankingTeam5;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1946,6 +2160,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsTeamVictoryBonus(int mPointsTeamVictoryBonus) {
         this.mPointsTeamVictoryBonus = mPointsTeamVictoryBonus;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1960,6 +2175,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setPointsTeamDrawBonus(int mPointsTeamDrawBonus) {
         this.mPointsTeamDrawBonus = mPointsTeamDrawBonus;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1974,6 +2190,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setGroupsEnable(boolean mGroupsEnable) {
         this.mGroupsEnable = mGroupsEnable;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -1988,6 +2205,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setEnableClans(boolean mEnableClans) {
         this.mEnableClans = mEnableClans;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -2002,6 +2220,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setAvoidClansFirstMatch(boolean mAvoidClansFirstMatch) {
         this.mAvoidClansFirstMatch = mAvoidClansFirstMatch;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -2016,6 +2235,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setAvoidClansMatch(boolean mAvoidClansMatch) {
         this.mAvoidClansMatch = mAvoidClansMatch;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -2030,6 +2250,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setTeamMatesClansNumber(int mTeamMatesClansNumber) {
         this.mTeamMatesClansNumber = mTeamMatesClansNumber;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -2044,6 +2265,7 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setUseColor(boolean useColor) {
         this.useColor = useColor;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -2058,30 +2280,37 @@ public class Parameters implements IXMLExport, Serializable {
      */
     public void setUseImage(boolean useImage) {
         this.useImage = useImage;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setUseLargeVictory(boolean use) {
         this.mUseLargeVictory = use;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setUseTeamLargeVictory(boolean use) {
         this.mUseTeamLargeVictory = use;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setUseTeamHugeVictory(boolean use) {
         this.mUseTeamHugeVictory = use;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setUseLittleLoss(boolean use) {
         this.mUseLittleLoss = use;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setUseTeamLittleLoss(boolean use) {
         this.mUseTeamLittleLoss = use;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setUseTeamHugeLoss(boolean use) {
         this.mUseTeamHugeLoss = use;
+        updateDateTime = LocalDateTime.now();
     }
 
     public boolean isUseLargeVictory() {
@@ -2116,6 +2345,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setWebServerPort(int port) {
         _webport = port;
+        updateDateTime = LocalDateTime.now();
     }
 
     /**
@@ -2220,6 +2450,7 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setWebEdit(boolean WebEdit) {
         mWebEdit = WebEdit;
+        updateDateTime = LocalDateTime.now();
     }
 
     public boolean isWebEdit() {
@@ -2261,22 +2492,27 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setColor1(Color c) {
         mColor1 = c;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setColor2(Color c) {
         mColor2 = c;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setBorderColor(Color c) {
         mBorderColor = c;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setForeColor(Color c) {
         mForeColor = c;
+        updateDateTime = LocalDateTime.now();
     }
 
     public void setDisplayByPages(boolean d) {
         displayByPages = d;
+        updateDateTime = LocalDateTime.now();
     }
 
     public boolean isDisplayByPages() {
@@ -2291,5 +2527,129 @@ public class Parameters implements IXMLExport, Serializable {
 
     public void setPageSize(int i) {
         pageSize = i;
+        updateDateTime = LocalDateTime.now();
+    }
+
+    public void updateFromJSON(JSONObject object) {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+//        final SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS", Locale.getDefault());
+
+        mTournamentName = object.get("tournamentName").toString();
+
+        String tmp=object.get("date").toString();
+        LocalDateTime ldt = LocalDateTime.parse(tmp.substring(0, tmp.indexOf(".")));
+
+        mDate = Date.from(ldt.toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        mBestResultsIndiv = Integer.parseInt(object.get("bestResultIndiv").toString());
+        mBestResultsTeam = Integer.parseInt(object.get("bestResultTeam").toString());
+
+        mApplyToAnnexTeam = Boolean.parseBoolean(object.get("applyToAnnexTeam").toString());
+        mCrossPoolMatch = Boolean.parseBoolean(object.get("crossPoolMatch").toString());
+        mGroupsEnable = Boolean.parseBoolean(object.get("groupsEnable").toString());
+        mSubstitutes = Boolean.parseBoolean(object.get("substitutes").toString());
+        mMultiRoster = Boolean.parseBoolean(object.get("multiRoster").toString());
+        mPlace = object.get("place").toString();
+
+        mExceptBestAndWorstTeam = Boolean.parseBoolean(object.get("exceptBestAndWorstTeam").toString());
+        mExceptBestAndWorstIndiv = Boolean.parseBoolean(object.get("exceptBestAndWorstIndiv").toString());
+        mUseBestResultsTeam = Boolean.parseBoolean(object.get("useBestResultTeam").toString());
+        mUseBestResultsIndiv = Boolean.parseBoolean(object.get("useBestResultIndiv").toString());
+
+        /*        mRoundRobin = Boolean.parseBoolean(object.get("roundRobin").toString());
+        JSONArray array = object.getJSONArray("orgas");
+        for (int i = 0; i < array.length(); i++) {
+            mParams.addTournamentOrga(array.getString(i));
+        }*/
+        mApplyToAnnexIndiv = Boolean.parseBoolean(object.get("applyToAnnexIndiv").toString());
+        mApplyToAnnexTeam = Boolean.parseBoolean(object.get("applyToAnnexTeam").toString());
+
+        mTeamMatesClansNumber = Integer.parseInt(object.get("teamMatesClansNumber").toString());
+        mClansMembersNumber = Integer.parseInt(object.get("clansMembersNumber").toString());
+
+        mTeamVictoryOnly = Boolean.parseBoolean(object.get("teamVictoryOnly").toString());
+        mIndivPairingTeamBalanced = Boolean.parseBoolean(object.get("indivPairingTeamBalanced").toString());
+        mIndivPairingIndivBalanced = Boolean.parseBoolean(object.get("indivPairingIndivBalanced").toString());
+
+        mAvoidClansFirstMatch = Boolean.parseBoolean(object.get("avoidClansFirstMatch").toString());
+
+        mTableBonusPerRound = Boolean.parseBoolean(object.get("tableBonusPerRound").toString());
+
+        mPointsIndivLittleLost = Integer.parseInt(object.get("pointsIndivLittleLost").toString());
+        mPointsIndivVictory = Integer.parseInt(object.get("pointsIndivVictory").toString());
+        mPointsIndivLargeVictory = Integer.parseInt(object.get("pointsIndivLargeVictory").toString());
+        mPointsTeamVictoryBonus = Integer.parseInt(object.get("pointsTeamVictoryBonus").toString());
+        mPointsTeamHugeVictory = Integer.parseInt(object.get("pointsTeamHugeVictory").toString());
+        mGapTeamLargeVictory = Float.parseFloat(object.get("gapTeamLargeVictory").toString());
+
+        mTeamIndivPairing = EIndivPairing.valueOf(object.get("teamIndivPairing").toString());
+
+        mPointsTeamDrawBonus = Integer.parseInt(object.get("pointsTeamDrawBonus").toString());
+        mGapTeamHugeVictory = Float.parseFloat(object.get("gapTeamHugeVictory").toString());
+        mPointsTeamLargeVictory = Integer.parseInt(object.get("pointsTeamLargeVictory").toString());
+        mPointsTeamVictory = Integer.parseInt(object.get("pointsTeamVictory").toString());
+
+        mUseTeamLargeVictory = Boolean.parseBoolean(object.get("useTeamLargeVictory").toString());
+        mPointsTeamHugeLost = Integer.parseInt(object.get("pointsTeamHugeLost").toString());
+        mGapTeamLittleLost = Float.parseFloat(object.get("gapTeamLittleLost").toString());
+        mUseTeamHugeVictory = Boolean.parseBoolean(object.get("useTeamHugeVictory").toString());
+        mPointsTeamLittleLost = Integer.parseInt(object.get("pointsTeamLittleLost").toString());
+
+        mUseTeamLittleLoss = Boolean.parseBoolean(object.get("useTeamLittleLoss").toString());
+        mTeamMatesNumber = Integer.parseInt(object.get("teamMatesNumber").toString());
+        mGapTeamHugeLost = Float.parseFloat(object.get("gapTeamHugeLost").toString());
+        mUseTeamHugeLoss = Boolean.parseBoolean(object.get("useTeamHugeLoss").toString());
+        mPointsTeamLost = Integer.parseInt(object.get("pointsTeamLost").toString());
+
+        mPointsTeamLost = Integer.parseInt(object.get("pointsTeamLost").toString());
+        mPointsTeamDraw = Integer.parseInt(object.get("pointsTeamDraw").toString());
+        mAvoidClansMatch = Boolean.parseBoolean(object.get("avoidClansMatch").toString());
+        mEnableClans = Boolean.parseBoolean(object.get("enableClans").toString());
+        mUseLargeVictory = Boolean.parseBoolean(object.get("useLargeVictory").toString());
+
+        mGapLargeVictory = Integer.parseInt(object.get("gapLargeVictory").toString());
+        mPointsIndivDraw = Integer.parseInt(object.get("pointsIndivDraw").toString());
+        mPointsConcedeed = Integer.parseInt(object.get("pointsConcedeed").toString());
+        mPointsRefused = Integer.parseInt(object.get("pointsRefused").toString());
+
+        mPointsIndivLost = Integer.parseInt(object.get("pointsIndivLost").toString());
+        mTableBonus = Boolean.parseBoolean(object.get("tableBonus").toString());
+
+        mTableBonusCoef = Float.parseFloat(object.get("tableBonusCoef").toString());
+
+        mGapLittleLost = Integer.parseInt(object.get("gapLittleLost").toString());
+        mUseLittleLoss = Boolean.parseBoolean(object.get("useLittleLoss").toString());
+        mPointsRefused = Integer.parseInt(object.get("pointsRefused").toString());
+
+        mRankingTeam1 = Integer.parseInt(object.get("rankingTeam1").toString());
+        mRankingTeam2 = Integer.parseInt(object.get("rankingTeam2").toString());
+        mRankingTeam3 = Integer.parseInt(object.get("rankingTeam3").toString());
+        mRankingTeam4 = Integer.parseInt(object.get("rankingTeam4").toString());
+        mRankingTeam5 = Integer.parseInt(object.get("rankingTeam5").toString());
+
+        mRankingIndiv1 = Integer.parseInt(object.get("rankingIndiv1").toString());
+        mRankingIndiv2 = Integer.parseInt(object.get("rankingIndiv2").toString());
+        mRankingIndiv3 = Integer.parseInt(object.get("rankingIndiv3").toString());
+        mRankingIndiv4 = Integer.parseInt(object.get("rankingIndiv4").toString());
+        mRankingIndiv5 = Integer.parseInt(object.get("rankingIndiv5").toString());
+
+        mTeamPairing = ETeamPairing.valueOf(object.get("teamPairing").toString());
+
+        mTeamTournament = Boolean.parseBoolean(object.get("teamTournament").toString());
+
+        /*JSONArray array = (JSONArray)object.get("tournamentOrga");
+        mTournamentOrga.clear();
+        for (int i=0; i<array.length(); i++)
+        {
+            mTournamentOrga.add(array.getString(i));
+        }*/
     }
 }

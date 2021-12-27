@@ -22,7 +22,11 @@ import bb.tourma.data.Team;
 import bb.tourma.data.Tournament;
 import bb.tourma.data.ranking.AnnexClanRanking;
 import bb.tourma.data.ranking.AnnexIndivRanking;
+import bb.tourma.data.ranking.AnnexRanking;
 import bb.tourma.data.ranking.AnnexTeamRanking;
+import bb.tourma.data.ranking.ClanRankingsSet;
+import bb.tourma.data.ranking.IndivRankingsSet;
+import bb.tourma.data.ranking.TeamRankingsSet;
 import bb.tourma.languages.Translate;
 import bb.tourma.tableModel.MjtAnnexRank;
 import bb.tourma.tableModel.MjtAnnexRankClan;
@@ -554,9 +558,21 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                 AnnexClanRanking ranking = null;
                 if (mCriteria != null) {
                     ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexPosRanking().get(mCriteria);
+                    if (ranking == null) {
+                        ClanRankingsSet irs = mRound.getRankings(mRoundOnly).getClanRankingSet();
+                        irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                        irs.update();
+                        ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexPosRanking().get(mCriteria);
+                    }
                 } else {
                     if (mFormula != null) {
                         ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexFormRanking().get(mFormula);
+                        if (ranking == null) {
+                        ClanRankingsSet irs = mRound.getRankings(mRoundOnly).getClanRankingSet();
+                        irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                        irs.update();
+                        ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexFormRanking().get(mFormula);
+                    }
                     }
                 }
                 if (this.mTour.getParams().isDisplayByPages()) {
@@ -575,8 +591,20 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                     AnnexTeamRanking ranking;
                     if (mCriteria != null) {
                         ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexPosRanking().get(mCriteria);
+                        if (ranking == null) {
+                            TeamRankingsSet irs = mRound.getRankings(mRoundOnly).getTeamRankingSet();
+                            irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                            irs.update();
+                             ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexPosRanking().get(mCriteria);
+                        }
                     } else {
                         ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexFormRanking().get(mFormula);
+                         if (ranking == null) {
+                            TeamRankingsSet irs = mRound.getRankings(mRoundOnly).getTeamRankingSet();
+                            irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                            irs.update();
+                            ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexFormRanking().get(mFormula);
+                        }
                     }
 
                     if (this.mTour.getParams().isDisplayByPages()) {
@@ -596,10 +624,21 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
 
                     if (mCriteria != null) {
                         ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexPosRanking().get(mCriteria);
+                        if (ranking == null) {
+                            IndivRankingsSet irs = mRound.getRankings(mRoundOnly).getIndivRankingSet();
+                            irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                            irs.update();
+                            ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexPosRanking().get(mCriteria);
+                        }
 
                     } else {
                         ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexFormRanking().get(mFormula);
-
+                        if (ranking == null) {
+                            IndivRankingsSet irs = mRound.getRankings(mRoundOnly).getIndivRankingSet();
+                            irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                            irs.update();
+                             ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexFormRanking().get(mFormula);
+                        }
                     }
 
                     if (this.mTour.getParams().isDisplayByPages()) {
@@ -612,9 +651,7 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                     } else {
                         modelPos = new MjtAnnexRankIndiv(ranking, true);
                     }
-
                 }
-
             }
             jtbPositive.setModel(modelPos);
 
@@ -646,8 +683,20 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                 AnnexClanRanking ranking;
                 if (mCriteria != null) {
                     ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexNegRanking().get(mCriteria);
+                    if (ranking == null) {
+                        ClanRankingsSet irs = mRound.getRankings(mRoundOnly).getClanRankingSet();
+                        irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                        irs.update();
+                         ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexNegRanking().get(mCriteria);
+                    }
                 } else {
                     ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexFormRanking().get(mFormula);
+                    if (ranking == null) {
+                        ClanRankingsSet irs = mRound.getRankings(mRoundOnly).getClanRankingSet();
+                        irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                        irs.update();
+                        ranking = mRound.getRankings(mRoundOnly).getClanRankingSet().getAnnexFormRanking().get(mFormula);
+                    }
                 }
                 if (this.mTour.getParams().isDisplayByPages()) {
                     int min = (mPagePosIndex - 1) * mTour.getParams().getPageSize();
@@ -665,8 +714,22 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                     AnnexTeamRanking ranking;
                     if (mCriteria != null) {
                         ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexNegRanking().get(mCriteria);
+                        if (ranking==null)
+                        {
+                            TeamRankingsSet irs=mRound.getRankings(mRoundOnly).getTeamRankingSet();
+                            irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                            irs.update();        
+                             ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexNegRanking().get(mCriteria);
+                        }
                     } else {
-                        ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexFormRanking().get(mFormula);
+                       ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexFormRanking().get(mFormula);
+                       if (ranking==null)
+                        {
+                            TeamRankingsSet irs=mRound.getRankings(mRoundOnly).getTeamRankingSet();
+                            irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                            irs.update();         
+                            ranking = mRound.getRankings(mRoundOnly).getTeamRankingSet().getAnnexFormRanking().get(mFormula);
+                        }
                     }
 
                     if (this.mTour.getParams().isDisplayByPages()) {
@@ -682,14 +745,28 @@ public final class JPNAnnexRanking extends javax.swing.JPanel {
                                 = new MjtAnnexRankTeam(ranking, true);
                     }
                 } else {
-                    AnnexIndivRanking ranking=null;
+                    AnnexIndivRanking ranking = null;
 
                     if (mCriteria != null) {
                         ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexNegRanking().get(mCriteria);
+                         if (ranking==null)
+                        {
+                            IndivRankingsSet irs=mRound.getRankings(mRoundOnly).getIndivRankingSet();
+                            irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                            irs.update();        
+                             ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexNegRanking().get(mCriteria);
+                        }
 
                     } else {
                         if (mFormula != null) {
                             ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexFormRanking().get(mFormula);
+                             if (ranking==null)
+                        {
+                            IndivRankingsSet irs=mRound.getRankings(mRoundOnly).getIndivRankingSet();
+                            irs.createRanking(mTour.getRoundIndex(mRound), mTour, mRoundOnly);
+                            irs.update();     
+                            ranking = mRound.getRankings(mRoundOnly).getIndivRankingSet().getAnnexFormRanking().get(mFormula);
+                        }
                         }
 
                     }

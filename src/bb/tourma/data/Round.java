@@ -372,7 +372,6 @@ public class Round implements IXMLExport, Serializable {
         }
 
         if (tmpCoachMatches == null) {
-
             tmpCoachMatches = new ArrayList<>();
             if (mMatchs.size() > 0) {
                 if (mMatchs.get(0) instanceof CoachMatch) {

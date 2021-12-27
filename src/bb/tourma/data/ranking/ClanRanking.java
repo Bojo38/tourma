@@ -56,7 +56,7 @@ public class ClanRanking extends Ranking {
      *
      */
     @Override
-    protected void sortDatas() {
+    public void sortDatas() {
         mDatas.clear();
         mDatas = new ArrayList();
         if (Tournament.getTournament().getParams().isTeamTournament()) {

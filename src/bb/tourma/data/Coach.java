@@ -30,6 +30,9 @@ import bb.teamma.data.Roster;
 import bb.tourma.MainFrame;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * This class contains data relative to coach
@@ -51,17 +54,15 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
     }
 
     protected String mNafRoster;
-    
-    public void setNafRoster(String naf)
-    {
-        mNafRoster=naf;
+
+    public void setNafRoster(String naf) {
+        mNafRoster = naf;
     }
-    
-    public String getNafRoster()
-    {
+
+    public String getNafRoster() {
         return mNafRoster;
     }
-    
+
     /**
      * Unique ID Setter
      *
@@ -686,12 +687,12 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
             }
         }
 
-        if (possible.isEmpty()) {
+        /*if (possible.isEmpty()) {
             if (params.isEnableClans()) {
                 JOptionPane.showMessageDialog(MainFrame.getMainFrame(), java.util.ResourceBundle.getBundle(StringConstants.CS_LANGUAGE_RESOURCE).getString("OnlyOneClanCoachKey"));
             }
             possible = new ArrayList<>(opponents);
-        }
+        }*/
         return possible;
     }
 
@@ -1068,6 +1069,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Check if Then opponent can match
+     *
      * @param Opponent Opponent
      * @param opponentOpponent Last opponent opponent
      * @param currentOpp Current opponent
@@ -1097,7 +1099,6 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
             }
         }
 
-       
         return canMatch;
     }
 
@@ -1241,6 +1242,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Team Getter
+     *
      * @return the Team
      */
     public String getTeam() {
@@ -1249,6 +1251,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Team Setter
+     *
      * @param mTeam the mTeam to set
      */
     public void setTeam(String mTeam) {
@@ -1258,6 +1261,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Roster Getter
+     *
      * @return the mRoster
      */
     public RosterType getRoster() {
@@ -1266,6 +1270,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Roster Setter
+     *
      * @param mRoster the mRoster to set
      */
     public void setRoster(RosterType mRoster) {
@@ -1275,6 +1280,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Naf number Getter
+     *
      * @return the mNaf
      */
     public int getNaf() {
@@ -1283,6 +1289,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Naf Number setter
+     *
      * @param mNaf the mNaf to set
      */
     public void setNaf(int mNaf) {
@@ -1292,6 +1299,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Rank Getter
+     *
      * @return the mRank
      */
     public int getRank() {
@@ -1300,6 +1308,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Rank Setter
+     *
      * @param mRank the mRank to set
      */
     public void setRank(int mRank) {
@@ -1309,6 +1318,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Is the coach active ?
+     *
      * @return the mActive
      */
     public boolean isActive() {
@@ -1317,6 +1327,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Active player Setter
+     *
      * @param mActive the mActive to set
      */
     public void setActive(boolean mActive) {
@@ -1325,6 +1336,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Teammates Getter
+     *
      * @return the mTeamMates
      */
     public Team getTeamMates() {
@@ -1333,6 +1345,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Teammates Setter
+     *
      * @param mTeamMates the mTeamMates to set
      */
     public void setTeamMates(Team mTeamMates) {
@@ -1340,9 +1353,9 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
         updated = true;
     }
 
-    
     /**
      * Naf Ranking Getter
+     *
      * @return the mNafRank
      */
     public double getNafRank() {
@@ -1351,7 +1364,8 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Average Naf ranking getter
-     * @return 
+     *
+     * @return
      */
     public double getNafRankAvg() {
         return mNafRankAvg;
@@ -1359,6 +1373,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Naf ranking setter
+     *
      * @param mNafRank the mNafRank to set
      */
     public void setNafRank(double mNafRank) {
@@ -1368,7 +1383,8 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Naf ranking average Setter
-     * @param mNafRank 
+     *
+     * @param mNafRank
      */
     public void setNafAvg(double mNafRank) {
         this.mNafRankAvg = mNafRank;
@@ -1377,6 +1393,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Handicap Getter
+     *
      * @return the mHandicap
      */
     public int getHandicap() {
@@ -1385,6 +1402,7 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Handicap Setter
+     *
      * @param mHandicap the mHandicap to set
      */
     public void setHandicap(int mHandicap) {
@@ -1393,7 +1411,8 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Pin code Getter
-     * @return 
+     *
+     * @return
      */
     public int getPinCode() {
         return _PinCode;
@@ -1401,7 +1420,8 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Pin code Setter
-     * @param pin 
+     *
+     * @param pin
      */
     public void setPinCode(int pin) {
         _PinCode = pin;
@@ -1410,8 +1430,9 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
     /**
      * Match Roster name Getter
+     *
      * @param i match index
-     * @return 
+     * @return
      */
     public String getMatchRoster(int i) {
         String res = mRoster.getName();
@@ -1429,5 +1450,135 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
             }
         }
         return res;
+    }
+
+    public void updateFromJSON(JSONObject object) throws IOException {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.setName(object.get("name").toString());
+
+        String base64Picture = object.getString("base64Picture");
+
+        byte[] bytes = Base64.decode(base64Picture);
+        BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+        ImageIcon ii = new ImageIcon(bi);
+        setPicture(ii);
+
+        this.mActive = object.getBoolean("active");
+
+        this.mNaf = object.getInt("naf");
+        this.mNafRoster = object.getString("nafRoster");
+        this.mRank = object.getInt("rank");
+        this.mTeam = object.getString("team");
+        this.mHandicap = object.getInt("handicap");
+        this.setPinCode(object.getInt("pinCode"));
+        this.mNafRankAvg = object.getDouble("nafRankAvg");
+        this.mNafRank = object.getDouble("nafRank");
+        this.mRoster = Tournament.getTournament().getRosterType().get(object.getString("rosterName"));
+        this.setClan(Tournament.getTournament().getClan(object.getString("clanName")));
+
+        JSONArray array = object.getJSONArray("categoriesName");
+        for (int i = 0; i < array.length(); i++) {
+            String categoryName = array.getString(i);
+            Category cat = Tournament.getTournament().getCategory(categoryName);
+
+            boolean found = false;
+            for (int j = 0; j < this.getCategoryCount(); j++) {
+                if (this.getCategory(j) == cat) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                this.addCategory(cat);
+            }
+        }
+
+        List<Category> toRemove = new ArrayList<Category>();
+        for (int j = 0; j < this.getCategoryCount(); j++) {
+            Category cat = this.getCategory(j);
+            boolean found = false;
+            for (int i = 0; i < array.length(); i++) {
+                String categoryName = array.getString(i);
+                if (categoryName.equals(cat.getName())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                toRemove.add(cat);
+            }
+        }
+
+        for (Category cat : toRemove) {
+            this.delCategory(cat);
+        }
+
+    }
+
+    public JSONObject getJSON() throws IOException {
+
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("name", getName());
+
+        String base64Picture;
+
+        if (getPicture() != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            BufferedImage bi = new BufferedImage(getPicture().getIconWidth(), getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+            Graphics g = bi.createGraphics();
+            getPicture().paintIcon(null, g, 0, 0);
+            g.dispose();
+            ImageIO.write(bi, "png", baos);
+            baos.flush();
+            //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+            base64Picture = Base64.encode(baos.toByteArray());
+            // should be inside a finally block
+        } else {
+            base64Picture = null;
+        }
+        json.put("base64Picture", base64Picture);
+
+        json.put("active", mActive);
+
+        json.put("naf", this.getNaf());
+        json.put("nafRoster", this.getNafRoster());
+        json.put("rank", this.getRank());
+        json.put("team", this.getTeam());
+        json.put("handicap", this.getHandicap());
+        json.put("pinCode", this.getPinCode());
+        json.put("nafRankAvg", this.getNafRankAvg());
+        json.put("nafRank", this.getNafRank());
+
+        json.put("rosterName", this.getRoster().getName());
+        json.put("clanName", this.getClan().getName());
+        json.put("nafRank", this.getNafRank());
+
+        JSONArray array = new JSONArray();
+        for (int i = 0; i < this.getCategoryCount(); i++) {
+            array.put(getCategory(i).getName());
+        }
+
+        json.put("categoriesNames", array);
+
+        return json;
     }
 }

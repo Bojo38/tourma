@@ -1499,7 +1499,12 @@ public final class JdgReport extends javax.swing.JDialog {
         Writer out = null;
 
         mRanking = new IndivRanking(mRoundNumber, Tournament.getTournament().getParams(), coaches, Tournament.getTournament().getParams().isTeamTournament(), false, false, false);
-        
+        try {
+            mRanking.sortDatas();
+        } catch (RemoteException ex) {
+            Logger.getLogger(JdgReport.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         Criterion td = Tournament.getTournament().getParams().getCriterion(0);
         try {
             final Configuration cfg = new Configuration();
@@ -1537,12 +1542,12 @@ public final class JdgReport extends javax.swing.JDialog {
             int nb_criterias = Tournament.getTournament().getParams().getCriteriaCount();
             root.put("nb_criterias", nb_criterias);
 
-            root.put("coach", Translate.translate(Translate.CS_Coach));
-            root.put("round", Translate.translate(Translate.CS_Round));
-            root.put("points", Translate.translate(Translate.CS_Points));
-            root.put("total_points", Translate.translate(Translate.CS_TotalPoints));
+            root.put("coach", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Coach)));
+            root.put("round", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Round)));
+            root.put("points", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Points)));
+            root.put("total_points", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_TotalPoints)));
 
-            root.put("roster", Translate.translate(Translate.CS_Roster));
+            root.put("roster", StringEscapeUtils.escapeHtml3(Translate.translate(Translate.CS_Roster)));
             root.put("nb_criterias", nb_criterias);
             root.put("nb_criteriasx2", 2 * nb_criterias);
 
@@ -1569,8 +1574,8 @@ public final class JdgReport extends javax.swing.JDialog {
             for (int i = 0; i < coaches.size(); i++) {
                 Coach coach = coaches.get(i);
                 HashMap<String, Object> hCoach = new HashMap<>();
-                hCoach.put("name", coach.getName());
-                hCoach.put("roster", coach.getRoster().getName());
+                hCoach.put("name", StringEscapeUtils.escapeHtml3(coach.getName()));
+                hCoach.put("roster", StringEscapeUtils.escapeHtml3(coach.getRoster().getName()));
                 for (int j = 0; j < mRanking.getRowCount(); j++) {
                     ObjectRanking or = mRanking.getSortedObject(j);
                     if (or.getObject() == coach) {
@@ -1594,7 +1599,6 @@ public final class JdgReport extends javax.swing.JDialog {
                                 } else {
                                     val += value.getValue1();
                                 }
-
                             } else {
                                 val += value.getValue1();
                             }
@@ -1664,7 +1668,7 @@ public final class JdgReport extends javax.swing.JDialog {
             for (int i = 0; i < coaches.size(); i++) {
                 Coach coach = coaches.get(i);
                 HashMap<String, Object> hCoach = new HashMap<>();
-                hCoach.put("name", coach.getName());
+                hCoach.put("name", StringEscapeUtils.escapeHtml3(coach.getName()));
 
                 int round_index = 1;
                 hCoach.put("round", round_index);
@@ -1710,6 +1714,7 @@ public final class JdgReport extends javax.swing.JDialog {
 
                 Ranking rank = new IndivRanking(round_index - 1, Tournament.getTournament().getParams(),
                         coaches, Tournament.getTournament().getParams().isTeamTournament(), false, false, false);
+                rank.sortDatas();
 
                 for (int j = 0; j < rank.getRowCount(); j++) {
                     ObjectRanking or = rank.getSortedObject(j);
@@ -1771,7 +1776,9 @@ public final class JdgReport extends javax.swing.JDialog {
 
                     hhCoach.put("values", values);
 
-                    // Indiv Ranking rank = new MjtRankingIndiv(j, coaches, true, true);
+                    rank = new IndivRanking(j, Tournament.getTournament().getParams(),
+                        coaches, Tournament.getTournament().getParams().isTeamTournament(), false, false, false);
+                    rank.sortDatas();
                     for (int k = 0; k < rank.getRowCount(); k++) {
                         ObjectRanking or = rank.getSortedObject(k);
                         if (or.getObject() == coach) {
@@ -1806,8 +1813,8 @@ public final class JdgReport extends javax.swing.JDialog {
                     Team team = c.getTeamMates();
                     if (team != null) {
                         TeamMatch tm = (TeamMatch) team.getMatch(i);
-                        aRound.put("opp1", WebPicture.getPictureAsHTML(((Team) tm.getCompetitor1()).getPicture(), 10, 10) + tm.getCompetitor1().getName());
-                        aRound.put("opp2", WebPicture.getPictureAsHTML(((Team) tm.getCompetitor2()).getPicture(), 10, 10) + tm.getCompetitor2().getName());
+                        aRound.put("opp1", WebPicture.getPictureAsHTML(((Team) tm.getCompetitor1()).getPicture(), 10, 10) + StringEscapeUtils.escapeHtml3(tm.getCompetitor1().getName()));
+                        aRound.put("opp2", WebPicture.getPictureAsHTML(((Team) tm.getCompetitor2()).getPicture(), 10, 10) +StringEscapeUtils.escapeHtml3( tm.getCompetitor2().getName()));
                         Round round = Tournament.getTournament().getRound(i);
                         aRound.put("tableindex", "&nbsp;");
 
@@ -1849,17 +1856,17 @@ public final class JdgReport extends javax.swing.JDialog {
                         tableIndex = 0;
                     }
                     hCm.put("table", tableIndex);
-                    hCm.put("c1", cm.getCompetitor1().getName());
-                    hCm.put("c2", cm.getCompetitor2().getName());
+                    hCm.put("c1", StringEscapeUtils.escapeHtml3(cm.getCompetitor1().getName()));
+                    hCm.put("c2", StringEscapeUtils.escapeHtml3(cm.getCompetitor2().getName()));
                     if (cm.getRoster1() != null) {
-                        hCm.put("roster1", cm.getRoster1().getName());
+                        hCm.put("roster1", StringEscapeUtils.escapeHtml3(cm.getRoster1().getName()));
                     } else {
-                        hCm.put("roster1", ((Coach) cm.getCompetitor1()).getRoster().getName());
+                        hCm.put("roster1", StringEscapeUtils.escapeHtml3(((Coach) cm.getCompetitor1()).getRoster().getName()));
                     }
                     if (cm.getRoster2() != null) {
-                        hCm.put("roster2", cm.getRoster2().getName());
+                        hCm.put("roster2", StringEscapeUtils.escapeHtml3(cm.getRoster2().getName()));
                     } else {
-                        hCm.put("roster2", ((Coach) cm.getCompetitor2()).getRoster().getName());
+                        hCm.put("roster2", StringEscapeUtils.escapeHtml3(((Coach) cm.getCompetitor2()).getRoster().getName()));
                     }
                     hCm.put("points1", cm.getValue(1, (Coach) cm.getCompetitor1()));
                     hCm.put("points2", cm.getValue(1, (Coach) cm.getCompetitor2()));

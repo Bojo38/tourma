@@ -688,15 +688,15 @@ public final class JPNRound extends javax.swing.JPanel {
                 IndivRanking ranking=null;
                 if (forPool)
                 {
-                    mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForPool();
+                    ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForPool();
                 }
                 else if (forCup)
                 {
-                    mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForCup();
+                    ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForCup();
                 }
                 else
                 {
-                    mRound.getRankings(mRoundOnly).getIndivRankingSet().getRanking();
+                    ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getRanking();
                 }
                 
                 final MjtRankingIndiv model = new MjtRankingIndiv(ranking);
@@ -729,15 +729,15 @@ public final class JPNRound extends javax.swing.JPanel {
                 IndivRanking ranking=null;
                 if (forPool)
                 {
-                    mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForPool();
+                    ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForPool();
                 }
                 else if (forCup)
                 {
-                    mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForCup();
+                    ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getRankingForCup();
                 }
                 else
                 {
-                    mRound.getRankings(mRoundOnly).getIndivRankingSet().getRanking();
+                    ranking=mRound.getRankings(mRoundOnly).getIndivRankingSet().getRanking();
                 }
                 
                 final MjtRankingIndiv model = new MjtRankingIndiv(ranking);

@@ -69,12 +69,14 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
                 result = Translate.translate(Translate.CS_Clan);
                 break;
             case 2:
-                if (((AnnexRanking)mRanking).getCriterion() != null) {
-                    result = ((AnnexRanking)mRanking).getCriterion().getName();
-                } else {
-                    result = ((AnnexRanking)mRanking).getFormula().getName();
+                if (mRanking!=null)
+                {
+                    if (((AnnexRanking)mRanking).getCriterion() != null) {
+                        result = ((AnnexRanking)mRanking).getCriterion().getName();
+                    } else {
+                        result = ((AnnexRanking)mRanking).getFormula().getName();
+                    }
                 }
-
                 break;
             default:
 
@@ -85,6 +87,10 @@ public class MjtAnnexRankClan extends MjtAnnexRank {
     @Override
     public Object getValueAt(final int row, final int col) {
 
+        if (mRanking==null)
+        {
+            return "";
+        }
         final ObjectAnnexRanking obj = (ObjectAnnexRanking) mRanking.getSortedObject(row + mMin);
         String result = StringConstants.CS_NULL;
         try {

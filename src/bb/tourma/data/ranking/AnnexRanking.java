@@ -88,7 +88,7 @@ abstract public class AnnexRanking extends Ranking {
     }
 
     @Override
-    abstract protected void sortDatas();
+    abstract public void sortDatas();
 
     public Criterion getCriterion() {
         return mCriterion;

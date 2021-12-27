@@ -15,13 +15,16 @@ import java.util.logging.Logger;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
 import java.util.TreeMap;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
  * @author Administrateur
  */
-public class Group implements Comparable,IXMLExport, Serializable {
+public class Group implements Comparable, IXMLExport, Serializable {
 
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
@@ -32,6 +35,26 @@ public class Group implements Comparable,IXMLExport, Serializable {
 
     public void setUID(int UID) {
         this.UID = UID;
+    }
+
+    protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
     }
 
     int _points;
@@ -115,16 +138,14 @@ public class Group implements Comparable,IXMLExport, Serializable {
         mRosters = new ArrayList<>();
     }
 
-    public boolean isMember(Coach c)
-    {
-        RosterType rt=c.getRoster();
-        if (mRosters.contains(rt))
-        {
+    public boolean isMember(Coach c) {
+        RosterType rt = c.getRoster();
+        if (mRosters.contains(rt)) {
             return true;
         }
         return false;
     }
-    
+
     /**
      *
      * @return
@@ -331,10 +352,88 @@ public class Group implements Comparable,IXMLExport, Serializable {
         int result;
         result = this.getName().compareTo("");
         if (obj instanceof Group) {
-            Group g=(Group) obj;
-            result=this.getName().compareTo(g.getName());
-        } 
+            Group g = (Group) obj;
+            result = this.getName().compareTo(g.getName());
+        }
         return result;
     }
 
+    public void updateFromJSON(JSONObject object) {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.mName = object.get("name").toString();
+
+        this._points = object.getInt("points");
+
+        JSONArray array = object.getJSONArray("rosterNames");
+        for (int i = 0; i < array.length(); i++) {
+            String name = array.getString(i);
+            RosterType rt = Tournament.getTournament().getRosterType().get(name);
+            if (rt != null) {
+                if (!mRosters.contains(rt)) {
+                    mRosters.set(i, rt);
+                }
+            }
+        }
+
+        List<RosterType> toRemove = new ArrayList<>();
+
+        for (RosterType rt : mRosters) {
+            boolean found = false;
+            for (int i = 0; i < array.length(); i++) {
+                String name = array.getString(i);
+                if (rt.getName().equals(name)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                toRemove.add(rt);
+            }
+        }
+
+        for (RosterType rt : toRemove) {
+            mRosters.remove(rt);
+        }
+
+    }
+
+    public JSONObject getJSON() {
+
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("name", mName);
+
+        json.put("points", _points);
+
+        JSONArray array = new JSONArray();
+        for (RosterType rt : mRosters) {
+            String name = rt.getName();
+
+            if (rt != null) {
+                array.put(rt.getName());
+            }
+        }
+
+        json.put("rosterNames", array);
+
+        return json;
+    }
 }

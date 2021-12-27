@@ -28,6 +28,9 @@ import bb.tourma.JdgPairing;
 import bb.tourma.MainFrame;
 import bb.tourma.utility.StringConstants;
 import bb.tourma.utils.Generation;
+import java.time.LocalDateTime;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -904,4 +907,149 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
         return balanced;
     }
 
+    public void updateFromJSON(JSONObject object) throws IOException {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.setName(object.get("name").toString());
+
+        String base64Picture = object.getString("base64Picture");
+
+        byte[] bytes = Base64.decode(base64Picture);
+        BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+        ImageIcon ii = new ImageIcon(bi);
+        setPicture(ii);
+
+        JSONArray array = object.getJSONArray("categoriesName");
+        for (int i = 0; i < array.length(); i++) {
+            String categoryName = array.getString(i);
+            Category cat = Tournament.getTournament().getCategory(categoryName);
+
+            boolean found = false;
+            for (int j = 0; j < this.getCategoryCount(); j++) {
+                if (this.getCategory(j) == cat) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                this.addCategory(cat);
+            }
+        }
+
+        List<Category> toRemove = new ArrayList<Category>();
+        for (int j = 0; j < this.getCategoryCount(); j++) {
+            Category cat = this.getCategory(j);
+            boolean found = false;
+            for (int i = 0; i < array.length(); i++) {
+                String categoryName = array.getString(i);
+                if (categoryName.equals(cat.getName())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                toRemove.add(cat);
+            }
+        }
+
+        for (Category cat : toRemove) {
+            this.delCategory(cat);
+        }
+
+          this.setClan(Tournament.getTournament().getClan(object.getString("clanName")));
+
+        JSONArray coachs = object.getJSONArray("coachsNames");
+
+        for (int i = 0; i < coachs.length(); i++) {
+            String coachName = coachs.getString(i);
+            Coach coach = Tournament.getTournament().getCoach(coachName);
+
+            coach.setTeamMates(this);
+            if (!mCoachs.contains(coach)) {
+                mCoachs.add(coach);
+            }
+        }
+
+        List<Coach> toRemoveCoach = new ArrayList<Coach>();
+        for (Coach c : mCoachs) {
+            boolean found = false;
+            for (int i = 0; i < coachs.length(); i++) {
+                String coachName = coachs.getString(i);
+                if (coachName.equals(c.getName())) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                toRemoveCoach.add(c);
+            }
+        }
+
+        for (Coach c : toRemoveCoach) {
+            mCoachs.remove(c);
+        }
+
+    }
+
+    public JSONObject getJSON() throws IOException {
+
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("name", getName());
+
+        String base64Picture;
+
+        if (getPicture() != null) {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            BufferedImage bi = new BufferedImage(getPicture().getIconWidth(), getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+            Graphics g = bi.createGraphics();
+            getPicture().paintIcon(null, g, 0, 0);
+            g.dispose();
+            ImageIO.write(bi, "png", baos);
+            baos.flush();
+            //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+            base64Picture = Base64.encode(baos.toByteArray());
+            // should be inside a finally block
+        } else {
+            base64Picture = null;
+        }
+        json.put("base64Picture", base64Picture);
+
+        json.put("clanName", this.getClan().getName());
+
+
+        JSONArray array = new JSONArray();
+        for (int i = 0; i < this.getCategoryCount(); i++) {
+            array.put(getCategory(i).getName());
+        }
+
+        json.put("categoriesNames", array);
+        
+        array = new JSONArray();
+        for (Coach c:mCoachs) {
+            array.put(c.getName());
+        }
+
+        json.put("categoriesNames", array);
+
+        return json;
+    }
 }

@@ -9,6 +9,8 @@ import bb.tourma.data.Tournament;
 import bb.tourma.languages.Translate;
 import bb.tourma.tableModel.MjtCoaches;
 import bb.tourma.utils.display.TableFormat;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /*
  * To change this template, choose Tools | Templates
@@ -137,7 +139,13 @@ public final class JPNParameters extends javax.swing.JPanel {
         jtpOptions.setEnabledAt(5, !mTournament.getParams().isMultiRoster());
         jtpOptions.setEnabledAt(3, mTournament.getParams().isTeamTournament());
 
-        jtfOrgas.setText(mTournament.getParams().getTournamentOrga());
+        DefaultListModel model = new DefaultListModel();
+        for (int i = 0; i < mTournament.getParams().getTournamentOrga().size(); i++) {
+            String orga = mTournament.getParams().getTournamentOrga().get(i);
+            model.add(i, orga);
+        }
+
+        jlsOrgas.setModel(model);
         jtfTournamentName.setText(mTournament.getParams().getTournamentName());
 
         Date d = new Date();
@@ -160,15 +168,22 @@ public final class JPNParameters extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jtfTournamentName = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jtfOrgas = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         jtfPlace = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jDate = new com.toedter.calendar.JDateChooser();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jlsOrgas = new javax.swing.JList<>();
+        jPanel6 = new javax.swing.JPanel();
+        jbtAddOrga = new javax.swing.JButton();
+        jbtRemoveOrga = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jtpOptions = new javax.swing.JTabbedPane();
         jpnParticipant = new javax.swing.JPanel();
@@ -185,8 +200,10 @@ public final class JPNParameters extends javax.swing.JPanel {
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/language"); // NOI18N
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TournamentKey"))); // NOI18N
-        jPanel5.setLayout(new java.awt.GridLayout(4, 2));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("TournamentKey"))); // NOI18N
+        jPanel3.setLayout(new java.awt.BorderLayout());
+
+        jPanel5.setLayout(new java.awt.GridLayout(3, 2));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel1.setText(bundle.getString("TournamentNameKey")); // NOI18N
@@ -198,22 +215,6 @@ public final class JPNParameters extends javax.swing.JPanel {
             }
         });
         jPanel5.add(jtfTournamentName);
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel2.setText(bundle.getString("OrganizerKey")); // NOI18N
-        jPanel5.add(jLabel2);
-
-        jtfOrgas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfOrgasActionPerformed(evt);
-            }
-        });
-        jtfOrgas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jtfOrgasKeyPressed(evt);
-            }
-        });
-        jPanel5.add(jtfOrgas);
 
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel21.setText(bundle.getString("PlaceKey")); // NOI18N
@@ -231,7 +232,48 @@ public final class JPNParameters extends javax.swing.JPanel {
         jPanel5.add(jLabel22);
         jPanel5.add(jDate);
 
-        jPanel1.add(jPanel5, java.awt.BorderLayout.PAGE_START);
+        jPanel3.add(jPanel5, java.awt.BorderLayout.NORTH);
+
+        jPanel4.setLayout(new java.awt.GridLayout(1, 2));
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel2.setText(bundle.getString("OrganizerKey")); // NOI18N
+        jPanel4.add(jLabel2);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jlsOrgas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jlsOrgas.setMaximumSize(new java.awt.Dimension(20, 20));
+        jlsOrgas.setMinimumSize(new java.awt.Dimension(20, 20));
+        jlsOrgas.setPreferredSize(new java.awt.Dimension(20, 20));
+        jlsOrgas.setVisibleRowCount(4);
+        jScrollPane2.setViewportView(jlsOrgas);
+
+        jPanel2.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        jbtAddOrga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Add.png"))); // NOI18N
+        jbtAddOrga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtAddOrgaActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jbtAddOrga);
+
+        jbtRemoveOrga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Close.png"))); // NOI18N
+        jbtRemoveOrga.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtRemoveOrgaActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jbtRemoveOrga);
+
+        jPanel2.add(jPanel6, java.awt.BorderLayout.SOUTH);
+
+        jPanel4.add(jPanel2);
+
+        jPanel3.add(jPanel4, java.awt.BorderLayout.CENTER);
+
+        jPanel1.add(jPanel3, java.awt.BorderLayout.NORTH);
 
         jPanel9.setBorder(javax.swing.BorderFactory.createTitledBorder(bundle.getString("RankingParametersKey"))); // NOI18N
         jPanel9.setLayout(new java.awt.BorderLayout());
@@ -306,30 +348,23 @@ public final class JPNParameters extends javax.swing.JPanel {
         mTournament.getParams().setTournamentName(jtfTournamentName.getText() + evt.getKeyChar());
 
     }//GEN-LAST:event_jtfTournamentNameKeyPressed
-    @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
-    private void jtfOrgasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfOrgasKeyPressed
 
-        mTournament.getParams().setTournamentOrga(jtfOrgas.getText() + evt.getKeyChar());
-
-    }//GEN-LAST:event_jtfOrgasKeyPressed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddActionPerformed
 
-        final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true);
-        w.setVisible(true);
-        update();
+       final JdgCoach w = new JdgCoach(MainFrame.getMainFrame(), true);
+       w.setVisible(true);
+       update();
     }//GEN-LAST:event_jbtAddActionPerformed
     @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
- 
-        Object oname=jtbCoachs.getValueAt(jtbCoachs.getSelectedRow(), 1);
-        if (oname!=null)
-        {
-            if (oname instanceof String)
-            {
-                Coach c=mTournament.getCoach((String)oname);
+
+        Object oname = jtbCoachs.getValueAt(jtbCoachs.getSelectedRow(), 1);
+        if (oname != null) {
+            if (oname instanceof String) {
+                Coach c = mTournament.getCoach((String) oname);
                 mTournament.removeCoach(c);
-            }        
+            }
         }
         update();
 
@@ -349,12 +384,6 @@ public final class JPNParameters extends javax.swing.JPanel {
 
     }//GEN-LAST:event_jbtModifyActionPerformed
 
-    private void jtfOrgasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOrgasActionPerformed
-
-        mTournament.getParams().setTournamentOrga(jtfOrgas.getText());
-
-    }//GEN-LAST:event_jtfOrgasActionPerformed
-
     private void jtfPlaceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPlaceKeyPressed
 
         mTournament.getParams().setPlace(jtfPlace.getText() + evt.getKeyChar());
@@ -365,6 +394,19 @@ public final class JPNParameters extends javax.swing.JPanel {
         mJpnFormulas.update();
     }//GEN-LAST:event_jtpOptionsMouseClicked
 
+    private void jbtRemoveOrgaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveOrgaActionPerformed
+        mTournament.getParams().delTournamentOrga(jlsOrgas.getSelectedIndex());
+        update();
+    }//GEN-LAST:event_jbtRemoveOrgaActionPerformed
+
+    private void jbtAddOrgaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtAddOrgaActionPerformed
+        String value = JOptionPane.showInputDialog("Enter orga name:");
+        if (value != null) {
+            mTournament.getParams().addTournamentOrga(value);
+            update();
+        }
+    }//GEN-LAST:event_jbtAddOrgaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser jDate;
     private javax.swing.JLabel jLabel1;
@@ -372,17 +414,24 @@ public final class JPNParameters extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbtAdd;
+    private javax.swing.JButton jbtAddOrga;
     private javax.swing.JButton jbtModify;
     private javax.swing.JButton jbtRemove;
+    private javax.swing.JButton jbtRemoveOrga;
+    private javax.swing.JList<String> jlsOrgas;
     private javax.swing.JPanel jpnCoachButtons;
     private javax.swing.JPanel jpnParticipant;
     private javax.swing.JTable jtbCoachs;
-    private javax.swing.JTextField jtfOrgas;
     private javax.swing.JTextField jtfPlace;
     private javax.swing.JTextField jtfTournamentName;
     private javax.swing.JTabbedPane jtpOptions;

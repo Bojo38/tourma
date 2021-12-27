@@ -12,6 +12,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -40,7 +41,26 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
         return new Color(red, green, blue);
     }
 
-    
+    protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
+
     public boolean isUpdated() {
         return updated;
     }

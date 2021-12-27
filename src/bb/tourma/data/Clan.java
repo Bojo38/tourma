@@ -20,6 +20,11 @@ import javax.swing.ImageIcon;
 import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * This class contains data relative to a clan
@@ -31,8 +36,29 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
 
+    protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
+
     /**
      * Is the Clan updated ?
+     *
      * @return The clan hase been updated
      */
     public boolean isUpdated() {
@@ -41,7 +67,8 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
 
     /**
      * Updated Setter
-     * @param updated 
+     *
+     * @param updated
      */
     public void setUpdated(boolean updated) {
         this.updated = updated;
@@ -53,6 +80,7 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
 
     /**
      * Unique ID Getter
+     *
      * @return Unique ID
      */
     public int getUID() {
@@ -61,6 +89,7 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
 
     /**
      * Unique ID Setter
+     *
      * @param UID Unique ID
      */
     public void setUID(int UID) {
@@ -69,7 +98,8 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
 
     /**
      * Clan Puller
-     * @param clan 
+     *
+     * @param clan
      */
     public void pull(Clan clan) {
         this.UID = clan.UID;
@@ -79,7 +109,8 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
 
     /**
      * Clan Pusher
-     * @param clan 
+     *
+     * @param clan
      */
     public void push(Clan clan) {
         if (clan.updated) {
@@ -94,10 +125,10 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
      */
     private static HashMap<String, Clan> sClanMap = new HashMap<>();
 
-   
     /**
      * Clan getter
-     * @param key 
+     *
+     * @param key
      * @return Clan from map
      */
     public static Clan getClan(String key) {
@@ -106,14 +137,16 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
 
     /**
      * Delete Clan from HashMap
-     * @param key 
+     *
+     * @param key
      */
     public static void delClan(String key) {
         sClanMap.remove(key);
     }
 
     /**
-     * Clan Putter 
+     * Clan Putter
+     *
      * @param key Key to index Clan
      * @param c Clan
      */
@@ -147,7 +180,6 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
         mName = name;
     }
 
-  
     @Override
     public boolean equals(final Object obj) {
 
@@ -168,7 +200,6 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
         return hash;
     }
 
-
     @Override
     public int compareTo(final Object obj) {
         int result = -1;
@@ -179,7 +210,6 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
         return result;
     }
 
-  
     @Override
     public Element getXMLElement() {
         final Element clan = new Element(StringConstants.CS_CLAN);
@@ -208,7 +238,6 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
         return clan;
     }
 
-
     @Override
     public void setXMLElement(final Element e) {
         this.mName = e.getAttributeValue(StringConstants.CS_NAME);
@@ -233,36 +262,93 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
     /**
      * Logger
      */
-     private static final Logger LOG = Logger.getLogger(Clan.class.getName());
-    
+    private static final Logger LOG = Logger.getLogger(Clan.class.getName());
 
     @Override
     public String getName() {
         return mName;
     }
 
-
     @Override
     public ImageIcon getPicture() {
         return picture;
     }
 
-
     @Override
     public void setPicture(ImageIcon p) {
         picture = p;
-        updated=true;
+        updated = true;
     }
-
 
     @Override
     public void setName(String name) {
         mName = name;
-        updated=true;
+        updated = true;
     }
 
     @Override
     public String toString() {
         return mName;
+    }
+
+    public void updateFromJSON(JSONObject object) throws IOException {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.mName = object.get("name").toString();
+
+        String base64Picture = object.getString("base64Picture");
+
+        byte[] bytes = Base64.decode(base64Picture);
+        BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+        ImageIcon ii = new ImageIcon(bi);
+        setPicture(ii);
+
+    }
+
+    public JSONObject getJSON() throws IOException {
+
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("name", mName);
+
+        String base64Picture;
+
+        if (getPicture()!=null)
+        {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        BufferedImage bi = new BufferedImage(getPicture().getIconWidth(), getPicture().getIconHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics g = bi.createGraphics();
+        getPicture().paintIcon(null, g, 0, 0);
+        g.dispose();
+        ImageIO.write(bi, "png", baos);
+        baos.flush();
+        //encodedImage = DatatypeConverter.printBase64Binary(baos.toByteArray());
+        base64Picture = Base64.encode(baos.toByteArray());
+        // should be inside a finally block
+        }
+        else
+        {
+            base64Picture=null;
+        }
+        json.put("base64Picture", base64Picture);
+
+        return json;
     }
 }

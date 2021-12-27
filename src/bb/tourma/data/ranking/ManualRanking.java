@@ -31,7 +31,7 @@ public class ManualRanking extends Ranking {
      *
      */
     @Override
-    protected void sortDatas() {
+    public void sortDatas() {
         mDatas.clear();
         mDatas = new ArrayList();
 

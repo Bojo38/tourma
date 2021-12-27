@@ -196,6 +196,15 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
                           {
                               Parameters p=Tournament.getTournament().getParams();
                               
+                              for (int k=0; k<t1.getCoachsCount(); k++)
+                              {
+                                  list1.add(t1.getCoach(k));
+                              }
+                              for (int k=0; k<t2.getCoachsCount(); k++)
+                              {
+                                  list2.add(t2.getCoach(k));
+                              }
+                              
                             int roundIndex=Tournament.getTournament().getRoundIndex(mRound);
                             IndivRanking idv1=new IndivRanking(roundIndex,
                                     p.getRankingIndiv1(),p.getRankingIndiv2(), p.getRankingIndiv3(),
@@ -230,6 +239,9 @@ public final class JdgChangePairing extends JDialog implements ActionListener {
                                 cm.setCompetitor1(list1.get(0));
                                 cm.setCompetitor2(list2.get(0));
                                 ((TeamMatch) m).addMatch(cm);
+                                
+                                list1.remove(0);
+                                list2.remove(0);
 
                              }
                           }

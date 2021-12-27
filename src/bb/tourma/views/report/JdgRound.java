@@ -381,7 +381,7 @@ public final class JdgRound extends javax.swing.JDialog {
 
             final ArrayList<Object> crits = new ArrayList<>();
             for (int i = 1; i < Tournament.getTournament().getParams().getCriteriaCount(); i++) {
-                crits.add(Tournament.getTournament().getParams().getCriterion(i).getName());
+                crits.add(StringEscapeUtils.escapeHtml4(Tournament.getTournament().getParams().getCriterion(i).getName()));
             }
             root.put(ReportKeys.CS_Criterias, crits);
 
@@ -434,9 +434,9 @@ public final class JdgRound extends javax.swing.JDialog {
                     m.put(ReportKeys.CS_Values, values);
                 }
                 if (!mTour.getParams().isTeamTournament()) {
-                    m.put(ReportKeys.CS_Coach2, match.getCompetitor2().getName());
+                    m.put(ReportKeys.CS_Coach2, StringEscapeUtils.escapeHtml4(match.getCompetitor2().getName()));
                 } else {
-                    m.put(ReportKeys.CS_Coach2, ((Coach) match.getCompetitor2()).getTeamMates().getName() + StringConstants.CS_THICK + match.getCompetitor2().getName());
+                    m.put(ReportKeys.CS_Coach2, StringEscapeUtils.escapeHtml4(((Coach) match.getCompetitor2()).getTeamMates().getName() + StringConstants.CS_THICK + match.getCompetitor2().getName()));
                 }
 
                 parMatches.add(m);

@@ -334,6 +334,17 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             ((JPNRound) jpnContent).update();
         }
 
+        if (mTournament.isSynchronized())
+        {
+            jlbStatus.setIcon(new ImageIcon(getClass().getResource("/bb/tourma/images/Select.png")));
+            jlbStatus.setText("Synchronized");
+        }
+        else
+        {
+             jlbStatus.setIcon(new ImageIcon(getClass().getResource("/bb/tourma/images/Halt.png")));
+             jlbStatus.setText("Not Synchronized");
+        }
+        
         updateMenus();
 
         jcxPatchPortugal.setSelected(mTournament.getParams().isPortugal());
@@ -363,6 +374,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jScrollPane1 = new javax.swing.JScrollPane();
         jtrPanels = new javax.swing.JTree();
         jpnContent = new javax.swing.JPanel();
+        jpnStatusBar = new javax.swing.JPanel();
+        jlbStatus = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jmnFile = new javax.swing.JMenu();
         jmiNouveau = new javax.swing.JMenuItem();
@@ -408,6 +421,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jSeparator19 = new javax.swing.JPopupMenu.Separator();
         jmiExportWebServerAsZIP = new javax.swing.JMenuItem();
         jmiExportWebServerToSite = new javax.swing.JMenuItem();
+        jSeparator22 = new javax.swing.JPopupMenu.Separator();
+        jmiEditRosterList1 = new javax.swing.JMenuItem();
         jmnRound = new javax.swing.JMenu();
         jmiGenerateNextRound = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
@@ -485,6 +500,16 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         jspSplit.setRightComponent(jpnContent);
 
         getContentPane().add(jspSplit, java.awt.BorderLayout.CENTER);
+
+        jpnStatusBar.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        jlbStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bb/tourma/images/Halt.png"))); // NOI18N
+        jlbStatus.setText("Synchronization Status");
+        jlbStatus.setToolTipText("Not Synchronized");
+        jlbStatus.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        jpnStatusBar.add(jlbStatus);
+
+        getContentPane().add(jpnStatusBar, java.awt.BorderLayout.SOUTH);
 
         jmnFile.setText(bundle.getString("FileKey")); // NOI18N
 
@@ -761,6 +786,15 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
             }
         });
         jmnParameters.add(jmiExportWebServerToSite);
+        jmnParameters.add(jSeparator22);
+
+        jmiEditRosterList1.setText(bundle.getString("SynchronizeWithServer")); // NOI18N
+        jmiEditRosterList1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiEditRosterList1ActionPerformed(evt);
+            }
+        });
+        jmnParameters.add(jmiEditRosterList1);
 
         jMenuBar1.add(jmnParameters);
 
@@ -3218,6 +3252,13 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
         this.update();
     }//GEN-LAST:event_jcxGenerateRandomSkillsActionPerformed
 
+    private void jmiEditRosterList1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditRosterList1ActionPerformed
+        JdgSynchronizeWithServer jdgSynchronize=new JdgSynchronizeWithServer(this,true,mTournament);
+        jdgSynchronize.setVisible(true);
+        this.update();
+                
+    }//GEN-LAST:event_jmiEditRosterList1ActionPerformed
+
     public boolean isRoundOnly() {
         return jckmiRoundOnly.isSelected();
     }
@@ -3426,6 +3467,8 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
 
         appInit();
 
+        JdgSynchronizeWithServer.allowMethods("PATCH");
+        
         if (mySplash != null) // check if we really had a spash screen
         {
             mySplash.close();   // if so we're now done with it
@@ -3539,6 +3582,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator20;
     private javax.swing.JPopupMenu.Separator jSeparator21;
+    private javax.swing.JPopupMenu.Separator jSeparator22;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
@@ -3560,6 +3604,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JCheckBoxMenuItem jcxUseImage;
     public javax.swing.JCheckBoxMenuItem jcxmiAsServer;
     private javax.swing.JCheckBoxMenuItem jcxmiRemoteEdit;
+    private javax.swing.JLabel jlbStatus;
     private javax.swing.JMenuItem jmiAbout;
     private javax.swing.JMenuItem jmiAddFreeMatch;
     private javax.swing.JMenuItem jmiAideEnLigne;
@@ -3575,6 +3620,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenuItem jmiEditColors;
     private javax.swing.JMenuItem jmiEditDescription;
     private javax.swing.JMenuItem jmiEditRosterList;
+    private javax.swing.JMenuItem jmiEditRosterList1;
     private javax.swing.JMenuItem jmiEditTeam;
     private javax.swing.JMenuItem jmiEditWebPort;
     private javax.swing.JMenuItem jmiExit;
@@ -3621,6 +3667,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     private javax.swing.JMenu jmnRound;
     private javax.swing.JMenu jmnTools;
     private javax.swing.JPanel jpnContent;
+    private javax.swing.JPanel jpnStatusBar;
     private javax.swing.JSplitPane jspSplit;
     private javax.swing.JTree jtrPanels;
     // End of variables declaration//GEN-END:variables

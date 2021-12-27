@@ -13,6 +13,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.jdom.Element;
 import bb.tourma.utility.Pair;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
+import org.json.JSONObject;
 
 
 /**
@@ -36,6 +38,26 @@ public class Formula implements Comparable, IXMLExport, Serializable {
         this.UID = UID;
     }
 
+    protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
+    
     public String getName() {
         return _name;
     }
@@ -336,4 +358,43 @@ public class Formula implements Comparable, IXMLExport, Serializable {
         return result;
     }
 
+    
+    public void updateFromJSON(JSONObject object) {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this._formula = object.get("formula").toString();
+        this._name = object.get("name").toString();
+
+        
+
+    }
+
+    public JSONObject getJSON() {
+
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("formula", _formula);
+        json.put("name", _name);
+
+        
+
+        return json;
+    }
 }

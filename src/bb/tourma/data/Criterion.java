@@ -12,6 +12,10 @@ import org.jdom.DataConversionException;
 import org.jdom.Element;
 import bb.tourma.MainFrame;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import org.json.JSONObject;
 
 /**
  *
@@ -30,6 +34,26 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
         this.UID = UID;
     }
 
+    protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
+
     public void pull(Criterion crit) {
         this.UID = crit.UID;
         this.mCriticalValueThreshold = crit.mCriticalValueThreshold;
@@ -42,10 +66,10 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
         this.mAccronym = crit.mAccronym;
 
         this.mCriticalValueThreshold = crit.mCriticalValueThreshold;
-        
+
         this.mOffensiveDiffThreshold = crit.mOffensiveDiffThreshold;
         this.mDefensiveDiffThreshold = crit.mDefensiveDiffThreshold;
-        
+
         this.mOffensiveDiffBonuses = crit.mOffensiveDiffBonuses;
         this.mDefensiveDiffBonuses = crit.mDefensiveDiffBonuses;
         this.mOffensiveThreshold = crit.mOffensiveThreshold;
@@ -526,10 +550,94 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
         int result;
         result = this.getName().compareTo("");
         if (obj instanceof Criterion) {
-            Criterion crit=(Criterion) obj;
-            result=this.getName().compareTo(crit.getName());
-        } 
+            Criterion crit = (Criterion) obj;
+            result = this.getName().compareTo(crit.getName());
+        }
         return result;
     }
 
+    public void updateFromJSON(JSONObject object) {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.mAccronym = object.get("accronym").toString();
+        this.mName = object.get("name").toString();
+
+        mPointsFor = Integer.parseInt(object.get("pointsFor").toString());
+        mPointsTeamFor = Integer.parseInt(object.get("pointsTeamFor").toString());
+
+        mPointsAgainst = Integer.parseInt(object.get("pointsAgainst").toString());
+        mPointsTeamAgainst = Integer.parseInt(object.get("pointsTeamAgainst").toString());
+
+        mOffensiveBonuses = Integer.parseInt(object.get("offensiveBonuses").toString());
+        mOffensiveBonusesByTeam = Integer.parseInt(object.get("offensiveBonusesByTeam").toString());
+        mOffensiveBonusesForTeam = Integer.parseInt(object.get("offensiveBonusesForTeam").toString());
+        mOffensiveDiffBonusesByTeam = Integer.parseInt(object.get("offensiveDiffBonusesByTeam").toString());
+        mOffensiveThreshold = Integer.parseInt(object.get("offensiveThreshold").toString());
+        mOffensiveDiffThreshold = Integer.parseInt(object.get("offensiveDiffThreshold").toString());
+        mOffensiveDiffBonusesForTeam = Integer.parseInt(object.get("offensiveDiffBonusesForTeam").toString());
+        mOffensiveThresholdByTeam = Integer.parseInt(object.get("offensiveThresholdByTeam").toString());
+        mOffensiveDiffThresholdByTeam = Integer.parseInt(object.get("offensiveDiffThresholdByTeam").toString());
+        mOffensiveDiffBonuses = Integer.parseInt(object.get("offensiveDiffBonuses").toString());
+
+        mDefensiveDiffBonusesByTeam = Integer.parseInt(object.get("defensiveDiffBonusesByTeam").toString());
+        mDefensiveDiffBonusesForTeam = Integer.parseInt(object.get("defensiveDiffBonusesForTeam").toString());
+        mDefensiveDiffBonusesByTeam = Integer.parseInt(object.get("defensiveDiffBonusesByTeam").toString());
+        mCriticalValueThreshold = Integer.parseInt(object.get("criticalThreshold").toString());
+
+        mDefensiveDiffBonuses = Integer.parseInt(object.get("defensiveDiffBonuses").toString());
+        mDefensiveDiffThreshold = Integer.parseInt(object.get("defensiveDiffThreshold").toString());
+
+    }
+
+    public JSONObject getJSON() {
+
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("accronym", mAccronym);
+        json.put("name", mName);
+
+        json.put("pointsFor", mPointsFor);
+        json.put("pointsTeamFor", mPointsTeamFor);
+
+        json.put("pointsAgainst", mPointsAgainst);
+        json.put("pointsTeamAgainst", mPointsTeamAgainst);
+
+        json.put("offensiveBonuses", mOffensiveBonuses);
+        json.put("offensiveBonusesByTeam", mOffensiveBonusesByTeam);
+        json.put("offensiveBonusesForTeam", mOffensiveBonusesForTeam);
+        json.put("offensiveDiffBonusesByTeam", mOffensiveDiffBonusesByTeam);
+        json.put("offensiveThreshold", mOffensiveThreshold);
+        json.put("offensiveDiffThreshold", mOffensiveDiffThreshold);
+        json.put("offensiveDiffBonusesForTeam", mOffensiveDiffBonusesForTeam);
+        json.put("offensiveThresholdByTeam", mOffensiveThresholdByTeam);
+        json.put("offensiveDiffThresholdByTeam", mOffensiveDiffThresholdByTeam);
+        json.put("offensiveDiffBonuses", mOffensiveDiffBonuses);
+
+        json.put("defensiveDiffBonusesByTeam", mDefensiveDiffBonusesByTeam);
+        json.put("defensiveDiffBonusesForTeam", mDefensiveDiffBonusesForTeam);
+        json.put("defensiveDiffBonusesByTeam", mDefensiveDiffBonusesByTeam);
+        json.put("criticalThreshold", mCriticalValueThreshold);
+
+        json.put("defensiveDiffBonuses", mDefensiveDiffBonuses);
+        json.put("defensiveDiffThreshold", mDefensiveDiffThreshold);
+
+        return json;
+    }
 }

@@ -68,6 +68,8 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                 result = Translate.translate(Translate.CS_Roster);
                 break;
             case 4:
+                if (mRanking!=null)
+                {
                 if (((AnnexRanking) mRanking).getCriterion() != null) {
                     if (((AnnexRanking) mRanking).getSubtype() == 0) {
                         result = ((AnnexRanking) mRanking).getCriterion().getName() + " " + Translate.translate(Translate.CS_Coach);
@@ -78,6 +80,7 @@ public class MjtAnnexRankIndiv extends MjtAnnexRank {
                     }
                 } else {
                     result = ((AnnexRanking) mRanking).getFormula().getName();
+                }
                 }
                 break;
             default:

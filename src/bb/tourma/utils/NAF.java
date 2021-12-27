@@ -35,6 +35,7 @@ import bb.tourma.MainFrame;
 import bb.tourma.data.Coach;
 import bb.tourma.data.RosterType;
 import static bb.tourma.data.RosterType.translate;
+import static bb.tourma.data.RosterType.translate2;
 
 /**
  *
@@ -675,13 +676,25 @@ public final class NAF {
             result = "Snotlings";
             result = "Snotling";
         }
-        if (source.equals(translate("OldWorldAllianceKey"))) {
+        if (source.equals(translate("OldWorldAllianceKey")) 
+                || source.equals(translate("Old World Alliance"))
+                || source.equals(translate2("OldWorldAllianceKey"))
+                || source.equals(translate2("Old World Alliance"))
+                ) {
             result = "Old World Alliance";
         }
-        if (source.equals(translate("ImperialNobilityKey"))) {
+        if (source.equals(translate("ImperialNobilityKey")) 
+                || source.equals(translate("Imperial Nobility")) 
+                || source.equals(translate2("ImperialNobilityKey"))
+                || source.equals(translate2("Imperial Nobility"))
+                ) {
             result = "Imperial Nobility";
         }
-        if (source.equals(translate("Black OrcKey"))) {
+        if (source.equals(translate("BlackOrcKey")) 
+                || source.equals(translate("Black Orc"))
+                || source.equals(translate2("BlackOrcKey"))
+                || source.equals(translate2("Black Orc"))
+                ) {
             result = "Black Orc";
         }
                 

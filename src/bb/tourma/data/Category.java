@@ -11,6 +11,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * This class contains data relative to a clan
@@ -38,6 +43,25 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
         this.UID = UID;
     }
     
+     protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
     
     
     /**
@@ -188,4 +212,38 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
         return getName();
     }
     
+    public void updateFromJSON(JSONObject object) {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.mName = object.get("name").toString();
+
+    }
+
+    public JSONObject getJSON() {
+
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("name", mName);
+
+        
+
+        return json;
+    }
 }

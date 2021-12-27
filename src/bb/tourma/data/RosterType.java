@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
+import org.json.JSONObject;
 
 /**
  *
@@ -32,7 +34,27 @@ public class RosterType implements IXMLExport, Serializable {
         this.UID = UID;
     }
 
+      protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
     private static ResourceBundle sBundle = null;
+    private static ResourceBundle sBundle2 = null;
 
     /**
      *
@@ -82,6 +104,20 @@ public class RosterType implements IXMLExport, Serializable {
 
     private static final Logger LOG = Logger.getLogger(RosterType.class.getName());
 
+    public static String translate2(String key) {
+        if (sBundle2 == null) {
+            sBundle2 = java.util.ResourceBundle.getBundle("bb/teamma/languages/language");
+        }
+
+        String name = "";
+        try {
+            name = sBundle2.getString(key);
+        } catch (Exception e) {
+
+        } 
+        return name;
+    }
+    
     public static String translate(String key) {
         if (sBundle == null) {
             sBundle = java.util.ResourceBundle.getBundle("bb/tourma/languages/rosters");
@@ -92,9 +128,7 @@ public class RosterType implements IXMLExport, Serializable {
             name = sBundle.getString(key);
         } catch (Exception e) {
 
-        } finally {
-
-        }
+        } 
 
         return name;
     }
@@ -560,6 +594,42 @@ public class RosterType implements IXMLExport, Serializable {
      */
     public void setName(String mName) {
         this.mName = mName;
+    }
+    
+    
+    public void updateFromJSON(JSONObject object) {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.mName = object.get("name").toString();
+
+      
+
+    }
+
+    public JSONObject getJSON() {
+
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("name", mName);
+
+        return json;
     }
 
 }

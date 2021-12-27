@@ -46,7 +46,13 @@ public class HTMLtoPDF {
             Document document = new Document(size);
             PdfWriter pdfWriter = PdfWriter.getInstance(document, output);            
             document.open();
-            document.addAuthor(Tournament.getTournament().getParams().getTournamentOrga());
+            String orgas="";
+            for (String orga:Tournament.getTournament().getParams().getTournamentOrga())
+            {
+                orgas+=orga+" / ";
+            }
+            
+            document.addAuthor(orgas);
             document.addCreator("TourMa");
             document.addSubject(Tournament.getTournament().getParams().getTournamentName());
             document.addCreationDate();

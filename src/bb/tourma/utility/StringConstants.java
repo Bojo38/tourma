@@ -266,7 +266,12 @@ public interface StringConstants {
     public static final String CS_VERSION = "Version";
     public static final String CS_ROUNDROBIN = "RoundRobin";
     public static final String CS_DESCRIPTION = "Description";
-
+    public static final String CS_SERVER="Server";
+    public static final String CS_URL="URL";
+    public static final String CS_LOGIN="Login";
+    public static final String CS_PASSWORD="Password";
+    public static final String CS_TOUR_ID="TourId";
+    
     public static final String CS_WEB_PORT = "Web_port";
 
     public static final String CS_CUP_TYPE = "Type";

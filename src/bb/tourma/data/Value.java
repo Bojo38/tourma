@@ -5,7 +5,9 @@
 package bb.tourma.data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicInteger;
+
 
 /**
  *
@@ -15,6 +17,26 @@ public class Value implements Serializable {
 
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
+
+    protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
 
     public boolean isUpdated() {
         return updated;
@@ -60,7 +82,6 @@ public class Value implements Serializable {
      * Name of the criteria
      */
     private Formula mFormula;
-    
 
     public enum e_ValueType {
         E_CRITERIA,
@@ -68,7 +89,7 @@ public class Value implements Serializable {
     };
 
     private e_ValueType _valueType;
-    
+
     /**
      * Value for the coach 1
      */
@@ -84,37 +105,33 @@ public class Value implements Serializable {
      */
     public Value(final Criterion criteria) {
         mCriteria = criteria;
-        _valueType=e_ValueType.E_CRITERIA;
+        _valueType = e_ValueType.E_CRITERIA;
     }
 
-    
     public Value(final Formula form) {
         mFormula = form;
-        _valueType=e_ValueType.E_FORMULA;
+        _valueType = e_ValueType.E_FORMULA;
     }
+
     /**
      * @return the mCriteria
      */
     public Criterion getCriteria() {
-        if (_valueType==e_ValueType.E_CRITERIA)
-        {
+        if (_valueType == e_ValueType.E_CRITERIA) {
             return mCriteria;
-        }
-        else
-        {
+        } else {
             return null;
-        }     
+        }
     }
+
     public Formula getFormula() {
-        if (_valueType==e_ValueType.E_FORMULA)
-        {
+        if (_valueType == e_ValueType.E_FORMULA) {
             return mFormula;
-        }
-        else
-        {
+        } else {
             return null;
-        }     
+        }
     }
+
     /**
      * @param mCriteria the mCriteria to set
      */

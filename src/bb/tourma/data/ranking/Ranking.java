@@ -358,7 +358,7 @@ abstract public class Ranking implements IRanked, IXMLExport {
     /**
      * Abstract sortDatas
      */
-    protected abstract void sortDatas() throws RemoteException;
+    public abstract void sortDatas() throws RemoteException;
     /**
      * Current Round
      */
