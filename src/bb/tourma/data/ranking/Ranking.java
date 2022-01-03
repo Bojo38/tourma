@@ -17,6 +17,7 @@ import bb.tourma.data.Coach;
 import bb.tourma.data.Criterion;
 import bb.tourma.data.Formula;
 import bb.tourma.data.IXMLExport;
+import bb.tourma.data.ObjectAnnexRanking;
 import bb.tourma.data.ObjectRanking;
 import bb.tourma.data.Parameters;
 import bb.tourma.data.Team;
@@ -24,6 +25,9 @@ import bb.tourma.data.Tournament;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
 import bb.tourma.utils.display.IRanked;
+import java.time.LocalDateTime;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -36,6 +40,26 @@ abstract public class Ranking implements IRanked, IXMLExport {
     }
 
     String mDetail = "";
+
+    protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
 
     public String getDetail() {
         return mDetail;
@@ -529,5 +553,79 @@ abstract public class Ranking implements IRanked, IXMLExport {
         } catch (NullPointerException dce) {
             dce.printStackTrace();;
         }
+    }
+
+    public JSONObject getJSON() {
+        JSONObject json = new JSONObject();
+
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("detail", mDetail);
+
+        json.put("rankingType1", mRankingType1);
+        json.put("rankingType2", mRankingType2);
+        json.put("rankingType3", mRankingType3);
+        json.put("rankingType4", mRankingType4);
+        json.put("rankingType5", mRankingType5);
+
+        JSONArray array = new JSONArray();
+        for (Object object : mObjects) {
+
+            if (object instanceof ObjectAnnexRanking) {
+                JSONObject obj = ((ObjectAnnexRanking) object).getJSON();
+                array.put(obj);
+            } else {
+                if (object instanceof ObjectRanking) {
+                    JSONObject obj = ((ObjectRanking) object).getJSON();
+                    array.put(obj);
+                }
+            }
+        }
+
+        json.put("objects", array);
+
+        return json;
+    }
+
+    public void updateFromJSON(JSONObject object) {
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+        mDetail = object.getString("detail");
+
+        mRankingType1 = object.getInt("rankingType1");
+        mRankingType2 = object.getInt("rankingType2");
+        mRankingType3 = object.getInt("rankingType3");
+        mRankingType4 = object.getInt("rankingType4");
+        mRankingType5 = object.getInt("rankingType5");
+
+        JSONArray array = object.getJSONArray("objects");
+
+        for (int i = 0; i < array.length(); i++) {
+            if (mObjects.size() > i) {
+                Object o = mObjects.get(i);
+                if (o instanceof ObjectAnnexRanking) {
+                    ((ObjectAnnexRanking) o).updateFromJSON((JSONObject) array.get(i));
+                } else {
+                    if (o instanceof ObjectRanking) {
+                        ((ObjectRanking) o).updateFromJSON((JSONObject) array.get(i));
+                    }
+                }
+            }
+        }
+
     }
 }

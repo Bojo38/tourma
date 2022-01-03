@@ -15,6 +15,7 @@ import org.apache.xerces.impl.dv.util.Base64;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
+import org.json.JSONObject;
 
 /**
  *
@@ -386,5 +387,59 @@ public class ObjectRanking implements Comparable<Object>, IXMLExport {
                 return getValue5();
         }
         return 0;
+    }
+    
+    
+
+    public JSONObject getJSON() {
+       
+        JSONObject json=new JSONObject();
+        
+        json.put("value1", mValue1);
+        json.put("value12", mValue2);
+        json.put("value3", mValue3);
+        json.put("value4", mValue4);
+        json.put("value5", mValue5);
+        
+        if (mObject instanceof Coach)
+        {
+            json.put("name", ((Coach)mObject).getName());
+        }
+        if (mObject instanceof Team)
+        {
+            json.put("name", ((Team)mObject).getName());
+        }
+        if (mObject instanceof Clan)
+        {
+            json.put("name", ((Clan)mObject).getName());
+        }
+        
+        
+        return json;
+    }
+
+
+    public void updateFromJSON(JSONObject object) {
+        
+        this.mValue1=object.getInt("value1");
+        this.mValue2=object.getInt("value2");
+        this.mValue3=object.getInt("value3");
+        this.mValue4=object.getInt("value4");
+        this.mValue5=object.getInt("value5");
+        
+        
+        if (mObject instanceof Coach)
+        {
+            mObject=Tournament.getTournament().getCoach(object.getString("name"));
+        }
+        if (mObject instanceof Team)
+        {
+            mObject=Tournament.getTournament().getTeam(object.getString("name"));
+        }
+        if (mObject instanceof Clan)
+        {
+            mObject=Tournament.getTournament().getClan(object.getString("name"));
+        }
+        
     }
 }

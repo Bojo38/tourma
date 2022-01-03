@@ -23,8 +23,11 @@ import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -1343,22 +1346,20 @@ public class CoachMatch extends Match implements Serializable {
 
         List<Coach> opponents = new ArrayList<Coach>();
 
-               int value = 0;
-        
-        if (c.getName().equals("Singsorrow"))
-        {
-            value=0;
+        int value = 0;
+
+        if (c.getName().equals("Singsorrow")) {
+            value = 0;
         }
-        
+
         int current_round_index = Tournament.getTournament().getRoundIndex(m.getRound());
-        if (current_round_index==-1)
-        {
-            current_round_index=Tournament.getTournament().getRoundsCount();
+        if (current_round_index == -1) {
+            current_round_index = Tournament.getTournament().getRoundsCount();
         }
-        
+
         // Firstly, the coachs of previous rounds for this round
         for (int i = 0; i < c.getMatchCount(); i++) {
-            
+
             CoachMatch cm = (CoachMatch) c.getMatch(i);
             if (Tournament.getTournament().getRoundIndex(cm.getRound()) < current_round_index) {
                 if (cm.getCompetitor1().equals(c)) {
@@ -1373,80 +1374,68 @@ public class CoachMatch extends Match implements Serializable {
         for (Coach opponent : opponents) {
             for (int i = 0; i < opponent.getMatchCount(); i++) {
                 CoachMatch cm = (CoachMatch) opponent.getMatch(i);
-                
-                int index=Tournament.getTournament().getRoundIndex(cm.getRound());
-                if (index==-1)
-                {
-                    index=Tournament.getTournament().getRoundsCount();
+
+                int index = Tournament.getTournament().getRoundIndex(cm.getRound());
+                if (index == -1) {
+                    index = Tournament.getTournament().getRoundsCount();
                 }
-                
+
                 if (index == current_round_index) {
                     if (cm.getCompetitor1().equals(opponent)) {
-                        if (cm.getCompetitor2().equals(c)&&(includeCurrent))
-                        {
-                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        if (cm.getCompetitor2().equals(c) && (includeCurrent)) {
+                            value += getPointsByCoach((Coach) opponent, cm, true, true);
                         }
-                        
-                        if (!cm.getCompetitor2().equals(c))
-                        {
-                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+
+                        if (!cm.getCompetitor2().equals(c)) {
+                            value += getPointsByCoach((Coach) opponent, cm, true, true);
                         }
-                       
+
                     }
                     if (cm.getCompetitor2().equals(opponent)) {
-                         if (cm.getCompetitor1().equals(c)&&(includeCurrent))
-                        {
-                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+                        if (cm.getCompetitor1().equals(c) && (includeCurrent)) {
+                            value += getPointsByCoach((Coach) opponent, cm, true, true);
                         }
-              
-                         if (!cm.getCompetitor1().equals(c))
-                        {
-                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
+
+                        if (!cm.getCompetitor1().equals(c)) {
+                            value += getPointsByCoach((Coach) opponent, cm, true, true);
                         }
                     }
                 }
             }
         }
-        
+
         Coach opponent;
-        if (m.getCompetitor1().equals(c))
-        {
-            opponent=(Coach)m.getCompetitor2();
-        }
-        else
-        {
-            opponent=(Coach)m.getCompetitor1();
+        if (m.getCompetitor1().equals(c)) {
+            opponent = (Coach) m.getCompetitor2();
+        } else {
+            opponent = (Coach) m.getCompetitor1();
         }
         // Secondly, the previous rounds of the current opponent
         for (int i = 0; i < opponent.getMatchCount(); i++) {
-                CoachMatch cm = (CoachMatch) opponent.getMatch(i);
-                if ((Tournament.getTournament().getRoundIndex(cm.getRound()) < current_round_index)||
-                        ((Tournament.getTournament().getRoundIndex(cm.getRound()) == current_round_index)&&(includeCurrent))) {
-                    if (cm.getCompetitor1().equals(opponent)) {
-                        if (cm.getCompetitor2().equals(c)&&(includeCurrent))
-                        {
-                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
-                        }
-                        
-                        if (!cm.getCompetitor2().equals(c))
-                        {
-                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
-                        }
-                       
+            CoachMatch cm = (CoachMatch) opponent.getMatch(i);
+            if ((Tournament.getTournament().getRoundIndex(cm.getRound()) < current_round_index)
+                    || ((Tournament.getTournament().getRoundIndex(cm.getRound()) == current_round_index) && (includeCurrent))) {
+                if (cm.getCompetitor1().equals(opponent)) {
+                    if (cm.getCompetitor2().equals(c) && (includeCurrent)) {
+                        value += getPointsByCoach((Coach) opponent, cm, true, true);
                     }
-                    if (cm.getCompetitor2().equals(opponent)) {
-                         if (cm.getCompetitor1().equals(c)&&(includeCurrent))
-                        {
-                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
-                        }
-              
-                         if (!cm.getCompetitor1().equals(c))
-                        {
-                            value+=getPointsByCoach((Coach) opponent, cm, true, true);
-                        }
+
+                    if (!cm.getCompetitor2().equals(c)) {
+                        value += getPointsByCoach((Coach) opponent, cm, true, true);
+                    }
+
+                }
+                if (cm.getCompetitor2().equals(opponent)) {
+                    if (cm.getCompetitor1().equals(c) && (includeCurrent)) {
+                        value += getPointsByCoach((Coach) opponent, cm, true, true);
+                    }
+
+                    if (!cm.getCompetitor1().equals(c)) {
+                        value += getPointsByCoach((Coach) opponent, cm, true, true);
                     }
                 }
             }
+        }
 
         /*int match_index = 0;
         int value = 0;
@@ -2169,6 +2158,165 @@ public class CoachMatch extends Match implements Serializable {
                     }
                 }
             }
+        }
+    }
+
+    public JSONObject getJSON() {
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("locked", this.isLocked());
+        json.put("values_computed", this.isValues_computed());
+        json.put("entered", this.isEntered());
+        json.put("remotely", this.isRemotely());
+        json.put("refusedBy1", this.isRefusedBy1());
+        json.put("refusedBy2", this.isRefusedBy2());
+        json.put("concedeedBy1", this.isConcedeedBy1());
+        json.put("concedeedBy2", this.isConcedeedBy2());
+
+        json.put("roster1", mRoster1 != null ? mRoster1.getName() : null);
+        json.put("roster2", mRoster2 != null ? mRoster2.getName() : null);
+
+        json.put("substitute1", mSubstitute1 != null ? mSubstitute1.getSubstitute().getName() : null);
+        json.put("substitute2", mSubstitute2 != null ? mSubstitute2.getSubstitute().getName() : null);
+
+        json.put("fullNaf", this.isFullNaf());
+
+        JSONArray array = new JSONArray();
+        for (Map.Entry<Criterion, Value> entry : mValues.entrySet()) {
+            JSONObject object = entry.getValue().getJSON();
+
+            array.put(object);
+        }
+        json.put("matchValues", array);
+
+        JSONArray array2 = new JSONArray();
+
+        for (Map.Entry<Formula, Value> entry : mComputedValues.entrySet()) {
+            JSONObject object = entry.getValue().getJSON();
+            array2.put(object);
+        }
+        json.put("computedValues", array2);
+
+        json.put("competitor1", this.getCompetitor1().getName());
+        json.put("competitor2", this.getCompetitor2().getName());
+
+        return json;
+    }
+
+    public void updateFromJSON(JSONObject object) {
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        JSONArray array = object.getJSONArray("matchValues");
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject json = array.getJSONObject(i);
+            Criterion crit = Tournament.getTournament().getParams().getCriterion(json.getString("criterionName"));
+
+            Value val = mValues.get(crit);
+            if (val != null) {
+                val.updateFromJSON(json);
+            } else {
+                Value value = new Value(crit);
+                value.updateFromJSON(json);
+                mValues.put(crit, value);
+            }
+        }
+        
+        JSONArray array2 = object.getJSONArray("computedValues");
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject json = array.getJSONObject(i);
+            Formula form = Tournament.getTournament().getParams().getFormula(json.getString("formulaName"));
+
+            Value val = mComputedValues.get(form);
+            if (val != null) {
+                val.updateFromJSON(json);
+            } else {
+                Value value = new Value(form);
+                value.updateFromJSON(json);
+                mComputedValues.put(form, value);
+            }
+        }
+        
+        this.mLocked=object.getBoolean("locked");
+        this.values_computed=object.getBoolean("values_computed");
+        this.remotely =object.getBoolean("remotely");
+
+        this.refusedBy1 =object.getBoolean("refusedBy1");
+        this.refusedBy2 =object.getBoolean("refusedBy2");
+        
+        RosterType rt1=Tournament.getTournament().getRosterType().get(object.getString("roster1"));
+        RosterType rt2=Tournament.getTournament().getRosterType().get(object.getString("roster2"));
+
+        this.concedeedBy1 =object.getBoolean("concedeedBy1");
+        this.concedeedBy2 =object.getBoolean("concedeedBy1");
+ 
+        Coach c1=Tournament.getTournament().getCoach(object.getString("competitor1_Name"));
+        Coach c2=Tournament.getTournament().getCoach(object.getString("competitor2_Name"));
+
+        if (c1!=null)
+        {
+            if (!c1.equals(this.getCompetitor1()))
+            {
+                this.getCompetitor1().removeMatch(this);
+                this.setCompetitor1(c1);
+                c1.addMatch(this);
+            }
+        }
+        if (c2!=null)
+        {
+            if (!c2.equals(this.getCompetitor2()))
+            {
+                this.getCompetitor2().removeMatch(this);
+                this.setCompetitor2(c2);
+                c2.addMatch(this);
+            }
+        }
+        
+        Object tmp=object.get("substitute1");
+        if (tmp!=JSONObject.NULL)
+        {
+            if (this.mSubstitute1==null)
+            {
+                this.mSubstitute1=new Substitute();
+            }
+            this.mSubstitute1.setMatch(this);
+            this.mSubstitute1.setTitular((Coach)this.getCompetitor1());
+            this.mSubstitute1.setSubstitute(Tournament.getTournament().getCoach(object.getString("substitute1")));
+        }
+        else
+        {
+            this.mSubstitute1=null;
+        }
+         
+        tmp=object.get("substitute2");
+        if (tmp!=JSONObject.NULL)
+        {
+            if (this.mSubstitute2==null)
+            {
+                this.mSubstitute2=new Substitute();
+            }
+            this.mSubstitute2.setMatch(this);
+            this.mSubstitute2.setTitular((Coach)this.getCompetitor2());
+            this.mSubstitute2.setSubstitute(Tournament.getTournament().getCoach(object.getString("substitute2")));
+        }
+        else
+        {
+            this.mSubstitute2=null;
         }
     }
 }

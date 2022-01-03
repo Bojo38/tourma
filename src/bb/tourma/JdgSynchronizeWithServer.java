@@ -8,13 +8,28 @@ package bb.tourma;
 import bb.tourma.data.Category;
 import bb.tourma.data.Clan;
 import bb.tourma.data.Coach;
+import bb.tourma.data.CoachMatch;
 import bb.tourma.data.Criterion;
 import bb.tourma.data.Formula;
 import bb.tourma.data.Group;
 import bb.tourma.data.GroupPoints;
+import bb.tourma.data.Match;
+import bb.tourma.data.Pool;
+import bb.tourma.data.Rankings;
 import bb.tourma.data.RosterType;
+import bb.tourma.data.Round;
 import bb.tourma.data.Team;
+import bb.tourma.data.TeamMatch;
 import bb.tourma.data.Tournament;
+import bb.tourma.data.ranking.AnnexClanRanking;
+import bb.tourma.data.ranking.AnnexIndivRanking;
+import bb.tourma.data.ranking.AnnexRanking;
+import bb.tourma.data.ranking.AnnexTeamRanking;
+import bb.tourma.data.ranking.IndivRanking;
+import bb.tourma.data.ranking.IndivRankingsSet;
+import bb.tourma.data.ranking.Ranking;
+import bb.tourma.data.ranking.TeamRanking;
+import bb.tourma.data.ranking.TeamRankingsSet;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,6 +70,12 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONWriter;
+
+enum SubRankingType {
+    NONE,
+    ForPOOL,
+    ForCUP
+};
 
 /**
  *
@@ -603,7 +624,553 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
 
         return error;
     }
-    
+
+    private boolean synchronizeMatchs(String url, long tourId, int roundId) throws IOException {
+        String lineGet = methodGET(url + "/tournaments/" + tourId + "/rounds/" + roundId + "/matchs");
+
+        boolean error = false;
+        JSONArray array = new JSONArray(lineGet);
+        Round round = mTournament.getRound(roundId);
+
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject object = array.getJSONObject(i);
+            String matchType = object.getString("matchType");
+
+            boolean toUpload = false;
+            boolean toDownload = false;
+            Object lastUpdatedDate = object.get("updateDateTime");
+            Match m = null;
+            if (lastUpdatedDate == JSONObject.NULL) {
+                toUpload = true;
+            } else {
+                LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
+                if (round.getMatchsCount() > i) {
+                    m = mTournament.getRound(roundId).getMatch(i);
+                    if (dt.isAfter(m.getUpdateDateTime())) {
+                        toUpload = true;
+                    }
+                    if (dt.isBefore(m.getUpdateDateTime())) {
+                        toDownload = true;
+                    }
+                } else {
+                    if (matchType.equals("TeamMatch")) {
+                        m = new TeamMatch(round);
+
+                    } else {
+                        m = new CoachMatch(round);
+                    }
+                    round.addMatch(m);
+                    toDownload = true;
+                }
+            }
+
+            if ((m != null) && (!error)) {
+                if (toUpload) {
+                    JSONObject obj2 = m.getJSON();
+                    int result = methodPATCH(url + "/tournaments/" + tourId + "/rounds/" + roundId + "/matchs/" + i, obj2);
+                    if (result != 0) {
+                        JOptionPane.showMessageDialog(this, "Error detected while synchronizing match " + i + " of round " + roundId + ": " + result);
+                        error = true;
+                    }
+                }
+                if (toDownload) {
+                    m.updateFromJSON(object);
+                }
+            }
+        }
+
+        return error;
+    }
+
+    private boolean synchronizeRanking(String url, Ranking ranking) throws IOException {
+        String lineGet = methodGET(url);
+
+        boolean error = false;
+        JSONObject object = new JSONObject(lineGet);
+
+        boolean toUpload = false;
+        boolean toDownload = false;
+        Object lastUpdatedDate = object.get("updateDateTime");
+        if (lastUpdatedDate == JSONObject.NULL) {
+            toUpload = true;
+        } else {
+            LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
+
+            if (dt.isAfter(ranking.getUpdateDateTime())) {
+                toUpload = true;
+            }
+            if (dt.isBefore(ranking.getUpdateDateTime())) {
+                toDownload = true;
+            }
+        }
+
+        if (toUpload) {
+            JSONObject obj2 = ranking.getJSON();
+            int result = methodPATCH(url, obj2);
+            if (result != 0) {
+                JOptionPane.showMessageDialog(this, "Error detected while synchronizing  ranking (" + url + "): " + result);
+                error = true;
+            }
+        }
+
+        if (toDownload) {
+            ranking.updateFromJSON(object);
+        }
+
+        return error;
+    }
+
+    private boolean synchronizeTeamAnnexRanking(String url, long tourId, int roundId, Criterion crit, Formula form, AnnexRanking.SubType subranking, TeamRankingsSet rankingSet) throws IOException {
+
+        String urlEnd = "";
+        AnnexTeamRanking ranking = null;
+
+        switch (subranking) {
+            case POSITIVE:
+                urlEnd = "/rankings/team/annex/" + crit.getName() + "/+";
+                ranking = rankingSet.getAnnexPosRanking().get(crit);
+                break;
+            case NEGATIVE:
+                urlEnd = "/rankings/team/annex/" + crit.getName() + "/-";
+                ranking = rankingSet.getAnnexNegRanking().get(crit);
+                break;
+            case DIFFERENCE:
+                urlEnd = "/rankings/team/annex/" + crit.getName() + "/=";
+                ranking = rankingSet.getAnnexDifRanking().get(crit);
+                break;
+            case FORMULA:
+                urlEnd = "/rankings/team/annex/" + form.getName();
+                ranking = rankingSet.getAnnexFormRanking().get(form);
+                break;
+            default:
+                return true;
+        }
+
+        boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
+        return error;
+    }
+
+    private boolean synchronizeClanAnnexRanking(String url, long tourId, int roundId, Criterion crit, Formula form, AnnexRanking.SubType subranking) throws IOException {
+
+        String urlEnd = "";
+        AnnexClanRanking ranking = null;
+
+        switch (subranking) {
+            case POSITIVE:
+                urlEnd = "/rankings/clan/annex/" + crit.getName() + "/+";
+                ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexPosRanking().get(crit);
+                break;
+            case NEGATIVE:
+                urlEnd = "/rankings/clan/annex/" + crit.getName() + "/-";
+                ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexNegRanking().get(crit);
+                break;
+            case DIFFERENCE:
+                urlEnd = "/rankings/clan/annex/" + crit.getName() + "/=";
+                ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexDifRanking().get(crit);
+                break;
+            case FORMULA:
+                urlEnd = "/rankings/clan/annex/" + form.getName();
+                ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexFormRanking().get(form);
+                break;
+            default:
+                return true;
+        }
+
+        boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
+        return error;
+    }
+
+    private boolean synchronizeIndivdualAnnexRanking(String url, long tourId, int roundId, Criterion crit, Formula form, AnnexRanking.SubType subranking, IndivRankingsSet rankingSet) throws IOException {
+
+        String urlEnd = "";
+        AnnexIndivRanking ranking = null;
+
+        switch (subranking) {
+            case POSITIVE:
+                urlEnd = "/rankings/indiv/annex/" + crit.getName() + "/+";
+                ranking = rankingSet.getAnnexPosRanking().get(crit);
+                break;
+            case NEGATIVE:
+                urlEnd = "/rankings/indiv/annex/" + crit.getName() + "/-";
+                ranking = rankingSet.getAnnexNegRanking().get(crit);
+                break;
+            case DIFFERENCE:
+                urlEnd = "/rankings/indiv/annex/" + crit.getName() + "/=";
+                ranking = rankingSet.getAnnexDifRanking().get(crit);
+                break;
+            case FORMULA:
+                urlEnd = "/rankings/indiv/annex/" + form.getName();
+                ranking = rankingSet.getAnnexFormRanking().get(form);
+                break;
+            default:
+                return true;
+        }
+
+        boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
+        return error;
+    }
+
+    private boolean synchronizeIndivdualRanking(String url, long tourId, int roundId, int poolId, SubRankingType subranking, IndivRankingsSet rankingSet) throws IOException {
+
+        String urlEnd = "";
+        IndivRanking ranking = null;
+
+        if (poolId == -1) {
+            switch (subranking) {
+                case NONE:
+                    urlEnd = "/rankings/indiv/ranking";
+                    ranking = rankingSet.getRanking();
+                    break;
+                case ForPOOL:
+                    urlEnd = "/rankings/indiv/pool";
+                    ranking = rankingSet.getRankingForPool();
+                    break;
+                case ForCUP:
+                    urlEnd = "/rankings/indiv/cup";
+                    ranking = rankingSet.getRankingForCup();
+                    break;
+                default:
+                    return true;
+            }
+        }
+        else
+        {
+            urlEnd="/rankings/pool/indiv/"+poolId;
+            ranking=rankingSet.getRanking();
+        }
+
+        boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
+
+        return error;
+    }
+
+    private boolean synchronizeTeamRanking(String url, long tourId, int roundId,int poolId, SubRankingType subranking, TeamRankingsSet rankingSet) throws IOException {
+
+        String urlEnd = "";
+        TeamRanking ranking = null;
+
+         if (poolId == -1) {
+        switch (subranking) {
+            case NONE:
+                urlEnd = "/rankings/team/ranking";
+                ranking = rankingSet.getRanking();
+                break;
+            case ForPOOL:
+                urlEnd = "/rankings/team/pool";
+                ranking = rankingSet.getRankingForPool();
+                break;
+            case ForCUP:
+                urlEnd = "/rankings/team/cup";
+                ranking = rankingSet.getRankingForCup();
+                break;
+            default:
+                return true;
+        }
+         }
+         else
+         {
+              urlEnd="/rankings/pool/team/"+poolId;
+            ranking=rankingSet.getRanking();
+         }
+
+        boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
+
+        return error;
+    }
+
+    private boolean synchronizeClanRanking(String url, long tourId, int roundId, SubRankingType subranking) throws IOException {
+
+        String urlEnd = "";
+        TeamRanking ranking = null;
+
+        switch (subranking) {
+            case NONE:
+                urlEnd = "/rankings/clan/ranking";
+                ranking = mTournament.getRound(roundId).getRankings(false).getTeamRankingSet().getRanking();
+                break;
+            case ForPOOL:
+                //urlEnd = "/rankings/team/pool";
+                //ranking = mTournament.getRound(roundId).getRankings(false).getTeamRankingSet().getRankingForPool();
+                break;
+            case ForCUP:
+                //urlEnd = "/rankings/team/cup";
+                // ranking = mTournament.getRound(roundId).getRankings(false).getTeamRankingSet().getRankingForCup();
+                break;
+            default:
+                return true;
+        }
+
+        boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
+
+        return error;
+    }
+
+    private boolean synchronizeIndivdualRankingSet(String url, long tourId, int roundId, int poolId, IndivRankingsSet rankingSet) throws IOException {
+
+        boolean error = synchronizeIndivdualRanking(url, tourId, roundId, poolId,SubRankingType.NONE, rankingSet);
+
+        if (mTournament.getPoolCount() > 0) {
+            if (!error) {
+                error = synchronizeIndivdualRanking(url, tourId, roundId,poolId, SubRankingType.ForPOOL, rankingSet);
+            }
+        }
+
+        if (mTournament.getCup() != null) {
+            if (!error) {
+                error = synchronizeIndivdualRanking(url, tourId, roundId, poolId,SubRankingType.ForCUP, rankingSet);
+            }
+
+        }
+
+        for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
+            Criterion crit = mTournament.getParams().getCriterion(i);
+            if (!error) {
+                error = synchronizeIndivdualAnnexRanking(url, tourId, roundId, crit, null, AnnexRanking.SubType.POSITIVE, rankingSet);
+            }
+            if (!error) {
+                error = synchronizeIndivdualAnnexRanking(url, tourId, roundId, crit, null, AnnexRanking.SubType.NEGATIVE, rankingSet);
+            }
+            if (!error) {
+                error = synchronizeIndivdualAnnexRanking(url, tourId, roundId, crit, null, AnnexRanking.SubType.DIFFERENCE, rankingSet);
+            }
+        }
+
+        for (int i = 0; i < mTournament.getParams().getFormulaCount(); i++) {
+            Formula form = mTournament.getParams().getFormula(i);
+            if (!error) {
+                error = synchronizeIndivdualAnnexRanking(url, tourId, roundId, null, form, AnnexRanking.SubType.FORMULA, rankingSet);
+            }
+        }
+        return error;
+    }
+
+    private boolean synchronizeClanRankingSet(String url, long tourId, int roundId) throws IOException {
+
+        boolean error = synchronizeClanRanking(url, tourId, roundId, SubRankingType.NONE);
+
+        for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
+            Criterion crit = mTournament.getParams().getCriterion(i);
+            if (!error) {
+                error = synchronizeClanAnnexRanking(url, tourId, roundId, crit, null, AnnexRanking.SubType.POSITIVE);
+            }
+            if (!error) {
+                error = synchronizeClanAnnexRanking(url, tourId, roundId, crit, null, AnnexRanking.SubType.NEGATIVE);
+            }
+            if (!error) {
+                error = synchronizeClanAnnexRanking(url, tourId, roundId, crit, null, AnnexRanking.SubType.DIFFERENCE);
+            }
+        }
+
+        for (int i = 0; i < mTournament.getParams().getFormulaCount(); i++) {
+            Formula form = mTournament.getParams().getFormula(i);
+            if (!error) {
+                error = synchronizeClanAnnexRanking(url, tourId, roundId, null, form, AnnexRanking.SubType.FORMULA);
+            }
+        }
+        return error;
+    }
+
+    private boolean synchronizeTeamRankingSet(String url, long tourId, int roundId, int poolId, TeamRankingsSet rankingSet) throws IOException {
+
+        boolean error = synchronizeTeamRanking(url, tourId, roundId,poolId, SubRankingType.NONE, rankingSet);
+
+        if (mTournament.getPoolCount() > 0) {
+            if (!error) {
+                error = synchronizeTeamRanking(url, tourId, roundId, poolId,SubRankingType.ForPOOL, rankingSet);
+            }
+        }
+
+        if (mTournament.getCup() != null) {
+            if (!error) {
+                error = synchronizeTeamRanking(url, tourId, roundId,poolId, SubRankingType.ForCUP, rankingSet);
+            }
+
+        }
+
+        for (int i = 0; i < mTournament.getParams().getCriteriaCount(); i++) {
+            Criterion crit = mTournament.getParams().getCriterion(i);
+            if (!error) {
+                error = synchronizeTeamAnnexRanking(url, tourId, roundId, crit, null, AnnexRanking.SubType.POSITIVE, rankingSet);
+            }
+            if (!error) {
+                error = synchronizeTeamAnnexRanking(url, tourId, roundId, crit, null, AnnexRanking.SubType.NEGATIVE, rankingSet);
+            }
+            if (!error) {
+                error = synchronizeTeamAnnexRanking(url, tourId, roundId, crit, null, AnnexRanking.SubType.DIFFERENCE, rankingSet);
+            }
+        }
+
+        for (int i = 0; i < mTournament.getParams().getFormulaCount(); i++) {
+            Formula form = mTournament.getParams().getFormula(i);
+            if (!error) {
+                error = synchronizeTeamAnnexRanking(url, tourId, roundId, null, form, AnnexRanking.SubType.FORMULA, rankingSet);
+            }
+        }
+        return error;
+
+    }
+
+    private boolean synchronizeCategoryRankings(String url, long tourId, int roundId) throws IOException {
+        boolean error = false;
+
+        for (int i = 0; i < mTournament.getCategoriesCount(); i++) {
+            Category cat = mTournament.getCategory(i);
+
+            IndivRanking ranking = mTournament.getRound(roundId).getRankings(false).getCategoryIndivRanking().get(cat);
+            String complete_url = url + "/tournaments/" + tourId + "/rounds/" + roundId + "/rankings/category/indiv/" + cat.getName();
+
+            if (!error) {
+                error = synchronizeRanking(complete_url, ranking);
+            }
+
+        }
+
+        for (int i = 0; i < mTournament.getCategoriesCount(); i++) {
+            Category cat = mTournament.getCategory(i);
+
+            TeamRanking ranking = mTournament.getRound(roundId).getRankings(false).getCategoryTeamRanking().get(cat);
+            String complete_url = url + "/tournaments/" + tourId + "/rounds/" + roundId + "/rankings/category/team/" + cat.getName();
+
+            if (!error) {
+                error = synchronizeRanking(complete_url, ranking);
+            }
+
+        }
+        return error;
+    }
+
+    private boolean synchronizeGroupRankings(String url, long tourId, int roundId) throws IOException {
+        boolean error = false;
+
+        for (int i = 0; i < mTournament.getGroupsCount(); i++) {
+            Group g = mTournament.getGroup(i);
+
+            IndivRanking ranking = mTournament.getRound(roundId).getRankings(false).getGroupRanking().get(g);
+
+            String complete_url = url + "/tournaments/" + tourId + "/rounds/" + roundId + "/rankings/groups/" + i;
+
+            if (!error) {
+                error = synchronizeRanking(complete_url, ranking);
+            }
+        }
+        return error;
+    }
+
+    private boolean synchronizePoolRankings(String url, long tourId, int roundId) throws IOException {
+
+        boolean error = false;
+
+        for (int i = 0; i < mTournament.getPoolCount(); i++) {
+            Pool p = mTournament.getPool(i);
+
+            IndivRankingsSet ranking_set = mTournament.getRound(roundId).getRankings(false).getPoolIndivRankings().get(p);
+
+            if (!error) {
+                error = synchronizeIndivdualRankingSet(url, tourId, roundId, i, ranking_set);
+            }
+        }
+
+        for (int i = 0; i < mTournament.getPoolCount(); i++) {
+            Pool p = mTournament.getPool(i);
+
+            TeamRankingsSet rankingSet = mTournament.getRound(roundId).getRankings(false).getPoolTeamRankings().get(p);
+
+            if (!error) {
+                error = synchronizeTeamRankingSet(url, tourId, roundId, i, rankingSet);
+            }
+        }
+        return error;
+    }
+
+    private boolean synchronizeRankings(String url, long tourId, int roundId) throws IOException {
+
+        Rankings rankings = mTournament.getRound(roundId).getRankings(false);
+
+        boolean error = synchronizeIndivdualRankingSet(url, tourId, roundId, -1, mTournament.getRound(roundId).getRankings(false).getIndivRankingSet());
+
+        if (!error) {
+            error = synchronizeClanRankingSet(url, tourId, roundId);
+        }
+
+        if (!error) {
+            error = synchronizeTeamRankingSet(url, tourId, roundId, -1, mTournament.getRound(roundId).getRankings(false).getTeamRankingSet());
+        }
+
+        if (!error) {
+            error = synchronizeCategoryRankings(url, tourId, roundId);
+        }
+
+        if (!error) {
+            error = synchronizeGroupRankings(url, tourId, roundId);
+        }
+
+        if (!error) {
+            error = synchronizePoolRankings(url, tourId, roundId);
+        }
+
+        return error;
+    }
+
+    private boolean synchronizeRounds(String url, long tourId) throws IOException {
+        String lineGet = methodGET(url + "/tournaments/" + tourId + "/rounds");
+
+        boolean error = false;
+        JSONArray array = new JSONArray(lineGet);
+
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject obj = array.getJSONObject(i);
+
+            boolean toUpload = false;
+            boolean toDownload = false;
+            Object lastUpdatedDate = obj.get("updateDateTime");
+            if (lastUpdatedDate == JSONObject.NULL) {
+                toUpload = true;
+            } else {
+                LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
+                if (mTournament.getRoundsCount() > i) {
+                    if (dt.isAfter(mTournament.getRound(i).getUpdateDateTime())) {
+                        toUpload = true;
+                    }
+                    if (dt.isBefore(mTournament.getRound(i).getUpdateDateTime())) {
+                        toDownload = true;
+                    }
+                } else {
+                    mTournament.addRound(new Round(i, mTournament));
+                    toDownload = true;
+                }
+            }
+
+            if (toUpload) {
+                JSONObject obj2 = mTournament.getRound(i).getJSON();
+                int result = methodPATCH(url + "/tournaments/" + tourId + "/rounds/" + i, obj2);
+                if (result != 0) {
+                    JOptionPane.showMessageDialog(this, "Error detected while synchronizing rounds " + i + ": " + result);
+                    error = true;
+                }
+
+                synchronizeMatchs(url, tourId, i);
+                synchronizeRankings(url, tourId, i);
+            }
+
+            if (toDownload) {
+                mTournament.getRound(i).updateFromJSON(obj);
+                synchronizeMatchs(url, tourId, i);
+                synchronizeRankings(url, tourId, i);
+            }
+        }
+
+        int diff = mTournament.getRoundsCount() - array.length();
+        for (int i = 0; i < diff; i++) {
+            JSONObject obj2 = mTournament.getRound(array.length() + i).getJSON();
+            int result = methodPOST(url + "/tournaments/" + tourId + "/rounds", obj2);
+            if (result != 0) {
+                JOptionPane.showMessageDialog(this, "Error detected while synchronizing rounds: " + result);
+                error = true;
+            }
+        }
+        return error;
+    }
+
     private boolean synchronizeClans(String url, long tourId) throws IOException {
         String lineGet = methodGET(url + "/tournaments/" + tourId + "/clans");
 
@@ -620,7 +1187,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 toUpload = true;
             } else {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
-                if (mTournament.getClansCount()> i) {
+                if (mTournament.getClansCount() > i) {
                     if (dt.isAfter(mTournament.getClan(i).getUpdateDateTime())) {
                         toUpload = true;
                     }
@@ -648,7 +1215,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
             }
         }
 
-        int diff = mTournament.getClansCount()- array.length();
+        int diff = mTournament.getClansCount() - array.length();
         for (int i = 0; i < diff; i++) {
             JSONObject obj2 = mTournament.getClan(array.length() + i).getJSON();
             int result = methodPOST(url + "/tournaments/" + tourId + "/categories", obj2);
@@ -659,7 +1226,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         }
         return error;
     }
-    
+
     private boolean synchronizeCoachs(String url, long tourId) throws IOException {
         String lineGet = methodGET(url + "/tournaments/" + tourId + "/coachs");
 
@@ -676,7 +1243,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 toUpload = true;
             } else {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
-                if (mTournament.getCoachsCount()> i) {
+                if (mTournament.getCoachsCount() > i) {
                     if (dt.isAfter(mTournament.getCoach(i).getUpdateDateTime())) {
                         toUpload = true;
                     }
@@ -704,7 +1271,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
             }
         }
 
-        int diff = mTournament.getCoachsCount()- array.length();
+        int diff = mTournament.getCoachsCount() - array.length();
         for (int i = 0; i < diff; i++) {
             JSONObject obj2 = mTournament.getCoach(array.length() + i).getJSON();
             int result = methodPOST(url + "/tournaments/" + tourId + "/coachs", obj2);
@@ -715,7 +1282,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         }
         return error;
     }
-    
+
     private boolean synchronizeTeams(String url, long tourId) throws IOException {
         String lineGet = methodGET(url + "/tournaments/" + tourId + "/teams");
 
@@ -732,7 +1299,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 toUpload = true;
             } else {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
-                if (mTournament.getTeamsCount()> i) {
+                if (mTournament.getTeamsCount() > i) {
                     if (dt.isAfter(mTournament.getTeam(i).getUpdateDateTime())) {
                         toUpload = true;
                     }
@@ -760,7 +1327,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
             }
         }
 
-        int diff = mTournament.getTeamsCount()- array.length();
+        int diff = mTournament.getTeamsCount() - array.length();
         for (int i = 0; i < diff; i++) {
             JSONObject obj2 = mTournament.getTeam(array.length() + i).getJSON();
             int result = methodPOST(url + "/tournaments/" + tourId + "/teams", obj2);
@@ -960,7 +1527,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         return error;
     }
 
-    private void synchronizeTournament(String url, long tourId) throws IOException {
+    private boolean synchronizeTournament(String url, long tourId) throws IOException {
         String lineGet = methodGET(url + "/tournaments/" + tourId);
 
         boolean error = false;
@@ -1029,21 +1596,21 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         if (!error) {
             error = synchronizeCoachs(url, tourId);
         }
-        
+
         // Download Teams
         // If needed update Teams
         if (!error) {
             error = synchronizeTeams(url, tourId);
         }
-        
+
         // Downloads Rounds
         // If needed update Rounds
-        
-            // Downloads Matchs
-            // If needed update Matchs
+        if (!error) {
+            error = synchronizeRounds(url, tourId);
+        }
 
-            // Downloads Rankings ?
-            // If needed update Ranking
+        return error;
+
     }
 
     private void jbtSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSyncActionPerformed

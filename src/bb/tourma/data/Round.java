@@ -20,6 +20,18 @@ import java.util.logging.Logger;
 import org.jdom.Element;
 import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import org.apache.xerces.impl.dv.util.Base64;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -40,6 +52,25 @@ public class Round implements IXMLExport, Serializable {
         this.UID = UID;
     }
 
+    protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
     /**
      *
      */
@@ -98,7 +129,7 @@ public class Round implements IXMLExport, Serializable {
     Rankings mRankings = new Rankings(false);
     Rankings mRankingsRoundOnly = new Rankings(true);
 
-    protected boolean mFastCompare=true;
+    protected boolean mFastCompare = true;
 
     public boolean isFastCompare() {
         return mFastCompare;
@@ -107,19 +138,17 @@ public class Round implements IXMLExport, Serializable {
     public void setFastCompare(boolean mFastCompare) {
         this.mFastCompare = mFastCompare;
     }
+
     /**
      * Default constructor
      */
     public Round(int rNumber, Tournament tour) {
         mMatchs = new ArrayList<>();
 
-        try
-        {
-        mRankings.createRankings(rNumber, tour);
-        mRankingsRoundOnly.createRankings(rNumber, tour);
-        }
-        catch(java.lang.IndexOutOfBoundsException ite)
-        {
+        try {
+            mRankings.createRankings(rNumber, tour);
+            mRankingsRoundOnly.createRankings(rNumber, tour);
+        } catch (java.lang.IndexOutOfBoundsException ite) {
             ite.printStackTrace();
         }
     }
@@ -344,11 +373,10 @@ public class Round implements IXMLExport, Serializable {
 
     ArrayList<CoachMatch> tmpCoachMatches = null;
 
-    public void resetTmpCoachMatches()
-    {
+    public void resetTmpCoachMatches() {
         tmpCoachMatches = null;
     }
-    
+
     /**
      *
      * @return
@@ -428,11 +456,11 @@ public class Round implements IXMLExport, Serializable {
         return (Date) mHour.clone();
     }
 
-    public void setRoundIndex(Tournament tour,int i)
-    {
+    public void setRoundIndex(Tournament tour, int i) {
         mRankings.setRoundIndex(tour, i);
-        mRankingsRoundOnly.setRoundIndex(tour,i);
+        mRankingsRoundOnly.setRoundIndex(tour, i);
     }
+
     /**
      *
      * @return
@@ -606,9 +634,8 @@ public class Round implements IXMLExport, Serializable {
         } catch (NullPointerException ne) {
             ne.printStackTrace();
         }
-        
-        for (Match match:mMatchs)
-        {
+
+        for (Match match : mMatchs) {
             match.recomputeValues();
         }
     }
@@ -778,7 +805,7 @@ public class Round implements IXMLExport, Serializable {
                 for (int i = 0; i < this.mMatchs.size(); i++) {
                     Match m = mMatchs.get(i);
                     Match mr = r.mMatchs.get(i);
-                    boolean tmp=m.isFastCompare();
+                    boolean tmp = m.isFastCompare();
                     m.setFastCompare(mFastCompare);
                     result &= m.equals(mr);
                     m.setFastCompare(tmp);
@@ -822,5 +849,68 @@ public class Round implements IXMLExport, Serializable {
         } else {
             mMatchs.add(position, m);
         }
+    }
+
+    boolean mLocked = false;
+
+    public void updateFromJSON(JSONObject object) throws IOException {
+
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.updated = object.getBoolean("updated");
+        this.mCup = object.getBoolean("cup");
+        this.mLocked = object.getBoolean("locked");
+        this.mRankingUpdated = object.getBoolean("rankingUpdated");
+        this.mFastCompare = object.getBoolean("fastCompare");
+
+        this.mCupTour = object.getInt("cupTour");
+        this.mCupMaxTour = object.getInt("cupMaxTour");
+
+        this.mMaxBonus = object.getInt("maxBonus");
+        this.mMinBonus = object.getInt("minBonus");
+
+        obj = object.get("hour");
+        if (obj != JSONObject.NULL) {
+            mHour = Date.from(LocalDateTime.parse(obj.toString()).atZone(ZoneId.systemDefault()).toInstant());
+        }
+
+    }
+
+    public JSONObject getJSON() throws IOException {
+
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("updated", updated);
+        json.put("cup", mCup);
+        json.put("locked", mLocked);
+
+        json.put("rankingUpdated", mRankingUpdated);
+        json.put("fastCompare", mFastCompare);
+
+        json.put("cupTour", mCupTour);
+        json.put("cupMaxTour", mCupMaxTour);
+
+        json.put("maxBonus", mMaxBonus);
+        json.put("minBonus", mMinBonus);
+
+        json.put("hour", mHour);
+
+        return json;
     }
 }

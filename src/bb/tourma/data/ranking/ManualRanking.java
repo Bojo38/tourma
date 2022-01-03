@@ -10,13 +10,14 @@ import org.jdom.Element;
 import bb.tourma.data.Competitor;
 import bb.tourma.data.ObjectRanking;
 import bb.tourma.utility.StringConstants;
+import org.json.JSONObject;
 
 /**
  *
  * @author WFMJ7631
  */
 public class ManualRanking extends Ranking {
-    
+
     public ManualRanking(final int round,
             final int ranking_type1,
             final int ranking_type2,
@@ -27,7 +28,8 @@ public class ManualRanking extends Ranking {
         super(round, ranking_type1, ranking_type2, ranking_type3, ranking_type4, ranking_type5, competitors, round_only);
         sortDatas();
     }
-      /**
+
+    /**
      *
      */
     @Override
@@ -71,12 +73,11 @@ public class ManualRanking extends Ranking {
         }
 
     }
-    
-      @Override
+
+    @Override
     public Element getXMLElement() {
-       Element e = super.getXMLElement();
-       e.setName(StringConstants.CS_MANUAL_RANKING);
-      
+        Element e = super.getXMLElement();
+        e.setName(StringConstants.CS_MANUAL_RANKING);
 
         return e;
     }
@@ -84,5 +85,17 @@ public class ManualRanking extends Ranking {
     @Override
     public void setXMLElement(Element e) {
         super.setXMLElement(e);
+    }
+
+    @Override
+    public JSONObject getJSON() {
+
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    }
+
+    @Override
+    public void updateFromJSON(JSONObject object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

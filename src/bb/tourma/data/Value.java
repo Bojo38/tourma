@@ -6,8 +6,10 @@ package bb.tourma.data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -172,4 +174,58 @@ public class Value implements Serializable {
         this.mValue2 = mValue2;
     }
 
+    public JSONObject getJSON() {
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+
+        json.put("updated", this.isUpdated());
+        json.put("value1", this.getValue1());
+        json.put("value2", this.getValue2());
+        json.put("criterionName", mCriteria != null ? mCriteria.getName() : null);
+        json.put("formulaName", mFormula != null ? mFormula.getName() : null);
+
+        return json;
+    }
+
+    public void updateFromJSON(JSONObject object) {
+        Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.updated = object.getBoolean("updated");
+
+        this.mValue1 = object.getInt("value1");
+        this.mValue2 = object.getInt("value2");
+
+        Object tmpObj = object.get("criterionName");
+        if (tmpObj != JSONObject.NULL) {
+            String criterionName = object.getString("criterionName");
+            Criterion crit = Tournament.getTournament().getParams().getCriterion(criterionName);
+            if (!crit.equals(this.mCriteria)) {
+                this.mCriteria = crit;
+            }
+        } else {
+            tmpObj = object.get("formulaName");
+            if (tmpObj != JSONObject.NULL) {
+                String formulaName = object.getString("formulaName");
+                Formula form = Tournament.getTournament().getParams().getFormula(formulaName);
+                if (!form.equals(this.mFormula)) {
+                    this.mFormula = form;
+                }
+            }
+        }
+    }
 }

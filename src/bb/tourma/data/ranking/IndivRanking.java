@@ -19,6 +19,9 @@ import bb.tourma.data.Round;
 import bb.tourma.data.Tournament;
 import bb.tourma.data.Value;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -50,7 +53,7 @@ public class IndivRanking extends Ranking {
         mTeamTournament = teamTour;
         mForCup = forCup;
         mForPool = forPool;
-   //     sortDatas();
+        //     sortDatas();
 
     }
 
@@ -116,7 +119,7 @@ public class IndivRanking extends Ranking {
         mDatas.clear();
         mDatas = new ArrayList();
 
-        Tournament tour=Tournament.getTournament();
+        Tournament tour = Tournament.getTournament();
         final ArrayList<Round> rounds = new ArrayList<>();
 
         if (mRoundOnly) {
@@ -324,13 +327,11 @@ public class IndivRanking extends Ranking {
 
         Collections.sort(mDatas);
 
-        
-
         // On ajuste le tri par poule si nécessaire pour que
         // l'écart minimum entre 2 membres de la même poule
         // soit le nombre de joueurs de la poule
         if ((mForPool) && (!tour.getParams()
-                .isTeamTournament())&&(tour.getPoolCount()>0)) {
+                .isTeamTournament()) && (tour.getPoolCount() > 0)) {
             if (mObjects.size() > tour.getPool(0).getCompetitorCount()) {
                 final int nbPool = tour.getPoolCount();
                 Pool p;
@@ -440,5 +441,29 @@ public class IndivRanking extends Ranking {
         } catch (DataConversionException dce) {
             dce.printStackTrace();
         }
+    }
+
+       
+    
+    
+    @Override
+    public JSONObject getJSON() {
+       
+        JSONObject json=super.getJSON();
+        
+        json.put("teamTournament", mTeamTournament);
+        json.put("forPool",mForPool);
+        json.put("forCup",mForCup);
+        
+        return json;
+    }
+
+    @Override
+    public void updateFromJSON(JSONObject object) {
+        super.updateFromJSON(object);
+        
+        this.mTeamTournament=object.getBoolean("teamTournament");
+        this.mForPool=object.getBoolean("forPool");
+        this.mForCup=object.getBoolean("forCup");
     }
 }

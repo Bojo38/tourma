@@ -20,12 +20,17 @@ import bb.tourma.data.ObjectRanking;
 import bb.tourma.data.Team;
 import bb.tourma.data.Tournament;
 import bb.tourma.utility.StringConstants;
+import org.json.JSONObject;
 
 /**
  *
  * @author WFMJ7631
  */
 abstract public class AnnexRanking extends Ranking {
+
+    public enum SubType {
+        POSITIVE, NEGATIVE, DIFFERENCE, FORMULA
+    }
 
     public AnnexRanking(Element e) {
         super(e);
@@ -226,5 +231,66 @@ abstract public class AnnexRanking extends Ranking {
         } catch (DataConversionException dce) {
             dce.printStackTrace();;
         }
+    }
+
+    @Override
+    public JSONObject getJSON() {
+
+        JSONObject json = super.getJSON();
+
+        if (mCriterion != null) {
+            json.put("criterionName", this.mCriterion.getName());
+            json.put("criterionAccronym", this.mCriterion.getAccronym());
+        } else {
+            if (mFormula != null) {
+                json.put("formulaName", this.mFormula.getName());
+            }
+        }
+        switch (this.mSubtype) {
+            case 0:
+                json.put("subtypeString", "+");
+                break;
+            case 1:
+                json.put("subtypeString", "-");
+                break;
+            case 2:
+                json.put("subtypeString", "=");
+                break;
+        }
+
+        return json;
+    }
+
+    @Override
+    public void updateFromJSON(JSONObject object) {
+        super.updateFromJSON(object);
+
+        if (object.get("critetrionName") != JSONObject.NULL) {
+            String tmp = object.getString("criterionName");
+
+            Criterion crit = Tournament.getTournament().getParams().getCriterion(tmp);
+            this.mCriterion = crit;
+        }
+
+        if (object.get("formulaName") != JSONObject.NULL) {
+            String tmp = object.getString("formulaName");
+
+            Formula form = Tournament.getTournament().getParams().getFormula(tmp);
+            this.mFormula = form;
+        }
+
+        String tmp = object.getString("subtypeString");
+        switch (tmp) {
+            case "+":
+                this.mSubtype = 0;
+                break;
+            case "-":
+                this.mSubtype = 1;
+                break;
+            case "=":
+                this.mSubtype = 2;
+                break;
+        }
+
     }
 }

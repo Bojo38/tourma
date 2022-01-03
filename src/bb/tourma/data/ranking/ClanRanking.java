@@ -18,6 +18,7 @@ import bb.tourma.data.Team;
 import bb.tourma.data.TeamMatch;
 import bb.tourma.data.Tournament;
 import bb.tourma.utility.StringConstants;
+import org.json.JSONObject;
 
 /**
  *
@@ -380,5 +381,19 @@ public class ClanRanking extends Ranking {
     @Override
     public void setXMLElement(Element e) {
         super.setXMLElement(e);
+    }
+    
+    @Override
+    public JSONObject getJSON() {
+       
+        JSONObject json=super.getJSON();
+        
+
+        return json;
+    }
+
+    @Override
+    public void updateFromJSON(JSONObject object) {
+       super.updateFromJSON(object);
     }
 }

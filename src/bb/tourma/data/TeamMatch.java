@@ -15,6 +15,9 @@ import java.util.logging.Logger;
 import org.jdom.Element;
 import bb.tourma.tableModel.MjtRanking;
 import bb.tourma.utility.StringConstants;
+import java.time.LocalDateTime;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  *
@@ -1498,4 +1501,89 @@ public class TeamMatch extends Match implements Serializable {
         }
         return true;
     }
+    
+    public JSONObject getJSON()
+    {
+        JSONObject json = new JSONObject();
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.now();
+        }
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.now();
+        }
+
+        json.put("createDateTime", createDateTime.toString());
+        json.put("updateDateTime", updateDateTime.toString());
+        
+        json.put("locked", this.isLocked());
+        json.put("values_computed", this.isValues_computed());
+        json.put("entered", this.isEntered());
+
+        JSONArray array=new JSONArray();
+        for (CoachMatch cm:mMatchs)
+        {
+            JSONObject object=cm.getJSON();
+            array.put(object);
+        }
+        json.put("coachMatch",array);
+        json.put("competitor1", this.getCompetitor1().getName());
+        json.put("competitor2", this.getCompetitor2().getName());
+
+        return json;
+    }
+    
+    public void updateFromJSON(JSONObject object)
+    {
+         Object obj = object.get("createDateTime");
+        if (obj != JSONObject.NULL) {
+            createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
+        }
+        obj = object.get("updateDateTime");
+        if (obj != JSONObject.NULL) {
+            updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
+        }
+
+        this.mLocked=object.getBoolean("locked");
+        this.values_computed=object.getBoolean("values_computed");
+        
+        Team t1=Tournament.getTournament().getTeam(object.getString("competitor1_Name"));
+        Team t2=Tournament.getTournament().getTeam(object.getString("competitor2_Name"));
+
+            
+        if (t1!=null)
+        {
+            if (!t1.equals(this.getCompetitor1()))
+            {
+                this.getCompetitor1().removeMatch(this);
+                this.setCompetitor1(t1);
+                t1.addMatch(this);
+            }
+        }
+        if (t2!=null)
+        {
+             this.getCompetitor2().removeMatch(this);
+                this.setCompetitor1(t2);
+                t2.addMatch(this);
+        }
+
+        JSONArray array = object.getJSONArray("coachMatch");
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject json = array.getJSONObject(i);
+            
+            if (mMatchs.size()>i)
+            {
+                CoachMatch cm=mMatchs.get(i);
+                cm.updateFromJSON(json);
+            }
+            else
+            {
+                CoachMatch cm=new CoachMatch(getRound());
+                mMatchs.add(cm);
+                cm.updateFromJSON(json);
+            }
+            
+           
+        }
+    }
+    
 }

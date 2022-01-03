@@ -5,7 +5,9 @@
 package bb.tourma.data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import org.jdom.Element;
+import org.json.JSONObject;
 
 /**
  *
@@ -13,6 +15,26 @@ import org.jdom.Element;
  */
 public abstract class Match implements IXMLExport, Serializable {
 
+    
+     protected LocalDateTime createDateTime;
+
+    protected LocalDateTime updateDateTime;
+
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
+    }
+
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
+    }
+
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
+    }
+
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
+    }
     public boolean isUpdated() {
         return updated;
     }
@@ -21,7 +43,18 @@ public abstract class Match implements IXMLExport, Serializable {
         this.updated = updated;
     }
     protected boolean updated = false;
+    protected boolean mLocked = false;
 
+    public boolean isLocked()
+    {
+        return mLocked;
+    }
+    
+    public void setLocked(boolean locked)
+    {
+        mLocked=locked;
+    }
+    
     /**
      *
      */
@@ -47,6 +80,9 @@ public abstract class Match implements IXMLExport, Serializable {
      */
     private Competitor mLooser = null;
 
+    public abstract JSONObject getJSON();
+    public abstract void updateFromJSON(JSONObject object);
+    
     /**
      *
      * @param round

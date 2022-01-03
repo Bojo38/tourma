@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import bb.tourma.utility.StringConstants;
+import org.json.JSONObject;
 
 /**
  *
@@ -111,5 +112,20 @@ public class ObjectAnnexRanking extends ObjectRanking {
      */
     public void setValue(int mValue)  {
         this.mValue = mValue;
+    }
+    
+    public JSONObject getJSON() {
+       
+        JSONObject json=super.getJSON();
+        
+        json.put("value", mValue);
+        
+        return json;
+    }
+
+
+    public void updateFromJSON(JSONObject object) {
+        super.updateFromJSON(object);
+        mValue=object.getInt("value");
     }
 }

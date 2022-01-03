@@ -23,6 +23,7 @@ import bb.tourma.data.TeamMatch;
 import bb.tourma.data.Tournament;
 import bb.tourma.data.Value;
 import bb.tourma.utility.StringConstants;
+import org.json.JSONObject;
 
 /**
  *
@@ -577,6 +578,26 @@ public class TeamRanking extends Ranking {
         } catch (DataConversionException dce) {
             dce.printStackTrace();
         }
+    }
+
+   @Override
+    public JSONObject getJSON() {
+       
+        JSONObject json=super.getJSON();
+        
+        json.put("teamVictory", this.mTeamVictory);
+        json.put("forPool",mForPool);
+        json.put("forCup",mForCup);
+        
+        return json;
+    }
+
+    @Override
+    public void updateFromJSON(JSONObject object) {
+        super.updateFromJSON(object);
+        this.mTeamVictory=object.getBoolean("teamVictory");
+        this.mForPool=object.getBoolean("forPool");
+        this.mForCup=object.getBoolean("forCup");
     }
 
 }
