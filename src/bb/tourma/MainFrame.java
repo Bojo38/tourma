@@ -3222,7 +3222,7 @@ public final class MainFrame extends javax.swing.JFrame implements PropertyChang
     }//GEN-LAST:event_jcxDisplayRostersActionPerformed
 
     private void jmiEditRosterListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiEditRosterListActionPerformed
-        JdgRosters jdg = new JdgRosters(this, true);
+        JdgRosters jdg = new JdgRosters(this, true,mTournament);
         jdg.setVisible(true);
     }//GEN-LAST:event_jmiEditRosterListActionPerformed
 

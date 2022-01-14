@@ -47,6 +47,12 @@ public class GroupPoints implements Serializable {
         this.updateDateTime = updateDateTime;
     }
 
+    public GroupPoints()
+    {
+        createDateTime=LocalDateTime.now();
+        updateDateTime=LocalDateTime.now();
+    }
+    
     private int victoryPoints = 0;
     private int drawPoints = 0;
     private int lossPoints = 0;
@@ -89,6 +95,7 @@ public class GroupPoints implements Serializable {
      */
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
+        updateDateTime=LocalDateTime.now();
     }
 
     /**
@@ -117,6 +124,7 @@ public class GroupPoints implements Serializable {
      */
     public void setLossPoints(int lossPoints) {
         this.lossPoints = lossPoints;
+        updateDateTime=LocalDateTime.now();
     }
 
     public void updateFromJSON(JSONObject object) {

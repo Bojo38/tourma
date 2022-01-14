@@ -17,6 +17,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import bb.tourma.data.RosterType;
+import bb.tourma.data.Tournament;
 import bb.tourma.languages.Translate;
 
 /**
@@ -26,16 +27,18 @@ import bb.tourma.languages.Translate;
 public final class JdgRosters extends javax.swing.JDialog {
 
     private final DefaultListModel mModel = new DefaultListModel();
+    Tournament mTournament;
 
     /**
      * Creates new form jdgCoach
      * @param parent
      * @param modal
      */
-    public JdgRosters(final java.awt.Frame parent, final boolean modal) {
+    public JdgRosters(final java.awt.Frame parent, final boolean modal, Tournament tour) {
         super(parent, modal);
         initComponents();
 
+        mTournament=tour;
         final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         final GraphicsDevice gs = ge.getDefaultScreenDevice();
         final DisplayMode dmode = gs.getDisplayMode();
@@ -45,19 +48,20 @@ public final class JdgRosters extends javax.swing.JDialog {
             this.setLocation((screenWidth - this.getWidth()) / 2, (screenHeight - this.getHeight()) / 2);
 
 
-        for (int i = 0; i < RosterType.getRostersNamesCount(); i++) {
-            String roster=RosterType.getRostersName(i);
-            mModel.addElement(roster);
-        }
 
-        jlsRosters.setModel(mModel);
 
         update();
 
     }
 
     private void update() {
-        // Empty method because everybod has update method
+        
+        
+        for (RosterType rt:mTournament.getRosterType()) {
+            mModel.addElement(rt.getName());
+        }
+
+        jlsRosters.setModel(mModel);
     }
 
     /**
@@ -157,9 +161,10 @@ public final class JdgRosters extends javax.swing.JDialog {
     private void jbtOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtOKActionPerformed
 
         RosterType.newRostersNames();
-        
+                
         for (int i = 0; i < mModel.getSize(); i++) {
             RosterType.addRosterName((String) mModel.get(i));
+            
         }
 
         this.setVisible(false);
@@ -171,8 +176,10 @@ public final class JdgRosters extends javax.swing.JDialog {
        final Object name = JOptionPane.showInputDialog(this,
                Translate.translate(CS_NewRosterName),
                Translate.translate(CS_NewRoster));
+       
         if (name != null) {
-            mModel.addElement(name);
+           RosterType rt=new RosterType((String)name);
+           mTournament.getRosterType().add(rt);
         }
 
         update();
@@ -185,14 +192,14 @@ public final class JdgRosters extends javax.swing.JDialog {
     private void jbtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveActionPerformed
 
         if ((jlsRosters.getSelectedIndex() > 0) && (jlsRosters.getSelectedIndex() < mModel.getSize())) {
-            mModel.remove(jlsRosters.getSelectedIndex());
+            mTournament.getRosterType().remove(jlsRosters.getSelectedIndex());
         }
 
         update();
     }//GEN-LAST:event_jbtRemoveActionPerformed
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})
     private void jbtRemoveAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtRemoveAllActionPerformed
-        mModel.removeAllElements();
+        mTournament.getRosterType().clear();
         update();
     }//GEN-LAST:event_jbtRemoveAllActionPerformed
 @SuppressWarnings({"PMD.UnusedFormalParameter", "PMD.MethodArgumentCouldBeFinal"})

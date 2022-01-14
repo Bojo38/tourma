@@ -878,7 +878,10 @@ public class Round implements IXMLExport, Serializable {
 
         obj = object.get("hour");
         if (obj != JSONObject.NULL) {
-            mHour = Date.from(LocalDateTime.parse(obj.toString()).atZone(ZoneId.systemDefault()).toInstant());
+            String d=obj.toString();
+            d=d.substring(0, d.indexOf("+"));
+            LocalDateTime ldt=LocalDateTime.parse(d);
+            mHour = Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant());
         }
 
     }

@@ -46,6 +46,10 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
     protected LocalDateTime updateDateTime;
 
     public LocalDateTime getCreateDateTime() {
+        if (createDateTime==null)
+        {
+            createDateTime=LocalDateTime.MIN;
+        }
         return createDateTime;
     }
 
@@ -54,6 +58,10 @@ public abstract class Competitor implements Comparable<Object>, IWithNameAndPict
     }
 
     public LocalDateTime getUpdateDateTime() {
+        if (updateDateTime==null)
+        {
+            updateDateTime=LocalDateTime.MIN;
+        }
         return updateDateTime;
     }
 

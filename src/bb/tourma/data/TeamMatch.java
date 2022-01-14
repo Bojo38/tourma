@@ -1242,16 +1242,13 @@ public class TeamMatch extends Match implements Serializable {
                     value = getTeammatesVND(t);
                     break;
                 default:
-                    Parameters params=Tournament.getTournament().getParams();
+                    Parameters params = Tournament.getTournament().getParams();
                     if (rankingType > Parameters.C_MAX_RANKING) {
-                        if (rankingType<=Parameters.C_MAX_RANKING+params.getCriteriaCount()*3)
-                        {
+                        if (rankingType <= Parameters.C_MAX_RANKING + params.getCriteriaCount() * 3) {
                             value += getValue(Ranking.getCriterionByValue(rankingType), Ranking.getSubtypeByValue(rankingType), t);
-                        }
-                        else
-                        {
-                            int f=rankingType-Parameters.C_MAX_RANKING-params.getCriteriaCount()*3-1;
-                            value+=getValue(Tournament.getTournament().getParams().getFormula(f),t);
+                        } else {
+                            int f = rankingType - Parameters.C_MAX_RANKING - params.getCriteriaCount() * 3 - 1;
+                            value += getValue(Tournament.getTournament().getParams().getFormula(f), t);
                         }
                     }
             }
@@ -1440,8 +1437,8 @@ public class TeamMatch extends Match implements Serializable {
         }
         return value;
     }
-    
-    public int getValue(Formula  form, Competitor c) {
+
+    public int getValue(Formula form, Competitor c) {
         int value = 0;
         if (c == mCompetitor1) {
             for (int i = 0; i < this.getMatchCount(); i++) {
@@ -1501,9 +1498,8 @@ public class TeamMatch extends Match implements Serializable {
         }
         return true;
     }
-    
-    public JSONObject getJSON()
-    {
+
+    public JSONObject getJSON() {
         JSONObject json = new JSONObject();
         if (createDateTime == null) {
             createDateTime = LocalDateTime.now();
@@ -1514,27 +1510,25 @@ public class TeamMatch extends Match implements Serializable {
 
         json.put("createDateTime", createDateTime.toString());
         json.put("updateDateTime", updateDateTime.toString());
-        
+
         json.put("locked", this.isLocked());
         json.put("values_computed", this.isValues_computed());
         json.put("entered", this.isEntered());
 
-        JSONArray array=new JSONArray();
-        for (CoachMatch cm:mMatchs)
-        {
-            JSONObject object=cm.getJSON();
+        JSONArray array = new JSONArray();
+        for (CoachMatch cm : mMatchs) {
+            JSONObject object = cm.getJSON();
             array.put(object);
         }
-        json.put("coachMatch",array);
+        json.put("coachMatch", array);
         json.put("competitor1", this.getCompetitor1().getName());
         json.put("competitor2", this.getCompetitor2().getName());
 
         return json;
     }
-    
-    public void updateFromJSON(JSONObject object)
-    {
-         Object obj = object.get("createDateTime");
+
+    public void updateFromJSON(JSONObject object) {
+        Object obj = object.get("createDateTime");
         if (obj != JSONObject.NULL) {
             createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
         }
@@ -1543,47 +1537,43 @@ public class TeamMatch extends Match implements Serializable {
             updateDateTime = LocalDateTime.parse(object.get("updateDateTime").toString());
         }
 
-        this.mLocked=object.getBoolean("locked");
-        this.values_computed=object.getBoolean("values_computed");
-        
-        Team t1=Tournament.getTournament().getTeam(object.getString("competitor1_Name"));
-        Team t2=Tournament.getTournament().getTeam(object.getString("competitor2_Name"));
+        this.mLocked = object.getBoolean("locked");
+        this.values_computed = object.getBoolean("values_computed");
 
-            
-        if (t1!=null)
-        {
-            if (!t1.equals(this.getCompetitor1()))
-            {
-                this.getCompetitor1().removeMatch(this);
+        Team t1 = Tournament.getTournament().getTeam(object.getString("competitor1_Name"));
+        Team t2 = Tournament.getTournament().getTeam(object.getString("competitor2_Name"));
+
+        if (t1 != null) {
+            if (!t1.equals(this.getCompetitor1())) {
+                if (this.getCompetitor1() != null) {
+                    this.getCompetitor1().removeMatch(this);
+                }
                 this.setCompetitor1(t1);
                 t1.addMatch(this);
             }
         }
-        if (t2!=null)
-        {
-             this.getCompetitor2().removeMatch(this);
-                this.setCompetitor1(t2);
-                t2.addMatch(this);
+        if (t2 != null) {
+            if (this.getCompetitor2() != null) {
+                this.getCompetitor2().removeMatch(this);
+            }
+            this.setCompetitor2(t2);
+            t2.addMatch(this);
         }
 
         JSONArray array = object.getJSONArray("coachMatch");
         for (int i = 0; i < array.length(); i++) {
             JSONObject json = array.getJSONObject(i);
-            
-            if (mMatchs.size()>i)
-            {
-                CoachMatch cm=mMatchs.get(i);
+
+            if (mMatchs.size() > i) {
+                CoachMatch cm = mMatchs.get(i);
                 cm.updateFromJSON(json);
-            }
-            else
-            {
-                CoachMatch cm=new CoachMatch(getRound());
+            } else {
+                CoachMatch cm = new CoachMatch(getRound());
                 mMatchs.add(cm);
                 cm.updateFromJSON(json);
             }
-            
-           
+
         }
     }
-    
+
 }

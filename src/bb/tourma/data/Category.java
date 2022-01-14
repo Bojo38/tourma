@@ -48,6 +48,10 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
     protected LocalDateTime updateDateTime;
 
     public LocalDateTime getCreateDateTime() {
+        if (createDateTime==null)
+        {
+            createDateTime=LocalDateTime.MIN;
+        }
         return createDateTime;
     }
 
@@ -56,6 +60,10 @@ public class Category implements Comparable<Object>, IXMLExport, Serializable {
     }
 
     public LocalDateTime getUpdateDateTime() {
+        if (updateDateTime==null)
+        {
+            updateDateTime=LocalDateTime.MIN;
+        }
         return updateDateTime;
     }
 

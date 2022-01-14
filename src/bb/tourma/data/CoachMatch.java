@@ -2236,87 +2236,90 @@ public class CoachMatch extends Match implements Serializable {
                 mValues.put(crit, value);
             }
         }
-        
-        JSONArray array2 = object.getJSONArray("computedValues");
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject json = array.getJSONObject(i);
-            Formula form = Tournament.getTournament().getParams().getFormula(json.getString("formulaName"));
 
-            Value val = mComputedValues.get(form);
-            if (val != null) {
-                val.updateFromJSON(json);
-            } else {
-                Value value = new Value(form);
-                value.updateFromJSON(json);
-                mComputedValues.put(form, value);
+        if (object.get("computedValues") != JSONObject.NULL) {
+            JSONObject cv = object.getJSONObject("computedValues");
+            if (!cv.isEmpty()) {
+                JSONArray array2 = object.getJSONArray("computedValues");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject json = array.getJSONObject(i);
+                    Formula form = Tournament.getTournament().getParams().getFormula(json.getString("formulaName"));
+
+                    Value val = mComputedValues.get(form);
+                    if (val != null) {
+                        val.updateFromJSON(json);
+                    } else {
+                        Value value = new Value(form);
+                        value.updateFromJSON(json);
+                        mComputedValues.put(form, value);
+                    }
+                }
             }
         }
-        
-        this.mLocked=object.getBoolean("locked");
-        this.values_computed=object.getBoolean("values_computed");
-        this.remotely =object.getBoolean("remotely");
 
-        this.refusedBy1 =object.getBoolean("refusedBy1");
-        this.refusedBy2 =object.getBoolean("refusedBy2");
-        
-        RosterType rt1=Tournament.getTournament().getRosterType().get(object.getString("roster1"));
-        RosterType rt2=Tournament.getTournament().getRosterType().get(object.getString("roster2"));
+        this.mLocked = object.getBoolean("locked");
+        this.values_computed = object.getBoolean("values_computed");
+        this.remotely = object.getBoolean("remotely");
 
-        this.concedeedBy1 =object.getBoolean("concedeedBy1");
-        this.concedeedBy2 =object.getBoolean("concedeedBy1");
- 
-        Coach c1=Tournament.getTournament().getCoach(object.getString("competitor1_Name"));
-        Coach c2=Tournament.getTournament().getCoach(object.getString("competitor2_Name"));
+        this.refusedBy1 = object.getBoolean("refusedBy1");
+        this.refusedBy2 = object.getBoolean("refusedBy2");
 
-        if (c1!=null)
-        {
-            if (!c1.equals(this.getCompetitor1()))
-            {
-                this.getCompetitor1().removeMatch(this);
+        RosterType rt1 = null;
+        RosterType rt2 = null;
+        if (object.get("roster1") != JSONObject.NULL) {
+            rt1 = Tournament.getTournament().getRosterType(object.getString("roster1"));
+        }
+        if (object.get("roster2") != JSONObject.NULL) {
+            rt2 = Tournament.getTournament().getRosterType(object.getString("roster2"));
+        }
+
+        this.concedeedBy1 = object.getBoolean("concedeedBy1");
+        this.concedeedBy2 = object.getBoolean("concedeedBy1");
+
+        Coach c1 = Tournament.getTournament().getCoach(object.getString("competitor1_Name"));
+        Coach c2 = Tournament.getTournament().getCoach(object.getString("competitor2_Name"));
+
+        if (c1 != null) {
+            if (!c1.equals(this.getCompetitor1())) {
+                if (this.getCompetitor1() != null) {
+                    this.getCompetitor1().removeMatch(this);
+                }
                 this.setCompetitor1(c1);
                 c1.addMatch(this);
             }
         }
-        if (c2!=null)
-        {
-            if (!c2.equals(this.getCompetitor2()))
-            {
-                this.getCompetitor2().removeMatch(this);
+        if (c2 != null) {
+            if (!c2.equals(this.getCompetitor2())) {
+                if (this.getCompetitor2() != null) {
+                    this.getCompetitor2().removeMatch(this);
+                }
                 this.setCompetitor2(c2);
                 c2.addMatch(this);
             }
         }
-        
-        Object tmp=object.get("substitute1");
-        if (tmp!=JSONObject.NULL)
-        {
-            if (this.mSubstitute1==null)
-            {
-                this.mSubstitute1=new Substitute();
+
+        Object tmp = object.get("substitute1");
+        if (tmp != JSONObject.NULL) {
+            if (this.mSubstitute1 == null) {
+                this.mSubstitute1 = new Substitute();
             }
             this.mSubstitute1.setMatch(this);
-            this.mSubstitute1.setTitular((Coach)this.getCompetitor1());
+            this.mSubstitute1.setTitular((Coach) this.getCompetitor1());
             this.mSubstitute1.setSubstitute(Tournament.getTournament().getCoach(object.getString("substitute1")));
+        } else {
+            this.mSubstitute1 = null;
         }
-        else
-        {
-            this.mSubstitute1=null;
-        }
-         
-        tmp=object.get("substitute2");
-        if (tmp!=JSONObject.NULL)
-        {
-            if (this.mSubstitute2==null)
-            {
-                this.mSubstitute2=new Substitute();
+
+        tmp = object.get("substitute2");
+        if (tmp != JSONObject.NULL) {
+            if (this.mSubstitute2 == null) {
+                this.mSubstitute2 = new Substitute();
             }
             this.mSubstitute2.setMatch(this);
-            this.mSubstitute2.setTitular((Coach)this.getCompetitor2());
+            this.mSubstitute2.setTitular((Coach) this.getCompetitor2());
             this.mSubstitute2.setSubstitute(Tournament.getTournament().getCoach(object.getString("substitute2")));
-        }
-        else
-        {
-            this.mSubstitute2=null;
+        } else {
+            this.mSubstitute2 = null;
         }
     }
 }

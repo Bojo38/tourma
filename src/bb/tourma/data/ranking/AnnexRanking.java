@@ -265,7 +265,7 @@ abstract public class AnnexRanking extends Ranking {
     public void updateFromJSON(JSONObject object) {
         super.updateFromJSON(object);
 
-        if (object.get("critetrionName") != JSONObject.NULL) {
+        if (object.get("criterionName") != JSONObject.NULL) {
             String tmp = object.getString("criterionName");
 
             Criterion crit = Tournament.getTournament().getParams().getCriterion(tmp);

@@ -1465,30 +1465,44 @@ public final class Coach extends Competitor implements IXMLExport, Serializable 
 
         this.setName(object.get("name").toString());
 
-        String base64Picture = object.getString("base64Picture");
+       /* if (object.get("base64Picture") != JSONObject.NULL) {
+            String base64Picture = object.getString("base64Picture");
 
-        byte[] bytes = Base64.decode(base64Picture);
-        BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
-        ImageIcon ii = new ImageIcon(bi);
-        setPicture(ii);
+            byte[] bytes = Base64.decode(base64Picture);
+            BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+            ImageIcon ii = new ImageIcon(bi);
+            setPicture(ii);
+        }*/
 
         this.mActive = object.getBoolean("active");
 
         this.mNaf = object.getInt("naf");
-        this.mNafRoster = object.getString("nafRoster");
+        //this.mNafRoster = object.getString("nafRoster");
         this.mRank = object.getInt("rank");
         this.mTeam = object.getString("team");
         this.mHandicap = object.getInt("handicap");
         this.setPinCode(object.getInt("pinCode"));
         this.mNafRankAvg = object.getDouble("nafRankAvg");
         this.mNafRank = object.getDouble("nafRank");
-        this.mRoster = Tournament.getTournament().getRosterType().get(object.getString("rosterName"));
-        this.setClan(Tournament.getTournament().getClan(object.getString("clanName")));
+        
+        Tournament tour=Tournament.getTournament();
+        
+        String roster=object.getString("rosterName");
+        RosterType rt=tour.getRosterType(roster);
+        
+        if (rt==null)
+        {
+             rt=new RosterType(roster);
+             tour.getRosterType().add( rt);
+             RosterType.addRosterName((String) roster);
+        }
+        this.mRoster = rt;
+        this.setClan(tour.getClan(object.getString("clanName")));
 
-        JSONArray array = object.getJSONArray("categoriesName");
+        JSONArray array = object.getJSONArray("categoriesNames");
         for (int i = 0; i < array.length(); i++) {
             String categoryName = array.getString(i);
-            Category cat = Tournament.getTournament().getCategory(categoryName);
+            Category cat =tour.getCategory(categoryName);
 
             boolean found = false;
             for (int j = 0; j < this.getCategoryCount(); j++) {

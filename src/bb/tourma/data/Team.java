@@ -920,14 +920,16 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
 
         this.setName(object.get("name").toString());
 
-        String base64Picture = object.getString("base64Picture");
+       /* if (object.get("base64Picture") != JSONObject.NULL) {
+            String base64Picture = object.getString("base64Picture");
 
-        byte[] bytes = Base64.decode(base64Picture);
-        BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
-        ImageIcon ii = new ImageIcon(bi);
-        setPicture(ii);
+            byte[] bytes = Base64.decode(base64Picture);
+            BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
+            ImageIcon ii = new ImageIcon(bi);
+            setPicture(ii);
+        }*/
 
-        JSONArray array = object.getJSONArray("categoriesName");
+        JSONArray array = object.getJSONArray("categoriesNames");
         for (int i = 0; i < array.length(); i++) {
             String categoryName = array.getString(i);
             Category cat = Tournament.getTournament().getCategory(categoryName);
@@ -964,7 +966,10 @@ public class Team extends Competitor implements IXMLExport, IContainCoachs, Seri
             this.delCategory(cat);
         }
 
-          this.setClan(Tournament.getTournament().getClan(object.getString("clanName")));
+        if (object.get("clanName")!=JSONObject.NULL)
+        this.setClan(Tournament.getTournament().getClan(object.getString("clanName")));
+        else
+            this.setClan(null);
 
         JSONArray coachs = object.getJSONArray("coachsNames");
 

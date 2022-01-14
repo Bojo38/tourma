@@ -41,6 +41,10 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
     protected LocalDateTime updateDateTime;
 
     public LocalDateTime getCreateDateTime() {
+         if (createDateTime==null)
+        {
+            createDateTime=LocalDateTime.MIN;
+        }
         return createDateTime;
     }
 
@@ -49,6 +53,10 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
     }
 
     public LocalDateTime getUpdateDateTime() {
+         if (updateDateTime==null)
+        {
+            updateDateTime=LocalDateTime.MIN;
+        }
         return updateDateTime;
     }
 
@@ -304,12 +312,12 @@ public class Clan implements Comparable<Object>, IXMLExport, IWithNameAndPicture
 
         this.mName = object.get("name").toString();
 
-        String base64Picture = object.getString("base64Picture");
+       /* String base64Picture = object.getString("base64Picture");
 
         byte[] bytes = Base64.decode(base64Picture);
         BufferedImage bi = ImageIO.read(new ByteArrayInputStream(bytes));
         ImageIcon ii = new ImageIcon(bi);
-        setPicture(ii);
+        setPicture(ii);*/
 
     }
 

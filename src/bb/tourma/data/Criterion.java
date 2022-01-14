@@ -23,6 +23,27 @@ import org.json.JSONObject;
  */
 public class Criterion implements Comparable, IXMLExport, Serializable {
 
+     protected boolean synchroMode=false;
+    
+    public void updateTime()
+    {
+        if (!synchroMode)
+            updateDateTime=LocalDateTime.now();
+        
+        if (createDateTime==null)
+            createDateTime=updateDateTime;
+    }
+    
+    public boolean iSynchroMode()
+    {
+        return synchroMode;
+    }
+    
+    public void setSynchroMode (boolean mode)
+    {
+        synchroMode=mode;
+    }
+    
     protected static AtomicInteger sGenUID = new AtomicInteger(0);
     protected int UID = sGenUID.incrementAndGet();
 
@@ -39,6 +60,10 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
     protected LocalDateTime updateDateTime;
 
     public LocalDateTime getCreateDateTime() {
+        if (createDateTime==null)
+        {
+            createDateTime=LocalDateTime.MIN;
+        }
         return createDateTime;
     }
 
@@ -47,6 +72,10 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
     }
 
     public LocalDateTime getUpdateDateTime() {
+        if (updateDateTime==null)
+        {
+            updateDateTime=LocalDateTime.MIN;
+        }
         return updateDateTime;
     }
 
@@ -108,6 +137,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setAccronym(String accronym) {
         this.mAccronym = accronym;
+        updateTime();
     }
     /**
      * Points for
@@ -243,6 +273,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setCriticalThreshold(int value) {
         mCriticalValueThreshold = value;
+        updateTime();
     }
 
     /**
@@ -367,6 +398,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
      */
     public void setName(String mName) {
         this.mName = mName;
+        updateTime();
     }
 
     /**
@@ -381,6 +413,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
      */
     public void setPointsFor(int mPointsFor) {
         this.mPointsFor = mPointsFor;
+        updateTime();
     }
 
     /**
@@ -395,6 +428,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
      */
     public void setPointsAgainst(int mPointsAgainst) {
         this.mPointsAgainst = mPointsAgainst;
+        updateTime();
     }
 
     /**
@@ -409,6 +443,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
      */
     public void setPointsTeamFor(int mPointsTeamFor) {
         this.mPointsTeamFor = mPointsTeamFor;
+        updateTime();
     }
 
     /**
@@ -423,6 +458,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
      */
     public void setPointsTeamAgainst(int mPointsTeamAgainst) {
         this.mPointsTeamAgainst = mPointsTeamAgainst;
+        updateTime();
     }
 
     public int getOffensiveDiffThreshold() {
@@ -431,6 +467,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setOffensiveDiffThreshold(int mOffensiveDiffThreshold) {
         this.mOffensiveDiffThreshold = mOffensiveDiffThreshold;
+        updateTime();
     }
 
     public int getDefensiveDiffThreshold() {
@@ -439,6 +476,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setDefensiveDiffThreshold(int mDefensiveDiffThreshold) {
         this.mDefensiveDiffThreshold = mDefensiveDiffThreshold;
+        updateTime();
     }
 
     public int getOffensiveDiffBonuses() {
@@ -447,6 +485,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setOffensiveDiffBonuses(int mOffensiveDiffBonuses) {
         this.mOffensiveDiffBonuses = mOffensiveDiffBonuses;
+        updateTime();
     }
 
     public int getDefensiveDiffBonuses() {
@@ -455,6 +494,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setDefensiveDiffBonuses(int mDefensiveDiffBonuses) {
         this.mDefensiveDiffBonuses = mDefensiveDiffBonuses;
+        updateTime();
     }
 
     public int getOffensiveThreshold() {
@@ -463,6 +503,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setOffensiveThreshold(int mOffensiveThreshold) {
         this.mOffensiveThreshold = mOffensiveThreshold;
+        updateTime();
     }
 
     public int getOffensiveBonuses() {
@@ -475,10 +516,12 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setOffensiveBonuses(int mOffensiveBonuses) {
         this.mOffensiveBonuses = mOffensiveBonuses;
+        updateTime();
     }
 
     public void setOffensiveBonusesByTeam(int mOffensiveBonuses) {
         this.mOffensiveBonusesByTeam = mOffensiveBonuses;
+        updateTime();
     }
 
     public int getOffensiveDiffThresholdByTeam() {
@@ -487,6 +530,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setOffensiveDiffThresholdByTeam(int mOffensiveDiffThresholdByTeam) {
         this.mOffensiveDiffThresholdByTeam = mOffensiveDiffThresholdByTeam;
+        updateTime();
     }
 
     public int getDefensiveDiffThresholdByTeam() {
@@ -495,6 +539,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setDefensiveDiffThresholdByTeam(int mDefensiveDiffThresholdByTeam) {
         this.mDefensiveDiffThresholdByTeam = mDefensiveDiffThresholdByTeam;
+        updateTime();
     }
 
     public int getOffensiveDiffBonusesByTeam() {
@@ -503,6 +548,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setOffensiveDiffBonusesByTeam(int mOffensiveDiffBonusesByTeam) {
         this.mOffensiveDiffBonusesByTeam = mOffensiveDiffBonusesByTeam;
+        updateTime();
     }
 
     public int getDefensiveDiffBonusesByTeam() {
@@ -511,6 +557,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setDefensiveDiffBonusesByTeam(int mDefensiveDiffBonusesByTeam) {
         this.mDefensiveDiffBonusesByTeam = mDefensiveDiffBonusesByTeam;
+        updateTime();
     }
 
     public int getOffensiveThresholdByTeam() {
@@ -519,6 +566,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setOffensiveThresholdByTeam(int mOffensiveThresholdByTeam) {
         this.mOffensiveThresholdByTeam = mOffensiveThresholdByTeam;
+        updateTime();
     }
 
     public int getOffensiveDiffBonusesForTeam() {
@@ -527,6 +575,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setOffensiveDiffBonusesForTeam(int mOffensiveDiffBonusesForTeam) {
         this.mOffensiveDiffBonusesForTeam = mOffensiveDiffBonusesForTeam;
+        updateTime();
     }
 
     public int getDefensiveDiffBonusesForTeam() {
@@ -535,6 +584,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setDefensiveDiffBonusesForTeam(int mDefensiveDiffBonusesForTeam) {
         this.mDefensiveDiffBonusesForTeam = mDefensiveDiffBonusesForTeam;
+        updateTime();
     }
 
     public int getOffensiveBonusesForTeam() {
@@ -543,6 +593,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void setOffensiveBonusesForTeam(int mOffensiveBonusesForTeam) {
         this.mOffensiveBonusesForTeam = mOffensiveBonusesForTeam;
+        updateTime();
     }
 
     @Override
@@ -558,6 +609,7 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
     public void updateFromJSON(JSONObject object) {
 
+        setSynchroMode(true);
         Object obj = object.get("createDateTime");
         if (obj != JSONObject.NULL) {
             createDateTime = LocalDateTime.parse(object.get("createDateTime").toString());
@@ -594,6 +646,8 @@ public class Criterion implements Comparable, IXMLExport, Serializable {
 
         mDefensiveDiffBonuses = Integer.parseInt(object.get("defensiveDiffBonuses").toString());
         mDefensiveDiffThreshold = Integer.parseInt(object.get("defensiveDiffThreshold").toString());
+        
+        setSynchroMode(false);
 
     }
 

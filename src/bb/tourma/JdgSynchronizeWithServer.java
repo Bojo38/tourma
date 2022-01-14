@@ -25,6 +25,7 @@ import bb.tourma.data.ranking.AnnexClanRanking;
 import bb.tourma.data.ranking.AnnexIndivRanking;
 import bb.tourma.data.ranking.AnnexRanking;
 import bb.tourma.data.ranking.AnnexTeamRanking;
+import bb.tourma.data.ranking.ClanRanking;
 import bb.tourma.data.ranking.IndivRanking;
 import bb.tourma.data.ranking.IndivRankingsSet;
 import bb.tourma.data.ranking.Ranking;
@@ -64,8 +65,11 @@ import javax.swing.JOptionPane;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -319,6 +323,8 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
         connection.setSSLSocketFactory(sslContext.getSocketFactory());
 
+        System.out.println(url);
+        
         connection.setRequestMethod("GET");
         connection.connect();
         //Getting the response code
@@ -377,6 +383,8 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
     public int methodPATCH(String url, JSONObject object) throws IOException {
         int result = 0;
 
+        System.out.println("PATCH: "+url);
+        
         SSLContext sslContext = getSSLContext();
         HttpsURLConnection connection = (HttpsURLConnection) new URL(url).openConnection();
         connection.setSSLSocketFactory(sslContext.getSocketFactory());
@@ -420,6 +428,12 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         Group opp = mTournament.getGroup(oid);
         GroupPoints gp = group.getOpponentModificationPoints(opp);
 
+        if( gp==null)
+        {
+            gp=new GroupPoints();
+            group.setOpponentModificationPoints(opp, gp);
+        }
+        
         // Download Params
         JSONObject obj = new JSONObject(lineGet);
         boolean toUpload = false;
@@ -430,10 +444,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         } else {
             LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
             if (dt.isAfter(gp.getUpdateDateTime())) {
-                toUpload = true;
+                toDownload = true;
             }
             if (dt.isBefore(gp.getUpdateDateTime())) {
-                toDownload = true;
+                toUpload = true;
             }
         }
 
@@ -472,10 +486,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         } else {
             LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
             if (dt.isAfter(mTournament.getParams().getUpdateDateTime())) {
-                toUpload = true;
+                toDownload = true;
             }
             if (dt.isBefore(mTournament.getParams().getUpdateDateTime())) {
-                toDownload = true;
+                toUpload = true;
             }
         }
 
@@ -514,9 +528,15 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         // Download Array of rosters
         JSONArray array = new JSONArray(lineGet);
 
-        RosterType[] rts = (RosterType[]) mTournament.getRosterType().entrySet().toArray();
+        List<RosterType> rts = new ArrayList<>();
+
+        
+        for ( RosterType entry : mTournament.getRosterType()) {
+            rts.add(entry);
+        }
 
         for (int i = 0; i < array.length(); i++) {
+            
             JSONObject obj = array.getJSONObject(i);
 
             boolean toUpload = false;
@@ -528,20 +548,22 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
             } else {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
                 if (mTournament.getRosterType().size() > i) {
-                    if (dt.isAfter(rts[i].getUpdateDateTime())) {
-                        toUpload = true;
-                    }
-                    if (dt.isBefore(rts[i].getUpdateDateTime())) {
+                    if (dt.isAfter(rts.get(i).getUpdateDateTime())) {
                         toDownload = true;
                     }
+                    if (dt.isBefore(rts.get(i).getUpdateDateTime())) {
+                        toUpload = true;
+                    }
                 } else {
-                    mTournament.getRosterType().put(obj.getString("name"), new RosterType("new"));
+                    RosterType rt=new RosterType("new");
+                    mTournament.getRosterType().add(rt);
+                    rts.add(rt);
                     toDownload = true;
                 }
             }
 
             if (toUpload) {
-                JSONObject obj2 = rts[i].getJSON();
+                JSONObject obj2 = rts.get(i).getJSON();
                 int result = methodPATCH(url + "/tournaments/" + tourId + "/rosters/" + i, obj2);
                 if (result != 0) {
                     JOptionPane.showMessageDialog(this, "Error detected while synchronizing rosters: " + result);
@@ -550,13 +572,13 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
             }
 
             if (toDownload) {
-                rts[i].updateFromJSON(obj);
+                rts.get(i).updateFromJSON(obj);
             }
         }
 
         int diff = mTournament.getRosterType().size() - array.length();
         for (int i = 0; i < diff; i++) {
-            JSONObject obj2 = rts[array.length() + i].getJSON();
+            JSONObject obj2 = rts.get(array.length() + i).getJSON();
             int result = methodPOST(url + "/tournaments/" + tourId + "/rosters", obj2);
             if (result != 0) {
                 JOptionPane.showMessageDialog(this, "Error detected while synchronizing rosters: " + result);
@@ -585,10 +607,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
                 if (mTournament.getCategoriesCount() > i) {
                     if (dt.isAfter(mTournament.getCategory(i).getUpdateDateTime())) {
-                        toUpload = true;
+                        toDownload = true;
                     }
                     if (dt.isBefore(mTournament.getCategory(i).getUpdateDateTime())) {
-                        toDownload = true;
+                        toUpload = true;
                     }
                 } else {
                     mTournament.addCategory(new Category(obj.getString("name")));
@@ -647,10 +669,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 if (round.getMatchsCount() > i) {
                     m = mTournament.getRound(roundId).getMatch(i);
                     if (dt.isAfter(m.getUpdateDateTime())) {
-                        toUpload = true;
+                        toDownload = true;
                     }
                     if (dt.isBefore(m.getUpdateDateTime())) {
-                        toDownload = true;
+                        toUpload = true;
                     }
                 } else {
                     if (matchType.equals("TeamMatch")) {
@@ -683,6 +705,9 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
     }
 
     private boolean synchronizeRanking(String url, Ranking ranking) throws IOException {
+
+        System.out.println(url);
+
         String lineGet = methodGET(url);
 
         boolean error = false;
@@ -697,10 +722,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
             LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
 
             if (dt.isAfter(ranking.getUpdateDateTime())) {
-                toUpload = true;
+                toDownload = true;
             }
             if (dt.isBefore(ranking.getUpdateDateTime())) {
-                toDownload = true;
+                toUpload = true;
             }
         }
 
@@ -727,19 +752,19 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
 
         switch (subranking) {
             case POSITIVE:
-                urlEnd = "/rankings/team/annex/" + crit.getName() + "/+";
+                urlEnd = "/rankings/team/annex/" + crit.getName().replace(" ", "") + "/+";
                 ranking = rankingSet.getAnnexPosRanking().get(crit);
                 break;
             case NEGATIVE:
-                urlEnd = "/rankings/team/annex/" + crit.getName() + "/-";
+                urlEnd = "/rankings/team/annex/" + crit.getName().replace(" ", "") + "/-";
                 ranking = rankingSet.getAnnexNegRanking().get(crit);
                 break;
             case DIFFERENCE:
-                urlEnd = "/rankings/team/annex/" + crit.getName() + "/=";
+                urlEnd = "/rankings/team/annex/" + crit.getName().replace(" ", "") + "/=";
                 ranking = rankingSet.getAnnexDifRanking().get(crit);
                 break;
             case FORMULA:
-                urlEnd = "/rankings/team/annex/" + form.getName();
+                urlEnd = "/rankings/team/annex/" + form.getName().replace(" ", "");
                 ranking = rankingSet.getAnnexFormRanking().get(form);
                 break;
             default:
@@ -754,30 +779,33 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
 
         String urlEnd = "";
         AnnexClanRanking ranking = null;
+        if (mTournament.getRound(roundId).getRankings(false).getClanRankingSet() != null) {
+            switch (subranking) {
+                case POSITIVE:
+                    urlEnd = "/rankings/clan/annex/" + crit.getName() + "/+";
+                    ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexPosRanking().get(crit);
+                    break;
+                case NEGATIVE:
+                    urlEnd = "/rankings/clan/annex/" + crit.getName() + "/-";
+                    ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexNegRanking().get(crit);
+                    break;
+                case DIFFERENCE:
+                    urlEnd = "/rankings/clan/annex/" + crit.getName() + "/=";
+                    ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexDifRanking().get(crit);
+                    break;
+                case FORMULA:
+                    urlEnd = "/rankings/clan/annex/" + form.getName();
+                    ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexFormRanking().get(form);
+                    break;
+                default:
+                    return true;
+            }
 
-        switch (subranking) {
-            case POSITIVE:
-                urlEnd = "/rankings/clan/annex/" + crit.getName() + "/+";
-                ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexPosRanking().get(crit);
-                break;
-            case NEGATIVE:
-                urlEnd = "/rankings/clan/annex/" + crit.getName() + "/-";
-                ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexNegRanking().get(crit);
-                break;
-            case DIFFERENCE:
-                urlEnd = "/rankings/clan/annex/" + crit.getName() + "/=";
-                ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexDifRanking().get(crit);
-                break;
-            case FORMULA:
-                urlEnd = "/rankings/clan/annex/" + form.getName();
-                ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getAnnexFormRanking().get(form);
-                break;
-            default:
-                return true;
+            boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
+            return error;
+        } else {
+            return false;
         }
-
-        boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
-        return error;
     }
 
     private boolean synchronizeIndivdualAnnexRanking(String url, long tourId, int roundId, Criterion crit, Formula form, AnnexRanking.SubType subranking, IndivRankingsSet rankingSet) throws IOException {
@@ -787,19 +815,19 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
 
         switch (subranking) {
             case POSITIVE:
-                urlEnd = "/rankings/indiv/annex/" + crit.getName() + "/+";
+                urlEnd = "/rankings/indiv/annex/" + crit.getName().replace(" ", "") + "/+";
                 ranking = rankingSet.getAnnexPosRanking().get(crit);
                 break;
             case NEGATIVE:
-                urlEnd = "/rankings/indiv/annex/" + crit.getName() + "/-";
+                urlEnd = "/rankings/indiv/annex/" + crit.getName().replace(" ", "") + "/-";
                 ranking = rankingSet.getAnnexNegRanking().get(crit);
                 break;
             case DIFFERENCE:
-                urlEnd = "/rankings/indiv/annex/" + crit.getName() + "/=";
+                urlEnd = "/rankings/indiv/annex/" + crit.getName().replace(" ", "") + "/=";
                 ranking = rankingSet.getAnnexDifRanking().get(crit);
                 break;
             case FORMULA:
-                urlEnd = "/rankings/indiv/annex/" + form.getName();
+                urlEnd = "/rankings/indiv/annex/" + form.getName().replace(" ", "");
                 ranking = rankingSet.getAnnexFormRanking().get(form);
                 break;
             default:
@@ -832,11 +860,9 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 default:
                     return true;
             }
-        }
-        else
-        {
-            urlEnd="/rankings/pool/indiv/"+poolId;
-            ranking=rankingSet.getRanking();
+        } else {
+            urlEnd = "/rankings/pool/indiv/" + poolId;
+            ranking = rankingSet.getRanking();
         }
 
         boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
@@ -844,34 +870,32 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         return error;
     }
 
-    private boolean synchronizeTeamRanking(String url, long tourId, int roundId,int poolId, SubRankingType subranking, TeamRankingsSet rankingSet) throws IOException {
+    private boolean synchronizeTeamRanking(String url, long tourId, int roundId, int poolId, SubRankingType subranking, TeamRankingsSet rankingSet) throws IOException {
 
         String urlEnd = "";
         TeamRanking ranking = null;
 
-         if (poolId == -1) {
-        switch (subranking) {
-            case NONE:
-                urlEnd = "/rankings/team/ranking";
-                ranking = rankingSet.getRanking();
-                break;
-            case ForPOOL:
-                urlEnd = "/rankings/team/pool";
-                ranking = rankingSet.getRankingForPool();
-                break;
-            case ForCUP:
-                urlEnd = "/rankings/team/cup";
-                ranking = rankingSet.getRankingForCup();
-                break;
-            default:
-                return true;
+        if (poolId == -1) {
+            switch (subranking) {
+                case NONE:
+                    urlEnd = "/rankings/team/ranking";
+                    ranking = rankingSet.getRanking();
+                    break;
+                case ForPOOL:
+                    urlEnd = "/rankings/team/pool";
+                    ranking = rankingSet.getRankingForPool();
+                    break;
+                case ForCUP:
+                    urlEnd = "/rankings/team/cup";
+                    ranking = rankingSet.getRankingForCup();
+                    break;
+                default:
+                    return true;
+            }
+        } else {
+            urlEnd = "/rankings/pool/team/" + poolId;
+            ranking = rankingSet.getRanking();
         }
-         }
-         else
-         {
-              urlEnd="/rankings/pool/team/"+poolId;
-            ranking=rankingSet.getRanking();
-         }
 
         boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
 
@@ -881,12 +905,14 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
     private boolean synchronizeClanRanking(String url, long tourId, int roundId, SubRankingType subranking) throws IOException {
 
         String urlEnd = "";
-        TeamRanking ranking = null;
+        ClanRanking ranking = null;
 
         switch (subranking) {
             case NONE:
                 urlEnd = "/rankings/clan/ranking";
-                ranking = mTournament.getRound(roundId).getRankings(false).getTeamRankingSet().getRanking();
+                if (mTournament.getRound(roundId).getRankings(false).getClanRankingSet() != null) {
+                    ranking = mTournament.getRound(roundId).getRankings(false).getClanRankingSet().getRanking();
+                }
                 break;
             case ForPOOL:
                 //urlEnd = "/rankings/team/pool";
@@ -900,24 +926,27 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 return true;
         }
 
-        boolean error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
+        boolean error = false;
+        if (ranking != null) {
+            error = synchronizeRanking(url + "/tournaments/" + tourId + "/rounds/" + roundId + urlEnd, ranking);
+        }
 
         return error;
     }
 
     private boolean synchronizeIndivdualRankingSet(String url, long tourId, int roundId, int poolId, IndivRankingsSet rankingSet) throws IOException {
 
-        boolean error = synchronizeIndivdualRanking(url, tourId, roundId, poolId,SubRankingType.NONE, rankingSet);
+        boolean error = synchronizeIndivdualRanking(url, tourId, roundId, poolId, SubRankingType.NONE, rankingSet);
 
         if (mTournament.getPoolCount() > 0) {
             if (!error) {
-                error = synchronizeIndivdualRanking(url, tourId, roundId,poolId, SubRankingType.ForPOOL, rankingSet);
+                error = synchronizeIndivdualRanking(url, tourId, roundId, poolId, SubRankingType.ForPOOL, rankingSet);
             }
         }
 
         if (mTournament.getCup() != null) {
             if (!error) {
-                error = synchronizeIndivdualRanking(url, tourId, roundId, poolId,SubRankingType.ForCUP, rankingSet);
+                error = synchronizeIndivdualRanking(url, tourId, roundId, poolId, SubRankingType.ForCUP, rankingSet);
             }
 
         }
@@ -972,17 +1001,17 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
 
     private boolean synchronizeTeamRankingSet(String url, long tourId, int roundId, int poolId, TeamRankingsSet rankingSet) throws IOException {
 
-        boolean error = synchronizeTeamRanking(url, tourId, roundId,poolId, SubRankingType.NONE, rankingSet);
+        boolean error = synchronizeTeamRanking(url, tourId, roundId, poolId, SubRankingType.NONE, rankingSet);
 
         if (mTournament.getPoolCount() > 0) {
             if (!error) {
-                error = synchronizeTeamRanking(url, tourId, roundId, poolId,SubRankingType.ForPOOL, rankingSet);
+                error = synchronizeTeamRanking(url, tourId, roundId, poolId, SubRankingType.ForPOOL, rankingSet);
             }
         }
 
         if (mTournament.getCup() != null) {
             if (!error) {
-                error = synchronizeTeamRanking(url, tourId, roundId,poolId, SubRankingType.ForCUP, rankingSet);
+                error = synchronizeTeamRanking(url, tourId, roundId, poolId, SubRankingType.ForCUP, rankingSet);
             }
 
         }
@@ -1016,23 +1045,26 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         for (int i = 0; i < mTournament.getCategoriesCount(); i++) {
             Category cat = mTournament.getCategory(i);
 
-            IndivRanking ranking = mTournament.getRound(roundId).getRankings(false).getCategoryIndivRanking().get(cat);
-            String complete_url = url + "/tournaments/" + tourId + "/rounds/" + roundId + "/rankings/category/indiv/" + cat.getName();
+            if (mTournament.getRound(roundId).getRankings(false).getCategoryIndivRanking() != null) {
+                IndivRanking ranking = mTournament.getRound(roundId).getRankings(false).getCategoryIndivRanking().get(cat);
+                String complete_url = url + "/tournaments/" + tourId + "/rounds/" + roundId + "/rankings/category/indiv/" + cat.getName();
 
-            if (!error) {
-                error = synchronizeRanking(complete_url, ranking);
+                if (!error) {
+                    error = synchronizeRanking(complete_url, ranking);
+                }
             }
 
         }
 
         for (int i = 0; i < mTournament.getCategoriesCount(); i++) {
             Category cat = mTournament.getCategory(i);
+            if (mTournament.getRound(roundId).getRankings(false).getCategoryTeamRanking() != null) {
+                TeamRanking ranking = mTournament.getRound(roundId).getRankings(false).getCategoryTeamRanking().get(cat);
+                String complete_url = url + "/tournaments/" + tourId + "/rounds/" + roundId + "/rankings/category/team/" + cat.getName();
 
-            TeamRanking ranking = mTournament.getRound(roundId).getRankings(false).getCategoryTeamRanking().get(cat);
-            String complete_url = url + "/tournaments/" + tourId + "/rounds/" + roundId + "/rankings/category/team/" + cat.getName();
-
-            if (!error) {
-                error = synchronizeRanking(complete_url, ranking);
+                if (!error) {
+                    error = synchronizeRanking(complete_url, ranking);
+                }
             }
 
         }
@@ -1045,12 +1077,14 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         for (int i = 0; i < mTournament.getGroupsCount(); i++) {
             Group g = mTournament.getGroup(i);
 
-            IndivRanking ranking = mTournament.getRound(roundId).getRankings(false).getGroupRanking().get(g);
+            if (mTournament.getRound(roundId).getRankings(false).getGroupRanking() != null) {
+                IndivRanking ranking = mTournament.getRound(roundId).getRankings(false).getGroupRanking().get(g);
 
-            String complete_url = url + "/tournaments/" + tourId + "/rounds/" + roundId + "/rankings/groups/" + i;
+                String complete_url = url + "/tournaments/" + tourId + "/rounds/" + roundId + "/rankings/groups/" + i;
 
-            if (!error) {
-                error = synchronizeRanking(complete_url, ranking);
+                if (!error) {
+                    error = synchronizeRanking(complete_url, ranking);
+                }
             }
         }
         return error;
@@ -1129,10 +1163,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
                 if (mTournament.getRoundsCount() > i) {
                     if (dt.isAfter(mTournament.getRound(i).getUpdateDateTime())) {
-                        toUpload = true;
+                        toDownload = true;
                     }
                     if (dt.isBefore(mTournament.getRound(i).getUpdateDateTime())) {
-                        toDownload = true;
+                        toUpload = true;
                     }
                 } else {
                     mTournament.addRound(new Round(i, mTournament));
@@ -1189,10 +1223,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
                 if (mTournament.getClansCount() > i) {
                     if (dt.isAfter(mTournament.getClan(i).getUpdateDateTime())) {
-                        toUpload = true;
+                        toDownload = true;
                     }
                     if (dt.isBefore(mTournament.getClan(i).getUpdateDateTime())) {
-                        toDownload = true;
+                        toUpload = true;
                     }
                 } else {
                     mTournament.addClan(new Clan(obj.getString("name")));
@@ -1245,10 +1279,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
                 if (mTournament.getCoachsCount() > i) {
                     if (dt.isAfter(mTournament.getCoach(i).getUpdateDateTime())) {
-                        toUpload = true;
+                        toDownload = true;
                     }
                     if (dt.isBefore(mTournament.getCoach(i).getUpdateDateTime())) {
-                        toDownload = true;
+                        toUpload = true;
                     }
                 } else {
                     mTournament.addCoach(new Coach(obj.getString("name")));
@@ -1301,10 +1335,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
                 if (mTournament.getTeamsCount() > i) {
                     if (dt.isAfter(mTournament.getTeam(i).getUpdateDateTime())) {
-                        toUpload = true;
+                        toDownload = true;
                     }
                     if (dt.isBefore(mTournament.getTeam(i).getUpdateDateTime())) {
-                        toDownload = true;
+                        toUpload = true;
                     }
                 } else {
                     mTournament.addTeam(new Team(obj.getString("name")));
@@ -1357,10 +1391,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
                 if (mTournament.getGroupsCount() > i) {
                     if (dt.isAfter(mTournament.getGroup(i).getUpdateDateTime())) {
-                        toUpload = true;
+                        toDownload = true;
                     }
                     if (dt.isBefore(mTournament.getGroup(i).getUpdateDateTime())) {
-                        toDownload = true;
+                        toUpload = true;
                     }
                 } else {
                     mTournament.addGroup(new Group(obj.getString("name")));
@@ -1371,7 +1405,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
             if (toUpload) {
 
                 JSONObject obj2 = mTournament.getGroup(i).getJSON();
-                int result = methodPATCH(url + "/tournaments/" + tourId + "/group/" + i, obj2);
+                int result = methodPATCH(url + "/tournaments/" + tourId + "/groups/" + i, obj2);
                 if (result != 0) {
                     JOptionPane.showMessageDialog(this, "Error detected while synchronizing criteria: " + result);
                     error = true;
@@ -1386,7 +1420,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         int diff = mTournament.getGroupsCount() - array.length();
         for (int i = 0; i < diff; i++) {
             JSONObject obj2 = mTournament.getGroup(array.length() + i).getJSON();
-            int result = methodPOST(url + "/tournaments/" + tourId + "/group", obj2);
+            int result = methodPOST(url + "/tournaments/" + tourId + "/groups", obj2);
             if (result != 0) {
                 JOptionPane.showMessageDialog(this, "Error detected while synchronizing criteria: " + result);
                 error = true;
@@ -1429,10 +1463,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
                 if (mTournament.getParams().getCriteriaCount() > i) {
                     if (dt.isAfter(mTournament.getParams().getCriterion(i).getUpdateDateTime())) {
-                        toUpload = true;
+                        toDownload = true;
                     }
                     if (dt.isBefore(mTournament.getParams().getCriterion(i).getUpdateDateTime())) {
-                        toDownload = true;
+                        toUpload = true;
                     }
                 } else {
                     mTournament.getParams().addCriteria(new Criterion("new_" + i));
@@ -1441,7 +1475,6 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
             }
 
             if (toUpload) {
-
                 JSONObject obj2 = mTournament.getParams().getCriterion(i).getJSON();
                 int result = methodPATCH(url + "/tournaments/" + tourId + "/params/criterion/" + i, obj2);
                 if (result != 0) {
@@ -1470,7 +1503,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
     }
 
     private boolean synchronizeFormula(String url, long tourId) throws IOException {
-        String lineGet = methodGET(url + "/tournaments/" + tourId + "/params/formula");
+        String lineGet = methodGET(url + "/tournaments/" + tourId + "/params/formulas");
 
         boolean error = false;
         JSONArray array = new JSONArray(lineGet);
@@ -1487,10 +1520,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
                 if (mTournament.getParams().getFormulaCount() > i) {
                     if (dt.isAfter(mTournament.getParams().getFormula(i).getUpdateDateTime())) {
-                        toUpload = true;
+                        toDownload = true;
                     }
                     if (dt.isBefore(mTournament.getParams().getFormula(i).getUpdateDateTime())) {
-                        toDownload = true;
+                        toUpload = true;
                     }
                 } else {
                     mTournament.getParams().addFormula(new Formula("new_" + i));
@@ -1541,10 +1574,10 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         } else {
             LocalDateTime dt = LocalDateTime.parse((String) lastUpdatedDate);
             if (dt.isAfter(mTournament.getUpdateDateTime())) {
-                toUpload = true;
+                toDownload = true;
             }
             if (dt.isBefore(mTournament.getUpdateDateTime())) {
-                toDownload = true;
+                toUpload = true;
             }
         }
 
@@ -1567,6 +1600,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
             error = synchronizeParams(url, tourId);
         }
 
+        
         // Download Rosters
         // If needed update Rosters    
         if (!error) {
@@ -1578,7 +1612,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         if (!error) {
             error = synchronizeGroups(url, tourId);
         }
-
+/*
         // Download Categories
         // If needed update Categories
         if (!error) {
@@ -1608,13 +1642,14 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         if (!error) {
             error = synchronizeRounds(url, tourId);
         }
-
+*/
         return error;
 
     }
 
     private void jbtSyncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtSyncActionPerformed
 
+        jbtOK.setEnabled(false);
         try {
             String url = mTournament.getURL();
             if (!url.startsWith("https://")) {
@@ -1625,7 +1660,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
                 }
             }
             url = "https://localhost:443";
-            mTournament.setTournament_id(62257);
+            mTournament.setTournament_id(158916);
 
             synchronizeTournament(url, mTournament.getTournament_id());
 
@@ -1634,7 +1669,7 @@ public class JdgSynchronizeWithServer extends javax.swing.JDialog {
         } catch (IOException ex) {
             Logger.getLogger(JdgSynchronizeWithServer.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        jbtOK.setEnabled(true);
     }//GEN-LAST:event_jbtSyncActionPerformed
 
     private void jtfTournamentIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfTournamentIdActionPerformed

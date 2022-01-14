@@ -213,7 +213,8 @@ public class Value implements Serializable {
         Object tmpObj = object.get("criterionName");
         if (tmpObj != JSONObject.NULL) {
             String criterionName = object.getString("criterionName");
-            Criterion crit = Tournament.getTournament().getParams().getCriterion(criterionName);
+            Tournament tour=Tournament.getTournament();
+            Criterion crit = tour.getParams().getCriterion(criterionName);
             if (!crit.equals(this.mCriteria)) {
                 this.mCriteria = crit;
             }

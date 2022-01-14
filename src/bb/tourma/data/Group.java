@@ -42,6 +42,9 @@ public class Group implements Comparable, IXMLExport, Serializable {
     protected LocalDateTime updateDateTime;
 
     public LocalDateTime getCreateDateTime() {
+        if (createDateTime == null) {
+            createDateTime = LocalDateTime.MIN;
+        }
         return createDateTime;
     }
 
@@ -50,6 +53,9 @@ public class Group implements Comparable, IXMLExport, Serializable {
     }
 
     public LocalDateTime getUpdateDateTime() {
+        if (updateDateTime == null) {
+            updateDateTime = LocalDateTime.MIN;
+        }
         return updateDateTime;
     }
 
@@ -376,10 +382,14 @@ public class Group implements Comparable, IXMLExport, Serializable {
         JSONArray array = object.getJSONArray("rosterNames");
         for (int i = 0; i < array.length(); i++) {
             String name = array.getString(i);
-            RosterType rt = Tournament.getTournament().getRosterType().get(name);
+            RosterType rt = Tournament.getTournament().getRosterType(name);
             if (rt != null) {
                 if (!mRosters.contains(rt)) {
-                    mRosters.set(i, rt);
+                    if (mRosters.size() > i) {
+                        mRosters.set(i, rt);
+                    } else {
+                        mRosters.add(rt);
+                    }
                 }
             }
         }

@@ -31,6 +31,7 @@ import bb.tourma.languages.Translate;
 import bb.tourma.utility.StringConstants;
 import bb.tourma.utils.NAF;
 import java.time.LocalDateTime;
+import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -40,6 +41,28 @@ import org.json.JSONObject;
  */
 public class Tournament implements IContainCoachs, Serializable {
 
+    
+    protected boolean synchroMode=false;
+    
+    public void updateTime()
+    {
+        if (!synchroMode)
+            updateDateTime=LocalDateTime.now();
+        
+        if (createDateTime==null)
+            createDateTime=updateDateTime;
+    }
+    
+    public boolean iSynchroMode()
+    {
+        return synchroMode;
+    }
+    
+    public void setSynchroMode (boolean mode)
+    {
+        synchroMode=mode;
+    }
+    
     /**
      *
      */
@@ -71,7 +94,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setClose(boolean b) {
         mClosed = b;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     public boolean isClosed() {
@@ -84,7 +107,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setURL(String URL) {
         this.URL = URL;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     public String getLogin() {
@@ -93,7 +116,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setLogin(String login) {
         this.login = login;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     public String getPassword() {
@@ -102,7 +125,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     public long getTournament_id() {
@@ -111,7 +134,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setTournament_id(long tournament_id) {
         this.tournament_id = tournament_id;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     private String URL = "192.168.1.100:443";
@@ -126,7 +149,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setSynchronized(boolean isSynchronized) {
         this._synchronized = isSynchronized;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     private boolean isClient = false;
@@ -143,12 +166,12 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setLRB(LRB rules) {
         lrb = rules;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     public void setIsClient(boolean isClient) {
         this.isClient = isClient;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -164,6 +187,7 @@ public class Tournament implements IContainCoachs, Serializable {
         for (int i = 0; i < this.mRounds.size(); i++) {
             mRounds.get(i).recomputeMatchs();
         }
+        updateTime();
     }
 
     public ArrayList<Team> getTeams() {
@@ -244,7 +268,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setCup(Cup cup) {
         mCup = cup;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     private Tournament() {
@@ -307,7 +331,7 @@ public class Tournament implements IContainCoachs, Serializable {
     public void addClan(Clan c) {
         mClans.add(c);
         clansUpdated = true;
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -315,6 +339,7 @@ public class Tournament implements IContainCoachs, Serializable {
      * @param c
      */
     public void removeClan(Clan c) {
+        updateTime();
         mClans.remove(c);
         clansUpdated = true;
     }
@@ -325,6 +350,7 @@ public class Tournament implements IContainCoachs, Serializable {
      * @throws java.rmi.RemoteException
      */
     public void removeClan(int c) {
+        updateTime();
         mClans.remove(c);
         clansUpdated = true;
     }
@@ -369,7 +395,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void addCategory(Category c) {
         mCategories.add(c);
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -386,6 +412,7 @@ public class Tournament implements IContainCoachs, Serializable {
         }
 
         mCategories.remove(c);
+        updateTime();
     }
 
     /**
@@ -395,7 +422,7 @@ public class Tournament implements IContainCoachs, Serializable {
     public void removeCategory(int c) {
 
         removeCategory(mCategories.get(c));
-
+updateTime();
     }
 
     /**
@@ -403,6 +430,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void clearCategories() {
         mCategories.clear();
+        updateTime();
     }
 
     /**
@@ -429,7 +457,7 @@ public class Tournament implements IContainCoachs, Serializable {
     public void addTeam(Team c) {
         mTeams.add(c);
         Team.putTeam(c.getName(), c);
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -437,6 +465,7 @@ public class Tournament implements IContainCoachs, Serializable {
      * @param c
      */
     public void removeTeam(Team c) {
+        updateTime();
         mTeams.remove(c);
         teamsUpdated = true;
     }
@@ -509,6 +538,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void clearTeams() {
         mTeams.clear();
+        updateTime();
     }
 
     /**
@@ -613,6 +643,7 @@ public class Tournament implements IContainCoachs, Serializable {
      * @param i
      */
     public void removeCoach(Coach i) {
+        updateTime();
         mCoachs.remove(i);
         coachsUpdated = true;
     }
@@ -634,6 +665,7 @@ public class Tournament implements IContainCoachs, Serializable {
     @Override
     public void clearCoachs() {
         mCoachs.clear();
+        updateTime();
 
     }
 
@@ -646,7 +678,7 @@ public class Tournament implements IContainCoachs, Serializable {
         mCoachs.add(c);
         Coach.putCoach(c.getName(), c);
         coachsUpdated = true;
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -675,7 +707,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void addGroup(Group g) {
         mGroups.add(g);
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -683,6 +715,7 @@ public class Tournament implements IContainCoachs, Serializable {
      * @param g
      */
     public void removeGroup(Group g) {
+        updateTime();
         mGroups.remove(g);
     }
 
@@ -691,6 +724,7 @@ public class Tournament implements IContainCoachs, Serializable {
      * @param g
      */
     public void removeGroup(int g) {
+        updateTime();
         mGroups.remove(g);
     }
 
@@ -709,6 +743,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void clearGroups() {
         mGroups.clear();
+        updateTime();
     }
 
     /**
@@ -774,6 +809,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void clearRounds() {
         mRounds.clear();
+        updateTime();
     }
 
     /**
@@ -782,7 +818,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void addRound(Round r) {
         mRounds.add(r);
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -1658,7 +1694,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void addPool(Pool p) {
         mPools.add(p);
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -1666,6 +1702,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void clearPools() {
         mPools.clear();
+        updateTime();
     }
 
     /**
@@ -1682,7 +1719,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void setParams(Parameters mParams) {
         this.mParams = mParams;
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -1697,7 +1734,7 @@ public class Tournament implements IContainCoachs, Serializable {
      */
     public void setRoundRobin(boolean mRoundRobin) {
         this.mRoundRobin = mRoundRobin;
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     /**
@@ -1705,6 +1742,7 @@ public class Tournament implements IContainCoachs, Serializable {
      * @param r
      */
     public void removeRound(Round r) {
+        updateTime();
         mRounds.remove(r);
         roundsUpdated = true;
     }
@@ -1724,7 +1762,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setDescription(String tmp) {
         mDescription = tmp;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     // To do : Fill all data from tour (Data from server)
@@ -1916,13 +1954,31 @@ public class Tournament implements IContainCoachs, Serializable {
         }
     }
 
-    private HashMap<String, RosterType> mRosterTypes = null;
+    private ArrayList<RosterType> mRosterTypes = null;
 
-    public HashMap<String, RosterType> getRosterType() {
+    public ArrayList<RosterType> getRosterType() {
         if (mRosterTypes == null) {
-            mRosterTypes = RosterType.getRosters();
+            mRosterTypes=new ArrayList<>();
+            for (Map.Entry<String,RosterType> entry:RosterType.getRosters().entrySet())
+            {
+                mRosterTypes.add(entry.getValue());
+            }
+           // mRosterTypes = RosterType.getRosters();
         }
         return mRosterTypes;
+    }
+    
+    public RosterType getRosterType(String name) {
+        if (mRosterTypes != null) {
+            
+            for (RosterType entry:mRosterTypes)
+            {
+                if (entry.getName().equals(name))
+                return entry;
+            }
+           // mRosterTypes = RosterType.getRosters();
+        }
+        return null;
     }
 
     // To Do : Fill only coach/team/match data from tour (Data From client)
@@ -1956,7 +2012,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setClansUpdated(boolean clansUpdated) {
         this.clansUpdated = clansUpdated;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     public boolean isCoachsUpdated() {
@@ -1965,7 +2021,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setCoachsUpdated(boolean coachsUpdated) {
         this.coachsUpdated = coachsUpdated;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     public boolean isTeamsUpdated() {
@@ -1974,7 +2030,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setTeamsUpdated(boolean teamsUpdated) {
         this.teamsUpdated = teamsUpdated;
-        updateDateTime = LocalDateTime.now();
+        updateTime();
     }
 
     public boolean isRoundsUpdated() {
@@ -1983,7 +2039,7 @@ public class Tournament implements IContainCoachs, Serializable {
 
     public void setRoundsUpdated(boolean roundsUpdated) {
         this.roundsUpdated = roundsUpdated;
-        this.updateDateTime = LocalDateTime.now();
+        updateTime();
     }
     protected boolean roundsUpdated = false;
 
@@ -2105,6 +2161,7 @@ public class Tournament implements IContainCoachs, Serializable {
             c.setUpdated(false);
         }
 
+        updateTime();
     }
 
     public String[] getTeamsNames() {
@@ -2138,7 +2195,7 @@ public class Tournament implements IContainCoachs, Serializable {
             createDateTime = LocalDateTime.now();
         }
         if (updateDateTime == null) {
-            updateDateTime = LocalDateTime.now();
+            updateTime();
         }
 
         json.put("createDateTime", createDateTime.toString());
@@ -2156,6 +2213,9 @@ public class Tournament implements IContainCoachs, Serializable {
     }
 
     public void updateFromJSON(JSONObject object) {
+        
+        setSynchroMode(true);
+        
         Object tmp = object.get("createDateTime");
         if (tmp != JSONObject.NULL) {
             createDateTime = LocalDateTime.parse(tmp.toString());
@@ -2167,11 +2227,14 @@ public class Tournament implements IContainCoachs, Serializable {
         mDescription = object.get("description").toString();
         mClosed = Boolean.parseBoolean(object.get("closed").toString());
         mRoundRobin = Boolean.parseBoolean(object.get("roundRobin").toString());
+        
+        mParams.clearOrgas();
         JSONArray array = object.getJSONArray("orgas");
         for (int i = 0; i < array.length(); i++) {
             mParams.addTournamentOrga(array.getString(i));
         }
-        //mParams.setTournamentOrga(object.getString("orgas"));
+       
+        setSynchroMode(false);
     }
 
 }
