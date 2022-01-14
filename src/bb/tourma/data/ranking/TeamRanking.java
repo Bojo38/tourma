@@ -596,8 +596,8 @@ public class TeamRanking extends Ranking {
     public void updateFromJSON(JSONObject object) {
         super.updateFromJSON(object);
         this.mTeamVictory=object.getBoolean("teamVictory");
-        this.mForPool=object.getBoolean("forPool");
-        this.mForCup=object.getBoolean("forCup");
+        //this.mForPool=object.getBoolean("forPool");
+        //this.mForCup=object.getBoolean("forCup");
     }
 
 }
